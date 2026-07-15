@@ -1,0 +1,2433 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guia BB — Agente de Tecnologia</title>
+<style>
+  :root {
+    color-scheme: light;
+    --surface-1: #fcfcfb;
+    --page: #f9f9f7;
+    --ink-1: #0b0b0b;
+    --ink-2: #52514e;
+    --ink-muted: #898781;
+    --grid: #e1e0d9;
+    --baseline: #c3c2b7;
+    --border: rgba(11,11,11,0.10);
+    --series-1: #2a78d6;
+    --series-2: #008300;
+    --series-3: #e87ba4;
+    --seq-250: #86b6ef;
+    --seq-400: #3987e5;
+    --seq-450: #2a78d6;
+    --seq-600: #184f95;
+    --good: #0ca30c;
+    --good-text: #006300;
+    --warning: #fab219;
+    --serious: #ec835a;
+    --critical: #d03b3b;
+    --accent: #2a78d6;
+    --accent-wash: rgba(42,120,214,0.10);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:where(:not([data-theme="light"])) {
+      color-scheme: dark;
+      --surface-1: #1a1a19;
+      --page: #0d0d0d;
+      --ink-1: #ffffff;
+      --ink-2: #c3c2b7;
+      --ink-muted: #898781;
+      --grid: #2c2c2a;
+      --baseline: #383835;
+      --border: rgba(255,255,255,0.10);
+      --series-1: #3987e5;
+      --series-2: #008300;
+      --series-3: #d55181;
+      --good-text: #0ca30c;
+      --accent: #3987e5;
+      --accent-wash: rgba(57,135,229,0.15);
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --surface-1: #1a1a19;
+    --page: #0d0d0d;
+    --ink-1: #ffffff;
+    --ink-2: #c3c2b7;
+    --ink-muted: #898781;
+    --grid: #2c2c2a;
+    --baseline: #383835;
+    --border: rgba(255,255,255,0.10);
+    --series-1: #3987e5;
+    --series-2: #008300;
+    --series-3: #d55181;
+    --good-text: #0ca30c;
+    --accent: #3987e5;
+    --accent-wash: rgba(57,135,229,0.15);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    background: var(--page);
+    color: var(--ink-1);
+    line-height: 1.55;
+    font-size: 15px;
+  }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 16px 16px 80px; }
+
+  header.top {
+    display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+    padding: 14px 0 10px;
+  }
+  header.top h1 { font-size: 1.25rem; font-weight: 700; }
+  header.top .sub { color: var(--ink-2); font-size: .85rem; }
+  header.top .spacer { flex: 1; }
+  .theme-btn {
+    border: 1px solid var(--border); background: var(--surface-1); color: var(--ink-2);
+    border-radius: 8px; padding: 6px 12px; cursor: pointer; font-size: .85rem;
+  }
+
+  nav.tabs {
+    display: flex; gap: 4px; flex-wrap: wrap; position: sticky; top: 0; z-index: 20;
+    background: var(--page); padding: 8px 0; border-bottom: 1px solid var(--grid);
+  }
+  nav.tabs button {
+    border: none; background: transparent; color: var(--ink-2); font-size: .95rem;
+    padding: 8px 14px; border-radius: 8px; cursor: pointer; font-family: inherit;
+  }
+  nav.tabs button:hover { background: var(--accent-wash); }
+  nav.tabs button.active { background: var(--accent); color: #fff; font-weight: 600; }
+
+  main section.tab { display: none; padding-top: 18px; }
+  main section.tab.active { display: block; }
+
+  .card {
+    background: var(--surface-1); border: 1px solid var(--border);
+    border-radius: 12px; padding: 18px; margin-bottom: 16px;
+  }
+  .card h2 { font-size: 1.05rem; margin-bottom: 10px; }
+  .card h3 { font-size: .95rem; margin: 14px 0 6px; }
+  .muted { color: var(--ink-muted); font-size: .85rem; }
+  .small { font-size: .85rem; color: var(--ink-2); }
+
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  @media (max-width: 760px) {
+    .grid-2 { grid-template-columns: 1fr; }
+    .grid-3, .grid-4 { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  /* stat tiles */
+  .tile { background: var(--surface-1); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; }
+  .tile .label { font-size: .78rem; color: var(--ink-2); }
+  .tile .value { font-size: 1.7rem; font-weight: 700; line-height: 1.2; }
+  .tile .delta { font-size: .78rem; color: var(--ink-muted); }
+  .tile .delta.up { color: var(--good-text); }
+
+  /* coach messages */
+  .coach-msg {
+    display: flex; gap: 10px; align-items: flex-start; padding: 10px 12px;
+    border-radius: 10px; margin-bottom: 8px; border: 1px solid var(--border);
+    font-size: .92rem;
+  }
+  .coach-msg .ico { font-size: 1.05rem; line-height: 1.4; }
+  .coach-msg.info { background: var(--accent-wash); }
+  .coach-msg.good { background: rgba(12,163,12,0.10); }
+  .coach-msg.warning { background: rgba(250,178,25,0.13); }
+  .coach-msg.serious { background: rgba(208,59,59,0.10); }
+
+  /* today blocks & reviews */
+  .block-item, .review-item {
+    display: flex; align-items: center; gap: 12px; padding: 10px 12px;
+    border: 1px solid var(--border); border-radius: 10px; margin-bottom: 8px;
+  }
+  .block-item.done { opacity: .55; }
+  .block-item.done .bt { text-decoration: line-through; }
+  .block-item input[type=checkbox] { width: 18px; height: 18px; accent-color: var(--accent); cursor: pointer; }
+  .block-item .bt { flex: 1; }
+  .badge {
+    display: inline-block; font-size: .72rem; padding: 2px 8px; border-radius: 999px;
+    background: var(--accent-wash); color: var(--accent); font-weight: 600; white-space: nowrap;
+  }
+  .badge.late { background: rgba(208,59,59,0.12); color: var(--critical); }
+  .badge.kind { background: transparent; border: 1px solid var(--border); color: var(--ink-2); }
+  .review-item .rt { flex: 1; }
+  .review-item .rnote { font-size: .8rem; color: var(--ink-muted); }
+
+  button.btn {
+    border: none; background: var(--accent); color: #fff; font-family: inherit;
+    padding: 8px 16px; border-radius: 8px; cursor: pointer; font-size: .9rem; font-weight: 600;
+  }
+  button.btn.ghost { background: transparent; color: var(--accent); border: 1px solid var(--accent); }
+  button.btn.sm { padding: 5px 12px; font-size: .82rem; }
+  button.btn.danger { background: var(--critical); }
+
+  /* forms */
+  form .row { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 10px; }
+  form label { display: block; font-size: .8rem; color: var(--ink-2); margin-bottom: 3px; }
+  form input, form select, form textarea {
+    font-family: inherit; font-size: .9rem; padding: 8px 10px; border-radius: 8px;
+    border: 1px solid var(--baseline); background: var(--page); color: var(--ink-1);
+    min-width: 0;
+  }
+  form textarea { width: 100%; resize: vertical; }
+  form .field { flex: 1; min-width: 130px; }
+  form .field.wide { flex-basis: 100%; }
+
+  /* timer */
+  .timer-box { text-align: center; padding: 10px 0; }
+  .timer-box .clock { font-size: 2.6rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .timer-box .controls { display: flex; gap: 8px; justify-content: center; margin-top: 10px; flex-wrap: wrap; }
+
+  /* edital */
+  details.disc { border: 1px solid var(--border); border-radius: 10px; margin-bottom: 10px; background: var(--surface-1); }
+  details.disc summary {
+    cursor: pointer; padding: 12px 14px; display: flex; align-items: center; gap: 12px;
+    list-style: none; font-weight: 600; flex-wrap: wrap;
+  }
+  details.disc summary::-webkit-details-marker { display: none; }
+  .mini-bar { flex: 1; min-width: 120px; height: 8px; background: var(--grid); border-radius: 4px; overflow: hidden; }
+  .mini-bar > div { height: 100%; background: var(--seq-450); border-radius: 4px; }
+  .topic-row {
+    display: flex; align-items: center; gap: 10px; padding: 8px 14px;
+    border-top: 1px solid var(--grid); font-size: .9rem;
+  }
+  .topic-row .tname { flex: 1; }
+  .status-chip {
+    cursor: pointer; user-select: none; font-size: .75rem; font-weight: 600;
+    padding: 3px 10px; border-radius: 999px; border: 1px solid var(--baseline);
+    color: var(--ink-2); background: transparent; white-space: nowrap; font-family: inherit;
+  }
+  .status-chip.s1 { border-color: var(--seq-250); color: var(--seq-600); background: rgba(134,182,239,.18); }
+  .status-chip.s2 { border-color: var(--seq-450); color: #fff; background: var(--seq-400); }
+  .status-chip.s3 { border-color: var(--good); color: #fff; background: var(--good); }
+  :root[data-theme="dark"] .status-chip.s1 { color: var(--seq-250); }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .status-chip.s1 { color: var(--seq-250); } }
+
+  /* tables */
+  table.data { width: 100%; border-collapse: collapse; font-size: .88rem; }
+  table.data th { text-align: left; color: var(--ink-2); font-weight: 600; padding: 6px 8px; border-bottom: 1px solid var(--baseline); }
+  table.data td { padding: 6px 8px; border-bottom: 1px solid var(--grid); font-variant-numeric: tabular-nums; }
+  .table-scroll { overflow-x: auto; }
+
+  /* charts */
+  .chart-wrap { position: relative; }
+  .chart-wrap svg { display: block; width: 100%; height: auto; }
+  .viz-tooltip {
+    position: fixed; pointer-events: none; z-index: 50; display: none;
+    background: var(--surface-1); border: 1px solid var(--border); border-radius: 8px;
+    padding: 8px 10px; font-size: .8rem; box-shadow: 0 4px 14px rgba(0,0,0,.18);
+    max-width: 240px;
+  }
+  .legend { display: flex; gap: 16px; flex-wrap: wrap; font-size: .8rem; color: var(--ink-2); margin: 6px 2px; }
+  .legend .li { display: flex; align-items: center; gap: 6px; }
+  .legend .sw { width: 10px; height: 10px; border-radius: 3px; }
+
+  /* método (professor) */
+  .lesson { border-left: 3px solid var(--accent); padding: 4px 0 4px 14px; margin: 14px 0; }
+  .lesson h3 { margin-top: 0; }
+  .lesson p, .lesson li { font-size: .93rem; color: var(--ink-2); margin-bottom: 6px; }
+  .lesson strong { color: var(--ink-1); }
+  .lesson ul, .lesson ol { padding-left: 20px; margin: 6px 0; }
+  kbd.chip { background: var(--accent-wash); color: var(--accent); border-radius: 6px; padding: 1px 7px; font-family: inherit; font-size: .85em; font-weight: 600; }
+
+  /* quiz */
+  .quiz-q { font-size: 1rem; margin: 10px 0 14px; line-height: 1.6; }
+  .quiz-q code, .fcard code { background: var(--accent-wash); border-radius: 4px; padding: 1px 6px; font-size: .9em; }
+  .quiz-opt {
+    display: flex; gap: 10px; align-items: flex-start; width: 100%; text-align: left;
+    border: 1px solid var(--border); background: transparent; color: var(--ink-1);
+    font-family: inherit; font-size: .93rem; line-height: 1.5;
+    padding: 10px 14px; border-radius: 10px; margin-bottom: 8px; cursor: pointer;
+  }
+  .quiz-opt:hover:not(:disabled) { background: var(--accent-wash); border-color: var(--accent); }
+  .quiz-opt:disabled { cursor: default; opacity: .75; }
+  .quiz-opt .letter { font-weight: 700; color: var(--ink-2); }
+  .quiz-opt.is-correct { border-color: var(--good); background: rgba(12,163,12,0.12); opacity: 1; }
+  .quiz-opt.is-wrong { border-color: var(--critical); background: rgba(208,59,59,0.12); opacity: 1; }
+  .quiz-fb { border-radius: 10px; padding: 12px 14px; margin: 10px 0; font-size: .92rem; border: 1px solid var(--border); }
+  .quiz-fb.ok { background: rgba(12,163,12,0.10); }
+  .quiz-fb.nok { background: rgba(208,59,59,0.08); }
+  .quiz-meta { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-bottom: 6px; }
+  /* flashcards */
+  .fcard {
+    border: 1px solid var(--border); border-radius: 14px; padding: 26px 22px;
+    min-height: 190px; display: flex; flex-direction: column; justify-content: center;
+    text-align: center; font-size: 1.02rem; background: var(--page); cursor: pointer;
+  }
+  .fcard .side-label { font-size: .72rem; color: var(--ink-muted); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 10px; }
+  .fcard .back-text { font-size: .95rem; color: var(--ink-2); text-align: left; white-space: pre-line; }
+  .fcard-controls { display: flex; gap: 10px; justify-content: center; margin-top: 14px; flex-wrap: wrap; }
+  .btn.good { background: var(--good); }
+
+  .empty { color: var(--ink-muted); font-size: .88rem; padding: 8px 0; }
+  .progress-outer { height: 10px; background: var(--grid); border-radius: 5px; overflow: hidden; margin: 6px 0 2px; }
+  .progress-outer > div { height: 100%; background: var(--seq-450); border-radius: 5px; transition: width .3s; }
+  .toast {
+    position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+    background: var(--ink-1); color: var(--page); padding: 10px 20px; border-radius: 10px;
+    font-size: .9rem; z-index: 100; display: none;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <h1>🎯 Guia BB — Agente de Tecnologia</h1>
+    <span class="sub" id="header-date"></span>
+    <span class="spacer"></span>
+    <button class="theme-btn" id="theme-toggle" title="Alternar tema">🌗 Tema</button>
+  </header>
+
+  <nav class="tabs" id="tabs">
+    <button data-tab="hoje" class="active">📅 Hoje</button>
+    <button data-tab="metodo">🧑‍🏫 Método</button>
+    <button data-tab="quiz">🧪 Quiz</button>
+    <button data-tab="cartoes">📇 Cartões</button>
+    <button data-tab="materiais">📚 Materiais</button>
+    <button data-tab="registrar">✍️ Registrar</button>
+    <button data-tab="edital">📖 Edital</button>
+    <button data-tab="progresso">📈 Progresso</button>
+  </nav>
+
+  <main>
+    <section class="tab active" id="tab-hoje"></section>
+    <section class="tab" id="tab-metodo"></section>
+    <section class="tab" id="tab-quiz"></section>
+    <section class="tab" id="tab-cartoes"></section>
+    <section class="tab" id="tab-materiais"></section>
+    <section class="tab" id="tab-registrar"></section>
+    <section class="tab" id="tab-edital"></section>
+    <section class="tab" id="tab-progresso"></section>
+  </main>
+</div>
+
+<div class="viz-tooltip" id="viz-tooltip"></div>
+<div class="toast" id="toast"></div>
+
+<script>
+"use strict";
+/* ============================================================
+   DADOS ESTÁTICOS
+============================================================ */
+const DISCS = ["Português","Inglês","Matemática/Estatística","Bancários","Atualidades","TI","Redação"];
+
+const CRONO = {
+  1: { nome: "Segunda", blocos: [
+      { id:"b1", txt:"🌅 Manhã — Conhecimentos Bancários: teoria + resumo esquematizado", dur:"1h", disc:"Bancários" },
+      { id:"b2", txt:"🌇 Tarde — TI: SQL / PL-SQL / Modelagem — só questões", dur:"1h", disc:"TI" },
+      { id:"b3", txt:"🌙 Noite — Revisões do dia + lei seca (LGPD / Res. 4.893)", dur:"1h", disc:"Bancários" } ]},
+  2: { nome: "Terça", blocos: [
+      { id:"b1", txt:"🌅 Manhã — Língua Portuguesa: gramática + questões", dur:"1h", disc:"Português" },
+      { id:"b2", txt:"🌇 Tarde — TI: Java / Estrutura de Dados — leitura de código", dur:"1h", disc:"TI" },
+      { id:"b3", txt:"🌙 Noite — Revisões do dia + 5–10 questões de Inglês", dur:"1h", disc:"Inglês" } ]},
+  3: { nome: "Quarta", blocos: [
+      { id:"b1", txt:"🌅 Manhã — Atualidades do Mercado Financeiro", dur:"1h", disc:"Atualidades" },
+      { id:"b2", txt:"🌇 Tarde — TI: Segurança da Informação / Redes — questões", dur:"1h", disc:"TI" },
+      { id:"b3", txt:"🌙 Noite — Revisões do dia + cartões vencidos + caderno de erros", dur:"1h", disc:"TI" } ]},
+  4: { nome: "Quinta", blocos: [
+      { id:"b1", txt:"🌅 Manhã — Probabilidade e Estatística: teoria + prática", dur:"1h", disc:"Matemática/Estatística" },
+      { id:"b2", txt:"🌇 Tarde — TI: Linux / Git / DevOps / Nuvem — questões", dur:"1h", disc:"TI" },
+      { id:"b3", txt:"🌙 Noite — Revisões do dia + releitura do resumo de Bancários", dur:"1h", disc:"Bancários" } ]},
+  5: { nome: "Sexta", blocos: [
+      { id:"b1", txt:"🌅 Manhã — Bancários: só questões", dur:"1h", disc:"Bancários" },
+      { id:"b2", txt:"🌇 Tarde — TI: quiz misto de 15–20 questões", dur:"1h", disc:"TI" },
+      { id:"b3", txt:"🌙 Noite — Fechar o caderno de erros da semana + cartões", dur:"1h", disc:"TI" } ]},
+  6: { nome: "Sábado", blocos: [
+      { id:"b1", txt:"Semana par: prova antiga na íntegra, cronometrada. Semana ímpar: bateria de 60 questões dos tópicos fracos", dur:"3h", disc:"TI" },
+      { id:"b2", txt:"Correção minuciosa — cada erro vai para o caderno com o porquê", dur:"2h", disc:"TI" } ]},
+  0: { nome: "Domingo", blocos: [
+      { id:"b1", txt:"Redação completa, manuscrita, cronometrada (30 linhas em 1h)", dur:"1h", disc:"Redação" },
+      { id:"b2", txt:"Atualizar progresso + planejar a semana. Depois: descanso de verdade", dur:"30m", disc:"Redação" } ]},
+};
+
+const DICAS = {
+  0: "Domingo é dia de redação e planejamento — e de descansar sem culpa. Descanso programado também é estudo.",
+  1: "Bancários é sua prioridade nº 1: é a matéria mais distante do seu dia a dia. Entenda a lógica da regulação, não decore listas.",
+  2: "Em leitura de código, cronometre: a prova não dá tempo de 'compilar mentalmente' com calma. Treine achar o erro em menos de 2 minutos.",
+  3: "Segurança é sua zona de conforto — o risco é a terminologia de concurso divergir do jargão prático. Leia o enunciado como a banca escreve.",
+  4: "Estatística cai pouco mas elimina: não zerar nenhuma disciplina é regra histórica do BB. Garanta o básico bem feito.",
+  5: "Sexta é dia de fechar a semana: todo erro sem registro no caderno é um erro que você vai repetir na prova.",
+  6: "Simulado é treino de prova, não de conteúdo: mesma hora, sem pausas, sem consulta. A correção vale mais que a prova.",
+};
+
+const EDITAL = [
+  { disc: "Língua Portuguesa", topics: [
+    "Interpretação e compreensão de texto","Tipologia e gêneros textuais","Ortografia e acentuação",
+    "Classes de palavras / morfologia","Sintaxe (termos da oração, período composto)","Concordância verbal e nominal",
+    "Regência verbal e nominal + crase","Colocação pronominal","Pontuação",
+    "Semântica (sinonímia, ambiguidade, conotação)","Reescrita de frases / paráfrase" ]},
+  { disc: "Língua Inglesa", topics: [
+    "Interpretação de textos técnicos/negócios","Vocabulário, cognatos e falsos cognatos","Gramática contextualizada" ]},
+  { disc: "Matemática / Financeira", topics: [
+    "Razão, proporção, porcentagem","Juros simples e compostos","Taxas (nominal, efetiva, equivalente, real)",
+    "Descontos e séries de pagamentos","Sistemas de amortização (SAC, Price)" ]},
+  { disc: "Probabilidade e Estatística", topics: [
+    "Estatística descritiva (média, mediana, moda, dispersão)","Probabilidade (condicional, Bayes, independência)",
+    "Variáveis aleatórias e distribuições (binomial, normal, Poisson)","Amostragem e estimação","Correlação e regressão linear" ]},
+  { disc: "Conhecimentos Bancários", topics: [
+    "SFN: estrutura, CMN, Bacen, CVM, Susep, Previc","Política monetária, Selic, Copom",
+    "Instituições financeiras (bancos, cooperativas, fintechs)","Produtos bancários (CDB, fundos, crédito, cartões)",
+    "Pix e arranjos de pagamento","Open Finance / Open Banking","Moeda digital (Drex/CBDC) e criptoativos",
+    "LGPD aplicada ao setor bancário","Segurança cibernética — Resolução CMN 4.893",
+    "Prevenção à lavagem de dinheiro (Lei 9.613)","Autorregulação, ética e compliance","ASG/ESG e finanças sustentáveis" ]},
+  { disc: "Atualidades do Mercado Financeiro", topics: [
+    "Cenário econômico nacional/internacional recente","Inovações tecnológicas no setor (IA, bancos digitais)",
+    "Notícias regulatórias do Bacen (últimos 12 meses)" ]},
+  { disc: "TI — Banco de Dados", topics: [
+    "Modelagem conceitual/lógica (MER/DER)","Normalização (1FN, 2FN, 3FN, BCNF)",
+    "SQL (DDL, DML, joins, subqueries, agregação)","PL/SQL (procedures, functions, triggers, cursores)",
+    "Transações, ACID e controle de concorrência","NoSQL (chave-valor, documento, coluna, grafo)",
+    "Data Warehouse, BI, Big Data (conceitos)" ]},
+  { disc: "TI — Desenvolvimento", topics: [
+    "Java (POO, exceções, collections, streams)","JavaScript/TypeScript (fundamentos, assincronismo)",
+    "Python (fundamentos)","Estruturas de dados (listas, pilhas, filas, árvores, hash, grafos)",
+    "Algoritmos (ordenação, busca, complexidade Big-O)","APIs REST, JSON, microsserviços, mensageria" ]},
+  { disc: "TI — Engenharia de Software", topics: [
+    "Ciclo de vida e processos de software","Metodologias ágeis (Scrum, Kanban, XP, Lean)",
+    "DevOps, CI/CD, contêineres (Docker, Kubernetes)","Testes (unitário, integração, TDD)",
+    "UML e padrões de projeto (GoF)","Arquitetura (camadas, microsserviços, eventos)" ]},
+  { disc: "TI — Segurança da Informação", topics: [
+    "Princípios (CID, autenticidade, não repúdio)","Criptografia simétrica/assimétrica, hash, assinatura digital",
+    "PKI, certificados, ICP-Brasil","Protocolos seguros (TLS, HTTPS, SSH, VPN, IPsec)",
+    "Firewall, IDS/IPS, WAF, proxy, DMZ","Ataques (DDoS, phishing, MitM, SQLi, XSS, CSRF) e malware",
+    "OWASP Top 10 e desenvolvimento seguro","Gestão de identidade (MFA, SSO, OAuth2, JWT)",
+    "ISO 27001/27002, gestão de riscos e incidentes" ]},
+  { disc: "TI — Redes", topics: [
+    "Modelos OSI × TCP/IP (camadas e funções)","Endereçamento IP, sub-redes, IPv4 × IPv6",
+    "Protocolos e portas padrão (HTTP, DNS, DHCP, SMTP...)","Equipamentos e redes sem fio" ]},
+  { disc: "TI — SO / Infraestrutura", topics: [
+    "Linux: comandos, permissões (chmod/chown), shell","Processos, threads, memória, escalonamento",
+    "Virtualização e nuvem (IaaS/PaaS/SaaS)","Git e controle de versão" ]},
+  { disc: "TI — Tendências", topics: [
+    "IA e aprendizado de máquina (conceitos)","Ciência de dados e Big Data (ecossistema, ETL)","Blockchain (conceitos)" ]},
+];
+
+const STATUS_LABELS = ["Não iniciado","Teoria vista","Em questões","Dominado ✓"];
+const CAUSAS = ["CONCEITO (não sabia)","CONFUSÃO (troquei conceitos)","DESATENÇÃO (li errado/pressa)","CHUTE-SORTE (acertei sem saber)"];
+const REVIEW_OFFSETS = [1, 7, 30];
+const META_HORAS_SEMANA = 18; // 3h/dia útil (1h manhã + 1h tarde + 1h noite) + fim de semana
+
+/* ============================================================
+   BANCO DE QUESTÕES (estilo multibanca: Cesgranrio/FGV/Cebraspe)
+   a = índice da alternativa correta
+============================================================ */
+const QUESTOES = [
+// ---------- CONHECIMENTOS BANCÁRIOS ----------
+{id:"b01",disc:"Bancários",top:"SFN — CMN",q:"No Sistema Financeiro Nacional, o órgão máximo, de caráter exclusivamente normativo, responsável por formular as diretrizes da política da moeda e do crédito, é o(a):",
+ o:["Conselho Monetário Nacional (CMN)","Banco Central do Brasil","Comissão de Valores Mobiliários","Banco do Brasil","Federação Brasileira de Bancos (Febraban)"],a:0,
+ exp:"O CMN normatiza (cria as regras); o Bacen executa e supervisiona. O CMN não executa NADA na prática.",trap:"Se o enunciado falar em 'executar', 'fiscalizar' ou 'supervisionar', a resposta nunca é CMN."},
+{id:"b02",disc:"Bancários",top:"SFN — Bacen",q:"Compete ao Banco Central do Brasil:",
+ o:["fixar as diretrizes da política monetária nacional","emitir papel-moeda, conforme autorização do CMN","fiscalizar as companhias de capital aberto","definir o valor do salário mínimo","conceder crédito rural diretamente ao produtor"],a:1,
+ exp:"Emitir papel-moeda é atribuição exclusiva do Bacen. Fixar diretrizes é do CMN; fiscalizar companhias abertas é da CVM.",trap:"Bacen EXECUTA a política monetária; quem FIXA as diretrizes é o CMN."},
+{id:"b03",disc:"Bancários",top:"SFN — CVM",q:"A supervisão do mercado de valores mobiliários — como ações e debêntures — é atribuição do(a):",
+ o:["Bacen","CMN","CVM","Susep","B3"],a:2,
+ exp:"CVM supervisiona o mercado de capitais (valores mobiliários). Susep cuida de seguros; Bacen, de instituições financeiras.",trap:"Debênture e ação = CVM. CDB e poupança = Bacen."},
+{id:"b04",disc:"Bancários",top:"Pix",q:"Sobre o Pix, é correto afirmar que:",
+ o:["funciona apenas em dias úteis, em horário bancário","é gerido e operado pela Febraban","está disponível 24 horas por dia, todos os dias, com liquidação em poucos segundos","exige a realização prévia de uma TED de validação","é obrigatoriamente tarifado para pessoas físicas"],a:2,
+ exp:"O Pix é o arranjo de pagamentos instantâneos criado e gerido pelo BACEN, disponível 24/7, com liquidação em segundos. Para PF é, em regra, gratuito.",trap:"Quem gere o Pix é o Bacen — banca adora colocar 'Febraban' como distrator."},
+{id:"b05",disc:"Bancários",top:"Open Finance",q:"O Open Finance caracteriza-se, essencialmente, pelo(a):",
+ o:["venda de dados dos clientes entre bancos parceiros","compartilhamento de dados do cliente entre instituições, mediante consentimento do próprio cliente","unificação de todos os bancos em uma única plataforma estatal","abertura obrigatória de conta em mais de um banco","fim do sigilo bancário no Brasil"],a:1,
+ exp:"A premissa do Open Finance: o dado pertence ao CLIENTE, que consente (por prazo determinado e finalidade específica) o compartilhamento entre instituições.",trap:"Sem consentimento do cliente, não há Open Finance. Consentimento é a palavra-chave."},
+{id:"b06",disc:"Bancários",top:"LGPD — bases legais",q:"De acordo com a LGPD, o tratamento de dados pessoais:",
+ o:["só pode ocorrer com o consentimento expresso do titular","é vedado para fins de proteção ao crédito","pode ocorrer sem consentimento em hipóteses legais, como a proteção ao crédito","é livre para dados tornados públicos","aplica-se apenas a dados em meio digital"],a:2,
+ exp:"O consentimento é só UMA das 10 bases legais. Proteção ao crédito, cumprimento de obrigação legal, execução de contrato e legítimo interesse são outras.",trap:"'Só com consentimento' é a pegadinha clássica de LGPD — está ERRADA."},
+{id:"b07",disc:"Bancários",top:"LGPD — ANPD",q:"O órgão responsável por fiscalizar e aplicar sanções pelo descumprimento da LGPD é o(a):",
+ o:["Ministério Público Federal","ANPD — Autoridade Nacional de Proteção de Dados","Bacen","Anatel","Senacon"],a:1,
+ exp:"A ANPD é a autoridade administrativa da LGPD. Sanções: de advertência até multa de 2% do faturamento, limitada a R$ 50 milhões por infração.",trap:"Guarde os números: 2% do faturamento, teto de R$ 50 mi POR INFRAÇÃO."},
+{id:"b08",disc:"Bancários",top:"Produtos — CDB",q:"O CDB (Certificado de Depósito Bancário) é um título:",
+ o:["público, emitido pelo Tesouro Nacional","de renda variável, negociado em bolsa","privado, emitido por bancos para captação, coberto pelo FGC até o limite vigente","emitido exclusivamente por cooperativas de crédito","sem qualquer garantia ao investidor"],a:2,
+ exp:"CDB = banco captando dinheiro do investidor (renda fixa). Tem cobertura do FGC até R$ 250 mil por CPF/CNPJ por instituição (teto global de R$ 1 milhão renovável a cada 4 anos).",trap:"FGC: 250 mil por CPF POR INSTITUIÇÃO — a banca troca esses limites."},
+{id:"b09",disc:"Bancários",top:"Política monetária — Selic",q:"A taxa Selic, referência básica de juros da economia brasileira, é definida:",
+ o:["pelo mercado interbancário, sem interferência estatal","pelo Copom, em reuniões ordinárias realizadas a cada 45 dias","pelo Ministério da Fazenda, mensalmente","pelo CMN, semestralmente","pelos bancos comerciais, em assembleia"],a:1,
+ exp:"O Copom (Comitê de Política Monetária do Bacen) define a meta da Selic em 8 reuniões anuais (a cada ~45 dias).",trap:"Copom define a Selic; CMN define a META DE INFLAÇÃO. Não confunda."},
+{id:"b10",disc:"Bancários",top:"Lavagem de dinheiro",q:"As três fases clássicas do crime de lavagem de dinheiro são, na ordem:",
+ o:["ocultação, colocação e integração","colocação, ocultação e integração","integração, colocação e dissimulação","captação, aplicação e resgate","colocação, integração e ocultação"],a:1,
+ exp:"Colocação (dinheiro sujo entra no sistema) → Ocultação/dissimulação (movimentações para esconder a origem) → Integração (volta à economia com aparência lícita).",trap:"Mnemônico: C-O-I. A banca embaralha a ordem."},
+{id:"b11",disc:"Bancários",top:"Drex",q:"O Drex, em desenvolvimento pelo Banco Central, é:",
+ o:["uma criptomoeda privada concorrente do Bitcoin","uma stablecoin emitida por bancos comerciais","a versão digital do real, uma CBDC emitida pelo próprio Bacen","um novo arranjo de cartões de débito","a substituição definitiva do papel-moeda"],a:2,
+ exp:"Drex = CBDC (moeda digital de banco central) brasileira: o próprio real em forma digital, emitido pelo Bacen sobre tecnologia de registro distribuído (DLT).",trap:"CBDC tem emissor estatal e curso legal — criptomoeda privada não. É o oposto de 'descentralizado sem governo'."},
+{id:"b12",disc:"Bancários",top:"Res. CMN 4.893 — segurança cibernética",q:"A Resolução CMN nº 4.893 determina que as instituições financeiras:",
+ o:["estão proibidas de contratar serviços de computação em nuvem","devem manter política de segurança cibernética e comunicar incidentes relevantes ao Bacen","podem terceirizar integralmente a responsabilidade pela segurança","só precisam de política de segurança se forem bancos públicos","devem divulgar publicamente todos os incidentes sofridos"],a:1,
+ exp:"A 4.893 exige política de segurança cibernética formal, planos de resposta a incidentes e comunicação dos relevantes ao Bacen. Nuvem é PERMITIDA, com requisitos de contratação.",trap:"'Proíbe nuvem' é distrator clássico — a norma REGULA a contratação, não proíbe."},
+
+// ---------- PORTUGUÊS ----------
+{id:"p01",disc:"Português",top:"Crase",q:"Assinale a frase em que o uso do acento grave indicativo de crase está correto:",
+ o:["Vou à pé para o trabalho.","Entreguei o relatório à ele.","Refiro-me à diretora do banco.","Chegamos à um acordo.","Começou à chover durante a prova."],a:2,
+ exp:"Crase = preposição 'a' + artigo 'a'. 'Diretora' é feminino determinado: refiro-me A + A diretora. Não há crase antes de masculino ('pé'), pronome pessoal ('ele'), artigo indefinido ('um') nem verbo ('chover').",trap:"Teste: troque por palavra masculina. 'Refiro-me AO diretor' → com feminino, há crase."},
+{id:"p02",disc:"Português",top:"Concordância — verbos impessoais",q:"Assinale a frase correta quanto à concordância verbal:",
+ o:["Fazem dez anos que trabalho com tecnologia.","Faz dez anos que trabalho com tecnologia.","Haviam muitos candidatos na sala.","Existe muitos candidatos inscritos.","Devem haver vagas para todos."],a:1,
+ exp:"'Fazer' indicando tempo decorrido é IMPESSOAL: fica na 3ª pessoa do singular ('Faz dez anos'). 'Haver' no sentido de existir também ('Havia muitos candidatos') — e contamina o auxiliar ('Deve haver vagas').",trap:"FAZ tempo / HÁ pessoas — sempre singular. 'Existir', porém, concorda normalmente: 'ExisteM muitos candidatos'."},
+{id:"p03",disc:"Português",top:"Concordância — haver",q:"Sobre a frase \"Houve inúmeras tentativas de fraude no aplicativo\", é correto afirmar:",
+ o:["está errada; o correto seria 'Houveram inúmeras tentativas'","está correta, pois 'haver' no sentido de existir é impessoal e fica no singular","está errada, pois 'haver' deve concordar com 'tentativas'","está correta, pois 'tentativas' é o sujeito do verbo","está errada, pois faltou o sujeito da oração"],a:1,
+ exp:"'Haver' = existir/ocorrer é impessoal: não tem sujeito e fica na 3ª pessoa do singular. 'Inúmeras tentativas' é objeto direto, não sujeito.",trap:"'Houveram' não existe nesse sentido — nunca. Só como auxiliar: 'haviam feito'."},
+{id:"p04",disc:"Português",top:"Colocação pronominal",q:"Assinale a frase em que a colocação pronominal está correta:",
+ o:["Não esqueça-se do edital.","Nunca viu-se tamanha concorrência.","Não se esqueça do edital.","Me avise quando sair o resultado. (norma culta escrita)","Jamais arrependeu-se da decisão."],a:2,
+ exp:"Palavras negativas (não, nunca, jamais) ATRAEM o pronome — exigem próclise: 'Não SE esqueça'. Iniciar frase com pronome oblíquo ('Me avise') fere a norma culta escrita.",trap:"Negativa antes do verbo = próclise obrigatória. É a atração mais cobrada."},
+{id:"p05",disc:"Português",top:"Regência verbal",q:"Quanto à regência do verbo 'assistir', está correta a frase:",
+ o:["Assistimos o debate dos candidatos ontem.","Assistimos ao debate dos candidatos ontem.","O filme que assistimos era ótimo.","Ela assistiu o jogo no estádio.","Nós assistimos à ele com atenção."],a:1,
+ exp:"'Assistir' no sentido de VER é transitivo indireto: assistir A algo ('ao debate'). No sentido de ajudar, é direto ('O médico assistiu o paciente').",trap:"Ver = assistir A. E o relativo vira 'o filme A QUE assistimos'."},
+{id:"p06",disc:"Português",top:"Semântica — onde",q:"O pronome relativo 'onde' está empregado corretamente em:",
+ o:["A reunião onde discutimos o projeto foi longa.","A época onde eu estudava era mais tranquila.","A cidade onde nasci fica no interior.","O relatório onde constam os dados foi enviado.","A prova onde fui aprovado era difícil."],a:2,
+ exp:"'Onde' só substitui LUGAR FÍSICO ('a cidade onde nasci'). Reunião, época, relatório e prova não são lugares — use 'em que' / 'na qual'.",trap:"Se não dá para apontar no mapa, não use 'onde'."},
+{id:"p07",disc:"Português",top:"Pontuação",q:"Assinale a frase com pontuação INCORRETA:",
+ o:["Os candidatos aprovados receberão o resultado por e-mail.","O edital, publicado ontem, trouxe novidades.","Os candidatos aprovados, receberão o resultado por e-mail.","Após a prova, os gabaritos serão divulgados.","O banco, que é público, abriu novo concurso."],a:2,
+ exp:"NUNCA se separa sujeito do verbo por uma única vírgula: 'Os candidatos aprovados, receberão' está errado. As demais usam vírgulas para adjuntos deslocados e orações intercaladas, o que é correto.",trap:"Vírgula única entre sujeito e verbo = erro sempre. Duas vírgulas (intercalação) podem."},
+{id:"p08",disc:"Português",top:"Por que / porque / porquê",q:"Assinale a frase correta quanto ao emprego de por que/porque/porquê:",
+ o:["Ninguém explicou o porquê da mudança no edital.","Não sei por quê você não estudou ontem.","Ele passou por que estudou com método.","Porque você não fez o simulado?","Quero saber o por que da demora."],a:0,
+ exp:"'O porquê' (com artigo) é substantivo = o motivo. 'Por quê' só no fim de frase; 'porque' é resposta/explicação; 'por que' inicia pergunta ou equivale a 'pelo qual'.",trap:"Se dá para trocar por 'o motivo', é 'o porquê' — junto e com acento."},
+
+// ---------- MATEMÁTICA / ESTATÍSTICA ----------
+{id:"e01",disc:"Matemática/Estatística",top:"Mediana",q:"A mediana do conjunto de dados {2, 3, 5, 8, 10, 12} é:",
+ o:["5","8","6,5","7","6"],a:2,
+ exp:"Com número PAR de elementos, a mediana é a média dos dois centrais: (5+8)/2 = 6,5.",trap:"Conjunto par = média dos dois do meio. A banca oferece '5' e '8' como distratores."},
+{id:"e02",disc:"Matemática/Estatística",top:"Média aritmética",q:"A média aritmética dos valores 4, 6, 8, 10 e 12 é:",
+ o:["7","8","9","8,5","10"],a:1,
+ exp:"(4+6+8+10+12)/5 = 40/5 = 8. Em sequências igualmente espaçadas, a média é o termo central.",trap:"Sequência aritmética: média = termo do meio. Economiza conta na prova."},
+{id:"e03",disc:"Matemática/Estatística",top:"Probabilidade — eventos independentes",q:"Lançando-se dois dados honestos, a probabilidade de obter 6 em ambos é:",
+ o:["1/6","1/12","2/6","1/36","1/18"],a:3,
+ exp:"Eventos independentes: P(A e B) = P(A) × P(B) = 1/6 × 1/6 = 1/36.",trap:"Independentes multiplicam. 'Ou' (união) é que somaria — cuidado com o conectivo."},
+{id:"e04",disc:"Matemática/Estatística",top:"Distribuição normal",q:"Sobre a distribuição normal, é correto afirmar que:",
+ o:["é assimétrica à direita","média, mediana e moda coincidem","a média é sempre maior que a mediana","é definida apenas para valores positivos","sua variância é sempre igual a 1"],a:1,
+ exp:"A normal é simétrica em torno da média — por isso média = mediana = moda. Variância 1 só na normal PADRÃO (após padronização Z).",trap:"Normal ≠ normal padrão. A padrão é o caso particular com média 0 e desvio 1."},
+{id:"e05",disc:"Matemática/Estatística",top:"Desvio padrão",q:"O desvio padrão de um conjunto de dados:",
+ o:["é o quadrado da variância","é expresso em unidade diferente da dos dados originais","é a raiz quadrada da variância, na mesma unidade dos dados","é sempre maior que a variância","não pode ser igual a zero"],a:2,
+ exp:"DP = √variância, e por isso volta à unidade original dos dados (a variância fica ao quadrado). DP zero é possível: todos os dados iguais.",trap:"Variância = DP², em unidade ao quadrado. A banca inverte a relação."},
+{id:"e06",disc:"Matemática/Estatística",top:"Correlação",q:"Um coeficiente de correlação linear r = −0,9 entre duas variáveis indica:",
+ o:["correlação fraca e negativa","que uma variável causa a outra","correlação forte e negativa, sem implicar causalidade","ausência de relação linear","erro de cálculo, pois r não pode ser negativo"],a:2,
+ exp:"|r| próximo de 1 = correlação forte; sinal negativo = variáveis em sentidos opostos. Correlação NUNCA prova causalidade.",trap:"'Correlação implica causalidade' é sempre falso em prova."},
+
+// ---------- TI: BANCO DE DADOS ----------
+{id:"d01",disc:"TI",top:"TRUNCATE × DELETE × DROP",q:"No Oracle, o comando que remove linhas de uma tabela e PODE ser desfeito com ROLLBACK dentro da transação é:",
+ o:["TRUNCATE TABLE","DROP TABLE","DELETE","PURGE","ALTER TABLE"],a:2,
+ exp:"DELETE é DML: entra na transação e aceita ROLLBACK. TRUNCATE e DROP são DDL: geram commit implícito no Oracle — não voltam atrás.",trap:"TRUNCATE é DDL disfarçado de limpeza — rápido, mas sem volta."},
+{id:"d02",disc:"TI",top:"WHERE × HAVING",q:"Em SQL, a cláusula HAVING difere da WHERE porque:",
+ o:["filtra linhas antes do agrupamento","é executada antes da cláusula FROM","filtra os grupos após o GROUP BY, podendo usar funções de agregação","não pode ser usada com GROUP BY","substitui a cláusula ORDER BY"],a:2,
+ exp:"WHERE filtra LINHAS (antes de agrupar); HAVING filtra GRUPOS (depois), e por isso aceita COUNT, SUM, AVG etc.",trap:"'WHERE COUNT(*) > 5' é inválido — agregação em filtro pede HAVING."},
+{id:"d03",disc:"TI",top:"JOINs",q:"Um LEFT JOIN entre as tabelas Cliente (esquerda) e Conta (direita) retorna:",
+ o:["apenas clientes que possuem conta","todas as contas, mesmo sem cliente","todos os clientes, com NULL nas colunas de Conta quando não houver correspondência","apenas as linhas sem correspondência em ambas","o produto cartesiano das duas tabelas"],a:2,
+ exp:"LEFT JOIN preserva TODAS as linhas da tabela à esquerda; onde não há par na direita, as colunas vêm NULL. INNER traria só os que casam; CROSS é o cartesiano.",trap:"Clássica: 'clientes SEM conta' = LEFT JOIN + WHERE conta.id IS NULL."},
+{id:"d04",disc:"TI",top:"NULL em SQL",q:"Sobre o valor NULL em SQL, é correto afirmar:",
+ o:["NULL é equivalente a zero","a comparação coluna = NULL retorna verdadeiro para linhas nulas","para localizar valores nulos, deve-se usar o operador IS NULL","NULL e string vazia são idênticos em todos os SGBDs","funções de agregação sempre incluem valores NULL"],a:2,
+ exp:"Qualquer comparação com NULL (= NULL, <> NULL) resulta UNKNOWN — nunca verdadeiro. Só IS NULL / IS NOT NULL testam nulidade. Agregações como AVG e COUNT(coluna) IGNORAM nulls.",trap:"'WHERE x = NULL' não retorna nada, nunca. É a pegadinha nº 1 de SQL."},
+{id:"d05",disc:"TI",top:"Normalização — 2FN",q:"Uma tabela viola a Segunda Forma Normal (2FN) quando:",
+ o:["possui atributos multivalorados","um atributo não-chave depende de apenas parte da chave primária composta","um atributo não-chave depende de outro atributo não-chave","não possui chave primária","possui dependências transitivas"],a:1,
+ exp:"2FN elimina dependência PARCIAL (atributo dependendo de só um pedaço da chave composta). Multivalorado é 1FN; dependência transitiva (não-chave → não-chave) é 3FN.",trap:"1FN = atomicidade; 2FN = dependência parcial; 3FN = transitiva. Grave o trio."},
+{id:"d06",disc:"TI",top:"ACID",q:"Em transações, a propriedade que garante que os efeitos de uma transação confirmada (COMMIT) persistam mesmo após uma falha do sistema é a:",
+ o:["Atomicidade","Consistência","Isolamento","Durabilidade","Escalabilidade"],a:3,
+ exp:"Durabilidade: o que foi commitado sobrevive a quedas. Atomicidade = tudo ou nada; Isolamento = transações não interferem entre si; Consistência = regras de integridade preservadas.",trap:"'Sobrevive à falha' → Durabilidade. 'Tudo ou nada' → Atomicidade."},
+{id:"d07",disc:"TI",top:"PL/SQL — triggers",q:"Em PL/SQL, um TRIGGER difere de uma PROCEDURE porque o trigger:",
+ o:["é executado automaticamente em resposta a um evento (INSERT, UPDATE, DELETE) na tabela","precisa ser chamado explicitamente pela aplicação","não pode conter comandos SQL","só pode ser criado pelo usuário SYS","aceita parâmetros de entrada e saída"],a:0,
+ exp:"Trigger dispara sozinho quando o evento ocorre; procedure é invocada explicitamente e aceita parâmetros (trigger não recebe parâmetros).",trap:"Trigger: automático e sem parâmetros. Procedure: chamada explícita e com parâmetros."},
+{id:"d08",disc:"TI",top:"NoSQL — tipos",q:"Associando bancos NoSQL a seus modelos, está correta a opção:",
+ o:["MongoDB — chave-valor","Redis — orientado a grafos","Neo4j — colunar","MongoDB — orientado a documentos","Cassandra — orientado a documentos"],a:3,
+ exp:"MongoDB = documentos (JSON/BSON); Redis = chave-valor (em memória); Neo4j = grafos; Cassandra = colunar (wide-column).",trap:"Grave os 4 exemplos canônicos — a banca só troca os pares."},
+{id:"d09",disc:"TI",top:"COUNT com NULL",q:"Em uma tabela com 10 linhas, onde a coluna telefone é NULL em 3 delas, o resultado de SELECT COUNT(telefone) será:",
+ o:["10","3","7","NULL","0"],a:2,
+ exp:"COUNT(coluna) conta apenas valores NÃO nulos: 10 − 3 = 7. COUNT(*) contaria as 10 linhas.",trap:"COUNT(*) conta linhas; COUNT(coluna) ignora NULL. Diferença favorita das bancas."},
+{id:"d10",disc:"TI",top:"Índices",q:"Sobre índices em bancos relacionais, é correto afirmar:",
+ o:["aceleram consultas, mas oneram operações de INSERT/UPDATE/DELETE e ocupam espaço adicional","aceleram igualmente leituras e escritas","devem ser criados em todas as colunas da tabela","eliminam a necessidade de chave primária","são atualizados apenas manualmente pelo DBA"],a:0,
+ exp:"Índice é uma estrutura extra (geralmente B-tree): acelera busca, mas cada escrita precisa atualizá-lo também — custo em tempo e espaço.",trap:"Índice não é grátis: leitura ganha, escrita paga."},
+
+// ---------- TI: DESENVOLVIMENTO / JAVA ----------
+{id:"j01",disc:"TI",top:"Java — try/finally",q:"Em Java, o bloco finally de um try-catch-finally:",
+ o:["só executa se ocorrer exceção","só executa se NÃO ocorrer exceção","executa em praticamente todos os casos, inclusive quando há return no try","nunca executa se houver return no try","substitui a necessidade do catch"],a:2,
+ exp:"finally executa com ou sem exceção, e mesmo com return no try (exceções: System.exit() ou queda da JVM).",trap:"'return no try' NÃO pula o finally — pegadinha recorrente de leitura de código."},
+{id:"j02",disc:"TI",top:"Java — NullPointerException",q:"Em Java, uma NullPointerException é lançada quando:",
+ o:["uma variável local primitiva não é inicializada","se invoca um método ou acessa um atributo por meio de uma referência null","ocorre divisão inteira por zero","um índice de array é excedido","o código não compila"],a:1,
+ exp:"NPE = usar uma referência que aponta para null. Divisão por zero inteira = ArithmeticException; índice excedido = ArrayIndexOutOfBoundsException; local não inicializada = ERRO DE COMPILAÇÃO.",trap:"NPE é erro de EXECUÇÃO; variável local não inicializada nem compila. A banca mistura os dois."},
+{id:"j03",disc:"TI",top:"Java — String imutável",q:"Considere: String s = \"BB\"; s.concat(\"2026\"); System.out.println(s); — a saída será:",
+ o:["BB2026","2026BB","BB","2026","erro de compilação"],a:2,
+ exp:"String é IMUTÁVEL: concat devolve uma NOVA string, que foi descartada (o retorno não foi atribuído). s continua \"BB\".",trap:"Métodos de String nunca alteram o objeto original — sempre retornam um novo."},
+{id:"j04",disc:"TI",top:"Java — sobrecarga × sobrescrita",q:"Em Java, a SOBRECARGA (overloading) de métodos ocorre quando:",
+ o:["uma subclasse redefine um método herdado com a mesma assinatura","métodos com o mesmo nome possuem listas de parâmetros diferentes na mesma classe","um método é declarado como final","dois métodos diferem apenas no tipo de retorno","um método estático acessa atributos de instância"],a:1,
+ exp:"Sobrecarga: mesmo nome, parâmetros diferentes, resolvida em COMPILAÇÃO. Sobrescrita (override): subclasse redefine método com MESMA assinatura, resolvida em EXECUÇÃO (polimorfismo). Mudar só o retorno não compila.",trap:"sobreCARGA = mesma Classe; sobreSCRITA = Subclasse."},
+{id:"j05",disc:"TI",top:"Estruturas — pilha e fila",q:"As estruturas de dados pilha e fila seguem, respectivamente, as políticas:",
+ o:["FIFO e LIFO","LIFO e FIFO","LIFO e LIFO","FIFO e FIFO","aleatória e sequencial"],a:1,
+ exp:"Pilha = LIFO (último a entrar, primeiro a sair — ex.: desfazer/Ctrl+Z, pilha de chamadas). Fila = FIFO (primeiro a entrar, primeiro a sair — ex.: fila de impressão).",trap:"PiLha = LIFO (o L ajuda a lembrar)."},
+{id:"j06",disc:"TI",top:"Estruturas — complexidade",q:"Sobre complexidade média de acesso, é correto afirmar:",
+ o:["a busca por chave em uma tabela hash (HashMap) é O(1) em média","o acesso por índice em um ArrayList é O(n)","a busca em árvore binária balanceada é O(n)","o acesso por índice em lista encadeada é O(1)","a busca linear em vetor não ordenado é O(log n)"],a:0,
+ exp:"Hash: O(1) médio. ArrayList por índice: O(1). Árvore balanceada: O(log n). Lista encadeada por índice: O(n). Busca linear: O(n). Busca binária (vetor ORDENADO): O(log n).",trap:"Busca binária exige vetor ORDENADO — sem isso, é O(n)."},
+{id:"j07",disc:"TI",top:"Java — leitura de código",q:"Considere: int x = 5; int y = x++ + ++x; — após a execução, os valores de x e y são, respectivamente:",
+ o:["7 e 12","6 e 11","7 e 11","6 e 12","7 e 13"],a:0,
+ exp:"x++ usa 5 e incrementa (x=6); ++x incrementa antes e usa 7 (x=7). y = 5 + 7 = 12.",trap:"Pós-incremento usa e depois soma; pré-incremento soma e depois usa."},
+{id:"j08",disc:"TI",top:"APIs REST",q:"Nos serviços REST, os métodos HTTP considerados idempotentes (repetir a mesma requisição produz o mesmo estado no servidor) incluem:",
+ o:["GET, PUT e DELETE","POST e PATCH","apenas POST","apenas os métodos com corpo","nenhum método HTTP é idempotente"],a:0,
+ exp:"GET (só leitura), PUT (substitui pelo mesmo estado) e DELETE (já apagado continua apagado) são idempotentes. POST cria um novo recurso a cada chamada — não é.",trap:"POST é o não-idempotente clássico das provas."},
+
+// ---------- TI: ENGENHARIA DE SOFTWARE ----------
+{id:"s01",disc:"TI",top:"Scrum",q:"No framework Scrum, a responsabilidade por ordenar (priorizar) o Product Backlog é do(a):",
+ o:["Scrum Master","Product Owner","time de desenvolvimento, coletivamente","gerente de projetos","stakeholders, por votação"],a:1,
+ exp:"O PO é o dono do Product Backlog e o maximizador de valor. O Scrum Master é facilitador do processo (não é chefe); o time define COMO fazer.",trap:"Scrum Master não prioriza backlog nem manda no time — distrator recorrente."},
+{id:"s02",disc:"TI",top:"Kanban",q:"Uma característica essencial do método Kanban é:",
+ o:["sprints com duração fixa de duas semanas","a limitação do trabalho em progresso (WIP)","papéis obrigatórios de PO e Scrum Master","estimativas obrigatórias em story points","entregas somente ao final do projeto"],a:1,
+ exp:"Kanban = fluxo contínuo com limite de WIP por coluna. Sprints e papéis fixos são do Scrum — Kanban não os exige.",trap:"Sprint é Scrum; WIP limitado é Kanban. As bancas trocam as características."},
+{id:"s03",disc:"TI",top:"CI/CD",q:"A prática de Integração Contínua (CI) consiste em:",
+ o:["integrar e testar o código automaticamente a cada alteração enviada ao repositório","implantar manualmente em produção uma vez por mês","escrever testes somente após o deploy","manter branches isoladas por longos períodos","dispensar o uso de controle de versão"],a:0,
+ exp:"CI: commits frequentes disparam build + testes automáticos, detectando quebras cedo. CD estende isso até a entrega/implantação automatizada.",trap:"CI é sobre INTEGRAR + TESTAR cedo e sempre; deploy automatizado é o CD."},
+{id:"s04",disc:"TI",top:"TDD",q:"No desenvolvimento orientado a testes (TDD), a sequência correta do ciclo é:",
+ o:["codificar → testar → documentar","escrever o teste (que falha) → escrever o código mínimo para passar → refatorar","refatorar → testar → codificar","testar em produção → corrigir → reescrever","escrever todos os testes ao final do projeto"],a:1,
+ exp:"Ciclo red-green-refactor: teste que falha (red) → código mínimo que passa (green) → refatorar mantendo os testes verdes.",trap:"No TDD o teste vem ANTES do código — é a definição."},
+
+// ---------- TI: SEGURANÇA ----------
+{id:"g01",disc:"TI",top:"Criptografia simétrica × assimétrica",q:"Sobre algoritmos criptográficos, é correto afirmar:",
+ o:["o AES é um algoritmo de criptografia assimétrica","o RSA utiliza a mesma chave para cifrar e decifrar","o AES é simétrico (mesma chave) e o RSA é assimétrico (par de chaves pública/privada)","algoritmos simétricos são sempre mais lentos que os assimétricos","o SHA-256 é um algoritmo de criptografia simétrica"],a:2,
+ exp:"AES = simétrico (uma chave secreta compartilhada, rápido). RSA = assimétrico (par público/privado, lento — usado para trocar chaves e assinar). SHA-256 é HASH, não criptografia.",trap:"Simétrico é o RÁPIDO; assimétrico resolve a distribuição de chaves. Hash não é criptografia."},
+{id:"g02",disc:"TI",top:"Assinatura digital",q:"Na assinatura digital, o remetente assina o documento utilizando:",
+ o:["a chave pública do destinatário","a sua própria chave privada","a chave privada do destinatário","uma chave simétrica combinada por telefone","o certificado da autoridade certificadora"],a:1,
+ exp:"Assina-se com a chave PRIVADA do emissor; qualquer um verifica com a pública dele. Garante autenticidade, integridade e não repúdio — mas NÃO confidencialidade (para isso, cifra-se com a pública do destinatário).",trap:"Assinar = minha privada. Cifrar para alguém = pública dele. Decore o par."},
+{id:"g03",disc:"TI",top:"Funções hash",q:"Uma função de hash criptográfico, como o SHA-256, caracteriza-se por:",
+ o:["ser reversível mediante a chave correta","produzir saída de tamanho fixo a partir de entrada de qualquer tamanho, de forma unidirecional","garantir a confidencialidade dos dados","produzir saídas de tamanho proporcional à entrada","substituir a necessidade de senhas"],a:1,
+ exp:"Hash: unidirecional (não se 'deshasheia'), saída de tamanho fixo, e qualquer mudança na entrada muda o resultado (efeito avalanche). Serve à INTEGRIDADE, não à confidencialidade.",trap:"Hash não cifra nada — não existe 'descriptografar um hash'."},
+{id:"g04",disc:"TI",top:"HTTPS/TLS",q:"O protocolo HTTPS:",
+ o:["opera, por padrão, na porta 80","utiliza TLS, combinando criptografia assimétrica na negociação e simétrica na transmissão dos dados","dispensa o uso de certificados digitais","criptografa apenas as senhas do usuário","é mais rápido que o HTTP por ser binário"],a:1,
+ exp:"HTTPS = HTTP sobre TLS, porta 443. Modelo híbrido: assimétrica para autenticar o servidor (certificado) e acordar a chave de sessão; simétrica para o tráfego (desempenho).",trap:"HTTPS = 443; HTTP = 80. E o TLS protege TODO o tráfego, não só senhas."},
+{id:"g05",disc:"TI",top:"IDS × IPS",q:"A diferença fundamental entre IDS e IPS é que o IPS:",
+ o:["apenas registra logs para auditoria posterior","atua em linha (inline), podendo bloquear o tráfego malicioso em tempo real","é instalado apenas nas estações de trabalho","substitui completamente o firewall","detecta somente ataques internos"],a:1,
+ exp:"IDS Detecta e alerta (passivo, fora do fluxo). IPS Previne: fica no caminho do tráfego e bloqueia. Nenhum dos dois substitui o firewall — são camadas complementares.",trap:"D de Detecção (avisa) × P de Prevenção (bloqueia)."},
+{id:"g06",disc:"TI",top:"Phishing",q:"O phishing é um ataque que se caracteriza por:",
+ o:["explorar falhas de buffer overflow no servidor","interceptar fisicamente o cabeamento de rede","usar engenharia social — mensagens falsas que imitam fontes confiáveis — para roubar dados da vítima","sobrecarregar o servidor com requisições em massa","alterar registros DNS do provedor"],a:2,
+ exp:"Phishing explora o FATOR HUMANO: e-mail/SMS/site falso imitando banco, empresa etc. para fisgar credenciais e dados. Sobrecarga em massa = DoS/DDoS.",trap:"Phishing ataca pessoas, não servidores. Se o alvo é o usuário, é engenharia social."},
+{id:"g07",disc:"TI",top:"SQL Injection",q:"A principal medida de prevenção contra SQL Injection é:",
+ o:["criptografar todo o banco de dados","utilizar consultas parametrizadas (prepared statements) e validar entradas","bloquear a porta 1521 no firewall","usar apenas o método HTTP POST","trocar o SGBD por um banco NoSQL"],a:1,
+ exp:"Prepared statements separam código SQL dos dados: a entrada do usuário nunca é interpretada como comando. Validação de entrada complementa. Criptografia não impede a injeção.",trap:"OWASP: injeção se previne PARAMETRIZANDO, não cifrando."},
+{id:"g08",disc:"TI",top:"XSS",q:"O ataque Cross-Site Scripting (XSS) consiste em:",
+ o:["injetar script malicioso em uma página para que ele execute no navegador das vítimas","adivinhar senhas por tentativa e erro","forjar o endereço IP de origem dos pacotes","explorar consultas SQL mal construídas","criptografar os arquivos do servidor"],a:0,
+ exp:"XSS injeta JavaScript em páginas vistas por outros usuários (roubo de sessão/cookies). Alvo: o NAVEGADOR da vítima. SQLi ataca o banco; força bruta, senhas; spoofing, IP.",trap:"XSS roda no cliente (navegador); SQL Injection, no banco. Não misture."},
+{id:"g09",disc:"TI",top:"MFA",q:"Um usuário que se autentica com senha e, em seguida, confirma um código gerado no aplicativo do celular está utilizando:",
+ o:["dois fatores do mesmo tipo (algo que se sabe)","autenticação de dois fatores: algo que se sabe + algo que se tem","biometria comportamental","single sign-on (SSO)","apenas um fator, repetido duas vezes"],a:1,
+ exp:"Fatores: algo que você SABE (senha), TEM (celular/token) e É (biometria). Senha + código do app = dois fatores DISTINTOS = 2FA legítimo. Senha + PIN seriam o mesmo fator (sabe + sabe).",trap:"Dois segredos decorados = 1 fator só. MFA exige tipos diferentes."},
+{id:"g10",disc:"TI",top:"Malware — ransomware",q:"O malware que criptografa os arquivos da vítima e exige pagamento para restabelecer o acesso é o:",
+ o:["spyware","adware","ransomware","keylogger","worm"],a:2,
+ exp:"Ransom = resgate. Spyware espiona; keylogger captura teclas; adware exibe propaganda; worm se replica pela rede sozinho.",trap:"Worm × vírus: worm se propaga sozinho; vírus precisa de hospedeiro."},
+
+// ---------- TI: REDES / LINUX / GIT ----------
+{id:"r01",disc:"TI",top:"Modelo OSI",q:"No modelo OSI, os protocolos TCP e UDP operam na camada de:",
+ o:["rede (camada 3)","transporte (camada 4)","sessão (camada 5)","enlace (camada 2)","aplicação (camada 7)"],a:1,
+ exp:"Transporte = camada 4 (TCP/UDP, portas). IP fica na 3 (rede); Ethernet na 2 (enlace); HTTP/DNS na 7 (aplicação).",trap:"Porta = camada 4; endereço IP = camada 3; MAC = camada 2."},
+{id:"r02",disc:"TI",top:"Portas padrão",q:"As portas padrão dos serviços SSH, HTTPS e DNS são, respectivamente:",
+ o:["21, 80 e 25","22, 443 e 53","23, 443 e 67","22, 8080 e 110","443, 22 e 53"],a:1,
+ exp:"SSH 22, HTTPS 443, DNS 53. Outras cobradas: HTTP 80, FTP 21, Telnet 23, SMTP 25, POP3 110, IMAP 143, RDP 3389.",trap:"Monte um flashcard só de portas — é ponto garantido em prova de TI."},
+{id:"r03",disc:"TI",top:"TCP × UDP",q:"Em comparação com o UDP, o protocolo TCP:",
+ o:["é orientado a conexão, garantindo entrega e ordem dos segmentos","é mais rápido por dispensar confirmações","é indicado para streaming em tempo real por seu menor overhead","não utiliza portas","não realiza controle de fluxo"],a:0,
+ exp:"TCP: conexão (handshake de 3 vias), confirmação, retransmissão, ordem, controle de fluxo/congestionamento. UDP: sem garantias, leve — bom para streaming, VoIP, DNS.",trap:"Confiabilidade = TCP; velocidade/tempo real = UDP."},
+{id:"r04",disc:"TI",top:"IPv6",q:"Os endereços IPv6 possuem comprimento de:",
+ o:["32 bits","64 bits","128 bits","256 bits","48 bits"],a:2,
+ exp:"IPv6 = 128 bits (8 grupos hexadecimais), contra 32 bits do IPv4. 48 bits é o MAC address.",trap:"IPv4 32 / IPv6 128 / MAC 48 — trio numérico de prova."},
+{id:"r05",disc:"TI",top:"DNS",q:"A função principal do serviço DNS é:",
+ o:["atribuir endereços IP dinamicamente aos hosts","traduzir nomes de domínio em endereços IP","criptografar o tráfego entre cliente e servidor","rotear pacotes entre redes distintas","autenticar usuários no domínio"],a:1,
+ exp:"DNS resolve nomes (bb.com.br) em IPs. Atribuição dinâmica de IP é o DHCP; roteamento é função do roteador/protocolos de roteamento.",trap:"DNS traduz; DHCP distribui IP. As bancas trocam os dois."},
+{id:"r06",disc:"TI",top:"Linux — chmod",q:"No Linux, o comando chmod 754 arquivo.sh atribui as permissões:",
+ o:["rwx r-x r--","rwx rw- r--","r-x rwx r--","rw- r-- r--","rwx r-x rw-"],a:0,
+ exp:"7 = rwx (4+2+1) para o dono; 5 = r-x (4+1) para o grupo; 4 = r-- para os demais. Leitura=4, escrita=2, execução=1.",trap:"Decore: 7=rwx, 6=rw-, 5=r-x, 4=r--. 755 e 644 são os valores mais cobrados."},
+{id:"r07",disc:"TI",top:"Linux — grep",q:"No Linux, o comando utilizado para buscar linhas que correspondam a um padrão (inclusive expressões regulares) em arquivos de texto é:",
+ o:["awk","sed","grep","cat","chmod"],a:2,
+ exp:"grep busca padrões. sed edita fluxo (substituições); awk processa colunas/relatórios; cat exibe/concatena.",trap:"Buscar = grep; substituir = sed; colunas = awk."},
+{id:"r08",disc:"TI",top:"Linux — pipe",q:"No shell do Linux, o operador | (pipe) tem a função de:",
+ o:["redirecionar a saída de um comando para um arquivo","encadear comandos, enviando a saída padrão de um para a entrada padrão do próximo","executar comandos em segundo plano","comparar o conteúdo de dois arquivos","listar processos em execução"],a:1,
+ exp:"pipe conecta stdout → stdin: ps aux | grep java. Redirecionar para arquivo é > ou >>; segundo plano é &.",trap:"| conecta comandos; > grava em arquivo. Ambos caem juntos como distratores."},
+{id:"r09",disc:"TI",top:"Git — merge × rebase",q:"No Git, em comparação com o merge, o rebase:",
+ o:["preserva o histórico original criando um commit de mesclagem","reaplica os commits sobre a nova base, produzindo histórico linear (reescreve o histórico)","é a única forma de integrar branches","não pode gerar conflitos","apaga a branch de origem automaticamente"],a:1,
+ exp:"Merge junta com um commit de mesclagem preservando o histórico; rebase reaplica os commits sobre a ponta da outra branch — histórico linear, mas reescrito (evitar em branches compartilhadas). Ambos podem gerar conflito.",trap:"Rebase reescreve história — por isso a regra 'não rebasear branch pública'."},
+{id:"r10",disc:"TI",top:"Docker × VM",q:"Em comparação com máquinas virtuais, os contêineres (ex.: Docker):",
+ o:["virtualizam o hardware completo, incluindo o sistema operacional convidado","compartilham o kernel do sistema hospedeiro, sendo mais leves e rápidos para iniciar","exigem um hipervisor do tipo 1","oferecem isolamento físico total entre aplicações","não podem ser usados em ambientes de produção"],a:1,
+ exp:"Contêiner empacota app + dependências e compartilha o kernel do host (leve, sobe em segundos). VM virtualiza hardware e carrega SO completo (isolamento maior, custo maior).",trap:"Contêiner NÃO tem SO convidado completo — é a diferença central para VM."},
+
+// ---------- INGLÊS ----------
+{id:"i01",disc:"Inglês",top:"Conectivos",q:"In the sentence \"The system was tested twice; however, a critical bug reached production\", the word HOWEVER expresses:",
+ o:["addition","contrast","cause","purpose","condition"],a:1,
+ exp:"However = contraste/oposição (equivale a 'no entanto'). Adição seria moreover/furthermore; causa, because/since; propósito, in order to.",trap:"Conectivos são presença garantida em prova de inglês — monte um flashcard deles."},
+{id:"i02",disc:"Inglês",top:"Falsos cognatos",q:"In \"The bank actually increased its investments in cybersecurity\", the word ACTUALLY means:",
+ o:["atualmente","na verdade / de fato","raramente","parcialmente","antigamente"],a:1,
+ exp:"Actually = na verdade (falso cognato). 'Atualmente' em inglês é currently/nowadays.",trap:"Outros clássicos: pretend = fingir; push = empurrar; college = faculdade; parents = pais."},
+{id:"i03",disc:"Inglês",top:"Modais",q:"In \"All employees must complete the security training\", the modal MUST expresses:",
+ o:["possibility","permission","obligation","suggestion","ability"],a:2,
+ exp:"Must = obrigação/necessidade. Possibilidade = may/might; permissão = may/can; sugestão = should; habilidade = can.",trap:"Should sugere; must obriga. Bancas exploram essa diferença de força."},
+{id:"i04",disc:"Inglês",top:"Preposições",q:"Complete: \"The IT team is responsible ___ protecting customer data.\"",
+ o:["by","for","with","at","about"],a:1,
+ exp:"Responsible FOR = responsável por. Combinações fixas (collocations) como esta são cobradas diretamente.",trap:"Outras fixas: depend ON, interested IN, good AT, worried ABOUT."},
+
+// ---------- ATUALIDADES ----------
+{id:"a01",disc:"Atualidades",top:"Open Finance — evolução",q:"A evolução do Open Banking para o Open Finance representou:",
+ o:["a restrição do compartilhamento apenas a dados de conta-corrente","a ampliação do escopo para além dos dados bancários, incluindo investimentos, seguros e câmbio","o fim do consentimento do cliente","a transferência da gestão do sistema para os bancos privados","a fusão do Pix com o sistema de cartões"],a:1,
+ exp:"Open Banking (fase inicial) tratava de dados bancários; o Open Finance amplia o ecossistema para investimentos, seguros, previdência e câmbio — sempre com consentimento.",trap:"Banking ⊂ Finance: a mudança de nome marca a AMPLIAÇÃO do escopo."},
+{id:"a02",disc:"Atualidades",top:"IA no setor bancário",q:"Sobre o uso de inteligência artificial generativa em bancos, é correto afirmar:",
+ o:["por ser precisa, dispensa revisão humana nas respostas ao cliente","não apresenta riscos de vazamento de dados","seu uso em atendimento exige controles como supervisão humana e proteção de dados, dado o risco de respostas incorretas ('alucinações')","é proibida pelo Bacen em instituições financeiras","substitui integralmente as políticas de crédito"],a:2,
+ exp:"IA generativa pode 'alucinar' (gerar informação falsa com confiança) e expor dados sensíveis — por isso bancos adotam supervisão humana, guardrails e governança de IA. Não há proibição do Bacen; há diretrizes de governança e gestão de riscos.",trap:"Em atualidades, alternativas absolutas ('dispensa', 'não apresenta riscos', 'proibida') costumam estar erradas."},
+{id:"a03",disc:"Atualidades",top:"Fintechs",q:"As fintechs de crédito no Brasil (SCD e SEP):",
+ o:["operam sem qualquer regulação estatal","são autorizadas e supervisionadas pelo Banco Central","são reguladas pela CVM","não podem conceder empréstimos","funcionam apenas como correspondentes bancários"],a:1,
+ exp:"SCD (Sociedade de Crédito Direto) e SEP (empréstimo entre pessoas) são categorias criadas pelo CMN e autorizadas/supervisionadas pelo BACEN — fintech regulada, não terra sem lei.",trap:"'Fintech não é regulada' é distrator garantido — SCD/SEP respondem ao Bacen."},
+{id:"a04",disc:"Atualidades",top:"ASG/ESG",q:"A sigla ASG (ou ESG), central nas finanças sustentáveis, refere-se aos critérios:",
+ o:["Ambiental, Social e de Governança","Administrativo, Setorial e Gerencial","Ambiental, Securitário e Global","Atuarial, Social e Governamental","Ambiental, Sistêmico e Geopolítico"],a:0,
+ exp:"Environmental, Social and Governance. Bancos avaliam riscos climáticos, impacto social e práticas de governança em crédito e investimento — há normas do CMN/Bacen sobre gerenciamento de risco social, ambiental e climático.",trap:"G é de GOVERNANÇA (corporativa), não de 'governo'."},
+
+// ---------- BANCÁRIOS (reforço) ----------
+{id:"b13",disc:"Bancários",top:"CMN — composição",q:"O Conselho Monetário Nacional é composto por:",
+ o:["presidente do Bacen, presidente da CVM e ministro da Fazenda","ministro da Fazenda (presidente do conselho), ministro do Planejamento e Orçamento e presidente do Bacen","presidentes de todos os bancos públicos federais","ministro da Fazenda e diretores do Bacen","presidente da República, ministro da Fazenda e presidente do Bacen"],a:1,
+ exp:"3 membros: Fazenda (preside), Planejamento e Orçamento, e presidente do Bacen.",trap:"CVM NÃO tem assento no CMN — distrator recorrente."},
+{id:"b14",disc:"Bancários",top:"Compulsório",q:"O aumento da alíquota do depósito compulsório tem como efeito:",
+ o:["aumentar a liquidez da economia","reduzir a capacidade de os bancos concederem crédito","reduzir a taxa Selic automaticamente","aumentar o multiplicador bancário","estimular o consumo das famílias"],a:1,
+ exp:"Compulsório maior = mais dinheiro preso no Bacen = menos crédito disponível = política monetária contracionista.",trap:"Compulsório sobe → liquidez desce. Relação sempre inversa."},
+{id:"b15",disc:"Bancários",top:"Open market",q:"Quando o Banco Central deseja ENXUGAR a liquidez da economia via operações de mercado aberto, ele:",
+ o:["compra títulos públicos","vende títulos públicos","reduz o compulsório","reduz a taxa de redesconto","emite mais papel-moeda"],a:1,
+ exp:"Vender títulos retira dinheiro de circulação (o mercado paga pelos títulos). Comprar títulos injeta dinheiro.",trap:"VENDE título → RECOLHE dinheiro. É o instrumento mais ágil da política monetária."},
+{id:"b16",disc:"Bancários",top:"FGC — teto global",q:"Sobre o Fundo Garantidor de Créditos (FGC), é correto afirmar:",
+ o:["cobre qualquer valor, sem limite","cobre até R$ 250 mil por CPF/CNPJ por conglomerado, com teto global de R$ 1 milhão renovável a cada 4 anos","cobre apenas contas-correntes","é garantido pelo Tesouro Nacional","cobre cotas de fundos de investimento"],a:1,
+ exp:"250 mil por CPF por conglomerado financeiro + teto global de 1 milhão a cada 4 anos. É entidade privada, e fundos de investimento NÃO têm cobertura.",trap:"Fundo de investimento não tem FGC — o risco é do cotista."},
+{id:"b17",disc:"Bancários",top:"Poupança",q:"Com a Selic acima de 8,5% ao ano, a caderneta de poupança rende:",
+ o:["70% da Selic + TR","0,5% ao mês + TR","1% ao mês, fixo","100% do CDI","IPCA + 3% ao ano"],a:1,
+ exp:"Regra desde 2012: Selic > 8,5% a.a. → poupança rende 0,5% a.m. + TR; Selic ≤ 8,5% → 70% da Selic + TR.",trap:"A banca inverte as duas regras — grave o gatilho de 8,5%."},
+{id:"b18",disc:"Bancários",top:"Fintechs — SCD",q:"A Sociedade de Crédito Direto (SCD), tipo de fintech regulada pelo CMN/Bacen, caracteriza-se por:",
+ o:["captar depósitos à vista do público","conceder crédito exclusivamente com capital próprio, por plataforma eletrônica","emitir papel-moeda digital","operar apenas como correspondente bancário","intermediar empréstimos entre pessoas"],a:1,
+ exp:"SCD empresta capital PRÓPRIO via plataforma eletrônica — não capta depósitos. Quem intermedeia empréstimo entre pessoas é a SEP (peer-to-peer).",trap:"SCD = capital próprio; SEP = entre pessoas. Nenhuma capta depósito como banco."},
+{id:"b19",disc:"Bancários",top:"Cooperativas de crédito",q:"As cooperativas de crédito:",
+ o:["não são consideradas instituições financeiras","são instituições financeiras autorizadas e supervisionadas pelo Bacen, que prestam serviços aos seus associados","são fiscalizadas pela CVM","não podem conceder empréstimos","têm fins lucrativos como os bancos comerciais"],a:1,
+ exp:"São instituições financeiras (Lei 5.764 + LC 130), supervisionadas pelo Bacen, sem fins lucrativos: os resultados (sobras) retornam aos associados.",trap:"Cooperativa É instituição financeira — cada associado é dono, com um voto."},
+{id:"b20",disc:"Bancários",top:"Pix — MED",q:"O Mecanismo Especial de Devolução (MED) do Pix serve para:",
+ o:["cancelar qualquer Pix por arrependimento do pagador","viabilizar a devolução de valores em casos de fraude ou falha operacional","transformar um Pix em TED","estornar compras no cartão de crédito","agendar transferências recorrentes"],a:1,
+ exp:"O MED permite bloqueio e devolução de recursos em caso de fundada suspeita de fraude (ex.: golpe) ou falha do sistema — não é botão de arrependimento.",trap:"Pix comum não tem 'estorno por arrependimento' — o MED é para FRAUDE/FALHA."},
+{id:"b21",disc:"Bancários",top:"Meta de inflação",q:"No regime de metas de inflação brasileiro:",
+ o:["o Copom define a meta e o CMN a persegue","a meta é definida pelo CMN e medida pelo IPCA, calculado pelo IBGE","a meta é definida pelo Ministério da Fazenda e medida pelo INPC","o Bacen define a própria meta","a meta é medida pelo IGP-M, da FGV"],a:1,
+ exp:"CMN define a meta; o Bacen (via Copom/Selic) a persegue; o índice de referência é o IPCA do IBGE.",trap:"Trio da meta: CMN define, Bacen persegue, IPCA mede."},
+{id:"b22",disc:"Bancários",top:"Tesouro Direto",q:"O título público Tesouro Selic caracteriza-se por ser:",
+ o:["prefixado, com taxa definida na compra","pós-fixado, com rentabilidade atrelada à taxa Selic","atrelado à inflação (IPCA)","um título privado emitido por bancos","isento de qualquer tributação"],a:1,
+ exp:"Tesouro Selic = pós-fixado (segue a Selic diária), o de menor volatilidade. Tesouro Prefixado = taxa travada; Tesouro IPCA+ = inflação + juro real.",trap:"Título PÚBLICO (Tesouro Nacional) ≠ CDB (privado/bancos). E há IR pela tabela regressiva."},
+{id:"b23",disc:"Bancários",top:"Debêntures",q:"Quem investe em debêntures de uma companhia torna-se:",
+ o:["sócio da companhia, com direito a voto","credor da companhia, que capta recursos por meio desse título de dívida","cotista de um fundo de investimento","garantidor das dívidas da companhia","acionista preferencial"],a:1,
+ exp:"Debênture é título de DÍVIDA corporativa: o investidor empresta dinheiro e vira credor (recebe juros). Ação é que torna sócio.",trap:"Debênture = credor; ação = sócio. E debênture é valor mobiliário → CVM."},
+{id:"b24",disc:"Bancários",top:"Ações ON × PN",q:"A diferença clássica entre ações ordinárias (ON) e preferenciais (PN) é que as ordinárias:",
+ o:["garantem dividendos maiores, sempre","conferem direito a voto nas assembleias","não podem ser negociadas em bolsa","são isentas de imposto de renda","representam dívida da empresa"],a:1,
+ exp:"ON = direito a voto; PN = preferência no recebimento de dividendos/reembolso, em regra sem voto.",trap:"ON-voto, PN-preferência no dinheiro. Simples e certeiro."},
+{id:"b25",disc:"Bancários",top:"Fundos de investimento",q:"Sobre fundos de investimento, é correto afirmar:",
+ o:["têm garantia do FGC até R$ 250 mil","o risco é do administrador, nunca do cotista","funcionam como um condomínio: o patrimônio pertence aos cotistas, que assumem o risco das aplicações","são supervisionados exclusivamente pelo Bacen","garantem rentabilidade mínima por lei"],a:2,
+ exp:"Fundo = condomínio de recursos; o cotista assume o risco (sem FGC, sem garantia). Supervisão: CVM.",trap:"Fundo NÃO tem FGC nem rentabilidade garantida — e quem supervisiona é a CVM."},
+{id:"b26",disc:"Bancários",top:"Sigilo bancário",q:"De acordo com a LC 105/2001, o sigilo bancário:",
+ o:["é absoluto e não admite exceções","pode ser afastado, entre outras hipóteses, por determinação judicial ou por CPI","só pode ser quebrado com autorização do gerente","não se aplica a contas de pessoas jurídicas","impede o Bacen de fiscalizar os bancos"],a:1,
+ exp:"O sigilo é a regra, mas cede a ordem judicial, CPIs e às atividades de fiscalização (Bacen/CVM) e troca de informações previstas em lei.",trap:"'Absoluto e sem exceções' invalida a alternativa — sigilo bancário é relativo."},
+{id:"b27",disc:"Bancários",top:"Correspondentes",q:"As casas lotéricas que prestam serviços de recebimento de contas e saques atuam como:",
+ o:["agências bancárias plenas","correspondentes no país, contratados por instituição financeira e atuando em nome dela","cooperativas de crédito","instituições de pagamento autônomas","filiais do Banco Central"],a:1,
+ exp:"Correspondente = empresa contratada (lotérica, mercado, correios) para prestar serviços em NOME da instituição financeira, que responde pelos atos.",trap:"A responsabilidade perante o cliente é da instituição contratante, não do correspondente."},
+{id:"b28",disc:"Bancários",top:"Coaf",q:"O Coaf — unidade de inteligência financeira do Brasil — tem como atribuição principal:",
+ o:["conceder crédito a exportadores","receber, analisar e disseminar comunicações de operações suspeitas de lavagem de dinheiro","fixar a taxa Selic","emitir moeda digital","fiscalizar companhias abertas"],a:1,
+ exp:"O Coaf recebe as comunicações obrigatórias (operações suspeitas/em espécie acima dos limites), analisa e aciona as autoridades. Está vinculado administrativamente ao Bacen.",trap:"Coaf não investiga nem pune — produz inteligência e comunica quem investiga."},
+
+// ---------- PORTUGUÊS (reforço) ----------
+{id:"p09",disc:"Português",top:"Concordância — horas",q:"Assinale a frase correta:",
+ o:["São meio-dia e meio.","É meio-dia e meia.","São meio-dia e meia.","É meio-dia e meio.","São doze horas e meio."],a:1,
+ exp:"'Meio-dia' é singular → verbo no singular ('É'). 'Meia' concorda com 'hora' (feminino): meio-dia e meia (hora).",trap:"Verbo singular + 'meia' feminino. A banca adora essa dupla."},
+{id:"p10",disc:"Português",top:"Concordância — anexo",q:"Quanto à concordância, está correta a frase:",
+ o:["Seguem anexo as planilhas do projeto.","Segue anexas as planilhas do projeto.","Seguem anexas as planilhas do projeto.","As planilhas seguem em anexas.","Anexo seguem as planilhas, obrigatoriamente invariável."],a:2,
+ exp:"'Anexo' é adjetivo e concorda: planilhas anexas, documento anexo. A locução 'em anexo' é que fica invariável.",trap:"'Anexo' concorda; 'em anexo' não varia. Dois caminhos certos, um erro clássico."},
+{id:"p11",disc:"Português",top:"Há × a (tempo)",q:"Assinale a frase correta quanto ao emprego de 'há' e 'a':",
+ o:["Trabalho com TI a dez anos.","A prova acontecerá daqui há três meses.","Trabalho com TI há dez anos, e a prova acontecerá daqui a três meses.","Há partir de hoje, estudarei mais.","Cheguei há tempo de fazer a prova."],a:2,
+ exp:"Tempo PASSADO (decorrido) = HÁ (equivale a 'faz'). Tempo FUTURO ou distância = A ('daqui a', 'a partir de', 'a tempo').",trap:"Passado-HÁ, futuro-A. 'Daqui há pouco' está sempre errado."},
+{id:"p12",disc:"Português",top:"Acerca de × há cerca de",q:"Assinale a frase correta:",
+ o:["Discutimos há cerca da prova do BB.","O edital foi publicado acerca de dois meses.","Conversamos acerca do novo edital, publicado há cerca de dois meses.","Falou-se a cerca do concurso.","Há cerca disso, nada sei."],a:2,
+ exp:"'Acerca de' = sobre, a respeito de. 'Há cerca de' = faz aproximadamente (tempo). 'A cerca de' = a uma distância aproximada.",trap:"Sobre = acerca; tempo decorrido aproximado = há cerca."},
+{id:"p13",disc:"Português",top:"Ao encontro de × de encontro a",q:"\"A proposta do sindicato veio ___ interesses dos funcionários, que a apoiaram.\" Preenche corretamente a lacuna:",
+ o:["de encontro aos","ao encontro dos","de encontro dos","ao encontro à","contra aos"],a:1,
+ exp:"'Ao encontro de' = a favor, em conformidade. 'De encontro a' = contra, em choque. Como os funcionários APOIARAM, a proposta veio ao encontro dos interesses.",trap:"DE encontro = bate DE frente (contra). AO encontro = vai ao abraço (a favor)."},
+{id:"p14",disc:"Português",top:"Pronome relativo cujo",q:"Assinale a frase em que 'cujo' está corretamente empregado:",
+ o:["O candidato cujo o nome foi divulgado passou.","O banco cuja agência foi reformada reabriu ontem.","O edital cujo saiu ontem é extenso.","A prova cuja a nota foi alta.","O concurso cujo dele falei saiu."],a:1,
+ exp:"'Cujo' indica posse, concorda com a coisa possuída e NUNCA admite artigo depois: 'cuja agência' (o banco possui a agência).",trap:"'Cujo o' / 'cuja a' está SEMPRE errado — cujo não convive com artigo."},
+{id:"p15",disc:"Português",top:"Senão × se não",q:"Assinale a frase correta:",
+ o:["Estude, se não será reprovado.","Não fez outra coisa se não reclamar.","Se não estudar, será reprovado; não há alternativa senão estudar.","Senão chover, haverá prova.","Nada disse, senão que se cale."],a:2,
+ exp:"'Se não' = caso não (condição, cabe 'caso não'). 'Senão' = a não ser / caso contrário / mas sim.",trap:"Teste: se couber 'caso não', é separado."},
+{id:"p16",disc:"Português",top:"Partícula 'se'",q:"Quanto à concordância com a partícula 'se', está correta a frase:",
+ o:["Precisam-se de programadores.","Vende-se casas novas.","Precisa-se de profissionais de TI; vendem-se apostilas na entrada.","Aluga-se salas comerciais.","Necessitam-se de mais candidatos."],a:2,
+ exp:"Com objeto INDIRETO (precisa-se DE), o 'se' é índice de indeterminação → verbo no singular. Com objeto direto (vendem-se apostilas = apostilas são vendidas), é voz passiva sintética → verbo concorda.",trap:"Tem preposição? Singular. Não tem? Concorda com o 'sujeito' (vendem-se casas)."},
+{id:"p17",disc:"Português",top:"Regência — implicar",q:"No sentido de 'acarretar', o verbo IMPLICAR é usado corretamente em:",
+ o:["A migração implica em riscos.","A migração implica riscos ao sistema.","A migração implica de riscos.","A migração implica com riscos.","A migração implica à riscos."],a:1,
+ exp:"Implicar = acarretar é transitivo DIRETO: implica algo (sem preposição). 'Implicar com' = antipatizar.",trap:"'Implicar EM' é o erro mais cometido do português formal — a banca sabe disso."},
+{id:"p18",disc:"Português",top:"Regência — preferir",q:"Segundo a norma culta, o verbo PREFERIR é corretamente empregado em:",
+ o:["Prefiro estudar do que sair.","Prefiro mais estudar que sair.","Prefiro estudar a sair.","Prefiro estudar à sair.","Prefiro mil vezes estudar do que sair."],a:2,
+ exp:"Preferir X A Y — sem 'do que', sem 'mais', sem reforços. E sem crase antes de verbo ('a sair').",trap:"'Prefiro... do que' é consagrado na fala e errado na prova."},
+{id:"p19",disc:"Português",top:"Ortografia/prosódia",q:"Assinale a opção em que a palavra está grafada corretamente:",
+ o:["rúbrica","previlégio","beneficiente","rubrica","empecilíio"],a:3,
+ exp:"Rubrica é paroxítona SEM acento (ru-BRI-ca). As formas corretas dos distratores: privilégio, beneficente, empecilho.",trap:"Pronunciar 'RÚbrica' é tão comum que virou pegadinha de prova."},
+{id:"p20",disc:"Português",top:"Expressões viciosas",q:"Assinale a frase INADEQUADA à norma culta:",
+ o:["Em nível de sintaxe, o texto é correto.","A decisão foi tomada no âmbito da diretoria.","A nível de banco de dados, o sistema é robusto.","Quanto ao banco de dados, o sistema é robusto.","No que se refere à segurança, houve avanços."],a:2,
+ exp:"'A nível de' é expressão viciosa condenada pela norma culta. Alternativas adequadas: 'em nível de', 'no âmbito de', 'quanto a', 'no que se refere a'.",trap:"'A nível de' aparece como isca — em prova, marque como inadequada."},
+{id:"p21",disc:"Português",top:"Vírgula antes de E",q:"Sobre o uso da vírgula antes da conjunção 'e', é correto afirmar:",
+ o:["nunca se usa vírgula antes de 'e'","usa-se vírgula antes de 'e' quando as orações têm sujeitos diferentes","a vírgula antes de 'e' é obrigatória sempre","só se usa vírgula antes de 'e' em enumerações","'e' substitui a vírgula em qualquer contexto"],a:1,
+ exp:"Vírgula antes de 'e' é permitida (entre outros casos) quando os sujeitos das orações são diferentes: 'O edital saiu, e os candidatos comemoraram.'",trap:"'Nunca use vírgula antes de e' é mito — sujeitos diferentes ou 'e' com valor adversativo permitem."},
+{id:"p22",disc:"Português",top:"Haja vista",q:"Assinale a frase correta:",
+ o:["Hajam vista os resultados do simulado.","Haja visto os resultados do simulado.","Haja vista os resultados do simulado.","Hajam vistos os resultados do simulado.","Haja vistas os resultados do simulado."],a:2,
+ exp:"'Haja vista' é expressão com 'vista' invariável. O verbo pode flexionar apenas se houver preposição ('hajam vista AOS resultados' é aceito por alguns gramáticos), mas 'haja vista os resultados' é a forma consagrada e sempre correta.",trap:"'Haja VISTO' não existe — vista é substantivo fixo na expressão."},
+
+// ---------- MATEMÁTICA FINANCEIRA ----------
+{id:"m01",disc:"Matemática/Estatística",top:"Juros simples",q:"Um capital de R$ 1.000,00 aplicado a juros simples de 2% ao mês, por 5 meses, rende juros de:",
+ o:["R$ 50,00","R$ 100,00","R$ 110,00","R$ 200,00","R$ 104,08"],a:1,
+ exp:"J = C·i·t = 1000 × 0,02 × 5 = R$ 100. Em juros simples, a taxa incide sempre sobre o capital inicial.",trap:"R$ 104,08 seria o juro COMPOSTO — a banca coloca os dois para pegar quem não leu 'simples'."},
+{id:"m02",disc:"Matemática/Estatística",top:"Juros compostos",q:"R$ 1.000,00 aplicados a juros compostos de 10% ao ano, por 2 anos, geram um montante de:",
+ o:["R$ 1.200,00","R$ 1.210,00","R$ 1.100,00","R$ 1.221,00","R$ 2.000,00"],a:1,
+ exp:"M = C·(1+i)^t = 1000 × 1,1² = 1000 × 1,21 = R$ 1.210. (Juros simples dariam R$ 1.200 — a diferença é o juro sobre juro.)",trap:"1.200 é o distrator de juros simples. Composto SEMPRE rende mais a partir do 2º período."},
+{id:"m03",disc:"Matemática/Estatística",top:"Taxa acumulada",q:"Uma aplicação rende 10% ao mês, com capitalização composta. A taxa acumulada em 2 meses é:",
+ o:["20%","21%","19%","22%","20,5%"],a:1,
+ exp:"(1,10 × 1,10) − 1 = 1,21 − 1 = 21%. Taxas compostas não se somam — multiplicam-se os fatores.",trap:"Somar taxas (10+10=20%) é o erro que a banca espera. Sempre multiplique os fatores."},
+{id:"m04",disc:"Matemática/Estatística",top:"Simples × composto",q:"Comparando juros simples e compostos com mesma taxa e mesmo capital, é correto afirmar:",
+ o:["os compostos rendem mais em qualquer prazo","os simples rendem mais no primeiro período","no primeiro período os montantes são IGUAIS; a partir do segundo, os compostos superam","os simples rendem mais no longo prazo","não há diferença em nenhum prazo"],a:2,
+ exp:"Em t=1 período, ambos rendem C·i (iguais). Do 2º período em diante, o composto incide sobre o montante e dispara.",trap:"'Composto rende mais SEMPRE' é falso — no 1º período empatam (e em frações de período, o simples rende mais)."},
+{id:"m05",disc:"Matemática/Estatística",top:"SAC",q:"No Sistema de Amortização Constante (SAC):",
+ o:["as prestações são constantes ao longo de todo o financiamento","a amortização é constante e as prestações são decrescentes","os juros são constantes","a amortização cresce ao longo do tempo","não há pagamento de juros"],a:1,
+ exp:"SAC: amortiza-se o mesmo valor todo mês; como o saldo devedor cai, os juros caem e as prestações DECRESCEM.",trap:"SAC = prestação começa alta e cai. Price = prestação fixa."},
+{id:"m06",disc:"Matemática/Estatística",top:"Tabela Price",q:"No sistema francês de amortização (Tabela Price):",
+ o:["as prestações são constantes, com amortização crescente e juros decrescentes","as prestações decrescem linearmente","a amortização é constante","os juros crescem ao longo do contrato","o saldo devedor nunca diminui"],a:0,
+ exp:"Price: prestação FIXA; dentro dela, no início paga-se mais juros e menos amortização — a composição inverte ao longo do tempo.",trap:"Price = Prestação Parada. SAC = Sempre Amortiza o mesmo e Cai."},
+{id:"m07",disc:"Matemática/Estatística",top:"Taxa nominal × efetiva",q:"Uma taxa nominal de 12% ao ano com capitalização mensal corresponde a uma taxa efetiva de:",
+ o:["12% ao ano, exatamente","1% ao mês","12,68% ao mês","1,2% ao mês","0,12% ao mês"],a:1,
+ exp:"Taxa nominal divide-se pelo período de capitalização: 12%/12 = 1% a.m. (A efetiva ANUAL seria (1,01)¹² − 1 ≈ 12,68% a.a.)",trap:"Nominal se DIVIDE (proporcional); efetiva se CAPITALIZA (exponencial)."},
+{id:"m08",disc:"Matemática/Estatística",top:"Desconto comercial",q:"Um título de R$ 1.000,00 é descontado 2 meses antes do vencimento, com desconto comercial simples de 5% ao mês. O valor líquido recebido é:",
+ o:["R$ 950,00","R$ 900,00","R$ 907,03","R$ 890,00","R$ 100,00"],a:1,
+ exp:"D = N·i·t = 1000 × 0,05 × 2 = R$ 100 → líquido = 1000 − 100 = R$ 900. No desconto comercial (por fora), a taxa incide sobre o valor NOMINAL.",trap:"Comercial/por fora = incide no nominal. Racional/por dentro = incide no valor atual."},
+
+// ---------- ESTATÍSTICA (reforço) ----------
+{id:"e07",disc:"Matemática/Estatística",top:"Moda",q:"A moda do conjunto de dados {2, 3, 3, 5, 7} é:",
+ o:["4","3","5","2","não existe"],a:1,
+ exp:"Moda = valor mais frequente. O 3 aparece duas vezes. (Um conjunto pode ser amodal, bimodal etc.)",trap:"Não confunda: moda = mais frequente; mediana = o do meio; média = soma/quantidade."},
+{id:"e08",disc:"Matemática/Estatística",top:"Eventos mutuamente exclusivos",q:"Se A e B são eventos mutuamente exclusivos, então P(A ∪ B) é igual a:",
+ o:["P(A) × P(B)","P(A) + P(B)","P(A) + P(B) − P(A ∩ B), com P(A ∩ B) > 0","1 − P(A)","P(A) ÷ P(B)"],a:1,
+ exp:"Mutuamente exclusivos = não podem ocorrer juntos = P(A∩B) = 0 → P(A∪B) = P(A) + P(B).",trap:"Exclusivos SOMAM (união); independentes MULTIPLICAM (interseção). Não são a mesma coisa!"},
+{id:"e09",disc:"Matemática/Estatística",top:"Distribuição binomial",q:"A distribuição binomial modela:",
+ o:["o tempo entre chegadas de clientes","o número de sucessos em n tentativas independentes, cada uma com dois resultados possíveis","variáveis contínuas e simétricas","qualquer variável aleatória contínua","a média de amostras grandes"],a:1,
+ exp:"Binomial: n ensaios independentes, cada um 'sucesso/fracasso' com probabilidade p constante. Tempo entre eventos é exponencial; contagem de eventos raros no tempo é Poisson.",trap:"Binomial conta SUCESSOS em n tentativas. Poisson conta eventos por intervalo."},
+{id:"e10",disc:"Matemática/Estatística",top:"Coeficiente de variação",q:"O coeficiente de variação (CV) é definido como:",
+ o:["a variância dividida pela média","o desvio padrão dividido pela média — uma medida de dispersão RELATIVA","a média dividida pelo desvio padrão","a raiz quadrada da média","a diferença entre o maior e o menor valor"],a:1,
+ exp:"CV = σ/μ (geralmente em %). Por ser relativo, permite comparar a dispersão de conjuntos com médias ou unidades diferentes.",trap:"Para comparar variabilidade entre grupos diferentes → CV, não o desvio bruto."},
+
+// ---------- TI (reforço) ----------
+{id:"d11",disc:"TI",top:"SELECT DISTINCT",q:"Em SQL, a cláusula DISTINCT em um SELECT tem a função de:",
+ o:["ordenar o resultado","eliminar linhas duplicadas do resultado","agrupar linhas para agregação","filtrar valores nulos","limitar o número de linhas retornadas"],a:1,
+ exp:"DISTINCT remove duplicatas do conjunto-resultado. Ordenar = ORDER BY; agrupar = GROUP BY; limitar = FETCH/LIMIT/ROWNUM.",trap:"DISTINCT considera a COMBINAÇÃO de todas as colunas selecionadas, não só a primeira."},
+{id:"d12",disc:"TI",top:"Chave estrangeira",q:"Uma chave estrangeira (foreign key) em um banco relacional garante:",
+ o:["a unicidade das linhas da tabela","a integridade referencial entre tabelas","o criptografia dos dados relacionados","maior velocidade nas consultas","a normalização automática do esquema"],a:1,
+ exp:"FK assegura que o valor referenciado EXISTE na tabela-pai (integridade referencial). Unicidade é papel da chave primária/unique.",trap:"FK pode ser NULL e pode se repetir — quem não repete é a PK."},
+{id:"j09",disc:"TI",top:"Java — interfaces",q:"A partir do Java 8, as interfaces podem conter:",
+ o:["apenas assinaturas de métodos abstratos","atributos de instância não estáticos","métodos default e static com implementação","construtores públicos","métodos privados de instância obrigatórios"],a:2,
+ exp:"Java 8 introduziu métodos default (com corpo) e static em interfaces — o que viabilizou evoluir APIs sem quebrar implementações. Interfaces continuam sem construtores e sem estado de instância.",trap:"'Interface não pode ter implementação' ficou FALSO desde o Java 8 — pegadinha de material desatualizado."},
+{id:"j10",disc:"TI",top:"Python — list × tuple",q:"Em Python, a diferença entre listas e tuplas é que:",
+ o:["listas são imutáveis e tuplas mutáveis","listas são mutáveis e tuplas imutáveis","ambas são imutáveis","tuplas não podem armazenar números","listas não podem ser percorridas em loops"],a:1,
+ exp:"list = mutável ([1,2,3], aceita append/remove); tuple = imutável ((1,2,3)) — pode inclusive ser chave de dicionário.",trap:"Imutabilidade da tupla é do CONTÊINER: uma tupla pode conter uma lista mutável dentro."},
+{id:"g11",disc:"TI",top:"CID — disponibilidade",q:"Um ataque DDoS que tira um internet banking do ar compromete, primariamente, qual princípio da segurança da informação?",
+ o:["confidencialidade","integridade","disponibilidade","autenticidade","não repúdio"],a:2,
+ exp:"DDoS = negação de serviço = o sistema fica INDISPONÍVEL. Confidencialidade = vazamento; integridade = alteração indevida.",trap:"Associe: vazou→confidencialidade; alterou→integridade; caiu→disponibilidade."},
+{id:"g12",disc:"TI",top:"OWASP Top 10",q:"No OWASP Top 10 (2021), a categoria que ocupa a primeira posição é:",
+ o:["Injection (injeção)","Broken Access Control (quebra de controle de acesso)","Cross-Site Scripting","Insecure Deserialization","Security Misconfiguration"],a:1,
+ exp:"Em 2021, Broken Access Control assumiu o topo (A01); Injection — que liderava em 2017 — caiu para A03, englobando XSS.",trap:"Quem estudou pela lista de 2017 marca 'Injection' — material desatualizado é pegadinha."},
+{id:"g13",disc:"TI",top:"Certificado digital",q:"Um certificado digital tem como função principal:",
+ o:["criptografar todo o disco do usuário","vincular uma chave pública à identidade do seu titular, com garantia de uma Autoridade Certificadora","substituir senhas em todos os sistemas","gerar números aleatórios seguros","comprimir documentos assinados"],a:1,
+ exp:"O certificado (padrão X.509) é a 'carteira de identidade' da chave pública, emitido por uma AC (no Brasil, dentro da ICP-Brasil).",trap:"Certificado ≠ assinatura: ele ATESTA de quem é a chave que assina."},
+{id:"r11",disc:"TI",top:"DHCP",q:"O protocolo responsável por atribuir dinamicamente endereços IP e configurações de rede aos hosts é o:",
+ o:["DNS","DHCP","SNMP","ARP","NAT"],a:1,
+ exp:"DHCP distribui IP, máscara, gateway e DNS automaticamente. DNS resolve nomes; ARP mapeia IP→MAC; NAT traduz endereços.",trap:"DNS traduz nome; DHCP entrega IP — o par de troca favorito das bancas."},
+{id:"r12",disc:"TI",top:"Linux — processos",q:"No Linux, o comando que lista os processos em execução é:",
+ o:["ls","ps","pwd","cat","chmod"],a:1,
+ exp:"ps (e top/htop para visão dinâmica). ls lista arquivos; pwd mostra o diretório atual; kill encerra processo pelo PID.",trap:"ps lista, top monitora, kill encerra — o trio de processos."},
+{id:"r13",disc:"TI",top:"Git — clone × pull",q:"No Git, a diferença entre clone e pull é que o clone:",
+ o:["atualiza um repositório local existente","copia integralmente um repositório remoto para criar o repositório local (primeira vez)","envia commits locais ao remoto","cria uma nova branch","desfaz o último commit"],a:1,
+ exp:"clone = cópia inicial completa (com todo o histórico). pull = atualiza um repositório que você JÁ tem (fetch + merge). push = envia.",trap:"clone uma vez; pull sempre; push para publicar."},
+{id:"s05",disc:"TI",top:"Microsserviços",q:"Na arquitetura de microsserviços:",
+ o:["toda a aplicação é implantada como um único artefato","os serviços são pequenos, independentes, com deploy separado e comunicação por rede (APIs/mensageria)","os serviços compartilham obrigatoriamente o mesmo banco de dados","não é possível usar contêineres","a escalabilidade é sempre menor que no monólito"],a:1,
+ exp:"Microsserviços: unidades pequenas e autônomas, cada uma com seu deploy (e idealmente seu banco), comunicando-se via API REST ou mensageria. Monólito = artefato único.",trap:"'Banco compartilhado por todos' contraria o princípio — cada serviço deve ser dono dos seus dados."},
+{id:"s06",disc:"TI",top:"Mensageria",q:"O uso de filas de mensagens (ex.: Kafka, RabbitMQ) entre sistemas tem como principal benefício:",
+ o:["comunicação síncrona obrigatória","o desacoplamento e a comunicação assíncrona entre produtores e consumidores","a eliminação da necessidade de rede","a criptografia automática dos dados","a redução do volume de dados trafegados a zero"],a:1,
+ exp:"Fila/tópico desacopla: o produtor publica e segue a vida; o consumidor processa no seu ritmo. Absorve picos e tolera indisponibilidade temporária do consumidor.",trap:"Mensageria = ASSÍNCRONO e desacoplado. API REST síncrona é o contraponto."},
+
+// ---------- INGLÊS (reforço) ----------
+{id:"i05",disc:"Inglês",top:"Conectivos — although",q:"In \"Although the system is old, it remains reliable\", the word ALTHOUGH introduces:",
+ o:["a cause","a concession/contrast","a consequence","a purpose","an addition"],a:1,
+ exp:"Although/though/even though = embora (concessão). A frase admite ideia contrária: velho, PORÉM confiável.",trap:"Although nunca vem com 'but' na mesma frase — em inglês é um ou outro."},
+{id:"i06",disc:"Inglês",top:"Conectivos — purpose",q:"In \"The bank updated its app in order to improve security\", the expression IN ORDER TO expresses:",
+ o:["contrast","time","purpose","condition","conclusion"],a:2,
+ exp:"In order to / so as to / to + verbo = finalidade (para, a fim de).",trap:"Purpose (para quê) ≠ cause (porque). 'In order to' responde 'para quê'."},
+{id:"i07",disc:"Inglês",top:"Falsos cognatos — library",q:"The word LIBRARY, as in \"a software library\", means:",
+ o:["livraria","biblioteca","livreto","escritório","laboratório"],a:1,
+ exp:"Library = biblioteca (inclusive em TI: biblioteca de código). Livraria (loja de livros) = bookstore.",trap:"Library/livraria é o falso cognato mais clássico do inglês."},
+{id:"i08",disc:"Inglês",top:"Modais — should",q:"In \"Developers should validate all user inputs\", the modal SHOULD expresses:",
+ o:["strong obligation (law)","recommendation/advice","ability","permission","past habit"],a:1,
+ exp:"Should = recomendação/conselho (deveria). Obrigação forte = must/have to; habilidade = can; permissão = may.",trap:"Must obriga; should recomenda — a força do modal muda a resposta."},
+
+// ---------- ATUALIDADES (reforço) ----------
+{id:"a05",disc:"Atualidades",top:"Pix Automático",q:"O Pix Automático, lançado pelo Banco Central, tem como finalidade:",
+ o:["permitir pagamentos recorrentes (assinaturas, mensalidades) com autorização prévia única do pagador","substituir o cartão de crédito em compras internacionais","eliminar a necessidade de chaves Pix","transformar o Pix em moeda digital","permitir Pix sem conta bancária"],a:0,
+ exp:"Pix Automático = débito recorrente via Pix: o cliente autoriza uma vez e as cobranças periódicas (streaming, escola, academia) ocorrem automaticamente, com regras de limite.",trap:"É a resposta do Pix ao débito automático — foco em RECORRÊNCIA com autorização prévia."},
+{id:"a06",disc:"Atualidades",top:"Digitalização bancária",q:"Sobre a transformação digital do setor bancário brasileiro, é correto afirmar:",
+ o:["o atendimento presencial voltou a ser o principal canal","os canais digitais (aplicativos) tornaram-se o principal meio de transações bancárias no país","o dinheiro em espécie deixou de existir","as agências físicas são proibidas de fechar","o internet banking foi descontinuado em favor das agências"],a:1,
+ exp:"Pesquisas Febraban mostram os canais digitais (sobretudo mobile) respondendo pela grande maioria das transações — tendência acelerada por Pix e fintechs.",trap:"Cuidado com absolutos: espécie ainda existe; o que mudou é a PREDOMINÂNCIA do digital."},
+{id:"a07",disc:"Atualidades",top:"Golpes digitais",q:"Sobre a segurança digital no sistema bancário brasileiro atual, é correto afirmar:",
+ o:["os golpes por engenharia social diminuíram com o fim do Pix","a engenharia social (golpe do falso funcionário, falsa central) tornou-se o principal vetor de fraudes, levando bancos e Bacen a criar mecanismos como o MED e limites noturnos","invadir sistemas centrais dos bancos é o método mais comum de fraude","o Bacen proibiu o Pix para reduzir golpes","as fraudes são responsabilidade exclusiva do cliente"],a:1,
+ exp:"Com sistemas bancários bem protegidos, o elo atacado é o HUMANO: golpes de engenharia social dominam. Respostas regulatórias: MED, limites noturnos, bloqueio cautelar.",trap:"O Pix não acabou nem foi proibido — foi cercado de mecanismos de proteção."},
+{id:"a08",disc:"Atualidades",top:"Basileia",q:"Os Acordos de Basileia, aplicados no Brasil pelo CMN/Bacen, tratam essencialmente de:",
+ o:["tarifas bancárias máximas","requisitos mínimos de capital e gestão de riscos para instituições financeiras","padronização de cartões de crédito","unificação das moedas internacionais","regras de atendimento ao consumidor"],a:1,
+ exp:"Basileia (I, II e III) = padrões internacionais de solidez: capital mínimo ponderado pelo risco, alavancagem e liquidez, para evitar quebras sistêmicas.",trap:"Basileia = colchão de capital contra crises, não regra de consumidor."},
+];
+
+/* ============================================================
+   FLASHCARDS BÁSICOS (os erros do caderno viram cartões também)
+============================================================ */
+const CARDS = [
+{id:"c01",disc:"TI",front:"TRUNCATE × DELETE × DROP\n(rollback? triggers? estrutura?)",back:"DELETE: DML, aceita ROLLBACK, dispara triggers, linha a linha.\nTRUNCATE: DDL, commit implícito (sem rollback no Oracle), rápido, mantém a estrutura.\nDROP: remove a tabela inteira (dados + estrutura)."},
+{id:"c02",disc:"TI",front:"WHERE × HAVING",back:"WHERE filtra LINHAS, antes do agrupamento — não aceita agregação.\nHAVING filtra GRUPOS, depois do GROUP BY — aceita COUNT, SUM, AVG..."},
+{id:"c03",disc:"TI",front:"Portas padrão:\nFTP, SSH, Telnet, SMTP, DNS, HTTP, POP3, IMAP, HTTPS, RDP",back:"FTP 21 · SSH 22 · Telnet 23 · SMTP 25 · DNS 53 · HTTP 80 · POP3 110 · IMAP 143 · HTTPS 443 · RDP 3389"},
+{id:"c04",disc:"TI",front:"chmod numérico:\nquanto vale r, w, x?\nO que é 755? E 644?",back:"r=4, w=2, x=1 (soma por grupo: dono/grupo/outros).\n755 = rwx r-x r-x (script executável)\n644 = rw- r-- r-- (arquivo comum)\n777 = tudo para todos (nunca em produção!)"},
+{id:"c05",disc:"TI",front:"Modelo OSI — as 7 camadas, de baixo para cima",back:"1 Física · 2 Enlace (MAC) · 3 Rede (IP) · 4 Transporte (TCP/UDP, portas) · 5 Sessão · 6 Apresentação · 7 Aplicação (HTTP, DNS...).\nMnemônico: Físico Enlaça Rede Transportando Seus Apps Prontamente."},
+{id:"c06",disc:"TI",front:"TCP × UDP — quando usar cada um?",back:"TCP: conexão (handshake 3 vias), garantia de entrega e ordem, controle de fluxo → web, e-mail, arquivos.\nUDP: sem conexão, sem garantia, leve e rápido → streaming, VoIP, DNS, jogos."},
+{id:"c07",disc:"TI",front:"Criptografia simétrica × assimétrica\n(exemplos e uso típico)",back:"Simétrica: UMA chave secreta, rápida — AES, 3DES. Problema: distribuir a chave.\nAssimétrica: par pública/privada, lenta — RSA, ECC. Usada para trocar a chave simétrica e assinar.\nTLS usa as duas (híbrido)."},
+{id:"c08",disc:"TI",front:"Assinatura digital:\nassina com qual chave? verifica com qual?\nGarante o quê?",back:"Assina: chave PRIVADA do emissor.\nVerifica: chave PÚBLICA do emissor.\nGarante: autenticidade, integridade e NÃO REPÚDIO.\nNÃO garante confidencialidade (para isso: cifrar com a pública do destinatário)."},
+{id:"c09",disc:"TI",front:"Firewall × IDS × IPS × WAF",back:"Firewall: filtra tráfego por regras (portas, IPs).\nIDS: Detecta e alerta (passivo).\nIPS: Previne — inline, bloqueia em tempo real.\nWAF: firewall de aplicação web (camada 7) — barra SQLi, XSS."},
+{id:"c10",disc:"TI",front:"Git: merge × rebase",back:"Merge: junta com commit de mesclagem, preserva o histórico como aconteceu.\nRebase: reaplica commits sobre a nova base — histórico linear, mas REESCRITO.\nRegra: nunca rebasear branch compartilhada/pública."},
+{id:"c11",disc:"TI",front:"Java: sobrecarga × sobrescrita",back:"SobreCARGA (overload): mesma Classe, mesmo nome, parâmetros DIFERENTES — resolvida em compilação.\nSobreSCRITA (override): Subclasse redefine método com MESMA assinatura — resolvida em execução (polimorfismo)."},
+{id:"c12",disc:"TI",front:"Pilha × Fila\n(política e exemplos)",back:"Pilha = LIFO: último entra, primeiro sai → desfazer (Ctrl+Z), pilha de chamadas.\nFila = FIFO: primeiro entra, primeiro sai → fila de impressão, mensageria."},
+{id:"c13",disc:"TI",front:"ACID — as 4 propriedades das transações",back:"Atomicidade: tudo ou nada.\nConsistência: regras de integridade preservadas.\nIsolamento: transações não interferem entre si.\nDurabilidade: o que foi commitado sobrevive a falhas."},
+{id:"c14",disc:"Bancários",front:"CMN × Bacen × CVM — quem faz o quê?",back:"CMN: NORMATIZA (órgão máximo, política da moeda e do crédito) — não executa nada.\nBacen: EXECUTA e supervisiona IFs; emite papel-moeda; Copom/Selic.\nCVM: supervisiona valores mobiliários (ações, debêntures, fundos)."},
+{id:"c15",disc:"Bancários",front:"Lavagem de dinheiro — as 3 fases, na ordem",back:"1. Colocação: dinheiro sujo entra no sistema financeiro.\n2. Ocultação (dissimulação): movimentações para apagar a trilha.\n3. Integração: retorna à economia com aparência lícita.\nMnemônico: C-O-I."},
+{id:"c16",disc:"Bancários",front:"FGC — cobre o quê e até quanto?",back:"Fundo Garantidor de Créditos: cobre depósitos (poupança, CDB, conta-corrente...) até R$ 250 mil por CPF/CNPJ POR INSTITUIÇÃO, com teto global de R$ 1 milhão a cada 4 anos.\nNão cobre: fundos de investimento, ações, debêntures."},
+{id:"c17",disc:"Bancários",front:"LGPD — 4 papéis + órgão fiscalizador",back:"Titular: dono do dado.\nControlador: decide o tratamento.\nOperador: trata em nome do controlador.\nEncarregado (DPO): canal entre todos e a ANPD.\nFiscaliza: ANPD (multa até 2% do faturamento, teto R$ 50 mi/infração)."},
+{id:"c18",disc:"Bancários",front:"Copom — o que define e com que frequência?",back:"Define a META DA TAXA SELIC (juros básicos).\n8 reuniões por ano (a cada ~45 dias).\nQuem define a META DE INFLAÇÃO é o CMN — o Copom persegue essa meta."},
+];
+const SRS_LADDER = [1, 3, 7, 15, 30, 60];
+
+/* ============================================================
+   PLANO DE MATERIAIS — roteiro completo com links
+============================================================ */
+const LINKS = {
+  tec: "https://www.tecconcursos.com.br",
+  qc: "https://www.qconcursos.com",
+  pci: "https://www.pciconcursos.com.br/provas/banco-do-brasil",
+  lgpd: "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm",
+  lei9613: "https://www.planalto.gov.br/ccivil_03/leis/l9613.htm",
+  pix: "https://www.bcb.gov.br/estabilidadefinanceira/pix",
+  of: "https://www.bcb.gov.br/estabilidadefinanceira/openfinance",
+  drex: "https://www.bcb.gov.br/estabilidadefinanceira/drex",
+  bcb: "https://www.bcb.gov.br",
+  bbconcurso: "https://www.bb.com.br/site/concurso-bb/",
+  ytBancarios: "https://www.youtube.com/results?search_query=conhecimentos+bancarios+concurso+banco+do+brasil+aula",
+  ytSFN: "https://www.youtube.com/results?search_query=sistema+financeiro+nacional+SFN+aula+concurso",
+  ytMatFin: "https://www.youtube.com/results?search_query=matematica+financeira+juros+concurso+banco",
+  ytRedacao: "https://www.youtube.com/results?search_query=redacao+dissertativa+concurso+banco+do+brasil+cesgranrio",
+  ytEstat: "https://www.youtube.com/results?search_query=probabilidade+e+estatistica+concurso+aula",
+  rSfn: "resumos/sfn.html",
+  rTi: "resumos/ti-comparativos.html",
+  rLgpd: "resumos/lgpd-bancaria.html",
+};
+
+const PLANO_MATERIAIS = [
+{ ciclo: "🎒 Semana 0 — Kit de materiais (faça antes de tudo)",
+  desc: "Um único gasto obrigatório: a plataforma de questões. O resto é gratuito. Não compre curso de TI.",
+  semanas: [
+    { id: "s0", titulo: "Setup completo", objetivo: "Deixar tudo pronto para começar segunda-feira sem ter que decidir nada.",
+      tarefas: [
+        { id: "s0t1", txt: "Assinar plataforma de questões — TecConcursos (recomendado p/ TI) ou QConcursos (mais barato)", link: "tec" },
+        { id: "s0t2", txt: "Baixar as provas do BB 2021 e 2023 (Agente de Tecnologia) com gabarito no PCI Concursos", link: "pci" },
+        { id: "s0t3", txt: "Salvar nos favoritos: LGPD (lei seca no Planalto)", link: "lgpd" },
+        { id: "s0t4", txt: "Salvar nos favoritos: páginas oficiais do Bacen — Pix, Open Finance e Drex (fonte das questões de Bancários)", link: "pix" },
+        { id: "s0t5", txt: "Escolher e salvar UMA playlist de Conhecimentos Bancários no YouTube (Gran, Estratégia ou Direção)", link: "ytBancarios" },
+        { id: "s0t6", txt: "Definir os horários fixos dos 3 blocos de 1h (ex.: 7h / 12h30 / 20h) e criar alarmes no celular" },
+        { id: "s0t7", txt: "SIMULADO DIAGNÓSTICO: prova BB 2021 inteira, 5h cronometradas, sem consulta — registrar na aba ✍️" },
+        { id: "s0t8", txt: "Analisar o diagnóstico: anotar as 3 piores disciplinas no registro do simulado" },
+      ]},
+  ]},
+{ ciclo: "🧱 Ciclo A — Fundação (Semanas 1–4)",
+  desc: "Construir a base de Bancários e destravar Português. TI entra só em modo questões (tardes).",
+  semanas: [
+    { id: "a1", titulo: "Semana 1 — SFN: quem manda no dinheiro", objetivo: "Dominar CMN × Bacen × CVM (o tópico nº 1 de Bancários). Manhãs: teoria de SFN · Tardes: TI conforme o dia · Noites: revisões + leve.",
+      tarefas: [
+        { id: "a1t1", txt: "Ler o resumo local do SFN (20 min) — abre no navegador", link: "rSfn" },
+        { id: "a1t2", txt: "Assistir 2–3 aulas de SFN no YouTube (manhãs de seg e sex)", link: "ytSFN" },
+        { id: "a1t3", txt: "Resolver 40 questões de SFN na plataforma (filtro: CMN, Bacen, CVM) com ≥70% de acerto", link: "tec" },
+        { id: "a1t4", txt: "Português: 30 questões de interpretação + concordância (terças + noites)" },
+        { id: "a1t5", txt: "Fazer 2 quizzes de Bancários aqui no guia (aba 🧪)" },
+        { id: "a1t6", txt: "Marcar os tópicos de SFN no 📖 Edital conforme o desempenho" },
+      ]},
+    { id: "a2", titulo: "Semana 2 — Política monetária + Java", objetivo: "Selic, Copom e instrumentos (open market, compulsório, redesconto). Português: crase e regência.",
+      tarefas: [
+        { id: "a2t1", txt: "Aula de política monetária (YouTube) + reler a seção do resumo SFN", link: "ytSFN" },
+        { id: "a2t2", txt: "30 questões de política monetária/Selic/Copom na plataforma", link: "tec" },
+        { id: "a2t3", txt: "Português: 30 questões de crase + regência verbal" },
+        { id: "a2t4", txt: "TI (tardes): 40 questões de Java/estrutura de dados — leitura de código cronometrada", link: "tec" },
+        { id: "a2t5", txt: "Estatística (qui): descritiva — média, mediana, moda, desvio (aula + 15 questões)", link: "ytEstat" },
+      ]},
+    { id: "a3", titulo: "Semana 3 — Produtos bancários + 1ª redação", objetivo: "CDB, poupança, fundos, crédito, cartões, FGC. Começa o treino de redação (domingos, 1h).",
+      tarefas: [
+        { id: "a3t1", txt: "Aulas de produtos bancários (YouTube) + anotar limites do FGC", link: "ytBancarios" },
+        { id: "a3t2", txt: "40 questões de produtos bancários na plataforma", link: "tec" },
+        { id: "a3t3", txt: "Português: 30 questões de pontuação + colocação pronominal" },
+        { id: "a3t4", txt: "✍️ 1ª REDAÇÃO (domingo, 1h, manuscrita, 30 linhas) — tema da pasta redacao/temas.md; ver estrutura antes", link: "ytRedacao" },
+        { id: "a3t5", txt: "Estatística: probabilidade condicional e independência (15 questões)" },
+      ]},
+    { id: "a4", titulo: "Semana 4 — Pix + fechamento do ciclo", objetivo: "Pix a fundo (fonte oficial) + simulado de checagem para medir o progresso do mês.",
+      tarefas: [
+        { id: "a4t1", txt: "Ler a página oficial do Pix no Bacen (regras, limites, MED) — 2 noites", link: "pix" },
+        { id: "a4t2", txt: "30 questões de Pix/arranjos de pagamento", link: "tec" },
+        { id: "a4t3", txt: "SIMULADO: prova BB 2023 inteira, cronometrada (sábado) + correção com caderno de erros" },
+        { id: "a4t4", txt: "Redação nº 2 (domingo) — autoavaliar com o checklist do projeto" },
+        { id: "a4t5", txt: "Domingo: comparar % com o diagnóstico e atualizar o 📖 Edital" },
+      ]},
+  ]},
+{ ciclo: "⚖️ Ciclo B — Regulação moderna (Semanas 5–8)",
+  desc: "O 'novo edital' na prática: Open Finance, LGPD, lavagem de dinheiro, Drex e ESG. É onde a prova de Bancários mais evoluiu desde 2021.",
+  semanas: [
+    { id: "b1", titulo: "Semana 5 — Open Finance", objetivo: "Fases, consentimento, participantes — direto da fonte oficial. TI: redes nas tardes.",
+      tarefas: [
+        { id: "b1t1", txt: "Ler a página oficial do Open Finance no Bacen (2 noites)", link: "of" },
+        { id: "b1t2", txt: "25 questões de Open Finance/Open Banking", link: "tec" },
+        { id: "b1t3", txt: "Português: 30 questões de semântica + reescrita de frases" },
+        { id: "b1t4", txt: "TI (tardes): 40 questões de redes (OSI, TCP/IP, portas) + reler quadros do resumo de TI", link: "rTi" },
+        { id: "b1t5", txt: "Redação nº 3 — tema: Open Finance e proteção de dados (está no banco de temas)" },
+      ]},
+    { id: "b2", titulo: "Semana 6 — LGPD a fundo", objetivo: "A interseção perfeita do seu perfil: LGPD + Res. 4.893. Dá para gabaritar.",
+      tarefas: [
+        { id: "b2t1", txt: "Ler a LGPD na lei seca — artigos 1–22 e 46–52 (3 noites, 20 min cada)", link: "lgpd" },
+        { id: "b2t2", txt: "Reler o resumo local de LGPD bancária + Res. 4.893", link: "rLgpd" },
+        { id: "b2t3", txt: "40 questões de LGPD na plataforma (filtro: LGPD)", link: "tec" },
+        { id: "b2t4", txt: "TI (tardes): 40 questões de Linux/Git", link: "tec" },
+        { id: "b2t5", txt: "Quiz de Bancários no guia até bater ≥80%" },
+      ]},
+    { id: "b3", titulo: "Semana 7 — Lavagem de dinheiro + compliance", objetivo: "Lei 9.613, as 3 fases, Coaf, comunicações obrigatórias. TI: engenharia de software/ágil.",
+      tarefas: [
+        { id: "b3t1", txt: "Ler a Lei 9.613 (foco: arts. 1º, 9º–11) — 2 noites", link: "lei9613" },
+        { id: "b3t2", txt: "30 questões de prevenção à lavagem/Coaf", link: "tec" },
+        { id: "b3t3", txt: "TI (tardes): 30 questões de Scrum/Kanban/DevOps/testes", link: "tec" },
+        { id: "b3t4", txt: "Estatística: amostragem + correlação/regressão (15 questões)" },
+        { id: "b3t5", txt: "Redação nº 4" },
+      ]},
+    { id: "b4", titulo: "Semana 8 — Drex, ESG + simulado", objetivo: "Fechar a regulação moderna e medir o 2º mês.",
+      tarefas: [
+        { id: "b4t1", txt: "Ler a página oficial do Drex no Bacen (1 noite)", link: "drex" },
+        { id: "b4t2", txt: "20 questões de moeda digital/criptoativos + 20 de ASG/ESG", link: "tec" },
+        { id: "b4t3", txt: "SIMULADO: prova de TI bancária de outra banca (ex.: Caixa 2024) para treinar multibanca" },
+        { id: "b4t4", txt: "Correção do simulado: TODO erro no caderno + atualizar 📖 Edital" },
+        { id: "b4t5", txt: "Redação nº 5 + contratar 1ª correção externa (Gran/Estratégia avulsa)" },
+      ]},
+  ]},
+{ ciclo: "🧮 Ciclo C — Consolidação (Semanas 9–12)",
+  desc: "Fechar os buracos restantes: matemática financeira, atualidades como rotina, lei seca 2ª passada e um pente-fino nos seus pontos fracos de TI.",
+  semanas: [
+    { id: "c1", titulo: "Semana 9 — Matemática financeira", objetivo: "Juros simples/compostos, taxas equivalentes, SAC × Price — cai TODO ano.",
+      tarefas: [
+        { id: "c1t1", txt: "Aulas de matemática financeira (YouTube) nas manhãs de seg/qui", link: "ytMatFin" },
+        { id: "c1t2", txt: "40 questões de juros + amortização na plataforma", link: "tec" },
+        { id: "c1t3", txt: "TI (tardes): refazer os tópicos com pior % no seu histórico de quiz" },
+        { id: "c1t4", txt: "Redação nº 6" },
+      ]},
+    { id: "c2", titulo: "Semana 10 — Atualidades como rotina", objetivo: "Criar o hábito que vai até a prova: 15 min/dia de fontes oficiais.",
+      tarefas: [
+        { id: "c2t1", txt: "Criar rotina: ler notícias do Bacen 2x/semana (Selic atual, IPCA, novidades Pix/Drex)", link: "bcb" },
+        { id: "c2t2", txt: "Montar UMA página de anotações de atualidades (mês a mês) na pasta do projeto" },
+        { id: "c2t3", txt: "Inglês: 20 questões de interpretação na plataforma", link: "tec" },
+        { id: "c2t4", txt: "30 questões de atualidades do mercado financeiro", link: "tec" },
+        { id: "c2t5", txt: "Redação nº 7" },
+      ]},
+    { id: "c3", titulo: "Semana 11 — Lei seca, 2ª passada", objetivo: "Reler LGPD + 9.613 já sabendo o que a banca cobra; ética e autorregulação.",
+      tarefas: [
+        { id: "c3t1", txt: "Releitura ativa da LGPD (anotar só o que ainda confunde)", link: "lgpd" },
+        { id: "c3t2", txt: "20 questões de ética bancária/autorregulação", link: "tec" },
+        { id: "c3t3", txt: "TI (tardes): 60 questões mistas cronometradas (2 min/questão)", link: "tec" },
+        { id: "c3t4", txt: "Estatística: revisão geral via 20 questões" },
+        { id: "c3t5", txt: "Redação nº 8" },
+      ]},
+    { id: "c4", titulo: "Semana 12 — Simulado + semana da revisão", objetivo: "Zerar as revisões pendentes e medir o trimestre. Aqui você deve estar ≥65% nos Básicos.",
+      tarefas: [
+        { id: "c4t1", txt: "SIMULADO: repetir a prova BB 2021 — compare com o diagnóstico da Semana 0" },
+        { id: "c4t2", txt: "Zerar TODAS as revisões e cartões pendentes no guia (aba Hoje)" },
+        { id: "c4t3", txt: "Passar o 📖 Edital a limpo: o que está < 'Em questões' vira prioridade do Ciclo D" },
+        { id: "c4t4", txt: "Redação nº 9 + 2ª correção externa" },
+      ]},
+  ]},
+{ ciclo: "🔁 Ciclo D — Manutenção rotativa (Semana 13 até o edital)",
+  desc: "Sem conteúdo novo obrigatório: agora é girar. Repita este bloco de 4 semanas até o edital sair, sempre priorizando os tópicos com pior % no 📖 Edital.",
+  semanas: [
+    { id: "d1", titulo: "O loop de 4 semanas (repetir até o edital)", objetivo: "Meta de saída: os 78 tópicos do edital em 'Dominado'. Volume: ~150 questões/semana + 1 redação/semana + simulado quinzenal.",
+      tarefas: [
+        { id: "d1t1", txt: "Semana tipo 1: os 3 piores tópicos de Bancários (teoria rápida + 30 questões cada)" },
+        { id: "d1t2", txt: "Semana tipo 2: os 3 piores de Português/Estatística + simulado no sábado" },
+        { id: "d1t3", txt: "Semana tipo 3: os 3 piores de TI + lei seca (releitura de 1 norma)" },
+        { id: "d1t4", txt: "Semana tipo 4: geral — 60 questões multibanca + simulado + zerar revisões" },
+        { id: "d1t5", txt: "Sempre: 1 redação/domingo (alternar autoavaliação e correção externa)" },
+        { id: "d1t6", txt: "Sempre: 15 min/dia de atualidades (Bacen) — anotar no arquivo de atualidades", link: "bcb" },
+        { id: "d1t7", txt: "Ficar de olho no portal oficial do concurso 1x/semana", link: "bbconcurso" },
+      ]},
+  ]},
+{ ciclo: "🚀 Fase 2 — Sprint pós-edital (quando ele SAIR)",
+  desc: "No dia em que o edital for publicado, pare tudo e execute esta lista. Me chame no Claude Code que eu atualizo o guia inteiro para a banca e o conteúdo reais.",
+  semanas: [
+    { id: "f2", titulo: "Checklist do dia D e do sprint", objetivo: "Transformar 6+ meses de base em aprovação, com a banca definida.",
+      tarefas: [
+        { id: "f2t1", txt: "Ler o edital INTEIRO no dia da publicação (2x) e marcar prazos no calendário" },
+        { id: "f2t2", txt: "Inscrever-se no 1º dia (evita imprevisto de pagamento/sistema)" },
+        { id: "f2t3", txt: "Pedir ao Claude: atualizar o 📖 Edital verticalizado com o conteúdo programático novo" },
+        { id: "f2t4", txt: "Refiltrar TODAS as questões da plataforma pela banca escolhida (2 semanas de imersão no estilo dela)" },
+        { id: "f2t5", txt: "Avaliar um curso pós-edital direcionado (agora sim pode valer a pena)" },
+        { id: "f2t6", txt: "Simulado COMPLETO todo sábado, no horário oficial da prova" },
+        { id: "f2t7", txt: "Últimas 2 semanas: só caderno de erros, cartões, lei seca e simulados — zero conteúdo novo" },
+      ]},
+  ]},
+];
+
+/* ============================================================
+   ESTADO
+============================================================ */
+const LS_KEY = "bb-estudos-v1";
+let state = loadState();
+
+function defaultState() {
+  return {
+    version: 1,
+    startDate: todayStr(),
+    sessions: [],      // {id, date, disc, minutes, questions, correct}
+    reviews: [],       // {id, label, disc, kind: 'erro'|'topico', created, steps:[{offset, due, done}], note}
+    errors: [],        // {id, date, disc, topic, cause, rule, trap}
+    simulados: [],     // {id, date, name, basicos, especificos, total, redacao, obs}
+    edital: {},        // topicKey -> 0..3
+    blocksDone: {},    // date -> [blockIds]
+    quizStats: {},     // qid -> {seen, right, lastWrong}
+    cardsSrs: {},      // cardId -> {step, due}
+    plano: {},         // tarefaId -> true (aba Materiais)
+    redacoes: [],      // {id, date, tema, nota, por, obs}
+  };
+}
+function loadState() {
+  try {
+    const raw = localStorage.getItem(LS_KEY);
+    if (!raw) return defaultState();
+    return Object.assign(defaultState(), JSON.parse(raw));
+  } catch (e) { return defaultState(); }
+}
+function save() { localStorage.setItem(LS_KEY, JSON.stringify(state)); }
+
+/* ============================================================
+   HELPERS
+============================================================ */
+function todayStr(d) {
+  const dt = d || new Date();
+  const off = dt.getTimezoneOffset();
+  return new Date(dt.getTime() - off * 60000).toISOString().slice(0, 10);
+}
+function addDays(iso, n) {
+  const d = new Date(iso + "T12:00:00");
+  d.setDate(d.getDate() + n);
+  return todayStr(d);
+}
+function diffDays(a, b) { // b - a em dias
+  return Math.round((new Date(b + "T12:00:00") - new Date(a + "T12:00:00")) / 86400000);
+}
+function fmtBR(iso) {
+  if (!iso) return "—";
+  const [y, m, d] = iso.split("-");
+  return `${d}/${m}/${y.slice(2)}`;
+}
+function uid() { return Math.random().toString(36).slice(2, 9) + Date.now().toString(36).slice(-4); }
+function esc(s) { return String(s ?? "").replace(/[&<>"']/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c])); }
+function weekStart(iso) { // segunda-feira da semana
+  const d = new Date(iso + "T12:00:00");
+  const dow = (d.getDay() + 6) % 7;
+  d.setDate(d.getDate() - dow);
+  return todayStr(d);
+}
+function toast(msg) {
+  const t = document.getElementById("toast");
+  t.textContent = msg;
+  t.style.display = "block";
+  clearTimeout(t._h);
+  t._h = setTimeout(() => (t.style.display = "none"), 2600);
+}
+function topicKey(di, ti) { return `t${di}_${ti}`; }
+function hoursFmt(min) {
+  const h = Math.floor(min / 60), m = min % 60;
+  return h ? `${h}h${m ? String(m).padStart(2, "0") : ""}` : `${m}m`;
+}
+function seriesColor(n) {
+  return getComputedStyle(document.documentElement).getPropertyValue(`--series-${n}`).trim();
+}
+
+/* ============================================================
+   REVISÃO ESPAÇADA
+============================================================ */
+function createReview(label, disc, kind, note) {
+  const created = todayStr();
+  state.reviews.push({
+    id: uid(), label, disc, kind, created, note: note || "",
+    steps: REVIEW_OFFSETS.map(o => ({ offset: o, due: addDays(created, o), done: null })),
+  });
+}
+function dueReviews(onDate) {
+  const items = [];
+  for (const r of state.reviews) {
+    const step = r.steps.find(s => !s.done && s.due <= onDate);
+    if (step) items.push({ review: r, step, late: diffDays(step.due, onDate) });
+  }
+  items.sort((a, b) => b.late - a.late);
+  return items;
+}
+function upcomingReviews(onDate, days) {
+  let n = 0;
+  for (const r of state.reviews) {
+    const step = r.steps.find(s => !s.done);
+    if (step && step.due > onDate && diffDays(onDate, step.due) <= days) n++;
+  }
+  return n;
+}
+function markReviewDone(reviewId) {
+  const r = state.reviews.find(x => x.id === reviewId);
+  if (!r) return;
+  const step = r.steps.find(s => !s.done);
+  if (step) step.done = todayStr();
+  save(); renderHoje();
+  const left = r.steps.filter(s => !s.done).length;
+  toast(left ? `✓ Revisado! Próxima revisão em ${fmtBR(r.steps.find(s => !s.done).due)}` : "✓ Ciclo de revisão completo — item arquivado!");
+}
+
+/* ============================================================
+   MÉTRICAS
+============================================================ */
+function weekSessions(refDate) {
+  const ws = weekStart(refDate);
+  const we = addDays(ws, 6);
+  return state.sessions.filter(s => s.date >= ws && s.date <= we);
+}
+function weekMinutes(refDate) { return weekSessions(refDate).reduce((a, s) => a + (s.minutes || 0), 0); }
+function accuracyByDisc() {
+  const map = {};
+  for (const s of state.sessions) {
+    if (!s.questions) continue;
+    map[s.disc] = map[s.disc] || { q: 0, c: 0 };
+    map[s.disc].q += s.questions;
+    map[s.disc].c += s.correct || 0;
+  }
+  return map;
+}
+function streak() {
+  let n = 0, d = todayStr();
+  const hasActivity = date =>
+    state.sessions.some(s => s.date === date) || (state.blocksDone[date] || []).length > 0;
+  if (!hasActivity(d)) d = addDays(d, -1); // hoje ainda não estudou não quebra o streak
+  while (hasActivity(d)) { n++; d = addDays(d, -1); }
+  return n;
+}
+function editalStats() {
+  const per = EDITAL.map((g, di) => {
+    let dom = 0, started = 0;
+    g.topics.forEach((_, ti) => {
+      const st = state.edital[topicKey(di, ti)] || 0;
+      if (st === 3) dom++;
+      if (st > 0) started++;
+    });
+    return { disc: g.disc, total: g.topics.length, dom, started };
+  });
+  const total = per.reduce((a, p) => a + p.total, 0);
+  const dom = per.reduce((a, p) => a + p.dom, 0);
+  return { per, total, dom };
+}
+
+/* ============================================================
+   COACH (o professor)
+============================================================ */
+function coachMessages() {
+  const msgs = [];
+  const today = todayStr();
+  const due = dueReviews(today);
+  const late = due.filter(d => d.late > 0);
+  const wm = weekMinutes(today);
+  const dow = new Date().getDay();
+
+  if (state.sessions.length === 0 && state.simulados.length === 0 && Object.keys(state.edital).length === 0 && Object.keys(state.plano).length === 0) {
+    msgs.push({ level: "info", ico: "👋", text: "Bem-vindo! Comece pela aba 🧑‍🏫 Método para aprender COMO estudar. Depois vá em 📚 Materiais e execute a Semana 0 (kit de materiais + simulado diagnóstico). O roteiro completo até a prova está lá." });
+    return msgs;
+  }
+
+  const s0tarefas = PLANO_MATERIAIS[0].semanas[0].tarefas;
+  const s0left = s0tarefas.filter(t => !state.plano[t.id]).length;
+  if (s0left > 0)
+    msgs.push({ level: "warning", ico: "🎒", text: `Kit de materiais incompleto: faltam ${s0left} item(ns) da Semana 0 na aba 📚 Materiais (plataforma de questões, provas antigas, diagnóstico). Sem o kit, o resto do plano trava.` });
+  if (late.length > 0)
+    msgs.push({ level: "serious", ico: "⏰", text: `Você tem ${late.length} revisão(ões) ATRASADA(s). Revisão atrasada perde efeito — faça-as antes de estudar conteúdo novo hoje.` });
+  else if (due.length > 0)
+    msgs.push({ level: "warning", ico: "🔁", text: `${due.length} revisão(ões) vencendo hoje. Regra do método: revisar vem ANTES de aprender coisa nova. São só alguns minutos por item.` });
+  else
+    msgs.push({ level: "good", ico: "✅", text: "Nenhuma revisão pendente. Caminho livre para o plano do dia." });
+
+  const cardsDue = dueCardsToday().length;
+  if (cardsDue > 0)
+    msgs.push({ level: "info", ico: "📇", text: `${cardsDue} cartão(ões) de memorização vencidos hoje — 5 minutos na aba Cartões resolvem.` });
+
+  const pct = Math.round((wm / (META_HORAS_SEMANA * 60)) * 100);
+  const diasRestantes = 7 - ((dow + 6) % 7);
+  if (wm === 0 && dow >= 2)
+    msgs.push({ level: "serious", ico: "📉", text: "Nenhuma hora registrada esta semana. Se estudou sem registrar, registre agora — sem números o método não funciona. Se não estudou: começa com 25 minutos no cronômetro, agora." });
+  else if (pct < 50 && dow >= 4)
+    msgs.push({ level: "warning", ico: "⚖️", text: `Semana em ${hoursFmt(wm)} de ${META_HORAS_SEMANA}h (${pct}%), com ${diasRestantes} dia(s) restando. Use o fim de semana para recuperar — mas sem virar noite: constância > heroísmo.` });
+  else if (pct >= 100)
+    msgs.push({ level: "good", ico: "🏆", text: `Meta semanal batida: ${hoursFmt(wm)}! Se estiver com energia, invista o extra em Bancários ou redação — nunca em mais TI.` });
+
+  const lastSim = state.simulados.length ? state.simulados[state.simulados.length - 1] : null;
+  if (!lastSim)
+    msgs.push({ level: "warning", ico: "🧪", text: "Nenhum simulado registrado ainda. O diagnóstico (prova BB 2021 completa, 5h cronometradas) é o que calibra todo o resto do plano. Agende para o próximo sábado." });
+  else if (diffDays(lastSim.date, today) > 14)
+    msgs.push({ level: "warning", ico: "🧪", text: `Seu último simulado foi há ${diffDays(lastSim.date, today)} dias. O ciclo pede prova antiga a cada 2 semanas — agende para este sábado.` });
+
+  const ws = weekStart(today);
+  const redacaoFeita = state.sessions.some(s => s.disc === "Redação" && s.date >= ws) ||
+    state.redacoes.some(r => r.date >= ws);
+  if (!redacaoFeita && dow === 0)
+    msgs.push({ level: "warning", ico: "✍️", text: "Hoje é domingo e a redação da semana ainda não foi registrada. Ela é ELIMINATÓRIA — 1h, manuscrita, 30 linhas. Tema sugerido na pasta redacao/temas.md." });
+
+  const acc = accuracyByDisc();
+  for (const [disc, v] of Object.entries(acc)) {
+    if (v.q >= 30) {
+      const p = Math.round((v.c / v.q) * 100);
+      if (p < 60 && disc !== "TI")
+        msgs.push({ level: "warning", ico: "🎯", text: `${disc} está em ${p}% de acerto (${v.c}/${v.q}). Abaixo de 60% = voltar à teoria desse tópico antes de fazer mais questões.` });
+      if (p >= 80 && disc === "TI")
+        msgs.push({ level: "good", ico: "💪", text: `TI está em ${p}% de acerto. Mantenha só o aquecimento (mini-simulados) e realoque energia para os Conhecimentos Básicos.` });
+    }
+  }
+
+  const st = streak();
+  if (st >= 3) msgs.push({ level: "good", ico: "🔥", text: `${st} dias seguidos de estudo. Constância é o que aprova — proteja a sequência com pelo menos 25 minutos até nos dias ruins.` });
+
+  return msgs;
+}
+
+/* ============================================================
+   RENDER: HOJE
+============================================================ */
+function renderHoje() {
+  const el = document.getElementById("tab-hoje");
+  const today = todayStr();
+  const dow = new Date().getDay();
+  const dia = CRONO[dow];
+  const doneToday = state.blocksDone[today] || [];
+  const due = dueReviews(today);
+  const wm = weekMinutes(today);
+  const pctSemana = Math.min(100, Math.round((wm / (META_HORAS_SEMANA * 60)) * 100));
+  const est = editalStats();
+
+  const msgs = coachMessages().map(m =>
+    `<div class="coach-msg ${m.level}"><span class="ico">${m.ico}</span><span>${esc(m.text)}</span></div>`).join("");
+
+  const revHtml = due.length
+    ? due.map(({ review: r, step, late }) => `
+      <div class="review-item">
+        <span class="badge kind">${r.kind === "erro" ? "erro" : "tópico"} · R+${step.offset}</span>
+        <div class="rt">
+          <div>${esc(r.label)} <span class="muted">· ${esc(r.disc)}</span></div>
+          ${r.note ? `<div class="rnote">💡 ${esc(r.note)}</div>` : ""}
+        </div>
+        ${late > 0 ? `<span class="badge late">${late}d atrasada</span>` : ""}
+        <button class="btn sm" onclick="markReviewDone('${r.id}')">Revisado ✓</button>
+      </div>`).join("")
+    : `<div class="empty">Nenhuma revisão para hoje. 🎉 ${upcomingReviews(today, 7)} agendada(s) para os próximos 7 dias.</div>`;
+
+  const blocosHtml = dia.blocos.map(b => {
+    const done = doneToday.includes(b.id);
+    return `
+      <div class="block-item ${done ? "done" : ""}">
+        <input type="checkbox" ${done ? "checked" : ""} onchange="toggleBlock('${b.id}')">
+        <div class="bt">${esc(b.txt)}</div>
+        <span class="badge">${b.dur}</span>
+      </div>`;
+  }).join("");
+
+  el.innerHTML = `
+    <div class="card">
+      <h2>🧑‍🏫 Seu professor diz:</h2>
+      ${msgs}
+      <div class="muted" style="margin-top:8px">💡 Dica de ${dia.nome.toLowerCase()}: ${esc(DICAS[dow])}</div>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <h2>🔁 Revisões de hoje <span class="muted">(o coração do método)</span></h2>
+        ${revHtml}
+      </div>
+      <div class="card">
+        <h2>📅 Plano de ${dia.nome.toLowerCase()}</h2>
+        ${blocosHtml}
+        <div class="muted" style="margin-top:6px">Terminou um bloco? Registre a sessão na aba ✍️ Registrar (ou use o cronômetro abaixo).</div>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <h2>⏱️ Cronômetro de estudo líquido</h2>
+        <div class="timer-box">
+          <div class="clock" id="clock">00:00:00</div>
+          <div class="controls">
+            <select id="timer-disc">${DISCS.map(d => `<option>${d}</option>`).join("")}</select>
+            <button class="btn" id="timer-start" onclick="timerToggle()">▶ Iniciar</button>
+            <button class="btn ghost" onclick="timerSave()">💾 Salvar sessão</button>
+            <button class="btn ghost" onclick="timerReset()">↺ Zerar</button>
+          </div>
+          <div class="muted" style="margin-top:8px">Pausou para o WhatsApp? Pause o cronômetro. Só conta minuto líquido.</div>
+        </div>
+      </div>
+      <div class="card">
+        <h2>📊 Semana atual</h2>
+        <div class="small"><strong>${hoursFmt(wm)}</strong> de ${META_HORAS_SEMANA}h líquidas (meta)</div>
+        <div class="progress-outer"><div style="width:${pctSemana}%"></div></div>
+        <div class="muted">${pctSemana}% da meta semanal</div>
+        <h3>Edital dominado</h3>
+        <div class="small"><strong>${est.dom}</strong> de ${est.total} tópicos com ≥80% de acerto</div>
+        <div class="progress-outer"><div style="width:${Math.round((est.dom / est.total) * 100)}%"></div></div>
+        <h3>🔥 Sequência</h3>
+        <div class="small"><strong>${streak()}</strong> dia(s) seguidos com estudo registrado</div>
+      </div>
+    </div>`;
+  updateClockDisplay();
+}
+
+function toggleBlock(bid) {
+  const today = todayStr();
+  const arr = state.blocksDone[today] || (state.blocksDone[today] = []);
+  const i = arr.indexOf(bid);
+  if (i >= 0) arr.splice(i, 1); else arr.push(bid);
+  save(); renderHoje();
+}
+
+/* ============================================================
+   CRONÔMETRO
+============================================================ */
+let timer = { running: false, elapsed: 0, lastTick: null, handle: null };
+function timerToggle() {
+  const btn = document.getElementById("timer-start");
+  if (timer.running) {
+    timer.running = false;
+    clearInterval(timer.handle);
+    if (btn) btn.textContent = "▶ Continuar";
+  } else {
+    timer.running = true;
+    timer.lastTick = Date.now();
+    timer.handle = setInterval(() => {
+      timer.elapsed += Date.now() - timer.lastTick;
+      timer.lastTick = Date.now();
+      updateClockDisplay();
+    }, 1000);
+    if (btn) btn.textContent = "⏸ Pausar";
+  }
+}
+function updateClockDisplay() {
+  const c = document.getElementById("clock");
+  if (!c) return;
+  const s = Math.floor(timer.elapsed / 1000);
+  c.textContent = [Math.floor(s / 3600), Math.floor((s % 3600) / 60), s % 60]
+    .map(n => String(n).padStart(2, "0")).join(":");
+  const btn = document.getElementById("timer-start");
+  if (btn) btn.textContent = timer.running ? "⏸ Pausar" : (timer.elapsed ? "▶ Continuar" : "▶ Iniciar");
+}
+function timerSave() {
+  const min = Math.round(timer.elapsed / 60000);
+  if (min < 1) { toast("Menos de 1 minuto — nada para salvar."); return; }
+  const disc = document.getElementById("timer-disc").value;
+  state.sessions.push({ id: uid(), date: todayStr(), disc, minutes: min, questions: 0, correct: 0 });
+  save(); timerReset(); renderHoje();
+  toast(`💾 ${hoursFmt(min)} de ${disc} registrados! Fez questões? Complete na aba Registrar.`);
+}
+function timerReset() {
+  timer.running = false; timer.elapsed = 0;
+  clearInterval(timer.handle);
+  updateClockDisplay();
+}
+
+/* ============================================================
+   RENDER: MÉTODO (professor)
+============================================================ */
+function renderMetodo() {
+  document.getElementById("tab-metodo").innerHTML = `
+  <div class="card">
+    <h2>🧑‍🏫 Como se estuda para concurso (o método, do zero)</h2>
+    <p class="small">Você disse que não sabe estudar para concursos — ótimo, porque quem "sabe" geralmente sabe errado.
+    Estudar para concurso não é ler muito: é um ciclo industrial de <strong>questões → erro → registro → revisão</strong>.
+    Este app automatiza a parte que todo mundo falha: saber <em>o que revisar em que dia</em>.</p>
+
+    <div class="lesson">
+      <h3>Lição 1 — A prova é o currículo, não o conhecimento</h3>
+      <p>Você não estuda "SQL": você estuda <strong>como bancas cobram SQL</strong>. A unidade de estudo é a questão,
+      não o capítulo. Teoria só entra quando uma questão prova que falta base.</p>
+      <p><strong>Na prática:</strong> para cada tópico do edital → resolva 20 questões → se acertar ≥80%, marque
+      <kbd class="chip">Dominado</kbd> na aba Edital e nunca mais estude teoria disso. Se acertar menos, aí sim vá à teoria.</p>
+    </div>
+
+    <div class="lesson">
+      <h3>Lição 2 — A curva do esquecimento (por que +1, +7, +30)</h3>
+      <p>Sem revisão, você esquece ~70% do que estudou em uma semana. A correção é revisar em intervalos crescentes:
+      <strong>1 dia depois, 7 dias depois, 30 dias depois</strong>. Cada revisão "achata" a curva do esquecimento.</p>
+      <p><strong>Na prática:</strong> toda vez que você registra um <em>tópico novo estudado</em> ou um <em>erro</em> na aba
+      ✍️ Registrar, o app agenda as 3 revisões sozinho. Sua única obrigação: abrir a aba 📅 Hoje e fazer o que ela mandar.
+      Revisar um item leva 2–5 minutos — é reler a regra e refazer 2 ou 3 questões do tópico.</p>
+    </div>
+
+    <div class="lesson">
+      <h3>Lição 3 — O erro é o seu material de estudo mais valioso</h3>
+      <p>Prova se ganha eliminando erro repetido. Todo erro tem uma causa, e cada causa tem remédio diferente:</p>
+      <ul>
+        <li><strong>CONCEITO</strong> (não sabia) → voltar à teoria daquele ponto específico.</li>
+        <li><strong>CONFUSÃO</strong> (troquei conceitos parecidos) → montar quadro comparativo (ex.: TRUNCATE × DELETE × DROP).</li>
+        <li><strong>DESATENÇÃO</strong> (li errado, caí no "EXCETO") → treinar leitura do comando: sublinhar o que a questão PEDE.</li>
+        <li><strong>CHUTE-SORTE</strong> (acertei sem saber) → registre também! É um erro disfarçado.</li>
+      </ul>
+      <p><strong>Na prática:</strong> registre cada erro na aba ✍️ Registrar escrevendo a regra <em>com as suas palavras</em>
+      — se não consegue explicar, não aprendeu. O app transforma cada erro em 3 revisões futuras.</p>
+    </div>
+
+    <div class="lesson">
+      <h3>Lição 4 — Estudo líquido (a mentira das "6 horas por dia")</h3>
+      <p>Três blocos de 1h de cronômetro rodando (manhã, tarde e noite) valem mais que 6h "estudando" com celular do lado.
+      Minuto líquido = cronômetro ligado e atenção na tarefa. Use o cronômetro da aba Hoje e pause a cada interrupção, sem dó.
+      1h é curta de propósito: dá para cumprir TODO dia — e cumprir todo dia é o que aprova.</p>
+      <p><strong>Meta: ${META_HORAS_SEMANA}h líquidas/semana.</strong> Menos que isso por 2 semanas seguidas = reduza o tamanho
+      dos blocos (25 min já vale), nunca abandone o ciclo.</p>
+    </div>
+
+    <div class="lesson">
+      <h3>Lição 5 — Ciclo, não cronograma rígido</h3>
+      <p>Perdeu a segunda-feira? Você NÃO "repõe" — retoma o ciclo de onde parou. Ciclo de estudos não tem buraco,
+      tem sequência. A culpa por bloco perdido derruba mais candidatos que o bloco perdido em si.</p>
+    </div>
+
+    <div class="lesson">
+      <h3>Lição 6 — Simulado é treino de PROVA, não de conteúdo</h3>
+      <p>A cada 2 semanas: prova antiga completa, cronometrada, sem consulta, de preferência no horário real da prova.
+      O que você treina: gestão de tempo, ordem das disciplinas (comece pela sua mais forte), quando chutar e quando pular.</p>
+      <p><strong>A correção vale mais que a prova:</strong> cada erro → caderno de erros, com causa. Registre as notas na
+      aba ✍️ Registrar para ver sua curva de evolução em 📈 Progresso.</p>
+      <p>Referências de nota: ~50% em cada bloco é o corte histórico de eliminação; <strong>aprovação dentro das vagas
+      costuma pedir 70%+</strong>.</p>
+    </div>
+
+    <div class="lesson">
+      <h3>Lição 7 — Redação: a disciplina que define quem é convocado</h3>
+      <p>Ela é eliminatória (nota mínima histórica ~70/100) e classificatória. Como você tende a ir bem em TI,
+      a redação é o seu desempate para DENTRO das vagas. 1 por semana, domingo, manuscrita, 30 linhas, 1h cronometrada.
+      Estrutura e temas estão em <kbd class="chip">redacao/</kbd> no projeto.</p>
+    </div>
+
+    <div class="lesson">
+      <h3>Lição 8 — Sua estratégia específica (perfil: já é de TI)</h3>
+      <ul>
+        <li><strong>Prioridade nº 1: Conhecimentos Bancários</strong> — é onde candidato de TI reprova. Teoria + resumo próprio + questões no mesmo dia.</li>
+        <li><strong>Prioridade nº 2: Português</strong> — 30 questões/semana, todo erro vira registro.</li>
+        <li><strong>TI: zero teoria passiva.</strong> Só questões + engenharia reversa do erro. Se estiver ≥80%, reduza ainda mais.</li>
+        <li><strong>Banca indefinida</strong> (Cesgranrio foi descontratada em jan/2026): treine multibanca — Cesgranrio, FGV e Cebraspe — até o edital sair. Quando sair: filtre tudo pela banca oficial.</li>
+      </ul>
+    </div>
+
+    <div class="lesson">
+      <h3>Sua rotina com este app (resumo de 30 segundos)</h3>
+      <ol>
+        <li>Abra a aba <strong>📅 Hoje</strong> → faça as <strong>revisões</strong> e os <strong>📇 Cartões</strong> vencidos primeiro, depois os blocos do dia.</li>
+        <li>Estude com o <strong>cronômetro</strong> ligado. Sem material à mão? A aba <strong>🧪 Quiz</strong> tem ${QUESTOES.length} questões estilo banca prontas.</li>
+        <li>Estudou tópico novo ou errou questão? → <strong>✍️ Registrar</strong> (o app agenda as revisões).</li>
+        <li>Bateu ≥80% num tópico? → marque na aba <strong>📖 Edital</strong>.</li>
+        <li>Domingo: olhe <strong>📈 Progresso</strong> e leia o que o professor mandou na aba Hoje.</li>
+      </ol>
+    </div>
+  </div>`;
+}
+
+/* ============================================================
+   RENDER: REGISTRAR
+============================================================ */
+function renderRegistrar() {
+  const el = document.getElementById("tab-registrar");
+  el.innerHTML = `
+  <div class="grid-2">
+    <div class="card">
+      <h2>📚 Sessão de estudo</h2>
+      <p class="muted">Registre cada bloco estudado. Se marcar "tópico novo", o professor agenda revisões em +1, +7 e +30 dias.</p>
+      <form id="form-sessao" onsubmit="return submitSessao(event)">
+        <div class="row">
+          <div class="field"><label>Data</label><input type="date" name="date" value="${todayStr()}" required></div>
+          <div class="field"><label>Disciplina</label><select name="disc">${DISCS.map(d => `<option>${d}</option>`).join("")}</select></div>
+          <div class="field"><label>Minutos líquidos</label><input type="number" name="minutes" min="1" max="600" required placeholder="90"></div>
+        </div>
+        <div class="row">
+          <div class="field"><label>Questões feitas</label><input type="number" name="questions" min="0" value="0"></div>
+          <div class="field"><label>Acertos</label><input type="number" name="correct" min="0" value="0"></div>
+        </div>
+        <div class="row">
+          <div class="field wide"><label>Estudei um tópico NOVO (agendar revisão espaçada) — qual?</label>
+          <input name="newTopic" placeholder="ex.: Formas normais (1FN a BCNF) — deixe vazio se foi só questões/revisão"></div>
+        </div>
+        <button class="btn">Salvar sessão</button>
+      </form>
+    </div>
+
+    <div class="card">
+      <h2>❌ Caderno de erros</h2>
+      <p class="muted">Toda questão errada (ou acertada no chute) entra aqui NO MESMO DIA. Vira revisão automática.</p>
+      <form id="form-erro" onsubmit="return submitErro(event)">
+        <div class="row">
+          <div class="field"><label>Disciplina</label><select name="disc">${DISCS.map(d => `<option>${d}</option>`).join("")}</select></div>
+          <div class="field"><label>Causa do erro</label><select name="cause">${CAUSAS.map(c => `<option>${c}</option>`).join("")}</select></div>
+        </div>
+        <div class="row"><div class="field wide"><label>Tópico / o que a questão cobrou</label>
+          <input name="topic" required placeholder="ex.: TRUNCATE × DELETE quanto a rollback"></div></div>
+        <div class="row"><div class="field wide"><label>A regra correta, com as SUAS palavras</label>
+          <textarea name="rule" rows="2" required placeholder="Se você não consegue explicar, ainda não aprendeu."></textarea></div></div>
+        <div class="row"><div class="field wide"><label>Pegadinha para lembrar (opcional)</label>
+          <input name="trap" placeholder='ex.: "TRUNCATE é DDL disfarçado de limpeza"'></div></div>
+        <button class="btn">Registrar erro + agendar revisões</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>🧪 Simulado</h2>
+    <p class="muted">Prova antiga completa, cronometrada. Registre os percentuais para acompanhar a curva de evolução.</p>
+    <form id="form-sim" onsubmit="return submitSimulado(event)">
+      <div class="row">
+        <div class="field"><label>Data</label><input type="date" name="date" value="${todayStr()}" required></div>
+        <div class="field wide" style="flex:2"><label>Prova</label><input name="name" required placeholder="ex.: BB Agente de Tecnologia 2021 (Cesgranrio)"></div>
+      </div>
+      <div class="row">
+        <div class="field"><label>Básicos %</label><input type="number" name="basicos" min="0" max="100" required></div>
+        <div class="field"><label>Específicos %</label><input type="number" name="especificos" min="0" max="100" required></div>
+        <div class="field"><label>Total %</label><input type="number" name="total" min="0" max="100" required></div>
+        <div class="field"><label>Redação (0–100, opcional)</label><input type="number" name="redacao" min="0" max="100"></div>
+      </div>
+      <div class="row"><div class="field wide"><label>Observações (tempo, disciplinas fracas, decisão para as próximas 2 semanas)</label>
+        <textarea name="obs" rows="2"></textarea></div></div>
+      <button class="btn">Registrar simulado</button>
+    </form>
+  </div>
+
+  <div class="card">
+    <h2>📝 Redação</h2>
+    <p class="muted">1 por semana (domingo). Escreveu? Digite ou fotografe o texto e <strong>cole no chat do Claude Code — ele corrige
+    estilo banca (nota 0–100 por critério) e sugere reescritas</strong>. Depois registre a nota aqui para acompanhar a evolução.</p>
+    <form id="form-red" onsubmit="return submitRedacao(event)">
+      <div class="row">
+        <div class="field"><label>Data</label><input type="date" name="date" value="${todayStr()}" required></div>
+        <div class="field wide" style="flex:2"><label>Tema</label><input name="tema" required placeholder="ex.: Segurança cibernética na era do Open Finance"></div>
+      </div>
+      <div class="row">
+        <div class="field"><label>Nota (0–100)</label><input type="number" name="nota" min="0" max="100" required></div>
+        <div class="field"><label>Corrigida por</label>
+          <select name="por"><option>Autoavaliação</option><option>Claude</option><option>Correção externa</option></select></div>
+      </div>
+      <div class="row"><div class="field wide"><label>Principal ponto a melhorar</label>
+        <input name="obs" placeholder="ex.: conclusão sem agente da proposta de intervenção"></div></div>
+      <button class="btn">Registrar redação</button>
+    </form>
+  </div>
+
+  <div class="card">
+    <h2>🗂️ Últimos registros</h2>
+    <div id="recent-logs"></div>
+  </div>`;
+  renderRecentLogs();
+}
+function submitRedacao(ev) {
+  ev.preventDefault();
+  const f = new FormData(ev.target);
+  state.redacoes.push({ id: uid(), date: f.get("date"), tema: f.get("tema").trim(),
+    nota: +f.get("nota"), por: f.get("por"), obs: (f.get("obs") || "").trim() });
+  state.redacoes.sort((a, b) => a.date < b.date ? -1 : 1);
+  state.sessions.push({ id: uid(), date: f.get("date"), disc: "Redação", minutes: 60, questions: 0, correct: 0 });
+  save(); ev.target.reset();
+  ev.target.querySelector('[name=date]').value = todayStr();
+  renderRecentLogs();
+  toast(+f.get("nota") >= 70 ? "📝 Registrada! Acima da nota mínima histórica (70). 👏" : "📝 Registrada. Abaixo de 70 — leia o modelo em redacao/modelo-estrutura.md e ataque o ponto fraco anotado.");
+  return false;
+}
+function delRedacao(id) { state.redacoes = state.redacoes.filter(r => r.id !== id); save(); renderRecentLogs(); }
+
+function renderRecentLogs() {
+  const el = document.getElementById("recent-logs");
+  if (!el) return;
+  const rows = [];
+  for (const s of state.sessions.slice(-8).reverse())
+    rows.push(`<tr><td>${fmtBR(s.date)}</td><td>📚 Sessão</td><td>${esc(s.disc)} — ${hoursFmt(s.minutes)}${s.questions ? ` · ${s.correct}/${s.questions} questões` : ""}</td>
+      <td><button class="btn sm ghost" onclick="delSession('${s.id}')">excluir</button></td></tr>`);
+  for (const e of state.errors.slice(-8).reverse())
+    rows.push(`<tr><td>${fmtBR(e.date)}</td><td>❌ Erro</td><td>[${esc(e.disc)}] ${esc(e.topic)}</td>
+      <td><button class="btn sm ghost" onclick="delError('${e.id}')">excluir</button></td></tr>`);
+  for (const r of state.redacoes.slice(-5).reverse())
+    rows.push(`<tr><td>${fmtBR(r.date)}</td><td>📝 Redação</td><td>${esc(r.tema)} — <strong>${r.nota}</strong>/100 (${esc(r.por)})</td>
+      <td><button class="btn sm ghost" onclick="delRedacao('${r.id}')">excluir</button></td></tr>`);
+  el.innerHTML = rows.length
+    ? `<div class="table-scroll"><table class="data"><tr><th>Data</th><th>Tipo</th><th>Detalhe</th><th></th></tr>${rows.join("")}</table></div>`
+    : `<div class="empty">Nada registrado ainda. Sua primeira sessão de hoje pode ser de 25 minutos — começa pequeno, mas começa.</div>`;
+}
+
+function submitSessao(ev) {
+  ev.preventDefault();
+  const f = new FormData(ev.target);
+  const q = +f.get("questions") || 0, c = Math.min(+f.get("correct") || 0, +f.get("questions") || 0);
+  state.sessions.push({ id: uid(), date: f.get("date"), disc: f.get("disc"), minutes: +f.get("minutes"), questions: q, correct: c });
+  const nt = (f.get("newTopic") || "").trim();
+  if (nt) createReview(nt, f.get("disc"), "topico", "");
+  save(); ev.target.reset();
+  ev.target.querySelector('[name=date]').value = todayStr();
+  renderRecentLogs();
+  toast(nt ? "💾 Sessão salva + revisões agendadas para +1, +7 e +30 dias!" : "💾 Sessão salva!");
+  return false;
+}
+function submitErro(ev) {
+  ev.preventDefault();
+  const f = new FormData(ev.target);
+  const e = { id: uid(), date: todayStr(), disc: f.get("disc"), topic: f.get("topic").trim(),
+              cause: f.get("cause"), rule: f.get("rule").trim(), trap: (f.get("trap") || "").trim() };
+  state.errors.push(e);
+  createReview(e.topic, e.disc, "erro", e.trap || e.rule.slice(0, 120));
+  save(); ev.target.reset(); renderRecentLogs();
+  toast("❌→✅ Erro registrado. O professor vai te cobrar esse tópico amanhã, em 7 e em 30 dias.");
+  return false;
+}
+function submitSimulado(ev) {
+  ev.preventDefault();
+  const f = new FormData(ev.target);
+  state.simulados.push({ id: uid(), date: f.get("date"), name: f.get("name").trim(),
+    basicos: +f.get("basicos"), especificos: +f.get("especificos"), total: +f.get("total"),
+    redacao: f.get("redacao") ? +f.get("redacao") : null, obs: (f.get("obs") || "").trim() });
+  state.simulados.sort((a, b) => a.date < b.date ? -1 : 1);
+  save(); ev.target.reset();
+  ev.target.querySelector('[name=date]').value = todayStr();
+  toast("🧪 Simulado registrado! Veja sua curva em 📈 Progresso.");
+  return false;
+}
+function delSession(id) { state.sessions = state.sessions.filter(s => s.id !== id); save(); renderRecentLogs(); }
+function delError(id) { state.errors = state.errors.filter(e => e.id !== id); save(); renderRecentLogs(); }
+
+/* ============================================================
+   RENDER: EDITAL
+============================================================ */
+function renderEdital() {
+  const el = document.getElementById("tab-edital");
+  const est = editalStats();
+  const groups = EDITAL.map((g, di) => {
+    const stat = est.per[di];
+    const rows = g.topics.map((t, ti) => {
+      const st = state.edital[topicKey(di, ti)] || 0;
+      return `<div class="topic-row">
+        <div class="tname">${esc(t)}</div>
+        <button class="status-chip s${st}" onclick="cycleTopic(${di},${ti})">${STATUS_LABELS[st]}</button>
+      </div>`;
+    }).join("");
+    return `<details class="disc">
+      <summary>
+        <span>${esc(g.disc)}</span>
+        <div class="mini-bar"><div style="width:${Math.round((stat.dom / stat.total) * 100)}%"></div></div>
+        <span class="muted">${stat.dom}/${stat.total} dominados</span>
+      </summary>
+      ${rows}
+    </details>`;
+  }).join("");
+
+  el.innerHTML = `
+  <div class="card">
+    <h2>📖 Edital verticalizado interativo</h2>
+    <p class="small">Clique no status para avançar: <span class="status-chip">Não iniciado</span> →
+    <span class="status-chip s1">Teoria vista</span> → <span class="status-chip s2">Em questões</span> →
+    <span class="status-chip s3">Dominado ✓</span></p>
+    <p class="muted">Regra: <strong>Dominado</strong> = ≥80% de acerto em ≥20 questões do tópico. Baseado no edital de 2021 —
+    quando o novo sair, os tópicos serão revisados.</p>
+    <div class="small" style="margin-top:8px"><strong>${est.dom}</strong> de ${est.total} tópicos dominados</div>
+    <div class="progress-outer"><div style="width:${Math.round((est.dom / est.total) * 100)}%"></div></div>
+  </div>
+  ${groups}`;
+}
+function cycleTopic(di, ti) {
+  const k = topicKey(di, ti);
+  const next = ((state.edital[k] || 0) + 1) % 4;
+  state.edital[k] = next;
+  save();
+  const details = [...document.querySelectorAll("details.disc")].map(d => d.open);
+  renderEdital();
+  [...document.querySelectorAll("details.disc")].forEach((d, i) => (d.open = details[i]));
+  if (next === 3) toast("🏆 Tópico dominado! Não estude mais teoria disso — só manutenção via questões.");
+}
+
+/* ============================================================
+   RENDER: PROGRESSO (gráficos)
+============================================================ */
+function renderProgresso() {
+  const el = document.getElementById("tab-progresso");
+  const totalMin = state.sessions.reduce((a, s) => a + s.minutes, 0);
+  const totalQ = state.sessions.reduce((a, s) => a + (s.questions || 0), 0);
+  const totalC = state.sessions.reduce((a, s) => a + (s.correct || 0), 0);
+  const pctGeral = totalQ ? Math.round((totalC / totalQ) * 100) : null;
+  const est = editalStats();
+
+  el.innerHTML = `
+  <div class="grid-4">
+    <div class="tile"><div class="label">Horas líquidas totais</div><div class="value">${hoursFmt(totalMin)}</div></div>
+    <div class="tile"><div class="label">Questões resolvidas</div><div class="value">${totalQ}</div>
+      <div class="delta">${pctGeral !== null ? pctGeral + "% de acerto geral" : "—"}</div></div>
+    <div class="tile"><div class="label">Erros no caderno</div><div class="value">${state.errors.length}</div>
+      <div class="delta">${state.reviews.filter(r => r.steps.every(s => s.done)).length} ciclos de revisão completos</div></div>
+    <div class="tile"><div class="label">Edital dominado</div><div class="value">${Math.round((est.dom / est.total) * 100)}%</div>
+      <div class="delta">${est.dom}/${est.total} tópicos</div></div>
+  </div>
+
+  <div class="card">
+    <h2>Horas líquidas por semana</h2>
+    <p class="muted">Meta: ${META_HORAS_SEMANA}h/semana (linha tracejada). Constância importa mais que picos.</p>
+    <div class="chart-wrap" id="chart-horas"></div>
+  </div>
+
+  <div class="card">
+    <h2>Evolução nos simulados</h2>
+    <div class="legend">
+      <span class="li"><span class="sw" style="background:var(--series-1)"></span>Total</span>
+      <span class="li"><span class="sw" style="background:var(--series-2)"></span>Básicos</span>
+      <span class="li"><span class="sw" style="background:var(--series-3)"></span>Específicos</span>
+    </div>
+    <div class="chart-wrap" id="chart-sim"></div>
+    <div id="sim-table"></div>
+  </div>
+
+  <div class="card">
+    <h2>Redações</h2>
+    <p class="muted">Nota mínima histórica: 70/100. Nota alta = subir na classificação.</p>
+    ${state.redacoes.length ? `<div class="table-scroll"><table class="data">
+      <tr><th>Data</th><th>Tema</th><th>Nota</th><th>Corrigida por</th><th>Melhorar</th></tr>
+      ${state.redacoes.map(r => `<tr><td>${fmtBR(r.date)}</td><td>${esc(r.tema)}</td>
+        <td><strong style="color:${r.nota >= 70 ? "var(--good-text)" : "var(--critical)"}">${r.nota}</strong></td>
+        <td>${esc(r.por)}</td><td>${esc(r.obs || "—")}</td></tr>`).join("")}
+    </table></div>` : `<div class="empty">Nenhuma redação registrada. A 1ª entra na Semana 3 do plano (aba 📚 Materiais).</div>`}
+  </div>
+
+  <div class="card">
+    <h2>Acerto por disciplina</h2>
+    <p class="muted">Sinal de ação: &lt;60% = voltar à teoria; ≥80% = manutenção via questões.</p>
+    <div class="chart-wrap" id="chart-acc"></div>
+  </div>
+
+  <div class="card">
+    <h2>💾 Backup dos dados</h2>
+    <p class="muted">Os dados vivem só neste navegador. Exporte um backup de vez em quando (ex.: todo domingo) para a pasta do projeto.</p>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button class="btn ghost" onclick="exportData()">⬇️ Exportar JSON</button>
+      <button class="btn ghost" onclick="document.getElementById('import-file').click()">⬆️ Importar JSON</button>
+      <button class="btn danger" onclick="resetAll()">🗑️ Apagar tudo</button>
+      <input type="file" id="import-file" accept=".json" style="display:none" onchange="importData(event)">
+    </div>
+  </div>`;
+
+  drawHorasChart();
+  drawSimChart();
+  drawAccChart();
+  renderSimTable();
+}
+
+/* ---------- gráfico: horas por semana (barras) ---------- */
+function drawHorasChart() {
+  const host = document.getElementById("chart-horas");
+  if (!host) return;
+  const weeks = [];
+  let ws = weekStart(todayStr());
+  for (let i = 7; i >= 0; i--) weeks.push(addDays(ws, -7 * i));
+  const data = weeks.map(w => {
+    const we = addDays(w, 6);
+    const min = state.sessions.filter(s => s.date >= w && s.date <= we).reduce((a, s) => a + s.minutes, 0);
+    return { week: w, hours: min / 60 };
+  });
+  if (data.every(d => d.hours === 0)) { host.innerHTML = `<div class="empty">Sem sessões registradas ainda — as barras aparecem aqui conforme você estuda.</div>`; return; }
+
+  const W = 720, H = 220, padL = 34, padB = 26, padT = 12, padR = 8;
+  const maxY = Math.max(META_HORAS_SEMANA + 4, ...data.map(d => d.hours)) * 1.1;
+  const bw = (W - padL - padR) / data.length;
+  const y = v => H - padB - (v / maxY) * (H - padB - padT);
+  let bars = "", labels = "", grid = "";
+  const stepsY = 4;
+  for (let i = 0; i <= stepsY; i++) {
+    const v = (maxY / stepsY) * i, yy = y(v);
+    grid += `<line x1="${padL}" y1="${yy}" x2="${W - padR}" y2="${yy}" stroke="var(--grid)" stroke-width="1"/>
+             <text x="${padL - 6}" y="${yy + 4}" text-anchor="end" font-size="10" fill="var(--ink-muted)">${Math.round(v)}h</text>`;
+  }
+  const metaY = y(META_HORAS_SEMANA);
+  data.forEach((d, i) => {
+    const x = padL + i * bw + bw * 0.18, w = bw * 0.64;
+    const h = Math.max(0, H - padB - y(d.hours));
+    if (d.hours > 0)
+      bars += `<path d="M${x},${H - padB} v${-Math.max(0, h - 4)} q0,-4 4,-4 h${w - 8} q4,0 4,4 v${Math.max(0, h - 4)} z"
+        fill="var(--seq-450)" data-tip="Semana de ${fmtBR(d.week)}: ${d.hours.toFixed(1)}h líquidas" class="hoverable"/>`;
+    labels += `<text x="${x + w / 2}" y="${H - padB + 15}" text-anchor="middle" font-size="10" fill="var(--ink-muted)">${fmtBR(d.week).slice(0, 5)}</text>`;
+  });
+  host.innerHTML = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Horas de estudo por semana">
+    ${grid}
+    <line x1="${padL}" y1="${metaY}" x2="${W - padR}" y2="${metaY}" stroke="var(--ink-muted)" stroke-width="1.5" stroke-dasharray="5 4"/>
+    <text x="${W - padR}" y="${metaY - 5}" text-anchor="end" font-size="10" fill="var(--ink-2)">meta ${META_HORAS_SEMANA}h</text>
+    ${bars}
+    <line x1="${padL}" y1="${H - padB}" x2="${W - padR}" y2="${H - padB}" stroke="var(--baseline)" stroke-width="1"/>
+    ${labels}
+  </svg>`;
+  attachTips(host);
+}
+
+/* ---------- gráfico: simulados (linhas) ---------- */
+function drawSimChart() {
+  const host = document.getElementById("chart-sim");
+  if (!host) return;
+  const sims = state.simulados;
+  if (sims.length === 0) { host.innerHTML = `<div class="empty">Nenhum simulado ainda. O diagnóstico (prova BB 2021) inaugura este gráfico.</div>`; return; }
+
+  const W = 720, H = 240, padL = 36, padB = 26, padT = 14, padR = 46;
+  const x = i => sims.length === 1 ? (padL + (W - padL - padR) / 2) : padL + (i / (sims.length - 1)) * (W - padL - padR);
+  const y = v => H - padB - (v / 100) * (H - padB - padT);
+  let grid = "";
+  for (let v = 0; v <= 100; v += 25)
+    grid += `<line x1="${padL}" y1="${y(v)}" x2="${W - padR}" y2="${y(v)}" stroke="var(--grid)" stroke-width="1"/>
+             <text x="${padL - 6}" y="${y(v) + 4}" text-anchor="end" font-size="10" fill="var(--ink-muted)">${v}%</text>`;
+  const corte = `<line x1="${padL}" y1="${y(50)}" x2="${W - padR}" y2="${y(50)}" stroke="var(--critical)" stroke-width="1" stroke-dasharray="3 4" opacity="0.6"/>
+    <text x="${W - padR}" y="${y(50) - 4}" text-anchor="end" font-size="9" fill="var(--critical)" opacity="0.8">corte 50%</text>`;
+
+  const series = [
+    { key: "total", name: "Total", color: "var(--series-1)" },
+    { key: "basicos", name: "Básicos", color: "var(--series-2)" },
+    { key: "especificos", name: "Específicos", color: "var(--series-3)" },
+  ];
+  let lines = "", dots = "", endLabels = "", xlabels = "";
+  for (const s of series) {
+    const pts = sims.map((sim, i) => `${x(i)},${y(sim[s.key])}`).join(" ");
+    if (sims.length > 1) lines += `<polyline points="${pts}" fill="none" stroke="${s.color}" stroke-width="2" stroke-linejoin="round"/>`;
+    sims.forEach((sim, i) => {
+      dots += `<circle cx="${x(i)}" cy="${y(sim[s.key])}" r="4" fill="${s.color}" stroke="var(--surface-1)" stroke-width="2"
+        class="hoverable" data-tip="${esc(sim.name)} (${fmtBR(sim.date)}) — ${s.name}: ${sim[s.key]}%"/>`;
+    });
+    const last = sims[sims.length - 1];
+    endLabels += `<text x="${x(sims.length - 1) + 8}" y="${y(last[s.key]) + 4}" font-size="10" font-weight="600" fill="${s.color}">${last[s.key]}%</text>`;
+  }
+  sims.forEach((sim, i) => {
+    xlabels += `<text x="${x(i)}" y="${H - padB + 15}" text-anchor="middle" font-size="10" fill="var(--ink-muted)">${fmtBR(sim.date).slice(0, 5)}</text>`;
+  });
+  host.innerHTML = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Evolução nos simulados">
+    ${grid}${corte}${lines}${dots}${endLabels}
+    <line x1="${padL}" y1="${H - padB}" x2="${W - padR}" y2="${H - padB}" stroke="var(--baseline)" stroke-width="1"/>
+    ${xlabels}
+  </svg>`;
+  attachTips(host);
+}
+
+function renderSimTable() {
+  const el = document.getElementById("sim-table");
+  if (!el || state.simulados.length === 0) { if (el) el.innerHTML = ""; return; }
+  el.innerHTML = `<div class="table-scroll" style="margin-top:10px"><table class="data">
+    <tr><th>Data</th><th>Prova</th><th>Básicos</th><th>Específicos</th><th>Total</th><th>Redação</th><th></th></tr>
+    ${state.simulados.map(s => `<tr><td>${fmtBR(s.date)}</td><td>${esc(s.name)}</td>
+      <td>${s.basicos}%</td><td>${s.especificos}%</td><td><strong>${s.total}%</strong></td>
+      <td>${s.redacao ?? "—"}</td>
+      <td><button class="btn sm ghost" onclick="delSim('${s.id}')">excluir</button></td></tr>`).join("")}
+  </table></div>`;
+}
+function delSim(id) { state.simulados = state.simulados.filter(s => s.id !== id); save(); renderProgresso(); }
+
+/* ---------- gráfico: acerto por disciplina (barras horizontais) ---------- */
+function drawAccChart() {
+  const host = document.getElementById("chart-acc");
+  if (!host) return;
+  const acc = accuracyByDisc();
+  const rows = Object.entries(acc).filter(([, v]) => v.q > 0)
+    .map(([disc, v]) => ({ disc, pct: Math.round((v.c / v.q) * 100), q: v.q, c: v.c }))
+    .sort((a, b) => a.pct - b.pct);
+  if (rows.length === 0) { host.innerHTML = `<div class="empty">Registre sessões com nº de questões e acertos para ver este gráfico.</div>`; return; }
+
+  const W = 720, rowH = 34, padL = 170, padR = 60, H = rows.length * rowH + 26;
+  const x = v => padL + (v / 100) * (W - padL - padR);
+  let bars = "";
+  rows.forEach((r, i) => {
+    const yy = 10 + i * rowH, bh = 16;
+    const w = Math.max(2, x(r.pct) - padL);
+    bars += `
+      <text x="${padL - 8}" y="${yy + bh - 3}" text-anchor="end" font-size="11" fill="var(--ink-2)">${esc(r.disc)}</text>
+      <rect x="${padL}" y="${yy}" width="${W - padL - padR - 2}" height="${bh}" rx="4" fill="var(--grid)" opacity="0.5"/>
+      <path d="M${padL},${yy} h${Math.max(0, w - 4)} q4,0 4,4 v${bh - 8} q0,4 -4,4 h${-Math.max(0, w - 4)} z"
+        fill="var(--seq-450)" class="hoverable" data-tip="${esc(r.disc)}: ${r.pct}% (${r.c}/${r.q} questões)"/>
+      <text x="${x(r.pct) + 8}" y="${yy + bh - 3}" font-size="11" font-weight="600" fill="var(--ink-1)">${r.pct}%</text>`;
+  });
+  const g60 = `<line x1="${x(60)}" y1="6" x2="${x(60)}" y2="${H - 20}" stroke="var(--ink-muted)" stroke-width="1" stroke-dasharray="3 4"/>
+    <text x="${x(60)}" y="${H - 6}" text-anchor="middle" font-size="9" fill="var(--ink-muted)">60%</text>`;
+  const g80 = `<line x1="${x(80)}" y1="6" x2="${x(80)}" y2="${H - 20}" stroke="var(--ink-muted)" stroke-width="1" stroke-dasharray="3 4"/>
+    <text x="${x(80)}" y="${H - 6}" text-anchor="middle" font-size="9" fill="var(--ink-muted)">80%</text>`;
+  host.innerHTML = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Percentual de acerto por disciplina">${g60}${g80}${bars}</svg>`;
+  attachTips(host);
+}
+
+/* ---------- tooltips ---------- */
+function attachTips(host) {
+  const tip = document.getElementById("viz-tooltip");
+  host.querySelectorAll(".hoverable").forEach(elm => {
+    elm.addEventListener("mousemove", e => {
+      tip.textContent = elm.getAttribute("data-tip");
+      tip.style.display = "block";
+      const pad = 14;
+      let lx = e.clientX + pad, ly = e.clientY + pad;
+      const r = tip.getBoundingClientRect();
+      if (lx + r.width > window.innerWidth - 8) lx = e.clientX - r.width - pad;
+      if (ly + r.height > window.innerHeight - 8) ly = e.clientY - r.height - pad;
+      tip.style.left = lx + "px"; tip.style.top = ly + "px";
+    });
+    elm.addEventListener("mouseleave", () => (tip.style.display = "none"));
+  });
+}
+
+/* ============================================================
+   BACKUP
+============================================================ */
+function exportData() {
+  const blob = new Blob([JSON.stringify(state, null, 2)], { type: "application/json" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = `bb-estudos-backup-${todayStr()}.json`;
+  a.click();
+  URL.revokeObjectURL(a.href);
+  toast("⬇️ Backup exportado! Guarde na pasta do projeto.");
+}
+function importData(ev) {
+  const file = ev.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = () => {
+    try {
+      const data = JSON.parse(reader.result);
+      if (!data.version) throw new Error("formato inválido");
+      state = Object.assign(defaultState(), data);
+      save(); renderAll();
+      toast("⬆️ Backup importado com sucesso!");
+    } catch (e) { toast("❌ Arquivo inválido — não é um backup deste app."); }
+  };
+  reader.readAsText(file);
+  ev.target.value = "";
+}
+function resetAll() {
+  if (!confirm("Apagar TODOS os dados de estudo deste navegador? Exporte um backup antes se tiver dúvida.")) return;
+  state = defaultState();
+  save(); renderAll();
+  toast("Dados apagados. Recomeçando do zero.");
+}
+
+/* ============================================================
+   QUIZ
+============================================================ */
+let quizS = null; // sessão de quiz em memória
+
+function quizDiscs() {
+  return ["Todas (mix)", ...new Set(QUESTOES.map(q => q.disc))];
+}
+function shuffle(arr) {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+function buildQuizPool(disc, n) {
+  let pool = QUESTOES.filter(q => disc === "Todas (mix)" || q.disc === disc);
+  const st = state.quizStats;
+  const unseen = pool.filter(q => !st[q.id]);
+  const wrongBefore = pool.filter(q => st[q.id] && st[q.id].lastWrong);
+  const rest = pool.filter(q => st[q.id] && !st[q.id].lastWrong);
+  return [...shuffle(unseen), ...shuffle(wrongBefore), ...shuffle(rest)].slice(0, n);
+}
+function startQuiz() {
+  const disc = document.getElementById("quiz-disc").value;
+  const n = +document.getElementById("quiz-n").value;
+  const mode = document.getElementById("quiz-mode").value;
+  const qs = buildQuizPool(disc, n);
+  if (!qs.length) { toast("Nenhuma questão disponível para esse filtro."); return; }
+  quizS = { qs, idx: 0, picked: null, answers: [], started: Date.now(), mode };
+  renderQuizTab();
+}
+function answerQuiz(i) {
+  if (!quizS || quizS.picked !== null) return;
+  const q = quizS.qs[quizS.idx];
+  const ok = i === q.a;
+  quizS.answers.push({ qid: q.id, disc: q.disc, ok, picked: i });
+  const st = state.quizStats[q.id] || (state.quizStats[q.id] = { seen: 0, right: 0, lastWrong: false });
+  st.seen++; if (ok) st.right++;
+  st.lastWrong = !ok;
+  if (!ok) registerQuizError(q);
+  save();
+  if (quizS.mode === "simulado") {
+    // modo prova: sem feedback, avança direto
+    if (quizS.idx + 1 >= quizS.qs.length) finishQuiz();
+    else { quizS.idx++; renderQuizTab(); }
+    return;
+  }
+  quizS.picked = i;
+  renderQuizTab();
+}
+function registerQuizError(q) {
+  const topic = `${q.top} (quiz)`;
+  state.errors.push({ id: uid(), date: todayStr(), disc: q.disc, topic,
+    cause: "CONCEITO (não sabia)", rule: q.exp, trap: q.trap || "" });
+  const jaAgendada = state.reviews.some(r => r.label === topic && r.steps.some(s => !s.done));
+  if (!jaAgendada) createReview(topic, q.disc, "erro", q.trap || q.exp.slice(0, 120));
+}
+function nextQuiz() {
+  if (!quizS) return;
+  if (quizS.idx + 1 >= quizS.qs.length) { finishQuiz(); return; }
+  quizS.idx++; quizS.picked = null;
+  renderQuizTab();
+}
+function finishQuiz() {
+  const elapsedMin = Math.max(1, Math.round((Date.now() - quizS.started) / 60000));
+  const byDisc = {};
+  for (const a of quizS.answers) {
+    byDisc[a.disc] = byDisc[a.disc] || { q: 0, c: 0 };
+    byDisc[a.disc].q++; if (a.ok) byDisc[a.disc].c++;
+  }
+  const total = quizS.answers.length;
+  for (const [disc, v] of Object.entries(byDisc)) {
+    state.sessions.push({ id: uid(), date: todayStr(), disc,
+      minutes: Math.max(1, Math.round(elapsedMin * v.q / total)), questions: v.q, correct: v.c });
+  }
+  save();
+  quizS.finished = { byDisc, elapsedMin };
+  renderQuizTab();
+}
+function quitQuiz() { quizS = null; renderQuizTab(); }
+
+function renderQuizTab() {
+  const el = document.getElementById("tab-quiz");
+  if (!el) return;
+
+  if (!quizS) {
+    const stats = state.quizStats;
+    const seen = Object.keys(stats).length;
+    const right = Object.values(stats).reduce((a, s) => a + s.right, 0);
+    const attempts = Object.values(stats).reduce((a, s) => a + s.seen, 0);
+    el.innerHTML = `
+    <div class="card">
+      <h2>🧪 Quiz — questões estilo banca</h2>
+      <p class="small">${QUESTOES.length} questões autorais no estilo Cesgranrio/FGV/Cebraspe, com explicação e pegadinha.
+      <strong>Errou? O erro entra sozinho no caderno e vira revisão espaçada.</strong> O tempo e os acertos também são registrados como sessão.</p>
+      <p class="muted"><strong>🎓 Treino</strong>: correção a cada questão, com explicação na hora. ·
+      <strong>🏁 Simulado</strong>: sem feedback durante — correção completa só no final, como na prova real.</p>
+      <form onsubmit="event.preventDefault(); startQuiz()">
+        <div class="row">
+          <div class="field"><label>Modo</label>
+            <select id="quiz-mode"><option value="treino">🎓 Treino</option><option value="simulado">🏁 Simulado</option></select></div>
+          <div class="field"><label>Disciplina</label>
+            <select id="quiz-disc">${quizDiscs().map(d => `<option>${d}</option>`).join("")}</select></div>
+          <div class="field"><label>Questões</label>
+            <select id="quiz-n"><option>5</option><option selected>10</option><option>15</option><option>20</option><option>30</option><option>40</option></select></div>
+        </div>
+        <button class="btn">▶ Começar</button>
+      </form>
+      <p class="muted" style="margin-top:8px">Ritmo de prova: ~2 min/questão. Num simulado de 20, tente fechar em 40 min.</p>
+      ${seen ? `<div class="muted" style="margin-top:8px">Seu histórico: ${seen}/${QUESTOES.length} questões já vistas · ${attempts ? Math.round((right / attempts) * 100) : 0}% de acerto em ${attempts} respostas.</div>` : ""}
+    </div>`;
+    return;
+  }
+
+  if (quizS.finished) {
+    const { byDisc, elapsedMin } = quizS.finished;
+    const total = quizS.answers.length, certas = quizS.answers.filter(a => a.ok).length;
+    const pct = Math.round((certas / total) * 100);
+    const tempoQ = (elapsedMin / total).toFixed(1);
+    const nivel = pct >= 80 ? ["good", "🏆", "Excelente — nível de aprovação!"] : pct >= 60 ? ["warning", "💪", "Bom caminho — revise os erros registrados."] : ["serious", "📚", "Abaixo do corte — os erros já viram revisões; volte à teoria dos tópicos."];
+    const letters = ["A", "B", "C", "D", "E"];
+    const gabarito = quizS.mode !== "simulado" ? "" : (() => {
+      const wrongs = quizS.answers.filter(a => !a.ok);
+      if (!wrongs.length) return `<h3>Gabarito comentado</h3><div class="empty">Nenhum erro — simulado gabaritado! 🎯</div>`;
+      return `<h3>Gabarito comentado — suas ${wrongs.length} erradas</h3>` + wrongs.map(a => {
+        const q = QUESTOES.find(x => x.id === a.qid);
+        return `<details class="disc"><summary><span class="badge kind">${esc(q.disc)} · ${esc(q.top)}</span>
+          <span style="flex:1">${esc(q.q.length > 90 ? q.q.slice(0, 90) + "…" : q.q)}</span></summary>
+          <div class="topic-row" style="display:block">
+            <div class="small">Você marcou <strong style="color:var(--critical)">${letters[a.picked]}</strong>; a correta é
+            <strong style="color:var(--good)">${letters[q.a]}) ${esc(q.o[q.a])}</strong></div>
+            <div class="small" style="margin-top:6px">${esc(q.exp)}</div>
+            ${q.trap ? `<div class="small" style="margin-top:6px">🪤 ${esc(q.trap)}</div>` : ""}
+          </div></details>`;
+      }).join("");
+    })();
+    el.innerHTML = `
+    <div class="card">
+      <h2>${quizS.mode === "simulado" ? "🏁 Resultado do simulado" : "Resultado do quiz"}</h2>
+      <div class="coach-msg ${nivel[0]}"><span class="ico">${nivel[1]}</span>
+        <span><strong>${certas}/${total} (${pct}%)</strong> em ${elapsedMin} min (${tempoQ} min/questão — alvo: ≤2). ${nivel[2]}</span></div>
+      <div class="table-scroll"><table class="data"><tr><th>Disciplina</th><th>Acertos</th><th>%</th></tr>
+        ${Object.entries(byDisc).map(([d, v]) => `<tr><td>${esc(d)}</td><td>${v.c}/${v.q}</td><td>${Math.round((v.c / v.q) * 100)}%</td></tr>`).join("")}
+      </table></div>
+      ${gabarito}
+      <p class="muted" style="margin-top:8px">✓ Sessão registrada automaticamente. ${total - certas ? `✓ ${total - certas} erro(s) adicionados ao caderno e agendados para revisão (+1/+7/+30).` : "Nenhum erro — nada novo para revisar."}</p>
+      <div style="display:flex;gap:8px;margin-top:10px">
+        <button class="btn" onclick="quitQuiz()">Novo quiz</button>
+        <button class="btn ghost" onclick="quizS=null; document.querySelector('[data-tab=hoje]').click()">Ver revisões de hoje</button>
+      </div>
+    </div>`;
+    return;
+  }
+
+  const q = quizS.qs[quizS.idx];
+  const picked = quizS.picked;
+  const letters = ["A", "B", "C", "D", "E"];
+  const opts = q.o.map((o, i) => {
+    let cls = "";
+    if (picked !== null) {
+      if (i === q.a) cls = "is-correct";
+      else if (i === picked) cls = "is-wrong";
+    }
+    return `<button class="quiz-opt ${cls}" ${picked !== null ? "disabled" : ""} onclick="answerQuiz(${i})">
+      <span class="letter">${letters[i]})</span><span>${esc(o)}</span></button>`;
+  }).join("");
+  const fb = picked === null ? "" : `
+    <div class="quiz-fb ${picked === q.a ? "ok" : "nok"}">
+      <strong>${picked === q.a ? "✅ Correta!" : `❌ Errada — a resposta é ${letters[q.a]}.`}</strong><br>
+      ${esc(q.exp)}
+      ${q.trap ? `<br><br>🪤 <strong>Pegadinha:</strong> ${esc(q.trap)}` : ""}
+      ${picked !== q.a ? `<br><span class="muted">✓ Registrado no caderno de erros e agendado para revisão.</span>` : ""}
+    </div>
+    <button class="btn" onclick="nextQuiz()">${quizS.idx + 1 >= quizS.qs.length ? "Ver resultado →" : "Próxima →"}</button>`;
+  const elapsed = Math.floor((Date.now() - quizS.started) / 60000);
+  el.innerHTML = `
+  <div class="card">
+    <div class="quiz-meta">
+      <span class="badge">${quizS.mode === "simulado" ? "🏁" : "🎓"} ${quizS.idx + 1}/${quizS.qs.length}</span>
+      ${quizS.mode === "simulado" ? `<span class="badge kind">⏱ ${elapsed} min</span>` : `<span class="badge kind">${esc(q.disc)} · ${esc(q.top)}</span>`}
+      <span class="spacer" style="flex:1"></span>
+      <button class="btn sm ghost" onclick="quitQuiz()">✕ Sair</button>
+    </div>
+    <div class="progress-outer"><div style="width:${Math.round((quizS.idx / quizS.qs.length) * 100)}%"></div></div>
+    <div class="quiz-q">${esc(q.q)}</div>
+    ${opts}
+    ${fb}
+  </div>`;
+}
+
+/* ============================================================
+   FLASHCARDS (repetição espaçada própria)
+============================================================ */
+let cardQ = null; // fila da sessão em memória
+
+function allCards() {
+  const fromErrors = state.errors.map(e => ({
+    id: "err_" + e.id, disc: e.disc,
+    front: `❌ ${e.topic}\n(${e.cause.split(" ")[0]})`,
+    back: e.rule + (e.trap ? `\n\n🪤 ${e.trap}` : ""),
+  }));
+  return [...CARDS, ...fromErrors];
+}
+function dueCardsToday() {
+  const t = todayStr();
+  return allCards().filter(c => {
+    const s = state.cardsSrs[c.id];
+    return !s || s.due <= t;
+  });
+}
+function startCards() {
+  const due = dueCardsToday();
+  if (!due.length) { renderCardsTab(); return; }
+  cardQ = { list: shuffle(due), idx: 0, flipped: false, done: 0, total: due.length };
+  renderCardsTab();
+}
+function flipCard() { if (cardQ) { cardQ.flipped = !cardQ.flipped; renderCardsTab(); } }
+function gradeCard(ok) {
+  const c = cardQ.list[cardQ.idx];
+  const s = state.cardsSrs[c.id] || { step: -1, due: todayStr() };
+  if (ok) {
+    s.step = Math.min(s.step + 1, SRS_LADDER.length - 1);
+    s.due = addDays(todayStr(), SRS_LADDER[s.step]);
+    cardQ.done++;
+  } else {
+    s.step = 0;
+    s.due = addDays(todayStr(), 1);
+    cardQ.list.push(c); // reaparece ainda nesta sessão
+    cardQ.total++;
+    cardQ.done++;
+  }
+  state.cardsSrs[c.id] = s;
+  save();
+  cardQ.idx++; cardQ.flipped = false;
+  if (cardQ.idx >= cardQ.list.length) cardQ.finished = true;
+  renderCardsTab();
+}
+function renderCardsTab() {
+  const el = document.getElementById("tab-cartoes");
+  if (!el) return;
+  const due = dueCardsToday();
+  const total = allCards().length;
+
+  if (!cardQ || cardQ.finished) {
+    const fin = cardQ && cardQ.finished;
+    cardQ = null;
+    el.innerHTML = `
+    <div class="card">
+      <h2>📇 Cartões — memorização espaçada</h2>
+      <p class="small">${CARDS.length} cartões essenciais (portas, chmod, ACID, CMN×Bacen×CVM...) + <strong>cada erro do seu caderno vira um cartão automaticamente</strong>.
+      Acertou: o cartão volta em intervalos crescentes (1→3→7→15→30→60 dias). Errou: volta amanhã e reaparece nesta sessão.</p>
+      ${fin ? `<div class="coach-msg good"><span class="ico">🎉</span><span>Sessão concluída! Todos os cartões do dia revisados.</span></div>` : ""}
+      ${due.length
+        ? `<div class="coach-msg warning"><span class="ico">📇</span><span><strong>${due.length}</strong> cartão(ões) para revisar hoje (de ${total} no total).</span></div>
+           <button class="btn" onclick="startCards()">▶ Revisar agora</button>`
+        : `<div class="coach-msg good"><span class="ico">✅</span><span>Nenhum cartão vencido hoje. Total no baralho: ${total}.</span></div>`}
+      <h3 style="margin-top:18px">📱 Levar para o celular (Anki)</h3>
+      <p class="muted">Exporta todos os ${total} cartões (incluindo os gerados pelos seus erros) em arquivo de texto para importar
+      no AnkiDroid/AnkiMobile: Anki → Importar → separado por TAB → 1º campo = frente, 2º = verso.</p>
+      <button class="btn ghost" onclick="exportAnki()">⬇️ Exportar para Anki (.txt)</button>
+    </div>`;
+    return;
+  }
+
+  const c = cardQ.list[cardQ.idx];
+  el.innerHTML = `
+  <div class="card">
+    <div class="quiz-meta">
+      <span class="badge">${cardQ.done + 1}/${cardQ.total}</span>
+      <span class="badge kind">${esc(c.disc)}</span>
+      <span class="spacer" style="flex:1"></span>
+      <button class="btn sm ghost" onclick="cardQ=null; renderCardsTab()">✕ Sair</button>
+    </div>
+    <div class="progress-outer"><div style="width:${Math.round((cardQ.done / cardQ.total) * 100)}%"></div></div>
+    <div class="fcard" onclick="flipCard()">
+      ${cardQ.flipped
+        ? `<div class="side-label">Resposta</div><div class="back-text">${esc(c.back)}</div>`
+        : `<div class="side-label">Pergunta — clique para virar</div><div style="white-space:pre-line">${esc(c.front)}</div>`}
+    </div>
+    <div class="fcard-controls">
+      ${cardQ.flipped
+        ? `<button class="btn danger" onclick="gradeCard(false)">❌ Esqueci</button>
+           <button class="btn good" onclick="gradeCard(true)">✅ Lembrei</button>`
+        : `<button class="btn ghost" onclick="flipCard()">Virar cartão</button>`}
+    </div>
+  </div>`;
+}
+
+function exportAnki() {
+  const clean = s => String(s).replace(/\t/g, " ").replace(/\n/g, "<br>");
+  const lines = ["#separator:tab", "#html:true",
+    ...allCards().map(c => `${clean(c.front)}\t${clean(c.back)}\tBB::${clean(c.disc)}`)];
+  const blob = new Blob([lines.join("\n")], { type: "text/plain;charset=utf-8" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = `bb-flashcards-anki-${todayStr()}.txt`;
+  a.click();
+  URL.revokeObjectURL(a.href);
+  toast("⬇️ Exportado! No Anki: Importar → separador TAB (3º campo é a tag).");
+}
+
+/* ============================================================
+   MATERIAIS (plano completo)
+============================================================ */
+function planoStats(ciclo) {
+  let done = 0, total = 0;
+  for (const sem of ciclo.semanas)
+    for (const t of sem.tarefas) { total++; if (state.plano[t.id]) done++; }
+  return { done, total };
+}
+function currentWeekId() {
+  for (const c of PLANO_MATERIAIS)
+    for (const sem of c.semanas)
+      if (sem.tarefas.some(t => !state.plano[t.id])) return sem.id;
+  return null;
+}
+function toggleTarefa(id) {
+  if (state.plano[id]) delete state.plano[id]; else state.plano[id] = true;
+  save();
+  const open = [...document.querySelectorAll("#tab-materiais details.disc")].map(d => d.open);
+  renderMateriais();
+  [...document.querySelectorAll("#tab-materiais details.disc")].forEach((d, i) => (d.open = open[i]));
+}
+function renderMateriais() {
+  const el = document.getElementById("tab-materiais");
+  if (!el) return;
+  const aqui = currentWeekId();
+  let totalDone = 0, totalAll = 0;
+
+  const blocos = PLANO_MATERIAIS.map(ciclo => {
+    const st = planoStats(ciclo);
+    totalDone += st.done; totalAll += st.total;
+    const semanas = ciclo.semanas.map(sem => {
+      const semDone = sem.tarefas.filter(t => state.plano[t.id]).length;
+      const isAqui = sem.id === aqui;
+      const rows = sem.tarefas.map(t => `
+        <div class="topic-row">
+          <input type="checkbox" style="width:17px;height:17px;accent-color:var(--accent);cursor:pointer;flex-shrink:0"
+            ${state.plano[t.id] ? "checked" : ""} onchange="toggleTarefa('${t.id}')">
+          <div class="tname" style="${state.plano[t.id] ? "opacity:.55;text-decoration:line-through" : ""}">${esc(t.txt)}</div>
+          ${t.link ? `<a href="${LINKS[t.link]}" target="_blank" rel="noopener" class="badge" style="text-decoration:none">abrir ↗</a>` : ""}
+        </div>`).join("");
+      return `<details class="disc" ${isAqui ? "open" : ""}>
+        <summary>
+          <span>${esc(sem.titulo)}</span>
+          ${isAqui ? `<span class="badge">📍 você está aqui</span>` : ""}
+          <span class="spacer" style="flex:1"></span>
+          <span class="muted">${semDone}/${sem.tarefas.length}</span>
+        </summary>
+        <div class="topic-row" style="border-top:none"><div class="tname muted">🎯 ${esc(sem.objetivo)}</div></div>
+        ${rows}
+      </details>`;
+    }).join("");
+    return `<div class="card">
+      <h2>${esc(ciclo.ciclo)} <span class="muted" style="font-weight:400">· ${st.done}/${st.total}</span></h2>
+      <p class="muted">${esc(ciclo.desc)}</p>
+      <div class="progress-outer"><div style="width:${st.total ? Math.round((st.done / st.total) * 100) : 0}%"></div></div>
+      ${semanas}
+    </div>`;
+  }).join("");
+
+  el.innerHTML = `
+  <div class="card">
+    <h2>📚 Materiais e roteiro completo</h2>
+    <p class="small">O plano inteiro, da Semana 0 até a prova, com links diretos. <strong>Custo total da Fase 1: só a
+    plataforma de questões</strong> — todo o resto é gratuito (fontes oficiais do Bacen, lei seca, YouTube e este guia).
+    Não compre curso de TI; não acumule material.</p>
+    <div class="small" style="margin-top:6px"><strong>${totalDone}</strong> de ${totalAll} tarefas concluídas</div>
+    <div class="progress-outer"><div style="width:${Math.round((totalDone / totalAll) * 100)}%"></div></div>
+    <p class="muted" style="margin-top:6px">As semanas dizem O QUE estudar; o horário (manhã/tarde/noite) segue o
+    cronograma da aba 📅 Hoje. Terminou uma semana? A badge 📍 avança sozinha.</p>
+  </div>
+  ${blocos}`;
+}
+
+/* ============================================================
+   TEMA / TABS / INIT
+============================================================ */
+function applyTheme() {
+  const pref = localStorage.getItem("bb-theme");
+  if (pref === "dark" || pref === "light") document.documentElement.setAttribute("data-theme", pref);
+  else document.documentElement.removeAttribute("data-theme");
+}
+document.getElementById("theme-toggle").addEventListener("click", () => {
+  const cur = localStorage.getItem("bb-theme");
+  const next = cur === "dark" ? "light" : cur === "light" ? null : "dark";
+  if (next) localStorage.setItem("bb-theme", next); else localStorage.removeItem("bb-theme");
+  applyTheme();
+  toast(`Tema: ${next || "automático (sistema)"}`);
+  renderAll();
+});
+
+document.getElementById("tabs").addEventListener("click", e => {
+  const btn = e.target.closest("button[data-tab]");
+  if (!btn) return;
+  document.querySelectorAll("nav.tabs button").forEach(b => b.classList.toggle("active", b === btn));
+  document.querySelectorAll("main .tab").forEach(s => s.classList.toggle("active", s.id === "tab-" + btn.dataset.tab));
+  renderTab(btn.dataset.tab);
+});
+
+function renderTab(name) {
+  if (name === "hoje") renderHoje();
+  else if (name === "metodo") renderMetodo();
+  else if (name === "quiz") renderQuizTab();
+  else if (name === "cartoes") renderCardsTab();
+  else if (name === "materiais") renderMateriais();
+  else if (name === "registrar") renderRegistrar();
+  else if (name === "edital") renderEdital();
+  else if (name === "progresso") renderProgresso();
+}
+function renderAll() {
+  const active = document.querySelector("nav.tabs button.active")?.dataset.tab || "hoje";
+  renderTab(active);
+}
+
+const hoje = new Date();
+document.getElementById("header-date").textContent =
+  hoje.toLocaleDateString("pt-BR", { weekday: "long", day: "numeric", month: "long", year: "numeric" });
+
+window.addEventListener("beforeunload", e => {
+  if (timer.elapsed > 60000) { e.preventDefault(); e.returnValue = ""; }
+});
+
+applyTheme();
+renderHoje();
+</script>
+</body>
+</html>

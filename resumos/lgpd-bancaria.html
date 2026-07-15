@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resumo — LGPD e Segurança Cibernética Bancária</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<div class="wrap">
+  <div class="nav"><a href="../guia.html">← voltar ao Guia</a> · <a href="sfn.html">SFN</a> · <a href="ti-comparativos.html">Comparativos de TI</a></div>
+  <h1>🔐 LGPD + Segurança Cibernética no Setor Bancário</h1>
+  <p class="sub">Lei 13.709/2018 (LGPD) + Resolução CMN 4.893/2021 — a interseção perfeita entre Bancários e TI, e presença garantida na prova.</p>
+
+  <h2>LGPD — o essencial</h2>
+
+  <h3>Conceitos e papéis</h3>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Papel</th><th>Quem é</th><th>No contexto do banco</th></tr>
+    <tr><td>Titular</td><td>a pessoa natural dona do dado</td><td>o cliente</td></tr>
+    <tr><td>Controlador</td><td>quem decide como e por que tratar</td><td>o banco</td></tr>
+    <tr><td>Operador</td><td>quem trata em nome do controlador</td><td>processadora de cartões, bureau, cloud</td></tr>
+    <tr><td>Encarregado (DPO)</td><td>canal entre titular, controlador e ANPD</td><td>obrigatório indicar; identidade pública</td></tr>
+    <tr><td>ANPD</td><td>autoridade nacional — regula, fiscaliza e sanciona</td><td>autarquia de natureza especial</td></tr>
+  </table>
+  </div>
+
+  <h3>Tipos de dados</h3>
+  <ul>
+    <li><strong>Dado pessoal:</strong> identifica ou torna identificável uma pessoa natural (nome, CPF, IP, localização, dados bancários).</li>
+    <li><strong>Dado sensível:</strong> origem racial/étnica, convicção religiosa, opinião política, filiação sindical, saúde, vida sexual, <strong>dado genético ou biométrico</strong>. Tratamento com regras mais rígidas.</li>
+    <li><strong>Dado anonimizado:</strong> perdeu o vínculo com o titular por meios razoáveis → em regra, <strong>fora</strong> da LGPD (se reversível, volta a ser pessoal).</li>
+    <li>A LGPD vale para meio <strong>físico E digital</strong>, setor público e privado.</li>
+  </ul>
+  <div class="trap">🪤 Biometria (digital, face) usada no app do banco = dado SENSÍVEL. E dado de pessoa jurídica NÃO é protegido pela LGPD (só pessoa natural).</div>
+
+  <h3>Bases legais (art. 7º) — consentimento é só UMA delas</h3>
+  <ul>
+    <li>Consentimento do titular (livre, informado e inequívoco; revogável a qualquer momento);</li>
+    <li><strong>Cumprimento de obrigação legal/regulatória</strong> (ex.: prevenção à lavagem — o banco guarda dados mesmo sem consentimento);</li>
+    <li><strong>Execução de contrato</strong> (dados necessários à conta/empréstimo);</li>
+    <li><strong>Proteção ao crédito</strong> (base específica — sustenta bureaus como SPC/Serasa);</li>
+    <li>Legítimo interesse do controlador (com teste de balanceamento);</li>
+    <li>Outras: pesquisa, tutela da saúde, proteção da vida, processo judicial, políticas públicas.</li>
+  </ul>
+  <div class="trap">🪤 "O tratamento de dados SÓ pode ocorrer com consentimento" = alternativa ERRADA, sempre. São 10 bases legais.</div>
+
+  <h3>Direitos do titular (art. 18)</h3>
+  <ul>
+    <li>Confirmação do tratamento e <strong>acesso</strong> aos dados;</li>
+    <li>Correção de dados incompletos/desatualizados;</li>
+    <li>Anonimização, bloqueio ou <strong>eliminação</strong> de dados desnecessários/excessivos;</li>
+    <li><strong>Portabilidade</strong> a outro fornecedor (é a alma do Open Finance);</li>
+    <li>Informação sobre compartilhamentos e sobre a possibilidade de negar consentimento;</li>
+    <li><strong>Revogação</strong> do consentimento e revisão de decisões automatizadas (ex.: score de crédito).</li>
+  </ul>
+
+  <h3>Sanções da ANPD</h3>
+  <ul>
+    <li>Advertência → multa simples de até <strong>2% do faturamento</strong> do grupo no Brasil, limitada a <strong>R$ 50 milhões POR INFRAÇÃO</strong> → multa diária → publicização → bloqueio → eliminação dos dados.</li>
+    <li>Vazamento com risco relevante: comunicar <strong>à ANPD e ao titular</strong> em prazo razoável.</li>
+  </ul>
+
+  <h2>Resolução CMN 4.893/2021 — cibersegurança nas IFs</h2>
+  <ul>
+    <li>Obriga as instituições a manter <strong>política de segurança cibernética</strong> formal, aprovada pelo conselho de administração, compatível com porte e perfil de risco.</li>
+    <li>Exige <strong>plano de ação e de resposta a incidentes</strong>, com cenários e testes.</li>
+    <li><strong>Incidentes relevantes</strong> e interrupções de serviços devem ser <strong>comunicados ao Bacen</strong>.</li>
+    <li><strong>Computação em nuvem é PERMITIDA</strong> — com requisitos: verificação da capacidade do provedor, previsão contratual de acesso do Bacen a dados e auditorias, e comunicação prévia ao Bacen para serviços relevantes no exterior.</li>
+    <li>Designação de <strong>diretor responsável</strong> pela política de segurança cibernética.</li>
+    <li>Relatório anual sobre a implementação do plano.</li>
+  </ul>
+  <div class="trap">🪤 "A resolução proíbe nuvem/exterior" = ERRADO. Ela CONDICIONA (governança + contrato + comunicação ao Bacen), não proíbe.</div>
+
+  <h2>A ponte com o Open Finance</h2>
+  <ul>
+    <li>O compartilhamento no Open Finance materializa a <strong>portabilidade</strong> da LGPD: o dado é do CLIENTE.</li>
+    <li>Exige <strong>consentimento</strong> específico: finalidade determinada, prazo limitado (renovável) e revogável a qualquer momento em qualquer participante.</li>
+    <li>Só participam instituições <strong>autorizadas pelo Bacen</strong>, com responsabilidade pela segurança da transmissão.</li>
+  </ul>
+
+  <h2>Quadro de fixação</h2>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Pergunta da banca</th><th>Resposta</th></tr>
+    <tr><td>Consentimento é a única base legal?</td><td>Não — são 10 (obrigação legal, contrato, proteção ao crédito...)</td></tr>
+    <tr><td>Quem fiscaliza a LGPD?</td><td>ANPD</td></tr>
+    <tr><td>Teto da multa?</td><td>2% do faturamento, máx. R$ 50 mi por infração</td></tr>
+    <tr><td>Biometria é dado...?</td><td>Sensível</td></tr>
+    <tr><td>LGPD protege pessoa jurídica?</td><td>Não — apenas pessoa natural</td></tr>
+    <tr><td>Res. 4.893 proíbe nuvem?</td><td>Não — regula a contratação e exige comunicação ao Bacen</td></tr>
+    <tr><td>Incidente cibernético relevante?</td><td>Comunicar ao Bacen (e, se vazamento com risco, ANPD + titular)</td></tr>
+    <tr><td>Dado anonimizado?</td><td>Fora da LGPD, enquanto irreversível</td></tr>
+  </table>
+  </div>
+
+  <div class="tip">📇 Fixe com o cartão "LGPD — 4 papéis" na aba <a href="../guia.html" style="color:var(--accent)">Cartões do Guia</a>, e treine com o quiz de Bancários.</div>
+</div>
+</body>
+</html>

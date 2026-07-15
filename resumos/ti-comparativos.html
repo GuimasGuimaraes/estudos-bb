@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resumo — Quadros Comparativos de TI</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<div class="wrap">
+  <div class="nav"><a href="../guia.html">← voltar ao Guia</a> · <a href="sfn.html">SFN</a> · <a href="lgpd-bancaria.html">LGPD bancária</a></div>
+  <h1>⚔️ Quadros Comparativos de TI</h1>
+  <p class="sub">90% das pegadinhas de TI em concurso são pares de conceitos parecidos. Este resumo é o antídoto — releia antes de cada simulado.</p>
+
+  <h2>Banco de Dados</h2>
+
+  <h3>TRUNCATE × DELETE × DROP</h3>
+  <div class="table-scroll">
+  <table>
+    <tr><th></th><th>DELETE</th><th>TRUNCATE</th><th>DROP</th></tr>
+    <tr><td>Categoria</td><td>DML</td><td>DDL</td><td>DDL</td></tr>
+    <tr><td>ROLLBACK (Oracle)</td><td>✅ sim</td><td>❌ commit implícito</td><td>❌ commit implícito</td></tr>
+    <tr><td>Dispara triggers</td><td>✅ sim</td><td>❌ não</td><td>❌ não</td></tr>
+    <tr><td>Cláusula WHERE</td><td>✅ sim</td><td>❌ tudo ou nada</td><td>—</td></tr>
+    <tr><td>Estrutura da tabela</td><td>mantém</td><td>mantém</td><td><strong>remove tudo</strong></td></tr>
+    <tr><td>Velocidade</td><td>lento (linha a linha)</td><td>rápido</td><td>—</td></tr>
+  </table>
+  </div>
+
+  <h3>WHERE × HAVING</h3>
+  <div class="table-scroll">
+  <table>
+    <tr><th></th><th>WHERE</th><th>HAVING</th></tr>
+    <tr><td>Filtra</td><td>linhas</td><td>grupos (pós GROUP BY)</td></tr>
+    <tr><td>Momento</td><td>antes do agrupamento</td><td>depois do agrupamento</td></tr>
+    <tr><td>Funções de agregação</td><td>❌ não aceita</td><td>✅ aceita (COUNT, SUM, AVG...)</td></tr>
+  </table>
+  </div>
+
+  <h3>JOINs (Cliente à esquerda, Conta à direita)</h3>
+  <div class="table-scroll">
+  <table>
+    <tr><th>JOIN</th><th>Retorna</th></tr>
+    <tr><td>INNER</td><td>só quem tem correspondência nas duas tabelas</td></tr>
+    <tr><td>LEFT</td><td>todos os clientes; contas viram NULL se não existirem</td></tr>
+    <tr><td>RIGHT</td><td>todas as contas; clientes viram NULL se não existirem</td></tr>
+    <tr><td>FULL</td><td>tudo dos dois lados, casando onde der</td></tr>
+    <tr><td>CROSS</td><td>produto cartesiano (todas as combinações)</td></tr>
+  </table>
+  </div>
+  <div class="trap">🪤 "Clientes SEM conta" = <code>LEFT JOIN ... WHERE conta.id IS NULL</code>. E lembre: <code>WHERE x = NULL</code> nunca retorna nada — use <code>IS NULL</code>.</div>
+
+  <h3>Normalização</h3>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Forma</th><th>Elimina</th><th>Palavra-chave</th></tr>
+    <tr><td>1FN</td><td>atributos multivalorados / repetição</td><td>atomicidade</td></tr>
+    <tr><td>2FN</td><td>dependência parcial (parte da chave composta)</td><td>parcial</td></tr>
+    <tr><td>3FN</td><td>dependência transitiva (não-chave → não-chave)</td><td>transitiva</td></tr>
+    <tr><td>BCNF</td><td>todo determinante deve ser chave candidata</td><td>determinante</td></tr>
+  </table>
+  </div>
+
+  <h3>NoSQL — os 4 canônicos</h3>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Modelo</th><th>Exemplo</th><th>Uso típico</th></tr>
+    <tr><td>Chave-valor</td><td>Redis</td><td>cache, sessão</td></tr>
+    <tr><td>Documento</td><td>MongoDB</td><td>JSON flexível, catálogos</td></tr>
+    <tr><td>Colunar (wide-column)</td><td>Cassandra</td><td>séries temporais, escala massiva</td></tr>
+    <tr><td>Grafo</td><td>Neo4j</td><td>relacionamentos, fraude, redes</td></tr>
+  </table>
+  </div>
+
+  <h2>Segurança da Informação</h2>
+
+  <h3>Criptografia: simétrica × assimétrica × hash</h3>
+  <div class="table-scroll">
+  <table>
+    <tr><th></th><th>Simétrica</th><th>Assimétrica</th><th>Hash</th></tr>
+    <tr><td>Chaves</td><td>1 (secreta, compartilhada)</td><td>2 (pública + privada)</td><td>nenhuma</td></tr>
+    <tr><td>Exemplos</td><td>AES, 3DES</td><td>RSA, ECC, Diffie-Hellman</td><td>SHA-256, MD5 (obsoleto)</td></tr>
+    <tr><td>Velocidade</td><td>rápida</td><td>lenta</td><td>rápida</td></tr>
+    <tr><td>Reversível</td><td>sim (com a chave)</td><td>sim (com o par)</td><td><strong>não — unidirecional</strong></td></tr>
+    <tr><td>Garante</td><td>confidencialidade</td><td>confidencialidade + autenticidade</td><td>integridade</td></tr>
+  </table>
+  </div>
+  <div class="tip">💡 TLS/HTTPS usa o modelo <strong>híbrido</strong>: assimétrica para autenticar e trocar a chave; simétrica para o tráfego (desempenho). Porta 443.</div>
+
+  <h3>Assinatura digital — qual chave?</h3>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Objetivo</th><th>Eu uso...</th><th>O outro usa...</th></tr>
+    <tr><td>Assinar (autenticidade + não repúdio)</td><td>minha chave PRIVADA</td><td>minha chave PÚBLICA para verificar</td></tr>
+    <tr><td>Cifrar para alguém (confidencialidade)</td><td>chave PÚBLICA do destinatário</td><td>a PRIVADA dele para decifrar</td></tr>
+  </table>
+  </div>
+
+  <h3>Firewall × IDS × IPS × WAF</h3>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Controle</th><th>Faz o quê</th><th>Postura</th></tr>
+    <tr><td>Firewall</td><td>filtra tráfego por regras (IP, porta, protocolo)</td><td>barreira</td></tr>
+    <tr><td>IDS</td><td>Detecta e ALERTA</td><td>passivo (fora do fluxo)</td></tr>
+    <tr><td>IPS</td><td>Previne: BLOQUEIA em tempo real</td><td>ativo (inline)</td></tr>
+    <tr><td>WAF</td><td>protege aplicações web (SQLi, XSS)</td><td>camada 7</td></tr>
+  </table>
+  </div>
+
+  <h3>Ataques — quem ataca o quê</h3>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Ataque</th><th>Alvo</th><th>Defesa principal</th></tr>
+    <tr><td>SQL Injection</td><td>banco de dados</td><td>prepared statements</td></tr>
+    <tr><td>XSS</td><td>navegador da vítima</td><td>sanitizar saída / CSP</td></tr>
+    <tr><td>CSRF</td><td>sessão autenticada da vítima</td><td>tokens anti-CSRF</td></tr>
+    <tr><td>Phishing</td><td>a pessoa (engenharia social)</td><td>conscientização + MFA</td></tr>
+    <tr><td>DDoS</td><td>disponibilidade do serviço</td><td>mitigação/absorção de tráfego</td></tr>
+    <tr><td>MitM</td><td>o canal de comunicação</td><td>TLS, certificados</td></tr>
+    <tr><td>Ransomware</td><td>seus arquivos (cifra e cobra resgate)</td><td>backup offline testado</td></tr>
+  </table>
+  </div>
+
+  <h2>Redes</h2>
+
+  <h3>OSI × TCP/IP</h3>
+  <div class="table-scroll">
+  <table>
+    <tr><th>OSI (7)</th><th>TCP/IP (4)</th><th>Mora aqui</th></tr>
+    <tr><td>7 Aplicação / 6 Apresentação / 5 Sessão</td><td>Aplicação</td><td>HTTP, DNS, SMTP, SSH, TLS</td></tr>
+    <tr><td>4 Transporte</td><td>Transporte</td><td>TCP, UDP, portas</td></tr>
+    <tr><td>3 Rede</td><td>Internet</td><td>IP, ICMP, roteador</td></tr>
+    <tr><td>2 Enlace / 1 Física</td><td>Acesso à rede</td><td>Ethernet, MAC, switch, cabo</td></tr>
+  </table>
+  </div>
+
+  <h3>Portas padrão (decore TODAS)</h3>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Serviço</th><th>Porta</th><th>Serviço</th><th>Porta</th></tr>
+    <tr><td>FTP</td><td>21</td><td>HTTP</td><td>80</td></tr>
+    <tr><td>SSH</td><td>22</td><td>POP3</td><td>110</td></tr>
+    <tr><td>Telnet</td><td>23</td><td>IMAP</td><td>143</td></tr>
+    <tr><td>SMTP</td><td>25</td><td>HTTPS</td><td>443</td></tr>
+    <tr><td>DNS</td><td>53</td><td>RDP</td><td>3389</td></tr>
+    <tr><td>DHCP</td><td>67/68</td><td>Oracle (listener)</td><td>1521</td></tr>
+  </table>
+  </div>
+
+  <h2>Linux</h2>
+  <h3>chmod numérico</h3>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Valor</th><th>Permissão</th><th>Exemplo comum</th></tr>
+    <tr><td>7 = 4+2+1</td><td>rwx</td><td rowspan="4"><code>755</code> = rwx r-x r-x (script/diretório)<br><code>644</code> = rw- r-- r-- (arquivo comum)<br><code>700</code> = rwx --- --- (privado)<br><code>777</code> = tudo p/ todos (⚠️ nunca!)</td></tr>
+    <tr><td>6 = 4+2</td><td>rw-</td></tr>
+    <tr><td>5 = 4+1</td><td>r-x</td></tr>
+    <tr><td>4</td><td>r--</td></tr>
+  </table>
+  </div>
+  <div class="tip">💡 Ordem: <strong>dono / grupo / outros</strong>. E o trio de comandos: <code>grep</code> busca, <code>sed</code> substitui, <code>awk</code> processa colunas.</div>
+
+  <h2>Git & DevOps</h2>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Par</th><th>Diferença que a banca cobra</th></tr>
+    <tr><td>merge × rebase</td><td>merge preserva histórico com commit de mesclagem; rebase reescreve, deixando linear. Não rebasear branch pública.</td></tr>
+    <tr><td>fetch × pull</td><td>fetch só baixa as referências; pull = fetch + merge no branch atual.</td></tr>
+    <tr><td>contêiner × VM</td><td>contêiner compartilha o kernel do host (leve); VM virtualiza hardware com SO completo (isolamento maior).</td></tr>
+    <tr><td>CI × CD</td><td>CI = integrar + testar a cada commit; CD = entregar/implantar automaticamente o que passou.</td></tr>
+    <tr><td>Scrum × Kanban</td><td>Scrum: sprints fixas, papéis (PO prioriza backlog, SM facilita). Kanban: fluxo contínuo, limite de WIP.</td></tr>
+  </table>
+  </div>
+
+  <div class="tip">📇 Todos estes quadros existem como flashcards na aba <a href="../guia.html" style="color:var(--accent)">📇 Cartões do Guia</a> — leia aqui, fixe lá.</div>
+</div>
+</body>
+</html>
