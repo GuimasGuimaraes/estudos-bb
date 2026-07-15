@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Teoria — Probabilidade e Estatística</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<div class="wrap">
+  <div class="nav"><a href="index.html">← Biblioteca</a> · <a href="../guia.html">Guia</a></div>
+  <h1>📊 Probabilidade e Estatística</h1>
+  <p class="sub">Cai pouco, mas <strong>não zerar nenhuma disciplina</strong> é regra do BB. O conteúdo é finito e mecânico — garanta o básico bem feito.</p>
+
+  <h2>1. Tipos de variáveis</h2>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Classe</th><th>Subtipo</th><th>Exemplo</th></tr>
+    <tr><td rowspan="2"><strong>Qualitativa</strong><br>(categoria)</td><td>Nominal (sem ordem)</td><td>sexo, agência, tipo de conta</td></tr>
+    <tr><td>Ordinal (com ordem)</td><td>escolaridade, rating de crédito (AAA, AA...)</td></tr>
+    <tr><td rowspan="2"><strong>Quantitativa</strong><br>(número)</td><td>Discreta (contagem, valores isolados)</td><td>nº de filhos, nº de clientes</td></tr>
+    <tr><td>Contínua (medição, qualquer valor no intervalo)</td><td>salário, altura, tempo</td></tr>
+  </table>
+  </div>
+  <div class="trap">🪤 Nº de filhos é <strong>discreta</strong> (não existe 2,5 filhos); salário é <strong>contínua</strong>. E rating "AAA/AA/A" é qualitativa <strong>ordinal</strong>, não quantitativa — o símbolo não é número.</div>
+
+  <h2>2. Medidas de posição (tendência central)</h2>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Medida</th><th>Como calcular</th><th>Característica-chave</th></tr>
+    <tr><td><strong>Média</strong> (x̄)</td><td>soma ÷ quantidade</td><td>sofre com <strong>valores extremos</strong> (outliers)</td></tr>
+    <tr><td><strong>Mediana</strong> (Md)</td><td>ordene os dados: o valor central (se par, média dos 2 centrais)</td><td><strong>resistente</strong> a outliers</td></tr>
+    <tr><td><strong>Moda</strong> (Mo)</td><td>o valor mais frequente</td><td>pode não existir (amodal) ou ser múltipla (bi/multimodal); é a única aplicável a variável <strong>qualitativa</strong></td></tr>
+  </table>
+  </div>
+  <p><strong>Exemplos:</strong> {2, 3, 5, 8, 10, 12} → mediana = (5+8)/2 = <strong>6,5</strong>. {2, 3, 3, 5, 7} → moda = <strong>3</strong>, mediana = 3, média = 4.</p>
+  <div class="tip">💡 <strong>Salário é o exemplo clássico:</strong> se o presidente entra na amostra, a <em>média</em> dispara mas a <em>mediana</em> quase não se move. Por isso renda se reporta pela mediana.</div>
+
+  <h3>Assimetria — a relação entre as três</h3>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Distribuição</th><th>Relação</th><th>Cauda</th></tr>
+    <tr><td>Simétrica</td><td>Média = Mediana = Moda</td><td>equilibrada (ex.: normal)</td></tr>
+    <tr><td>Assimétrica <strong>positiva</strong> (à direita)</td><td>Moda &lt; Mediana &lt; <strong>Média</strong></td><td>alongada à direita (ex.: renda)</td></tr>
+    <tr><td>Assimétrica <strong>negativa</strong> (à esquerda)</td><td><strong>Média</strong> &lt; Mediana &lt; Moda</td><td>alongada à esquerda</td></tr>
+  </table>
+  </div>
+  <p class="muted">Regra de ouro: <strong>a média sempre "corre" para o lado da cauda</strong> — ela é puxada pelos extremos.</p>
+
+  <h2>3. Medidas de dispersão</h2>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Medida</th><th>Fórmula/ideia</th><th>Unidade</th></tr>
+    <tr><td>Amplitude</td><td>maior − menor</td><td>a dos dados</td></tr>
+    <tr><td><strong>Variância</strong> (σ²)</td><td>média dos quadrados dos desvios</td><td><strong>ao quadrado</strong></td></tr>
+    <tr><td><strong>Desvio padrão</strong> (σ)</td><td>√variância</td><td>a dos dados</td></tr>
+    <tr><td><strong>Coef. de variação</strong> (CV)</td><td>σ ÷ x̄ (em %)</td><td><strong>adimensional</strong></td></tr>
+  </table>
+  </div>
+  <ul>
+    <li><strong>Dispersão zero</strong> é possível: todos os dados iguais → σ = 0.</li>
+    <li><strong>CV serve para comparar</strong> conjuntos de médias/unidades diferentes ("qual investimento é mais volátil?"). Menor CV = mais homogêneo.</li>
+    <li><strong>Populacional (÷N) × amostral (÷n−1)</strong>: a amostral divide por n−1 (correção de Bessel) e dá valor maior.</li>
+  </ul>
+  <div class="trap">🪤 Somar constante a todos os dados: média muda, <strong>dispersão não</strong>. Multiplicar todos por k: média ×k e desvio padrão ×k (variância ×k²).</div>
+
+  <h2>4. Probabilidade — os fundamentos</h2>
+  <div class="card"><p><code>P(A) = casos favoráveis ÷ casos possíveis</code> &nbsp;·&nbsp; <code>0 ≤ P(A) ≤ 1</code> &nbsp;·&nbsp; <code>P(Ā) = 1 − P(A)</code></p></div>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Situação</th><th>Regra</th><th>Exemplo</th></tr>
+    <tr><td><strong>União</strong> (A <em>ou</em> B)</td><td>P(A) + P(B) − P(A∩B)</td><td>carta de copas ou rei: 13/52 + 4/52 − 1/52</td></tr>
+    <tr><td>União, eventos <strong>mutuamente exclusivos</strong></td><td>P(A) + P(B) &nbsp;<em>(pois P(A∩B)=0)</em></td><td>no dado, sair 2 ou 5</td></tr>
+    <tr><td><strong>Interseção</strong>, eventos <strong>independentes</strong></td><td>P(A) × P(B)</td><td>dois dados, 6 em ambos: 1/6 × 1/6 = 1/36</td></tr>
+    <tr><td><strong>Condicional</strong></td><td>P(A|B) = P(A∩B) ÷ P(B)</td><td>"dado que já saiu B..."</td></tr>
+  </table>
+  </div>
+  <div class="trap">🪤 <strong>Exclusivos ≠ independentes!</strong> Exclusivos: não podem ocorrer juntos (soma na união). Independentes: um não afeta o outro (multiplica na interseção). Dois eventos exclusivos com P&gt;0 são, na verdade, <em>dependentes</em>.</div>
+  <p><strong>Teorema de Bayes</strong> (probabilidade das causas): <code>P(A|B) = [P(B|A) · P(A)] ÷ P(B)</code>. Cai em contexto de teste/diagnóstico: "sabendo que o alarme disparou, qual a chance de ser fraude real?".</p>
+
+  <h2>5. Distribuições de probabilidade</h2>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Distribuição</th><th>Modela</th><th>Parâmetros</th><th>Média</th></tr>
+    <tr><td><strong>Binomial</strong> (discreta)</td><td>nº de <strong>sucessos</strong> em n tentativas independentes com p constante (sucesso/fracasso)</td><td>n, p</td><td>n·p (variância: n·p·q)</td></tr>
+    <tr><td><strong>Poisson</strong> (discreta)</td><td>nº de <strong>eventos raros por intervalo</strong> de tempo/espaço</td><td>λ</td><td>λ (variância também = λ)</td></tr>
+    <tr><td><strong>Normal</strong> (contínua)</td><td>fenômenos naturais, erros, médias amostrais</td><td>μ, σ</td><td>μ</td></tr>
+    <tr><td><strong>Exponencial</strong> (contínua)</td><td><strong>tempo entre</strong> eventos (fila, falha)</td><td>λ</td><td>1/λ</td></tr>
+  </table>
+  </div>
+  <div class="tip">💡 Par confuso: <strong>Poisson conta eventos</strong> num intervalo (quantos clientes chegam por hora); <strong>Exponencial mede o tempo</strong> entre eles (quanto tempo até o próximo cliente).</div>
+
+  <h3>Distribuição Normal (a que mais cai)</h3>
+  <ul>
+    <li><strong>Simétrica</strong> em torno da média → média = mediana = moda.</li>
+    <li>Forma de sino; a área total sob a curva = 1 (100%).</li>
+    <li><strong>Regra empírica 68–95–99,7:</strong> ±1σ ≈ 68% dos dados · ±2σ ≈ 95% · ±3σ ≈ 99,7%.</li>
+    <li><strong>Normal padrão (Z):</strong> μ=0 e σ=1. Padronização: <code>Z = (X − μ) ÷ σ</code> — transforma qualquer normal na padrão para consultar a tabela.</li>
+  </ul>
+  <div class="trap">🪤 "Toda normal tem variância 1" é FALSO — só a <strong>normal padrão</strong>. E Z negativo só significa "abaixo da média", não erro.</div>
+
+  <h2>6. Amostragem</h2>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Técnica</th><th>Como é</th></tr>
+    <tr><td><strong>Aleatória simples</strong></td><td>sorteio puro; todos com a mesma chance</td></tr>
+    <tr><td><strong>Sistemática</strong></td><td>escolhe a cada k elementos (ex.: 1 a cada 10 da lista)</td></tr>
+    <tr><td><strong>Estratificada</strong></td><td>divide em <strong>estratos homogêneos</strong> (ex.: por região) e sorteia dentro de cada um, proporcionalmente</td></tr>
+    <tr><td><strong>Por conglomerado</strong></td><td>divide em grupos <strong>heterogêneos</strong> (ex.: agências) e sorteia grupos INTEIROS</td></tr>
+  </table>
+  </div>
+  <p><strong>Teorema Central do Limite (TCL):</strong> para amostras grandes (n ≥ 30), a distribuição das <strong>médias amostrais</strong> se aproxima de uma normal, <em>independentemente</em> da distribuição da população. É o que sustenta toda a inferência.</p>
+  <p><strong>Erro padrão da média:</strong> σ/√n — aumentar a amostra reduz o erro (mas pela raiz: quadruplicar n só corta o erro pela metade).</p>
+
+  <h2>7. Correlação e regressão</h2>
+  <p><strong>Coeficiente de correlação linear de Pearson (r):</strong> varia de <strong>−1 a +1</strong>.</p>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Valor de r</th><th>Interpretação</th></tr>
+    <tr><td>próximo de +1</td><td>forte e positiva (crescem juntas)</td></tr>
+    <tr><td>próximo de −1</td><td>forte e negativa (uma sobe, outra desce)</td></tr>
+    <tr><td>próximo de 0</td><td>ausência de relação <strong>linear</strong> (pode haver relação curva!)</td></tr>
+  </table>
+  </div>
+  <p><strong>Regressão linear simples:</strong> <code>Y = a + bX</code>, onde <em>b</em> é o coeficiente angular (quanto Y varia para cada unidade de X) e <em>a</em> o intercepto (Y quando X=0). O método é o dos <strong>mínimos quadrados</strong> (minimiza a soma dos quadrados dos resíduos).</p>
+  <p><strong>Coeficiente de determinação (R²)</strong> = r²: o % da variação de Y explicado pelo modelo. r = −0,9 → R² = 0,81 → 81% explicado.</p>
+  <div class="trap">🪤 <strong>Correlação NUNCA implica causalidade</strong> — em prova, alternativa que diz "X causa Y" a partir de r está errada. E |r| mede a força; o sinal, só a direção (r = −0,9 é tão forte quanto +0,9).</div>
+
+  <div class="tip">📇 Fixe com o quiz (aba 🧪 → Matemática/Estatística) — 10 questões de estatística, todas com a pegadinha explicada.</div>
+</div>
+</body>
+</html>

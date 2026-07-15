@@ -34,9 +34,7 @@ navegador — exporte um backup pelo próprio app todo domingo.
 | Arquivo | O que é |
 | --- | --- |
 | **[guia.html](guia.html)** | **O app: professor diário, revisões, quiz, flashcards, cronômetro, gráficos** |
-| [resumos/sfn.html](resumos/sfn.html) | Resumo esquematizado do SFN (CMN × Bacen × CVM) |
-| [resumos/ti-comparativos.html](resumos/ti-comparativos.html) | Quadros comparativos de TI (as pegadinhas clássicas) |
-| [resumos/lgpd-bancaria.html](resumos/lgpd-bancaria.html) | LGPD + Resolução CMN 4.893 aplicadas a bancos |
+| **[resumos/index.html](resumos/index.html)** | **Biblioteca de teoria — 12 apostilas de todas as matérias** |
 | [plano/plano-de-estudos.md](plano/plano-de-estudos.md) | A estratégia completa (leia primeiro) |
 | [plano/edital-verticalizado.md](plano/edital-verticalizado.md) | Checklist de todos os tópicos com status de domínio |
 | [plano/cronograma.md](plano/cronograma.md) | Ciclo semanal de estudos |

@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Teoria — TI: Segurança, Redes e Infraestrutura</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<div class="wrap">
+  <div class="nav"><a href="index.html">← Biblioteca</a> · <a href="../guia.html">Guia</a> · <a href="ti-comparativos.html">Comparativos</a></div>
+  <h1>🔐 TI — Segurança, Redes e Infraestrutura</h1>
+  <p class="sub">Sua zona de conforto — e por isso a mais perigosa. O risco aqui não é ignorância: é a <strong>terminologia de concurso divergir do jargão prático</strong>. Leia procurando os rótulos, não os conceitos.</p>
+
+  <h2>1. Princípios da segurança da informação</h2>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Princípio</th><th>Garante</th><th>É violado quando</th><th>Mecanismo típico</th></tr>
+    <tr><td><strong>C</strong>onfidencialidade</td><td>só quem pode vê</td><td>vazamento</td><td>criptografia, controle de acesso</td></tr>
+    <tr><td><strong>I</strong>ntegridade</td><td>dado não alterado indevidamente</td><td>adulteração</td><td>hash, assinatura digital</td></tr>
+    <tr><td><strong>D</strong>isponibilidade</td><td>acessível quando necessário</td><td>DDoS, queda</td><td>redundância, backup, DR</td></tr>
+    <tr><td>Autenticidade</td><td>é quem diz ser</td><td>spoofing</td><td>autenticação, certificado</td></tr>
+    <tr><td>Não repúdio (irretratabilidade)</td><td>não pode negar a autoria</td><td>—</td><td><strong>assinatura digital</strong></td></tr>
+  </table>
+  </div>
+  <div class="tip">💡 Associação de prova: <em>vazou</em> → confidencialidade · <em>alteraram</em> → integridade · <em>caiu</em> → disponibilidade · <em>"não fui eu"</em> → não repúdio.</div>
+  <p><strong>Outros conceitos:</strong> <em>ameaça</em> (evento potencial) × <em>vulnerabilidade</em> (fraqueza) × <em>risco</em> (probabilidade × impacto) × <em>incidente</em> (evento adverso confirmado). <strong>Risco = ameaça explora vulnerabilidade.</strong> Princípios de projeto: <strong>defesa em profundidade</strong> (camadas), <strong>menor privilégio</strong>, <strong>need to know</strong>, <strong>segregação de funções</strong>, <strong>fail-safe</strong>, <strong>security by design/default</strong>.</p>
+
+  <h2>2. Criptografia</h2>
+  <div class="table-scroll">
+  <table>
+    <tr><th></th><th>Simétrica</th><th>Assimétrica</th><th>Hash</th></tr>
+    <tr><td>Chaves</td><td>1 secreta compartilhada</td><td>par pública/privada</td><td>nenhuma</td></tr>
+    <tr><td>Algoritmos</td><td><strong>AES</strong>, 3DES, RC4, ChaCha20</td><td><strong>RSA</strong>, ECC, Diffie-Hellman, ElGamal, DSA</td><td><strong>SHA-2/SHA-256</strong>, SHA-3, MD5 e SHA-1 (<em>obsoletos</em>)</td></tr>
+    <tr><td>Velocidade</td><td>rápida (bom para volume)</td><td>lenta</td><td>rápida</td></tr>
+    <tr><td>Problema que resolve</td><td>confidencialidade eficiente</td><td><strong>distribuição de chaves</strong> + assinatura</td><td>integridade</td></tr>
+    <tr><td>Problema que tem</td><td>como combinar a chave?<br>nº de chaves cresce: n(n−1)/2</td><td>desempenho</td><td>irreversível por definição</td></tr>
+  </table>
+  </div>
+  <ul>
+    <li><strong>Modos de operação</strong> (simétrica em bloco): ECB (inseguro — padrões se repetem), CBC (encadeado, usa IV), CTR, <strong>GCM</strong> (cifra + autentica: AEAD).</li>
+    <li><strong>Hash:</strong> unidirecional, saída de <strong>tamanho fixo</strong>, efeito avalanche, resistente a colisão e a pré-imagem. <strong>Salt</strong> impede rainbow tables; para senhas use <strong>bcrypt/scrypt/Argon2/PBKDF2</strong> (lentos de propósito) — nunca SHA puro.</li>
+    <li><strong>HMAC:</strong> hash + chave secreta = integridade <strong>e</strong> autenticidade (mas sem não repúdio, pois a chave é compartilhada).</li>
+    <li><strong>Assinatura digital:</strong> hash do documento cifrado com a <strong>chave privada do emissor</strong>; qualquer um verifica com a pública dele. Garante autenticidade, integridade e não repúdio — <strong>não</strong> confidencialidade.</li>
+    <li><strong>Envelope digital / híbrido:</strong> cifra o conteúdo com chave simétrica de sessão e cifra <em>essa chave</em> com a pública do destinatário. É o que TLS e PGP fazem.</li>
+  </ul>
+  <div class="trap">🪤 Para <strong>enviar</strong> confidencial: use a chave <strong>pública do destinatário</strong>. Para <strong>assinar</strong>: sua chave <strong>privada</strong>. Hash <strong>não é criptografia</strong> — não existe "descriptografar um hash".</div>
+
+  <h2>3. PKI e certificados</h2>
+  <ul>
+    <li><strong>Certificado X.509</strong> vincula uma <strong>chave pública</strong> a uma identidade; é assinado por uma <strong>AC</strong> (Autoridade Certificadora). Contém: titular, chave pública, emissor, validade, número de série, assinatura da AC.</li>
+    <li><strong>AR</strong> (Autoridade de Registro): faz a identificação presencial do solicitante — <em>não</em> emite certificado.</li>
+    <li><strong>ICP-Brasil</strong> (MP 2.200-2/2001): AC Raiz = <strong>ITI</strong>. Documento assinado com certificado ICP-Brasil tem presunção de <strong>validade jurídica</strong>.</li>
+    <li><strong>Tipos:</strong> <strong>A1</strong> (software, arquivo, validade 1 ano) × <strong>A3</strong> (hardware: token/cartão, 1 a 5 anos). Série A = assinatura; S = sigilo; T = tempo (carimbo).</li>
+    <li><strong>Revogação:</strong> <strong>LCR/CRL</strong> (lista publicada periodicamente) × <strong>OCSP</strong> (consulta on-line, em tempo real).</li>
+    <li><strong>Cadeia de confiança:</strong> raiz → intermediária → final. Certificado <em>autoassinado</em> não tem terceira parte confiável.</li>
+  </ul>
+
+  <h2>4. Protocolos seguros</h2>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Protocolo</th><th>Camada</th><th>Uso</th></tr>
+    <tr><td><strong>TLS</strong> (1.2/1.3; SSL está obsoleto)</td><td>entre transporte e aplicação</td><td>HTTPS (443), SMTPS, FTPS. TLS 1.3 removeu cifras fracas e reduziu o handshake (1-RTT)</td></tr>
+    <tr><td><strong>SSH</strong></td><td>aplicação</td><td>acesso remoto seguro (22); substitui Telnet</td></tr>
+    <tr><td><strong>IPsec</strong></td><td>rede</td><td>VPN. <strong>AH</strong> = integridade/autenticidade (sem cifra); <strong>ESP</strong> = cifra também. Modo <em>transporte</em> (só payload) × <em>túnel</em> (pacote inteiro — VPN site-to-site)</td></tr>
+    <tr><td>WPA2 / WPA3</td><td>enlace</td><td>Wi-Fi (WPA2 = AES/CCMP; WEP é quebrado)</td></tr>
+    <tr><td>DNSSEC</td><td>aplicação</td><td>autenticidade das respostas DNS (não dá confidencialidade)</td></tr>
+  </table>
+  </div>
+  <p><strong>Handshake TLS (resumo de prova):</strong> cliente e servidor negociam a suíte → servidor envia certificado → cliente valida na cadeia → acordam a chave de <strong>sessão simétrica</strong> (via ECDHE) → tráfego cifrado simetricamente. <strong>Forward secrecy</strong>: comprometer a chave privada não decifra sessões passadas.</p>
+
+  <h2>5. Controles de rede</h2>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Controle</th><th>Atua</th><th>Detalhe de prova</th></tr>
+    <tr><td><strong>Firewall</strong></td><td>filtra por regras</td><td><em>stateless</em> (pacote a pacote) × <strong>stateful</strong> (acompanha o estado da conexão) × <strong>NGFW</strong> (inspeção profunda, identidade, aplicação)</td></tr>
+    <tr><td><strong>IDS</strong></td><td><strong>D</strong>etecta e alerta</td><td>passivo, fora do fluxo (out-of-band); HIDS (host) × NIDS (rede)</td></tr>
+    <tr><td><strong>IPS</strong></td><td><strong>P</strong>revine: bloqueia</td><td>ativo, <strong>inline</strong> (no caminho do tráfego)</td></tr>
+    <tr><td><strong>WAF</strong></td><td>aplicação web (camada 7)</td><td>barra SQLi, XSS — o firewall comum não vê isso</td></tr>
+    <tr><td><strong>Proxy</strong></td><td>intermedeia</td><td><em>forward</em> (protege o cliente) × <em>reverso</em> (protege/balanceia o servidor)</td></tr>
+    <tr><td><strong>DMZ</strong></td><td>rede intermediária</td><td>hospeda serviços públicos, isolando a rede interna</td></tr>
+    <tr><td><strong>SIEM</strong></td><td>correlaciona logs</td><td>detecção e resposta centralizadas (SOC)</td></tr>
+  </table>
+  </div>
+  <p><strong>Detecção:</strong> por <em>assinatura</em> (conhece o padrão; não pega zero-day) × por <em>anomalia/comportamento</em> (aprende o normal; gera mais falso positivo). <strong>Falso positivo</strong> = alarme sem ataque; <strong>falso negativo</strong> = ataque sem alarme (o pior).</p>
+
+  <h2>6. Ataques e malware</h2>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Ataque</th><th>Alvo/mecanismo</th><th>Defesa</th></tr>
+    <tr><td><strong>SQL Injection</strong></td><td>entrada vira comando no banco</td><td><strong>prepared statements</strong>, validação, menor privilégio</td></tr>
+    <tr><td><strong>XSS</strong></td><td>script executa no <strong>navegador da vítima</strong> (refletido, armazenado, DOM)</td><td>sanitizar saída, CSP, HttpOnly</td></tr>
+    <tr><td><strong>CSRF</strong></td><td>usa a sessão autenticada da vítima para agir sem que ela saiba</td><td><strong>token anti-CSRF</strong>, SameSite</td></tr>
+    <tr><td><strong>DoS/DDoS</strong></td><td>exaure recurso (botnet); ex.: SYN flood, amplificação DNS</td><td>mitigação, rate limit, CDN</td></tr>
+    <tr><td><strong>MitM</strong></td><td>intercepta o canal (ARP spoofing, rogue AP)</td><td>TLS, certificate pinning</td></tr>
+    <tr><td><strong>Phishing / engenharia social</strong></td><td><strong>a pessoa</strong> (spear phishing = alvo específico; vishing = voz; smishing = SMS)</td><td>conscientização, MFA</td></tr>
+    <tr><td>Força bruta / credential stuffing</td><td>senhas; reuso de vazamentos</td><td>lockout, MFA, senha forte</td></tr>
+    <tr><td>Buffer overflow</td><td>estoura o buffer e executa código</td><td>validação, ASLR, DEP</td></tr>
+    <tr><td>Zero-day</td><td>falha sem correção disponível</td><td>defesa em camadas, virtual patching</td></tr>
+  </table>
+  </div>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Malware</th><th>Definição fechada</th></tr>
+    <tr><td><strong>Vírus</strong></td><td>precisa de <strong>hospedeiro</strong> e de ação do usuário para se replicar</td></tr>
+    <tr><td><strong>Worm</strong></td><td>autorreplicante: <strong>propaga-se sozinho</strong> pela rede</td></tr>
+    <tr><td><strong>Trojan</strong></td><td>disfarçado de programa legítimo; não se replica</td></tr>
+    <tr><td><strong>Ransomware</strong></td><td>cifra os dados e exige resgate → defesa real é <strong>backup offline testado</strong></td></tr>
+    <tr><td><strong>Spyware / keylogger</strong></td><td>espiona; captura teclas</td></tr>
+    <tr><td><strong>Rootkit</strong></td><td>esconde a presença do invasor no sistema (nível profundo)</td></tr>
+    <tr><td><strong>Backdoor</strong></td><td>acesso remoto oculto para retorno</td></tr>
+    <tr><td>Botnet</td><td>rede de máquinas zumbis sob C&C</td></tr>
+  </table>
+  </div>
+  <p><strong>OWASP Top 10 (2021):</strong> A01 <strong>Broken Access Control</strong> (topo) · A02 Cryptographic Failures · A03 Injection (<em>engloba XSS</em>) · A04 Insecure Design · A05 Security Misconfiguration · A06 Vulnerable Components · A07 Identification/Authentication Failures · A08 Software and Data Integrity Failures · A09 Logging &amp; Monitoring Failures · A10 SSRF.</p>
+  <div class="trap">🪤 Quem estudou pela lista de <strong>2017</strong> marca "Injection" como A01 — desde 2021 o topo é <strong>Broken Access Control</strong>. Material desatualizado é pegadinha.</div>
+
+  <h2>7. Identidade e acesso (IAM)</h2>
+  <ul>
+    <li><strong>Os 3 fatores:</strong> algo que você <strong>sabe</strong> (senha, PIN) · <strong>tem</strong> (token, celular, cartão) · <strong>é</strong> (biometria). <strong>MFA</strong> exige fatores de <strong>tipos diferentes</strong> — senha + PIN é um fator só.</li>
+    <li><strong>AAA:</strong> Autenticação (quem é) → Autorização (o que pode) → Auditoria/Accounting (o que fez).</li>
+    <li><strong>Modelos de controle de acesso:</strong> <strong>DAC</strong> (dono define) · <strong>MAC</strong> (rótulos/classificação, rígido, militar) · <strong>RBAC</strong> (por papel — o mais usado) · <strong>ABAC</strong> (por atributos/contexto).</li>
+    <li><strong>SSO</strong>: uma autenticação, vários sistemas. <strong>OAuth 2.0</strong> = <em>autorização</em> (delegação de acesso via token) · <strong>OpenID Connect</strong> = camada de <em>autenticação</em> sobre o OAuth · <strong>SAML</strong> = federação baseada em XML · <strong>JWT</strong> = token autocontido (header.payload.signature) — assinado, <em>não</em> cifrado por padrão (não coloque segredo nele).</li>
+    <li><strong>Zero Trust:</strong> "nunca confie, sempre verifique" — sem confiança implícita por estar na rede interna; verificação contínua e microssegmentação.</li>
+  </ul>
+  <div class="trap">🪤 <strong>OAuth ≠ autenticação.</strong> Quem autentica é o OIDC. E biometria é dado <strong>sensível</strong> pela LGPD — cruzamento clássico com Bancários.</div>
+
+  <h2>8. Normas e continuidade</h2>
+  <ul>
+    <li><strong>ISO/IEC 27001</strong>: requisitos do <strong>SGSI</strong> — é a norma <em>certificável</em>, baseada em risco e no ciclo <strong>PDCA</strong>. <strong>27002</strong>: código de <em>práticas</em> (controles, não certificável). <strong>27005</strong>: gestão de riscos. <strong>27701</strong>: privacidade. <strong>22301</strong>: continuidade de negócios. <strong>ISO 31000</strong>: gestão de riscos (geral).</li>
+    <li><strong>Tratamento de risco:</strong> mitigar (reduzir) · transferir (seguro/terceiro) · <strong>aceitar</strong> (reter) · evitar (não fazer). Risco <strong>residual</strong> é o que sobra após os controles.</li>
+    <li><strong>Continuidade:</strong> <strong>BIA</strong> identifica processos críticos e define <strong>RTO</strong> (tempo máximo tolerável para restaurar) e <strong>RPO</strong> (perda máxima de dados aceitável, "até que ponto no tempo eu volto"). <strong>PCN</strong> = plano de continuidade; <strong>DRP</strong> = recuperação de desastres.</li>
+    <li><strong>Backup:</strong> <em>completo</em> · <em>incremental</em> (só o que mudou desde o último backup <strong>qualquer</strong> — rápido de gravar, lento de restaurar, precisa da cadeia toda) · <em>diferencial</em> (o que mudou desde o último <strong>completo</strong> — mais pesado, restaura com 2 conjuntos). Regra <strong>3-2-1</strong>: 3 cópias, 2 mídias, 1 fora do site.</li>
+    <li><strong>Resposta a incidentes</strong> (NIST): preparação → detecção e análise → contenção, erradicação e recuperação → lições aprendidas. Cadeia de custódia e forense preservam a evidência.</li>
+    <li><strong>Governança:</strong> <strong>COBIT</strong> (governança de TI, foco em controle e alinhamento) × <strong>ITIL</strong> (gerenciamento de <em>serviços</em>: incidente ≠ problema — incidente restaura o serviço, problema busca a causa raiz).</li>
+  </ul>
+
+  <h2>9. Redes</h2>
+  <div class="table-scroll">
+  <table>
+    <tr><th>OSI</th><th>PDU</th><th>Endereço</th><th>Equipamento</th><th>Exemplos</th></tr>
+    <tr><td>7 Aplicação<br>6 Apresentação<br>5 Sessão</td><td>dados</td><td>—</td><td>gateway, WAF</td><td>HTTP, DNS, SMTP, FTP, SSH</td></tr>
+    <tr><td><strong>4 Transporte</strong></td><td>segmento</td><td><strong>porta</strong></td><td>firewall stateful</td><td>TCP, UDP</td></tr>
+    <tr><td><strong>3 Rede</strong></td><td>pacote</td><td><strong>IP</strong></td><td><strong>roteador</strong></td><td>IP, ICMP, ARP*, OSPF, BGP</td></tr>
+    <tr><td><strong>2 Enlace</strong></td><td>quadro</td><td><strong>MAC</strong> (48 bits)</td><td><strong>switch</strong>, bridge</td><td>Ethernet, PPP, VLAN</td></tr>
+    <tr><td>1 Física</td><td>bit</td><td>—</td><td>hub, repetidor, cabo</td><td>RJ-45, fibra</td></tr>
+  </table>
+  </div>
+  <p class="muted">*ARP é classificado entre 2 e 3 conforme a banca (mapeia IP → MAC). TCP/IP tem 4 camadas: Aplicação (5-7), Transporte, Internet, Acesso à rede (1-2).</p>
+  <div class="table-scroll">
+  <table>
+    <tr><th></th><th>TCP</th><th>UDP</th></tr>
+    <tr><td>Conexão</td><td>orientado (handshake <strong>3 vias</strong>: SYN → SYN-ACK → ACK)</td><td>sem conexão</td></tr>
+    <tr><td>Garantias</td><td>entrega, ordem, retransmissão, controle de fluxo (janela) e congestionamento</td><td>nenhuma ("melhor esforço")</td></tr>
+    <tr><td>Overhead</td><td>cabeçalho 20 bytes</td><td>8 bytes</td></tr>
+    <tr><td>Uso</td><td>web, e-mail, arquivo, SSH</td><td>streaming, VoIP, DNS, DHCP, jogos</td></tr>
+  </table>
+  </div>
+  <p><strong>Endereçamento:</strong> IPv4 = <strong>32 bits</strong>; IPv6 = <strong>128 bits</strong>; MAC = 48 bits. Privados (RFC 1918): 10.0.0.0/8 · 172.16.0.0/12 · 192.168.0.0/16. Loopback: 127.0.0.1. <strong>CIDR:</strong> /24 = 256 endereços, <strong>254 hosts</strong> úteis (menos rede e broadcast). Fórmula: 2^(32−n) − 2. <strong>NAT</strong> traduz privado ↔ público (paliativo para o esgotamento do IPv4). IPv6: sem broadcast (usa multicast/anycast), sem NAT por concepção, cabeçalho simplificado.</p>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Porta</th><th>Serviço</th><th>Porta</th><th>Serviço</th></tr>
+    <tr><td>20/21</td><td>FTP (dados/controle)</td><td>110</td><td>POP3</td></tr>
+    <tr><td>22</td><td>SSH / SFTP</td><td>143</td><td>IMAP</td></tr>
+    <tr><td>23</td><td>Telnet</td><td>161/162</td><td>SNMP</td></tr>
+    <tr><td>25</td><td>SMTP</td><td>389 / 636</td><td>LDAP / LDAPS</td></tr>
+    <tr><td>53</td><td>DNS</td><td><strong>443</strong></td><td><strong>HTTPS</strong></td></tr>
+    <tr><td>67/68</td><td>DHCP</td><td>3306 / 1521 / 5432</td><td>MySQL / Oracle / PostgreSQL</td></tr>
+    <tr><td><strong>80</strong></td><td><strong>HTTP</strong></td><td>3389</td><td>RDP</td></tr>
+  </table>
+  </div>
+  <p><strong>Serviços:</strong> <strong>DNS</strong> resolve nome → IP (registros A, AAAA, CNAME, MX, NS, TXT; recursivo × iterativo; cache/TTL). <strong>DHCP</strong> entrega IP dinâmico (DORA: Discover, Offer, Request, Ack). <strong>VLAN</strong> segmenta logicamente o switch (broadcast domain). <strong>Topologias:</strong> barramento, anel, estrela (a usual), malha. <strong>LAN × MAN × WAN</strong>. <strong>Wi-Fi</strong>: 2,4 GHz (alcance) × 5 GHz (velocidade).</p>
+
+  <h2>10. Sistemas operacionais e Linux</h2>
+  <ul>
+    <li><strong>Processo × thread:</strong> processo tem espaço de memória próprio; threads compartilham o do processo (mais leves). <strong>Escalonamento:</strong> FIFO, SJF, Round Robin (fatia de tempo), por prioridade. <strong>Deadlock</strong> exige as 4 condições de Coffman: exclusão mútua, posse e espera, não preempção, espera circular.</li>
+    <li><strong>Memória:</strong> virtual, paginação, segmentação, <strong>swap</strong>; <em>thrashing</em> = paginação excessiva. MMU traduz endereço lógico → físico.</li>
+    <li><strong>Permissões:</strong> r=4, w=2, x=1, na ordem <strong>dono/grupo/outros</strong>. 755 = rwx r-x r-x · 644 = rw- r-- r-- · 777 (nunca em produção). <code>chmod</code> muda permissão, <code>chown</code> muda dono, <code>umask</code> define o padrão. Especiais: SUID, SGID, sticky bit (/tmp).</li>
+    <li><strong>Comandos:</strong> <code>ls, cd, pwd, cp, mv, rm, mkdir</code> · <code>cat, less, head, tail -f</code> · <strong><code>grep</code> busca</strong>, <strong><code>sed</code> substitui</strong>, <strong><code>awk</code> processa colunas</strong> · <code>find</code> localiza · <code>ps, top, kill, systemctl</code> · <code>df, du, free</code> · <code>tar, gzip</code> · <code>apt/yum/dnf</code> (pacotes) · <code>ssh, scp, curl, netstat/ss, ping, traceroute</code>.</li>
+    <li><strong>Shell:</strong> <code>|</code> encadeia (stdout → stdin) · <code>&gt;</code> sobrescreve arquivo · <code>&gt;&gt;</code> anexa · <code>2&gt;</code> redireciona erro · <code>&amp;</code> executa em background. Descritores: 0=stdin, 1=stdout, 2=stderr.</li>
+    <li><strong>Estrutura de diretórios:</strong> /etc (configuração) · /var (logs, dados variáveis) · /home · /bin, /usr/bin (binários) · /tmp · /proc (kernel/processos virtuais) · /dev (dispositivos).</li>
+  </ul>
+
+  <h2>11. Virtualização, nuvem e Git</h2>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Modelo</th><th>Você gerencia</th><th>Exemplo</th></tr>
+    <tr><td><strong>IaaS</strong></td><td>SO, middleware, app e dados</td><td>EC2, máquina virtual</td></tr>
+    <tr><td><strong>PaaS</strong></td><td>app e dados</td><td>App Engine, Heroku</td></tr>
+    <tr><td><strong>SaaS</strong></td><td>só usa</td><td>Gmail, Salesforce</td></tr>
+  </table>
+  </div>
+  <p><strong>Implantação:</strong> pública, privada, <strong>híbrida</strong>, comunitária. <strong>Características essenciais (NIST):</strong> autosserviço sob demanda, amplo acesso à rede, <strong>pooling</strong> de recursos, <strong>elasticidade</strong> rápida, <strong>serviço medido</strong> (pay-per-use). <strong>Responsabilidade compartilhada:</strong> o provedor cuida da segurança <em>da</em> nuvem; o cliente, <em>na</em> nuvem (dados, acesso, configuração).</p>
+  <p><strong>VM × contêiner:</strong> VM virtualiza hardware (hipervisor tipo 1 bare-metal × tipo 2 hospedado) e carrega SO convidado completo; <strong>contêiner compartilha o kernel do host</strong> — leve, sobe em segundos, isolamento menor. <strong>Kubernetes</strong> orquestra (pod, deployment, service, node); <strong>IaC</strong> (Terraform/Ansible) trata infraestrutura como código.</p>
+  <p><strong>Git:</strong> distribuído (cada clone tem o histórico completo). Áreas: working directory → <strong>staging/index</strong> (<code>git add</code>) → repositório local (<code>commit</code>) → remoto (<code>push</code>). <code>clone</code> (primeira cópia) · <code>fetch</code> (baixa refs) · <code>pull</code> = fetch + merge · <strong>merge</strong> (preserva histórico, cria commit de mesclagem) × <strong>rebase</strong> (reescreve, histórico linear — nunca em branch pública) · <code>revert</code> (novo commit que desfaz, seguro) × <code>reset</code> (move o ponteiro; <code>--hard</code> descarta) · <code>stash</code> (guarda temporário) · <code>cherry-pick</code> (traz um commit específico). <strong>GitFlow</strong>: main, develop, feature, release, hotfix. <strong>CI</strong> integra e testa a cada commit; <strong>CD</strong> entrega/implanta automaticamente.</p>
+
+  <h2>12. IA, dados e tendências</h2>
+  <ul>
+    <li><strong>Tipos de aprendizado:</strong> <strong>supervisionado</strong> (dados rotulados → classificação/regressão; ex.: score de crédito) · <strong>não supervisionado</strong> (sem rótulo → clusterização, associação; ex.: segmentação de clientes) · <strong>por reforço</strong> (agente, ambiente, recompensa) · semissupervisionado.</li>
+    <li><strong>Overfitting</strong> (decorou o treino, vai mal no teste) × <strong>underfitting</strong> (modelo simples demais). Combate: validação cruzada, regularização, mais dados.</li>
+    <li><strong>Métricas de classificação:</strong> matriz de confusão → acurácia, <strong>precisão</strong> (dos que apontei, quantos eram), <strong>recall/sensibilidade</strong> (dos que existiam, quantos achei), F1 (média harmônica), AUC-ROC. Em <strong>antifraude</strong>, recall costuma importar mais que acurácia (base desbalanceada!).</li>
+    <li><strong>IA generativa / LLM:</strong> riscos de <strong>alucinação</strong>, viés, vazamento de dados e prompt injection → exigem <em>human in the loop</em> e governança. <strong>RAG</strong> = recuperar contexto para fundamentar a resposta.</li>
+    <li><strong>Ciência de dados:</strong> pipeline ETL/ELT · qualidade e <strong>governança de dados</strong> (data steward, catálogo, linhagem) · <strong>Hadoop</strong> (HDFS + MapReduce) e <strong>Spark</strong> (processamento em memória, mais rápido).</li>
+    <li><strong>Blockchain:</strong> cadeia de blocos com hash encadeado, imutável e distribuída; consenso (PoW, PoS); <em>permissionada</em> (Drex) × pública. <strong>Smart contract</strong> = código que executa sozinho quando a condição é satisfeita.</li>
+  </ul>
+
+  <div class="tip">📇 Este é o material de <strong>consulta</strong>, não de leitura linear. Seu plano continua: TI se estuda com questões (aba 🧪) — volte aqui só quando errar e não souber por quê.</div>
+</div>
+</body>
+</html>

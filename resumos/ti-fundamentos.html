@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Teoria — TI: Banco de Dados, Programação e Engenharia de Software</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<div class="wrap">
+  <div class="nav"><a href="index.html">← Biblioteca</a> · <a href="../guia.html">Guia</a> · <a href="ti-comparativos.html">Comparativos</a></div>
+  <h1>💾 TI — Dados, Programação e Engenharia</h1>
+  <p class="sub">Você já <em>faz</em> isso. Esta apostila entrega o que falta: a <strong>terminologia fechada de concurso</strong> — as definições, classificações e números que a banca cobra e que ninguém usa no dia a dia.</p>
+
+  <div class="tip">🎯 <strong>Leia diferente:</strong> não estude o conceito, estude o <strong>rótulo</strong>. Você sabe fazer um índice; a prova quer saber se você chama aquilo de "B-tree", "denso" ou "clusterizado".</div>
+
+  <h2>1. Modelagem de dados</h2>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Nível</th><th>O que define</th><th>Artefato</th></tr>
+    <tr><td><strong>Conceitual</strong></td><td>o negócio, sem tecnologia</td><td>MER / diagrama ER (entidades, atributos, relacionamentos)</td></tr>
+    <tr><td><strong>Lógico</strong></td><td>estrutura no modelo escolhido (relacional), sem SGBD específico</td><td>tabelas, chaves, cardinalidade</td></tr>
+    <tr><td><strong>Físico</strong></td><td>implementação real</td><td>DDL, tipos, índices, tablespaces</td></tr>
+  </table>
+  </div>
+  <p><strong>Conceitos do MER:</strong> entidade (forte × fraca — depende de outra para existir), atributo (simples, composto, multivalorado, derivado, <strong>chave</strong>), relacionamento e <strong>cardinalidade</strong> (1:1, 1:N, N:N). Relacionamento <strong>N:N vira tabela associativa</strong> no modelo lógico. <strong>Generalização/especialização</strong> = herança.</p>
+  <p><strong>Chaves:</strong> <em>primária</em> (única, não nula), <em>candidata</em> (poderia ser PK), <em>alternativa</em> (candidata não escolhida), <em>composta</em> (2+ colunas), <em>estrangeira</em> (integridade referencial — pode ser nula e repetir), <em>surrogate</em> (artificial, sequencial).</p>
+  <p><strong>Integridades:</strong> de <em>domínio</em> (tipo/valores válidos), de <em>entidade</em> (PK não nula e única), <em>referencial</em> (FK aponta para PK existente) e <em>definida pelo usuário</em> (regras de negócio, CHECK).</p>
+
+  <h2>2. Normalização</h2>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Forma</th><th>Exige</th><th>Elimina</th></tr>
+    <tr><td><strong>1FN</strong></td><td>atributos atômicos; sem grupos repetitivos</td><td>multivalorado</td></tr>
+    <tr><td><strong>2FN</strong></td><td>estar na 1FN + nenhum atributo não-chave depender de <em>parte</em> da chave composta</td><td>dependência <strong>parcial</strong></td></tr>
+    <tr><td><strong>3FN</strong></td><td>estar na 2FN + nenhum atributo não-chave depender de outro não-chave</td><td>dependência <strong>transitiva</strong></td></tr>
+    <tr><td><strong>BCNF</strong></td><td>todo determinante é chave candidata</td><td>anomalias residuais da 3FN</td></tr>
+    <tr><td>4FN / 5FN</td><td>sem dependência multivalorada / de junção</td><td>casos raros</td></tr>
+  </table>
+  </div>
+  <p><strong>Desnormalização:</strong> introduzir redundância <em>de propósito</em> para desempenho de leitura — típica em DW/OLAP. Troca-se integridade por velocidade.</p>
+  <div class="trap">🪤 Ordem das causas: 1FN=atomicidade · 2FN=parcial · 3FN=transitiva. A banca pergunta "qual FN a tabela viola?" — identifique a dependência, não decore exemplos.</div>
+
+  <h2>3. SQL — a taxonomia que cai</h2>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Sublinguagem</th><th>Comandos</th><th>Transação?</th></tr>
+    <tr><td><strong>DDL</strong> (definição)</td><td>CREATE, ALTER, DROP, TRUNCATE, RENAME</td><td>commit implícito (Oracle)</td></tr>
+    <tr><td><strong>DML</strong> (manipulação)</td><td>INSERT, UPDATE, DELETE, (SELECT*)</td><td>✅ aceita rollback</td></tr>
+    <tr><td><strong>DCL</strong> (controle)</td><td>GRANT, REVOKE</td><td>—</td></tr>
+    <tr><td><strong>TCL/DTL</strong> (transação)</td><td>COMMIT, ROLLBACK, SAVEPOINT</td><td>—</td></tr>
+  </table>
+  </div>
+  <p class="muted">*SELECT é classificado como DQL por muitas bancas (ou dentro de DML) — se aparecer "DQL", é o SELECT.</p>
+  <p><strong>Ordem lógica de execução</strong> (diferente da ordem escrita!):<br>
+  <code>FROM → JOIN → WHERE → GROUP BY → HAVING → SELECT → DISTINCT → ORDER BY → LIMIT</code></p>
+  <p>Por isso: <em>não se usa apelido do SELECT no WHERE</em>, e <em>agregação no filtro pede HAVING</em>.</p>
+  <p><strong>Funções de agregação:</strong> COUNT, SUM, AVG, MIN, MAX — todas <strong>ignoram NULL</strong> (exceto COUNT(*), que conta linhas). Toda coluna do SELECT fora de agregação deve estar no GROUP BY.</p>
+  <p><strong>Operadores de conjunto:</strong> UNION (elimina duplicatas), UNION ALL (mantém, mais rápido), INTERSECT, EXCEPT/MINUS.</p>
+  <p><strong>Views:</strong> tabela virtual (consulta armazenada) — simplifica e dá segurança (expõe só colunas permitidas). <strong>Materialized view</strong> armazena o resultado fisicamente. <strong>Índice:</strong> em geral B-tree; acelera leitura, onera escrita; <em>bitmap</em> para baixa cardinalidade; <em>clusterizado</em> define a ordem física.</p>
+
+  <h2>4. Transações e concorrência</h2>
+  <p><strong>ACID:</strong> Atomicidade (tudo ou nada) · Consistência (integridade preservada) · Isolamento (transações não se enxergam) · Durabilidade (commit sobrevive a falha).</p>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Nível de isolamento</th><th>Dirty read</th><th>Non-repeatable read</th><th>Phantom</th></tr>
+    <tr><td>Read Uncommitted</td><td>✅ ocorre</td><td>✅</td><td>✅</td></tr>
+    <tr><td>Read Committed <em>(padrão Oracle/PG)</em></td><td>❌</td><td>✅</td><td>✅</td></tr>
+    <tr><td>Repeatable Read</td><td>❌</td><td>❌</td><td>✅</td></tr>
+    <tr><td><strong>Serializable</strong></td><td>❌</td><td>❌</td><td>❌</td></tr>
+  </table>
+  </div>
+  <ul>
+    <li><strong>Dirty read:</strong> leu dado não commitado. <strong>Non-repeatable:</strong> releu a linha e mudou. <strong>Phantom:</strong> releu o conjunto e apareceram/sumiram linhas.</li>
+    <li><strong>Deadlock:</strong> duas transações esperam recursos uma da outra. O SGBD detecta e aborta uma (a "vítima").</li>
+    <li><strong>Bloqueio otimista</strong> (versão/timestamp, assume pouco conflito) × <strong>pessimista</strong> (lock, assume muito conflito). <strong>MVCC</strong>: leitores não bloqueiam escritores.</li>
+  </ul>
+
+  <h2>5. PL/SQL — objetos e diferenças</h2>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Objeto</th><th>Característica</th></tr>
+    <tr><td><strong>Procedure</strong></td><td>chamada explícita; parâmetros IN/OUT/IN OUT; <strong>não</strong> retorna valor via RETURN</td></tr>
+    <tr><td><strong>Function</strong></td><td>chamada explícita; <strong>retorna</strong> um valor; pode ser usada em SELECT</td></tr>
+    <tr><td><strong>Trigger</strong></td><td><strong>automático</strong> ante evento (BEFORE/AFTER + INSERT/UPDATE/DELETE); <strong>sem parâmetros</strong>; row-level (FOR EACH ROW) ou statement-level; usa :NEW e :OLD</td></tr>
+    <tr><td><strong>Package</strong></td><td>agrupa procedures/functions/variáveis (spec + body)</td></tr>
+    <tr><td><strong>Cursor</strong></td><td>percorre resultado linha a linha (implícito × explícito: OPEN/FETCH/CLOSE)</td></tr>
+  </table>
+  </div>
+  <p><strong>Blocos:</strong> DECLARE → BEGIN → EXCEPTION → END. Exceções pré-definidas: NO_DATA_FOUND, TOO_MANY_ROWS, DUP_VAL_ON_INDEX, ZERO_DIVIDE.</p>
+
+  <h2>6. NoSQL, DW e Big Data</h2>
+  <p><strong>Teorema CAP:</strong> em sistema distribuído, escolha 2 entre <strong>C</strong>onsistência, <strong>A</strong>vailability e <strong>P</strong>artition tolerance. Como partição é inevitável na rede, o trade-off real é <strong>CP × AP</strong>. NoSQL costuma seguir <strong>BASE</strong> (Basically Available, Soft state, Eventual consistency) em vez de ACID.</p>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Modelo</th><th>Exemplo</th><th>Uso</th></tr>
+    <tr><td>Chave-valor</td><td>Redis, DynamoDB</td><td>cache, sessão</td></tr>
+    <tr><td>Documento</td><td>MongoDB, CouchDB</td><td>JSON flexível</td></tr>
+    <tr><td>Colunar (wide-column)</td><td>Cassandra, HBase</td><td>escala massiva, séries temporais</td></tr>
+    <tr><td>Grafo</td><td>Neo4j</td><td>relacionamentos, antifraude</td></tr>
+  </table>
+  </div>
+  <p><strong>OLTP × OLAP:</strong> transacional (muitas escritas curtas, normalizado, dado atual) × analítico (leituras complexas, desnormalizado, histórico).</p>
+  <p><strong>Data Warehouse (Inmon/Kimball):</strong> integrado, orientado a assunto, <strong>não volátil</strong> e <strong>variante no tempo</strong>. Modelagem <strong>dimensional</strong>: fato (métricas) + dimensões. <em>Star schema</em> (dimensões desnormalizadas, mais rápido) × <em>snowflake</em> (dimensões normalizadas). <strong>Data mart</strong> = recorte departamental. <strong>ETL</strong> (transforma antes) × <strong>ELT</strong> (carrega e transforma no destino). <strong>Data lake</strong> = dado bruto, schema-on-read; <strong>lakehouse</strong> = híbrido. <strong>Os 5 Vs:</strong> volume, velocidade, variedade, veracidade, valor.</p>
+
+  <h2>7. Programação e POO</h2>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Pilar da POO</th><th>Definição de prova</th></tr>
+    <tr><td><strong>Abstração</strong></td><td>representar o essencial, ocultar detalhes</td></tr>
+    <tr><td><strong>Encapsulamento</strong></td><td>esconder o estado interno; acesso por métodos (getters/setters)</td></tr>
+    <tr><td><strong>Herança</strong></td><td>reuso: subclasse estende superclasse (Java: herança múltipla só de <em>interfaces</em>)</td></tr>
+    <tr><td><strong>Polimorfismo</strong></td><td>mesma interface, comportamentos diferentes</td></tr>
+  </table>
+  </div>
+  <p><strong>Polimorfismo × sobrecarga:</strong> <em>sobrescrita/override</em> (mesma assinatura, subclasse, ligação <strong>dinâmica</strong> em execução) × <em>sobrecarga/overload</em> (mesmo nome, parâmetros diferentes, ligação <strong>estática</strong> em compilação). Mudar só o tipo de retorno <strong>não</strong> é sobrecarga.</p>
+  <p><strong>Java específico:</strong></p>
+  <ul>
+    <li><strong>Classe abstrata × interface:</strong> abstrata pode ter estado e construtor, herança simples; interface define contrato, herança múltipla, e desde o <strong>Java 8</strong> aceita <code>default</code> e <code>static</code> com corpo (Java 9: métodos privados).</li>
+    <li><strong>Exceções:</strong> <em>checked</em> (herdam Exception — obrigam try/catch ou throws: IOException, SQLException) × <em>unchecked</em> (herdam RuntimeException — NullPointerException, ArrayIndexOutOfBounds, ArithmeticException, IllegalArgument). <strong>Error</strong> (OutOfMemory, StackOverflow) não deve ser tratado.</li>
+    <li><strong>finally</strong> executa sempre — inclusive com <code>return</code> no try (exceções: System.exit() ou queda da JVM).</li>
+    <li><strong>String é imutável</strong> (métodos retornam nova instância; usa String pool). Mutáveis: StringBuilder (rápido, não sincronizado) e StringBuffer (thread-safe).</li>
+    <li><strong>== compara referência; equals() compara conteúdo.</strong> Sobrescreveu equals? Sobrescreva hashCode.</li>
+    <li><strong>Collections:</strong> List (ordenada, aceita duplicata) · Set (sem duplicata) · Map (chave→valor) · Queue. ArrayList (acesso O(1), inserção no meio O(n)) × LinkedList (inserção O(1), acesso O(n)). HashMap (sem ordem, permite 1 null na chave) × TreeMap (ordenado, O(log n)) × LinkedHashMap (ordem de inserção). Vector/Hashtable = legados sincronizados.</li>
+    <li><strong>static</strong> pertence à classe: método estático <em>não</em> acessa atributo de instância diretamente. <strong>final</strong>: variável constante, método não sobrescrevível, classe não herdável.</li>
+    <li><strong>Modificadores:</strong> private (classe) · default/package (pacote) · protected (pacote + subclasses) · public (todos).</li>
+    <li><strong>JVM:</strong> .java → <em>compilador</em> → bytecode (.class) → JVM interpreta/JIT. <strong>JDK</strong> ⊃ <strong>JRE</strong> ⊃ <strong>JVM</strong>. Garbage collector cuida do heap (objetos); a stack guarda variáveis locais e frames.</li>
+  </ul>
+
+  <h2>8. Estruturas de dados e algoritmos</h2>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Estrutura</th><th>Política / forma</th><th>Acesso</th><th>Busca</th><th>Inserção</th></tr>
+    <tr><td>Array / vetor</td><td>contíguo, índice</td><td>O(1)</td><td>O(n) — O(log n) se ordenado (binária)</td><td>O(n)</td></tr>
+    <tr><td>Lista encadeada</td><td>nós com ponteiros</td><td>O(n)</td><td>O(n)</td><td>O(1) na ponta</td></tr>
+    <tr><td>Pilha</td><td><strong>LIFO</strong> (push/pop/top)</td><td colspan="3">Ctrl+Z, chamadas de função, expressões pós-fixas</td></tr>
+    <tr><td>Fila</td><td><strong>FIFO</strong> (enqueue/dequeue)</td><td colspan="3">impressão, mensageria, BFS</td></tr>
+    <tr><td>Hash</td><td>função de espalhamento</td><td>—</td><td><strong>O(1) médio</strong>, O(n) pior (colisões)</td><td>O(1) médio</td></tr>
+    <tr><td>Árvore binária de busca balanceada</td><td>esquerda &lt; raiz &lt; direita</td><td>—</td><td>O(log n)</td><td>O(log n)</td></tr>
+  </table>
+  </div>
+  <p><strong>Árvores:</strong> percursos <em>in-ordem</em> (esq→raiz→dir: gera ordem crescente na BST), <em>pré-ordem</em> (raiz→esq→dir) e <em>pós-ordem</em> (esq→dir→raiz). Balanceadas: AVL, rubro-negra. <strong>B-tree/B+tree</strong>: a base dos índices de SGBD (otimizada para disco). <strong>Heap</strong>: pai ≥/≤ filhos — base da fila de prioridade.</p>
+  <p><strong>Grafos:</strong> BFS (fila, menor nº de arestas) · DFS (pilha/recursão) · Dijkstra (menor caminho com pesos não negativos) · Kruskal/Prim (árvore geradora mínima).</p>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Ordenação</th><th>Médio</th><th>Pior</th><th>Estável?</th></tr>
+    <tr><td>Bubble / Insertion / Selection</td><td>O(n²)</td><td>O(n²)</td><td>bubble e insertion: sim</td></tr>
+    <tr><td><strong>Quicksort</strong></td><td>O(n log n)</td><td><strong>O(n²)</strong> (pivô ruim)</td><td>não</td></tr>
+    <tr><td><strong>Mergesort</strong></td><td>O(n log n)</td><td>O(n log n)</td><td>sim (usa memória extra)</td></tr>
+    <tr><td>Heapsort</td><td>O(n log n)</td><td>O(n log n)</td><td>não</td></tr>
+  </table>
+  </div>
+  <p><strong>Big-O</strong> = limite superior (pior caso). Ordem de crescimento: O(1) &lt; O(log n) &lt; O(n) &lt; O(n log n) &lt; O(n²) &lt; O(2ⁿ) &lt; O(n!).</p>
+  <div class="trap">🪤 Quicksort é o mais rápido na prática mas tem <strong>pior caso O(n²)</strong>; mergesort garante O(n log n) sempre. Busca binária exige vetor <strong>ordenado</strong>.</div>
+
+  <h2>9. Engenharia de software</h2>
+  <p><strong>Modelos de processo:</strong> Cascata (sequencial, rígido) · Incremental · Espiral (guiado a risco, de Boehm) · RUP (iterativo, 4 fases: concepção, elaboração, construção, transição) · Ágil.</p>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Framework</th><th>Essência</th></tr>
+    <tr><td><strong>Scrum</strong></td><td>Papéis: PO (prioriza o Product Backlog, maximiza valor), Scrum Master (facilita, remove impedimentos — <em>não</em> é chefe), Devs (decidem o COMO). Eventos: Sprint (≤1 mês), Planning, Daily (15 min), Review (inspeciona incremento) e Retrospective (melhora o processo). Artefatos: Product Backlog, Sprint Backlog, Incremento — cada um com um compromisso (Meta do Produto, Meta do Sprint, DoD).</td></tr>
+    <tr><td><strong>Kanban</strong></td><td>Fluxo contínuo, visualização do quadro, <strong>limite de WIP</strong>, gestão do fluxo, melhoria evolutiva. Sem sprints e sem papéis obrigatórios.</td></tr>
+    <tr><td><strong>XP</strong></td><td>Programação em par, TDD, integração contínua, refatoração, propriedade coletiva do código, cliente presente.</td></tr>
+    <tr><td><strong>Lean</strong></td><td>Eliminar desperdício, entregar rápido, decidir o mais tarde possível, otimizar o todo.</td></tr>
+  </table>
+  </div>
+  <p><strong>Manifesto Ágil — os 4 valores</strong> (mais à esquerda que à direita): indivíduos e interações &gt; processos e ferramentas · software funcionando &gt; documentação abrangente · colaboração com o cliente &gt; negociação de contratos · responder a mudanças &gt; seguir um plano. (12 princípios.)</p>
+  <div class="trap">🪤 O Manifesto <strong>não descarta</strong> o lado direito ("há valor nos itens à direita") — alternativa que diz "ágil dispensa documentação" está errada.</div>
+
+  <h3>Testes</h3>
+  <ul>
+    <li><strong>Caixa-branca</strong> (estrutural, conhece o código: cobertura de linha/condição) × <strong>caixa-preta</strong> (funcional, só entradas/saídas: partição de equivalência, valor-limite) × caixa-cinza.</li>
+    <li><strong>Níveis:</strong> unitário → integração → sistema → aceitação. <strong>Regressão</strong> garante que o que funcionava continua funcionando; <strong>smoke</strong> é a verificação mínima.</li>
+    <li><strong>Pirâmide de testes:</strong> muitos unitários (base, baratos) → menos de integração → poucos E2E (topo, caros/lentos).</li>
+    <li><strong>TDD:</strong> red → green → refactor (teste primeiro, código mínimo, refatora). <strong>BDD</strong>: Given/When/Then. <strong>Erro × defeito × falha:</strong> erro humano gera defeito (bug) no código, que pode se manifestar como falha em execução.</li>
+  </ul>
+
+  <h3>UML e padrões</h3>
+  <p><strong>UML — estruturais</strong>: classes, objetos, componentes, implantação, pacotes. <strong>Comportamentais</strong>: casos de uso, sequência, atividades, estados, comunicação.</p>
+  <p><strong>Relações de classe:</strong> associação · agregação (losango vazio — a parte sobrevive ao todo) · composição (losango cheio — a parte morre com o todo) · herança (triângulo) · dependência (tracejado).</p>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Categoria GoF</th><th>Padrões cobrados</th></tr>
+    <tr><td><strong>Criacionais</strong></td><td>Singleton (uma instância), Factory Method, Abstract Factory, Builder, Prototype</td></tr>
+    <tr><td><strong>Estruturais</strong></td><td>Adapter (compatibiliza interfaces), Facade (simplifica subsistema), Proxy, Decorator, Composite, Bridge, Flyweight</td></tr>
+    <tr><td><strong>Comportamentais</strong></td><td>Observer (publish/subscribe), Strategy (algoritmo intercambiável), Command, Template Method, Iterator, State, Chain of Responsibility, Mediator, Memento, Visitor</td></tr>
+  </table>
+  </div>
+  <p><strong>SOLID:</strong> <em>S</em>ingle Responsibility · <em>O</em>pen/Closed (aberto a extensão, fechado a modificação) · <em>L</em>iskov (subtipo substitui o tipo base) · <em>I</em>nterface Segregation · <em>D</em>ependency Inversion (dependa de abstrações). Complementos: DRY, KISS, YAGNI, coesão <strong>alta</strong> e acoplamento <strong>baixo</strong>.</p>
+
+  <h2>10. Arquitetura e integração</h2>
+  <ul>
+    <li><strong>Monólito × microsserviços:</strong> artefato único × serviços pequenos, autônomos, com deploy independente e <strong>banco próprio</strong> (database per service). Padrões: API Gateway, Service Discovery, Circuit Breaker, Saga (transação distribuída), CQRS, Event Sourcing.</li>
+    <li><strong>REST:</strong> estilo arquitetural sobre HTTP. Restrições: cliente-servidor, <strong>stateless</strong>, cacheável, interface uniforme, camadas, código sob demanda (opcional). Maturidade (Richardson): 0 → 3 (HATEOAS).</li>
+    <li><strong>Métodos e idempotência:</strong> GET (seguro e idempotente), PUT e DELETE (idempotentes), <strong>POST não é</strong>, PATCH (parcial, não idempotente).</li>
+    <li><strong>Status HTTP:</strong> 2xx sucesso (200 OK, 201 Created, 204 No Content) · 3xx redirecionamento (301, 304) · <strong>4xx erro do cliente</strong> (400 Bad Request, <strong>401 não autenticado</strong>, <strong>403 autenticado sem permissão</strong>, 404, 429 Too Many Requests) · <strong>5xx erro do servidor</strong> (500, 502, 503).</li>
+    <li><strong>SOAP × REST:</strong> SOAP usa XML + WSDL, é protocolo rígido com WS-Security; REST é leve, geralmente JSON.</li>
+    <li><strong>Mensageria:</strong> desacopla e é assíncrona. <em>Fila</em> (ponto a ponto, 1 consumidor) × <em>tópico</em> (pub/sub, N assinantes). RabbitMQ (broker AMQP, roteamento rico) × Kafka (log distribuído, alta vazão, retenção e replay). Entrega: at-most-once, at-least-once, exactly-once.</li>
+  </ul>
+
+  <div class="tip">📇 Pare de ler e vá resolver: aba 🧪 → TI. Nesta apostila, o que você <em>não sabia dizer com as palavras da banca</em> é o que vale ponto — o resto você já fazia.</div>
+</div>
+</body>
+</html>

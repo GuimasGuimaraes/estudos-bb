@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biblioteca de Teoria — Concurso BB</title>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  .lib { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media (max-width: 720px) { .lib { grid-template-columns: 1fr; } }
+  a.item {
+    display: block; text-decoration: none; background: var(--surface);
+    border: 1px solid var(--border); border-radius: 12px; padding: 16px;
+  }
+  a.item:hover { border-color: var(--accent); }
+  a.item .t { color: var(--ink-1); font-weight: 700; font-size: 1rem; margin-bottom: 4px; }
+  a.item .d { color: var(--ink-2); font-size: .86rem; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="nav"><a href="../guia.html">← voltar ao Guia</a></div>
+  <h1>📚 Biblioteca de Teoria</h1>
+  <p class="sub">Apostilas filtradas para a prova do BB — Agente de Tecnologia. Cada uma traz só o que a banca cobra, com as pegadinhas marcadas (🪤) e quadros de fixação.</p>
+
+  <div class="tip">🎯 <strong>Ordem sugerida:</strong> a teoria segue seu plano (aba 📚 Materiais do guia). Bancários e Português primeiro; TI é material de <em>consulta</em>, não de leitura linear — você já sabe fazer, precisa é da terminologia.</div>
+
+  <h2>Conhecimentos Bancários <span class="pill">prioridade 1</span></h2>
+  <div class="lib">
+    <a class="item" href="sfn.html"><div class="t">🏛️ Sistema Financeiro Nacional</div>
+      <div class="d">CMN × Bacen × CVM, Copom/Selic, política monetária e os 3 andares do SFN. O tópico mais cobrado.</div></a>
+    <a class="item" href="bancarios-produtos.html"><div class="t">🏦 Produtos e Serviços</div>
+      <div class="d">Depósitos, poupança, CDB, FGC, Tesouro, ações, fundos, crédito, garantias, cartões, PGBL × VGBL.</div></a>
+    <a class="item" href="bancarios-pagamentos.html"><div class="t">⚡ Pagamentos, Inovação e Atualidades</div>
+      <div class="d">Pix (e MED), Open Finance, Drex, fintechs (SCD/SEP), SPB/STR/SPI, IA no setor e golpes digitais.</div></a>
+    <a class="item" href="bancarios-compliance.html"><div class="t">⚖️ Compliance, Riscos e Ética</div>
+      <div class="d">Lavagem de dinheiro (C-O-I), Coaf, sigilo bancário, Basileia, gestão de riscos, autorregulação, ASG/ESG.</div></a>
+    <a class="item" href="lgpd-bancaria.html"><div class="t">🔐 LGPD + Segurança Cibernética</div>
+      <div class="d">Bases legais, papéis, ANPD, sanções e a Resolução CMN 4.893. A interseção perfeita do seu perfil.</div></a>
+  </div>
+
+  <h2>Língua Portuguesa <span class="pill">prioridade 2</span></h2>
+  <div class="lib">
+    <a class="item" href="portugues.html"><div class="t">✍️ Português completo</div>
+      <div class="d">Interpretação, acentuação, sintaxe, concordância, regência, crase, colocação pronominal, pontuação, palavras que confundem e reescrita.</div></a>
+  </div>
+
+  <h2>Matemática, Estatística e Inglês</h2>
+  <div class="lib">
+    <a class="item" href="matematica-financeira.html"><div class="t">💰 Matemática Financeira</div>
+      <div class="d">Juros simples/compostos, taxas (nominal, efetiva, equivalente, real), descontos, SAC × Price. Cai todo ano.</div></a>
+    <a class="item" href="estatistica.html"><div class="t">📊 Probabilidade e Estatística</div>
+      <div class="d">Medidas, dispersão, assimetria, probabilidade, distribuições, TCL, amostragem, correlação e regressão.</div></a>
+    <a class="item" href="ingles.html"><div class="t">🇬🇧 Língua Inglesa</div>
+      <div class="d">Estratégia de prova, conectivos, falsos cognatos, modais, voz passiva e vocabulário banco + TI.</div></a>
+  </div>
+
+  <h2>Tecnologia da Informação <span class="pill">consulta</span></h2>
+  <div class="lib">
+    <a class="item" href="ti-comparativos.html"><div class="t">⚔️ Quadros Comparativos</div>
+      <div class="d">Todos os pares-pegadinha em tabelas: TRUNCATE×DELETE, JOINs, cripto, IDS×IPS, portas, chmod, merge×rebase.</div></a>
+    <a class="item" href="ti-fundamentos.html"><div class="t">💾 Dados, Programação e Engenharia</div>
+      <div class="d">Modelagem, normalização, SQL, ACID/isolamento, PL/SQL, NoSQL/CAP, DW, Java/POO, estruturas, Big-O, ágil, testes, UML, SOLID, REST.</div></a>
+    <a class="item" href="ti-seguranca-redes.html"><div class="t">🔐 Segurança, Redes e Infra</div>
+      <div class="d">CID, criptografia, PKI/ICP-Brasil, TLS, firewall/IDS/IPS, ataques, OWASP 2021, IAM, ISO 27001, redes, Linux, nuvem, Git, IA.</div></a>
+  </div>
+
+  <div class="tip" style="margin-top:20px">📇 Depois de ler qualquer apostila: vá ao <a href="../guia.html" style="color:var(--accent)">Guia</a> → aba 🧪 <strong>Quiz</strong> e resolva questões do tema. Errou? O erro entra sozinho no caderno e volta como revisão.</div>
+</div>
+</body>
+</html>

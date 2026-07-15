@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Teoria — Pagamentos, Inovação e Mercado Financeiro</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<div class="wrap">
+  <div class="nav"><a href="index.html">← Biblioteca</a> · <a href="../guia.html">Guia</a> · <a href="lgpd-bancaria.html">LGPD</a></div>
+  <h1>⚡ Pagamentos, Inovação e Atualidades</h1>
+  <p class="sub">A parte mais "nova" da prova — e a mais provável de crescer no próximo edital. Aqui é onde seu perfil de TI vira vantagem: você entende a infraestrutura, só precisa da terminologia regulatória.</p>
+
+  <h2>1. Pix</h2>
+  <div class="card">
+    <p><strong>O que é:</strong> arranjo de pagamentos instantâneos <strong>criado, gerido e operado pelo Banco Central</strong>. Liquidação em segundos, <strong>24/7</strong>, inclusive fins de semana e feriados.</p>
+    <p><strong>Infraestrutura:</strong> liquidado no <strong>SPI</strong> (Sistema de Pagamentos Instantâneos), com contas <strong>PI</strong> no Bacen; o <strong>DICT</strong> é o diretório que associa a chave à conta.</p>
+  </div>
+  <ul>
+    <li><strong>Chaves:</strong> CPF/CNPJ, e-mail, celular, chave aleatória (EVP). Limite: 5 chaves por conta PF, 20 por conta PJ.</li>
+    <li><strong>Gratuito para PF</strong> (em regra, exceto uso comercial); <strong>PJ pode ser tarifada</strong>.</li>
+    <li><strong>Obrigatório</strong> para instituições com mais de 500 mil contas de clientes.</li>
+  </ul>
+
+  <h3>Modalidades e mecanismos</h3>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Recurso</th><th>O que faz</th></tr>
+    <tr><td><strong>Pix Cobrança</strong></td><td>QR Code com juros/multa/desconto (substitui boleto)</td></tr>
+    <tr><td><strong>Pix Saque / Pix Troco</strong></td><td>sacar dinheiro no comércio/agente, com ou sem compra</td></tr>
+    <tr><td><strong>Pix Agendado</strong></td><td>programa data futura</td></tr>
+    <tr><td><strong>Pix Automático</strong></td><td><strong>recorrência</strong> com autorização prévia única (assinaturas, mensalidades)</td></tr>
+    <tr><td><strong>Pix Parcelado</strong></td><td>produto de crédito do banco (não é do arranjo em si)</td></tr>
+    <tr><td><strong>MED</strong> (Mecanismo Especial de Devolução)</td><td>bloqueio e devolução em caso de <strong>fraude ou falha operacional</strong> — não é arrependimento</td></tr>
+    <tr><td><strong>Pix por aproximação</strong></td><td>pagamento via NFC pela carteira digital</td></tr>
+  </table>
+  </div>
+  <p><strong>Segurança:</strong> limite noturno (20h–6h) ajustável, bloqueio cautelar (até 72h para análise de suspeita), marcação de chaves/contas com histórico de fraude no DICT.</p>
+  <div class="trap">🪤 Três pegadinhas: (1) quem gere o Pix é o <strong>Bacen</strong> — nunca Febraban/bancos; (2) MED é para <strong>fraude/falha</strong>, não para quem se arrependeu; (3) Pix <strong>não</strong> é moeda digital — é transferência de reais.</div>
+
+  <h2>2. Open Finance</h2>
+  <div class="card">
+    <p><strong>Premissa:</strong> o dado bancário pertence ao <strong>cliente</strong>, não ao banco. Ele pode compartilhá-lo com quem quiser, para obter melhores ofertas.</p>
+    <p><strong>Requisitos do consentimento:</strong> finalidade determinada, prazo definido (renovável), <strong>revogável a qualquer momento</strong>, concedido em ambiente da própria instituição.</p>
+  </div>
+  <h3>As 4 fases</h3>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Fase</th><th>O que abriu</th></tr>
+    <tr><td>1</td><td>Dados <strong>públicos</strong> das instituições (canais, produtos, tarifas) — sem cliente envolvido</td></tr>
+    <tr><td>2</td><td>Dados <strong>cadastrais e transacionais</strong> do cliente (com consentimento)</td></tr>
+    <tr><td>3</td><td><strong>Iniciação de pagamento</strong> (ITP) e encaminhamento de proposta de crédito</td></tr>
+    <tr><td>4</td><td><strong>Ampliação</strong>: câmbio, investimentos, seguros, previdência → daí o nome Open <em>Finance</em></td></tr>
+  </table>
+  </div>
+  <p><strong>ITP (Iniciador de Transação de Pagamento):</strong> instituição autorizada que inicia um pagamento na conta do cliente <strong>sem ter a posse do dinheiro</strong> nem manter conta — apenas comanda a ordem.</p>
+  <div class="tip">💡 A ponte com a <a href="lgpd-bancaria.html">LGPD</a>: o Open Finance é a materialização do direito de <strong>portabilidade de dados</strong> (art. 18). Consentimento é a palavra que liga os dois temas.</div>
+
+  <h2>3. Drex (Real Digital)</h2>
+  <div class="table-scroll">
+  <table>
+    <tr><th></th><th>Drex (CBDC)</th><th>Criptomoeda (Bitcoin)</th><th>Stablecoin</th></tr>
+    <tr><td>Emissor</td><td><strong>Banco Central</strong></td><td>rede descentralizada</td><td>empresa privada</td></tr>
+    <tr><td>Curso legal</td><td>✅ é o real</td><td>❌ não</td><td>❌ não</td></tr>
+    <tr><td>Lastro</td><td>o próprio real</td><td>nenhum</td><td>ativo de referência (ex.: dólar)</td></tr>
+    <tr><td>Tecnologia</td><td>DLT permissionada</td><td>blockchain pública</td><td>varia</td></tr>
+  </table>
+  </div>
+  <p><strong>A grande promessa do Drex:</strong> <em>smart contracts</em> permitindo <strong>liquidação atômica</strong> (DvP — a entrega do ativo e o pagamento acontecem no mesmo instante, ou nenhum dos dois). Casos de uso: compra de imóvel, veículo e ativos financeiros tokenizados, com menos intermediários e menos risco de contraparte.</p>
+  <p><strong>Marco legal dos criptoativos:</strong> Lei 14.478/2022 — o <strong>Bacen</strong> é o regulador das prestadoras de serviços de ativos virtuais (VASPs); a <strong>CVM</strong> cuida quando o token for valor mobiliário.</p>
+
+  <h2>4. Instituições de pagamento e fintechs</h2>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Figura</th><th>O que faz</th><th>Pode captar depósito?</th></tr>
+    <tr><td><strong>IP</strong> — Instituição de Pagamento</td><td>emissor de moeda eletrônica, emissor de cartão pós-pago, credenciadora, ITP</td><td>❌ (mantém <em>conta de pagamento</em>, e os recursos ficam segregados no Bacen)</td></tr>
+    <tr><td><strong>SCD</strong> — Sociedade de Crédito Direto</td><td>empresta <strong>capital próprio</strong> via plataforma eletrônica</td><td>❌</td></tr>
+    <tr><td><strong>SEP</strong> — Soc. de Empréstimo entre Pessoas</td><td><strong>peer-to-peer</strong>: conecta credor e devedor (não assume o risco)</td><td>❌</td></tr>
+    <tr><td><strong>Banco digital</strong></td><td>é banco (múltiplo/comercial) sem agência física</td><td>✅ sim</td></tr>
+  </table>
+  </div>
+  <div class="trap">🪤 IP <strong>não é</strong> instituição financeira (não intermedia crédito nem capta depósito), mas <strong>é autorizada e supervisionada pelo Bacen</strong>. E o dinheiro na conta de pagamento é segregado — não entra na massa falida da empresa.</div>
+
+  <h2>5. Sistemas de pagamentos e liquidação</h2>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Sistema</th><th>Função</th></tr>
+    <tr><td><strong>SPB</strong></td><td>Sistema de Pagamentos Brasileiro — o guarda-chuva de tudo</td></tr>
+    <tr><td><strong>STR</strong></td><td>liquidação <strong>bruta em tempo real</strong> (LBTR) — TEDs e o núcleo do SPB, operado pelo Bacen</td></tr>
+    <tr><td><strong>SPI</strong></td><td>liquidação dos Pix (24/7)</td></tr>
+    <tr><td><strong>Selic</strong> (sistema)</td><td>custódia e liquidação de <strong>títulos públicos</strong> federais</td></tr>
+    <tr><td><strong>B3</strong> (ex-Cetip)</td><td>custódia e liquidação de <strong>títulos privados</strong> e ativos</td></tr>
+    <tr><td><strong>CIP</strong></td><td>compensação de boletos e TEDs (privada)</td></tr>
+  </table>
+  </div>
+  <div class="tip">💡 Cuidado com o nome duplo: <strong>Selic</strong> é ao mesmo tempo a <em>taxa</em> básica de juros e o <em>sistema</em> de custódia de títulos públicos (a taxa nasce das operações compromissadas registradas nele).</div>
+
+  <h2>6. Atualidades — o que está no radar</h2>
+  <ul>
+    <li><strong>Digitalização:</strong> os canais digitais (sobretudo mobile) respondem pela maior parte das transações bancárias; agências migram para consultoria/negócios complexos.</li>
+    <li><strong>IA generativa nos bancos:</strong> atendimento, análise de crédito, detecção de fraude e produtividade interna. Riscos cobrados em prova: <strong>alucinação</strong>, viés/discriminação algorítmica, vazamento de dados e a exigência de <strong>supervisão humana</strong> e governança de modelos. A LGPD garante ao titular a <strong>revisão de decisões automatizadas</strong>.</li>
+    <li><strong>Golpes e engenharia social:</strong> como os sistemas estão robustos, o elo atacado é o humano (falsa central, falso funcionário, WhatsApp clonado). Respostas: MED, limites noturnos, bloqueio cautelar, educação do cliente.</li>
+    <li><strong>Banking as a Service (BaaS) e embedded finance:</strong> empresas não financeiras oferecendo serviços bancários via API de um banco licenciado.</li>
+    <li><strong>Tokenização e ativos digitais:</strong> representar ativos reais (imóveis, recebíveis) em DLT — a agenda do Drex.</li>
+    <li><strong>ASG/ESG e risco climático:</strong> o Bacen exige gerenciamento dos riscos social, ambiental e climático (Res. 4.945) e a divulgação do relatório <strong>GRSAC</strong>.</li>
+  </ul>
+  <div class="trap">🪤 Em Atualidades, alternativas <strong>absolutas</strong> ("dispensa revisão humana", "não apresenta riscos", "foi proibido pelo Bacen") quase sempre estão erradas. A regulação brasileira tende a <em>condicionar</em>, não a proibir.</div>
+
+  <div class="tip">📇 Rotina de atualidades: 15 min, 2×/semana, no site do Bacen (notas à imprensa e notícias). Anote Selic e IPCA vigentes — a banca cobra o número do momento.</div>
+</div>
+</body>
+</html>

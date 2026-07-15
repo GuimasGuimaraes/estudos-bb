@@ -913,7 +913,23 @@ const LINKS = {
   rSfn: "resumos/sfn.html",
   rTi: "resumos/ti-comparativos.html",
   rLgpd: "resumos/lgpd-bancaria.html",
+  rIndex: "resumos/index.html",
 };
+
+const BIBLIOTECA = [
+  { href: "resumos/sfn.html", t: "🏛️ SFN", d: "CMN × Bacen × CVM, Copom, política monetária" },
+  { href: "resumos/bancarios-produtos.html", t: "🏦 Produtos bancários", d: "Poupança, CDB, FGC, Tesouro, fundos, crédito, garantias" },
+  { href: "resumos/bancarios-pagamentos.html", t: "⚡ Pagamentos e inovação", d: "Pix, Open Finance, Drex, fintechs, atualidades" },
+  { href: "resumos/bancarios-compliance.html", t: "⚖️ Compliance e riscos", d: "Lavagem, Coaf, sigilo, Basileia, ESG" },
+  { href: "resumos/lgpd-bancaria.html", t: "🔐 LGPD + Res. 4.893", d: "Bases legais, ANPD, sanções, cibersegurança bancária" },
+  { href: "resumos/portugues.html", t: "✍️ Português", d: "Crase, concordância, regência, pontuação, pronomes" },
+  { href: "resumos/matematica-financeira.html", t: "💰 Matemática financeira", d: "Juros, taxas, descontos, SAC × Price" },
+  { href: "resumos/estatistica.html", t: "📊 Estatística", d: "Medidas, probabilidade, distribuições, regressão" },
+  { href: "resumos/ingles.html", t: "🇬🇧 Inglês", d: "Conectivos, falsos cognatos, modais, vocabulário" },
+  { href: "resumos/ti-comparativos.html", t: "⚔️ TI — comparativos", d: "Os pares-pegadinha em tabelas" },
+  { href: "resumos/ti-fundamentos.html", t: "💾 TI — dados e engenharia", d: "SQL, ACID, NoSQL, Java, estruturas, ágil, REST" },
+  { href: "resumos/ti-seguranca-redes.html", t: "🔐 TI — segurança e redes", d: "Cripto, PKI, OWASP, IAM, ISO, redes, Linux, nuvem" },
+];
 
 const PLANO_MATERIAIS = [
 { ciclo: "🎒 Semana 0 — Kit de materiais (faça antes de tudo)",
@@ -2374,6 +2390,18 @@ function renderMateriais() {
     <div class="progress-outer"><div style="width:${Math.round((totalDone / totalAll) * 100)}%"></div></div>
     <p class="muted" style="margin-top:6px">As semanas dizem O QUE estudar; o horário (manhã/tarde/noite) segue o
     cronograma da aba 📅 Hoje. Terminou uma semana? A badge 📍 avança sozinha.</p>
+  </div>
+
+  <div class="card">
+    <h2>📖 Biblioteca de teoria <span class="muted" style="font-weight:400">· ${BIBLIOTECA.length} apostilas</span></h2>
+    <p class="muted">Teoria filtrada para a prova, escrita para o seu perfil: densa em Bancários e Português, e de <strong>consulta</strong> em TI
+    (você já sabe fazer — precisa da terminologia da banca). Cada uma tem as pegadinhas marcadas 🪤 e quadro de fixação.</p>
+    <div class="grid-2" style="margin-top:10px">
+      ${BIBLIOTECA.map(b => `<a href="${b.href}" target="_blank" rel="noopener" class="block-item" style="text-decoration:none;color:inherit">
+        <div class="bt"><div><strong>${esc(b.t)}</strong></div><div class="muted" style="font-size:.82rem">${esc(b.d)}</div></div>
+        <span class="badge">ler ↗</span></a>`).join("")}
+    </div>
+    <p class="muted" style="margin-top:10px">📇 Leu? Vá para a aba 🧪 Quiz e resolva questões do tema — teoria sem questão não fixa.</p>
   </div>
   ${blocos}`;
 }

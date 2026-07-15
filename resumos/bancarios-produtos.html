@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Teoria — Produtos e Serviços Bancários</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<div class="wrap">
+  <div class="nav"><a href="index.html">← Biblioteca</a> · <a href="../guia.html">Guia</a> · <a href="sfn.html">SFN</a></div>
+  <h1>🏦 Produtos e Serviços Bancários</h1>
+  <p class="sub">O catálogo do banco. A banca cobra: quem emite, quem garante, quem supervisiona e como tributa. Organize por essas 4 perguntas e nada se confunde.</p>
+
+  <h2>1. Depósitos</h2>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Tipo</th><th>Característica</th><th>Remuneração</th></tr>
+    <tr><td><strong>À vista</strong> (conta-corrente)</td><td>livre movimentação; é a moeda escritural. Só bancos <strong>comerciais</strong> (e múltiplos com carteira comercial) e cooperativas podem captar</td><td>não remunerado</td></tr>
+    <tr><td><strong>A prazo</strong> (CDB/RDB)</td><td>captação com prazo; CDB é transferível/negociável, <strong>RDB é inegociável e intransferível</strong></td><td>pré ou pós-fixada</td></tr>
+    <tr><td><strong>De poupança</strong></td><td>a mais popular; aniversário mensal (PF)</td><td>ver regra abaixo</td></tr>
+  </table>
+  </div>
+
+  <h3>Regra da poupança (decore o gatilho)</h3>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Selic meta</th><th>Rendimento</th></tr>
+    <tr><td><strong>&gt; 8,5% a.a.</strong></td><td>0,5% ao mês + TR (≈ 6,17% a.a. + TR)</td></tr>
+    <tr><td><strong>≤ 8,5% a.a.</strong></td><td>70% da Selic + TR</td></tr>
+  </table>
+  </div>
+  <ul>
+    <li><strong>PF e PJ imune:</strong> crédito mensal (aniversário). <strong>PJ tributada:</strong> crédito trimestral.</li>
+    <li>Saque antes do aniversário = <strong>perde o rendimento do período</strong>.</li>
+    <li><strong>Isenta de IR para PF</strong> — é o principal atrativo.</li>
+  </ul>
+
+  <h2>2. Renda fixa — os títulos</h2>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Título</th><th>Emissor</th><th>Natureza</th><th>FGC?</th><th>IR</th></tr>
+    <tr><td><strong>CDB / RDB</strong></td><td>bancos</td><td>privado</td><td>✅ sim</td><td>tabela regressiva</td></tr>
+    <tr><td><strong>LCI / LCA</strong></td><td>bancos (lastro imobiliário/agro)</td><td>privado</td><td>✅ sim</td><td><strong>isento p/ PF</strong></td></tr>
+    <tr><td><strong>Poupança</strong></td><td>bancos</td><td>privado</td><td>✅ sim</td><td><strong>isenta p/ PF</strong></td></tr>
+    <tr><td><strong>LF</strong> (Letra Financeira)</td><td>bancos</td><td>privado</td><td>❌ não</td><td>tabela regressiva</td></tr>
+    <tr><td><strong>Debênture</strong></td><td>S.A. não financeira</td><td>privado (valor mobiliário → CVM)</td><td>❌ não</td><td>regressiva (incentivada: isenta)</td></tr>
+    <tr><td><strong>Tesouro Direto</strong></td><td>Tesouro Nacional</td><td>público</td><td>❌ não (mas é o de menor risco de crédito do país)</td><td>regressiva</td></tr>
+  </table>
+  </div>
+  <p><strong>Tabela regressiva do IR</strong> (renda fixa): até 180 dias = 22,5% · 181–360 = 20% · 361–720 = 17,5% · acima de 720 dias = <strong>15%</strong>. Há ainda <strong>IOF regressivo</strong> nos resgates com menos de 30 dias.</p>
+
+  <h3>Tesouro Direto — os 3 tipos</h3>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Título</th><th>Rentabilidade</th><th>Indicado para</th></tr>
+    <tr><td><strong>Tesouro Selic</strong> (LFT)</td><td>pós-fixado, segue a Selic</td><td>reserva de emergência (menor volatilidade)</td></tr>
+    <tr><td><strong>Tesouro Prefixado</strong> (LTN/NTN-F)</td><td>taxa travada na compra</td><td>quem aposta em queda de juros</td></tr>
+    <tr><td><strong>Tesouro IPCA+</strong> (NTN-B)</td><td>inflação + juro real</td><td>proteção do poder de compra (longo prazo)</td></tr>
+  </table>
+  </div>
+  <div class="trap">🪤 <strong>Marcação a mercado:</strong> prefixado e IPCA+ vendidos ANTES do vencimento podem dar prejuízo (o preço oscila com a taxa de juros — relação inversa). Só o Tesouro Selic é praticamente imune.</div>
+
+  <h2>3. FGC — Fundo Garantidor de Créditos</h2>
+  <div class="card">
+    <p><strong>Entidade privada</strong> (não é do governo), mantida pelas próprias instituições. Protege o depositante em caso de quebra/intervenção.</p>
+    <ul>
+      <li><strong>R$ 250 mil</strong> por CPF/CNPJ <strong>por conglomerado financeiro</strong>;</li>
+      <li><strong>Teto global de R$ 1 milhão</strong>, renovável a cada <strong>4 anos</strong>;</li>
+      <li><strong>Cobre:</strong> conta-corrente, poupança, CDB/RDB, LCI, LCA, LC, letras hipotecárias.</li>
+      <li><strong>NÃO cobre:</strong> fundos de investimento, ações, debêntures, títulos públicos, LF, previdência.</li>
+    </ul>
+  </div>
+
+  <h2>4. Renda variável</h2>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Ação</th><th>Direito principal</th><th>Observação</th></tr>
+    <tr><td><strong>Ordinária (ON)</strong></td><td><strong>voto</strong> em assembleia</td><td>tag along mínimo de 80% na venda de controle</td></tr>
+    <tr><td><strong>Preferencial (PN)</strong></td><td><strong>preferência</strong> em dividendos/reembolso</td><td>em regra sem voto; máx. 50% do capital nas novas S.A.</td></tr>
+  </table>
+  </div>
+  <ul>
+    <li><strong>Proventos:</strong> dividendos (isentos para PF — parcela do lucro), <strong>JCP</strong> (tributado em 15% na fonte, dedutível para a empresa), bonificação, subscrição.</li>
+    <li><strong>IR em ações:</strong> 15% sobre o ganho (day trade: 20%). <strong>Isenção</strong> para vendas até R$ 20 mil/mês no mercado à vista (não vale para day trade nem FIIs).</li>
+    <li><strong>B3</strong>: bolsa e depositária; a supervisão do mercado é da <strong>CVM</strong>.</li>
+  </ul>
+
+  <h2>5. Fundos de investimento</h2>
+  <p><strong>Conceito-chave:</strong> fundo é um <strong>condomínio</strong> de investidores. O patrimônio é dos <strong>cotistas</strong>, que assumem o risco. Sem FGC, sem rentabilidade garantida. Regulação/supervisão: <strong>CVM</strong>.</p>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Classe (CVM)</th><th>Onde investe</th></tr>
+    <tr><td>Renda fixa</td><td>≥ 80% em ativos de renda fixa</td></tr>
+    <tr><td>Ações</td><td>≥ 67% em ações</td></tr>
+    <tr><td>Cambial</td><td>≥ 80% atrelado a moeda estrangeira</td></tr>
+    <tr><td>Multimercado</td><td>várias classes, sem concentração obrigatória</td></tr>
+  </table>
+  </div>
+  <ul>
+    <li><strong>Taxa de administração</strong> (fixa, sobre o PL) e <strong>taxa de performance</strong> (sobre o que exceder o benchmark).</li>
+    <li><strong>Come-cotas:</strong> antecipação semestral de IR (maio e novembro) em fundos de renda fixa/multimercado — 15% (longo prazo) ou 20% (curto). <strong>Fundos de ações não têm come-cotas</strong> (IR de 15% só no resgate).</li>
+    <li><strong>Papéis:</strong> administrador (responde pelo fundo), gestor (decide os investimentos), custodiante, auditor.</li>
+  </ul>
+
+  <h2>6. Crédito</h2>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Produto</th><th>Característica</th></tr>
+    <tr><td><strong>Cheque especial</strong></td><td>crédito rotativo pré-aprovado; juros altíssimos; limite de tarifa e teto regulado</td></tr>
+    <tr><td><strong>CDC</strong> (crédito direto ao consumidor)</td><td>financiamento de bem/serviço, com o bem em garantia (alienação fiduciária)</td></tr>
+    <tr><td><strong>Consignado</strong></td><td>desconto em folha/benefício → menor risco → <strong>menor taxa</strong></td></tr>
+    <tr><td><strong>Rotativo do cartão</strong></td><td>pagar menos que o total da fatura; limitado a <strong>1 mês</strong>, depois migra obrigatoriamente para parcelamento</td></tr>
+    <tr><td><strong>Capital de giro</strong></td><td>PJ: financia o ciclo operacional</td></tr>
+    <tr><td><strong>Desconto de duplicatas</strong></td><td>antecipação de recebíveis (o cedente responde se o sacado não pagar)</td></tr>
+    <tr><td><strong>Leasing</strong> (arrendamento mercantil)</td><td>arrendadora compra e arrenda; ao fim: renova, devolve ou paga o <strong>VRG</strong> e fica com o bem</td></tr>
+    <tr><td><strong>Microcrédito produtivo</strong></td><td>pequeno empreendedor; metodologia com agente de crédito</td></tr>
+  </table>
+  </div>
+  <p><strong>Garantias:</strong> <em>pessoais/fidejussórias</em> — aval (título de crédito, autônomo) e fiança (contrato, subsidiária, com benefício de ordem); <em>reais</em> — penhor (móvel), hipoteca (imóvel), alienação fiduciária (a propriedade fica com o credor até quitar).</p>
+  <div class="trap">🪤 <strong>Aval × fiança</strong> é campeão de prova: aval é em <strong>título de crédito</strong> e é obrigação autônoma; fiança é em <strong>contrato</strong> e é subsidiária (o fiador pode exigir que executem primeiro o devedor).</div>
+
+  <h2>7. Cartões</h2>
+  <ul>
+    <li><strong>Débito</strong> (usa saldo), <strong>crédito</strong> (usa limite, com prazo), <strong>pré-pago</strong> (carga prévia).</li>
+    <li><strong>Participantes:</strong> portador · estabelecimento · <strong>emissor</strong> (banco do cliente) · <strong>credenciadora/adquirente</strong> (afilia o lojista — Cielo, Rede) · <strong>bandeira</strong> (regras e marca — Visa, Elo).</li>
+    <li>Fatura mínima e rotativo: regulados pelo CMN; rotativo por no máximo 1 mês.</li>
+  </ul>
+
+  <h2>8. Serviços e transferências</h2>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Serviço</th><th>Prazo/limite</th><th>Sistema</th></tr>
+    <tr><td><strong>Pix</strong></td><td>segundos, 24/7</td><td>SPI (Bacen)</td></tr>
+    <tr><td><strong>TED</strong></td><td>mesmo dia, em horário do STR (dias úteis)</td><td>STR</td></tr>
+    <tr><td><strong>DOC</strong></td><td>D+1 (descontinuado a partir de 2024)</td><td>—</td></tr>
+    <tr><td><strong>Boleto</strong></td><td>plataforma centralizada; registro obrigatório</td><td>—</td></tr>
+  </table>
+  </div>
+  <p><strong>Outros serviços:</strong> cobrança, custódia, arrecadação de tributos, folha de pagamento, câmbio, <strong>seguros</strong> (Susep), <strong>capitalização</strong> (não é investimento — é poupança programada com sorteio, com deságio), <strong>previdência</strong> (PGBL: dedução de até 12% da renda bruta, IR sobre o total resgatado; VGBL: sem dedução, IR só sobre o rendimento) e <strong>consórcio</strong> (autofinanciamento em grupo, supervisionado pelo <strong>Bacen</strong>, sem juros — cobra taxa de administração).</p>
+  <div class="tip">💡 <strong>PGBL × VGBL:</strong> declaração completa e quem contribui ao INSS → PGBL. Declaração simplificada/isento → VGBL. É a regra que a banca cobra.</div>
+
+  <h2>9. Contas — tipos especiais</h2>
+  <ul>
+    <li><strong>Conta salário:</strong> aberta pelo empregador, sem tarifa, sem cheque, com portabilidade gratuita para outro banco.</li>
+    <li><strong>Conta simplificada / digital:</strong> abertura remota, limites de movimentação e documentação reduzida.</li>
+    <li><strong>Serviços essenciais gratuitos</strong> (Res. 3.919): 4 saques, 2 extratos, 10 folhas de cheque/mês, 2 transferências entre contas da própria instituição, consultas pela internet.</li>
+    <li><strong>Cesta de serviços:</strong> pacote alternativo; o cliente pode sempre optar pelos essenciais gratuitos.</li>
+  </ul>
+
+  <div class="tip">📇 Fixe com o quiz (aba 🧪 → Bancários): 28 questões cobrindo produtos, FGC, poupança, Tesouro, fundos e ações.</div>
+</div>
+</body>
+</html>
