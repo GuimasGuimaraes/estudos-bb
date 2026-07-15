@@ -2,6 +2,10 @@
 
 Base de estudos para o concurso do BB. Meta única: **aprovação dentro das vagas**.
 
+**📱 Acesse de qualquer lugar:** <https://guimasguimaraes.github.io/estudos-bb/guia.html>
+(o progresso fica salvo por dispositivo — para levar o progresso do PC ao celular,
+use Exportar/Importar JSON na aba 📈 Progresso do guia).
+
 ## Status do concurso (atualizado em 15/07/2026)
 
 - **Edital:** ainda NÃO publicado, sem previsão oficial.
