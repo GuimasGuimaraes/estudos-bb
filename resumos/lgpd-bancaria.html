@@ -12,9 +12,132 @@
   <h1>🔐 LGPD + Segurança Cibernética no Setor Bancário</h1>
   <p class="sub">Lei 13.709/2018 (LGPD) + Resolução CMN 4.893/2021 — a interseção perfeita entre Bancários e TI, e presença garantida na prova.</p>
 
-  <h2>LGPD — o essencial</h2>
+  <div class="card" id="sumario">
+    <h2 id="sec-sumario" style="margin-top:0">📑 Sumário</h2>
+    <ol style="columns:2;column-gap:28px">
+      <li><a href="#sec-1-por-que-essa-lei-existe-o-problema-antes-da">1. Por que essa lei existe — o problema antes da resposta</a></li>
+      <li><a href="#sec-2-onde-a-lgpd-se-aplica-e-onde-nao-entra">2. Onde a LGPD se aplica — e onde não entra</a></li>
+      <li><a href="#sec-3-o-vocabulario-juridico-em-linguagem-de-gent">3. O vocabulário jurídico, em linguagem de gente</a></li>
+      <li><a href="#sec-4-tipos-de-dados-a-classificacao-que-muda-o-r">4. Tipos de dados — a classificação que muda o regime</a></li>
+      <li><a href="#sec-5-os-papeis-quem-e-quem-e-quem-paga-a-conta">5. Os papéis — quem é quem, e quem paga a conta</a></li>
+      <li><a href="#sec-6-os-principios-art-6-o-privacy-by-design-esc">6. Os princípios (art. 6º) — o "privacy by design" escrito em lei</a></li>
+      <li><a href="#sec-7-as-10-bases-legais-art-7-o-coracao-da-mater">7. As 10 bases legais (art. 7º) — o coração da matéria</a></li>
+      <li><a href="#sec-8-dado-sensivel-e-o-caso-da-biometria-facial">8. Dado sensível e o caso da biometria facial</a></li>
+      <li><a href="#sec-9-direitos-do-titular-art-18-os-botoes-que-o-">9. Direitos do titular (art. 18) — os botões que o cliente ganhou</a></li>
+      <li><a href="#sec-10-incidente-de-seguranca-o-fluxo-de-resposta">10. Incidente de segurança — o fluxo de resposta com camada jurídica</a></li>
+      <li><a href="#sec-11-sancoes-e-responsabilidade">11. Sanções e responsabilidade</a></li>
+      <li><a href="#sec-12-resolucao-cmn-4-893-2021-ciberseguranca-na">12. Resolução CMN 4.893/2021 — cibersegurança nas IFs</a></li>
+      <li><a href="#sec-13-a-ponte-com-o-open-finance">13. A ponte com o Open Finance</a></li>
+      <li><a href="#sec-14-quadro-de-fixacao">14. Quadro de fixação</a></li>
+    </ol>
+    <p class="muted" style="margin-top:8px">Apostila longa de propósito — use o sumário para ir direto ao ponto. Cada 🪤 é uma pegadinha de banca; cada 💡 é um atalho de prova.</p>
+  </div>
 
-  <h3>Conceitos e papéis</h3>
+
+  <div class="tip">💡 <strong>Como ler.</strong> Você já sabe proteger dado: cifrar, controlar acesso, responder a incidente. O que a LGPD acrescenta não é técnica — é <strong>autorização</strong>. Ela não pergunta "esse dado está seguro?", pergunta "<strong>você podia estar com esse dado, para quê, e até quando?</strong>". Uma base perfeitamente criptografada, com MFA e log impecável, pode violar a LGPD do primeiro ao último byte. <em>Segurança é condição, não é permissão</em> — é por não ver essa diferença que gente de TI erra questão de LGPD.</div>
+
+  <h2 id="sec-1-por-que-essa-lei-existe-o-problema-antes-da">1. Por que essa lei existe — o problema antes da resposta</h2>
+  <p>Toda lei responde a um problema que já existia. Entenda o problema e a lei passa a fazer sentido sozinha. Antes de 2018 havia três.</p>
+
+  <h3>1.1 O dado virou mercadoria — e ninguém tinha combinado isso</h3>
+  <p>O dado pessoal deixou de ser subproduto de um serviço e virou <strong>ativo econômico</strong>: sua lista de compras prevê sua gravidez, seu histórico prevê sua inadimplência melhor que você. E a economia inteira passou a comprar, vender e cruzar esses dados <strong>sem que o dono soubesse, autorizasse ou lucrasse</strong>. Você abria conta e três dias depois ligava uma seguradora que nunca procurou: existia um mercado de listas, e não havia sequer <em>a quem perguntar</em>.</p>
+
+  <h3>1.2 Vazamento sem consequência</h3>
+  <p>Isso você conhece por dentro: o custo real de vazar uma base era <strong>duas semanas de constrangimento na imprensa</strong> — nenhuma obrigação de avisar a vítima ou uma autoridade (não havia autoridade), nenhuma multa proporcional ao faturamento.</p>
+  <p>Repare no incentivo: se vazar é barato, <strong>investir em segurança é irracional</strong>. Orçamento de segurança não é decidido por engenheiro — é decidido por quem compara o custo do controle com o custo esperado do incidente. Enquanto esse custo foi ~zero, o CISO perdeu toda discussão de budget. <strong>A LGPD é uma intervenção deliberada nesse cálculo</strong>: encareceu o vazamento para tornar a segurança racional.</p>
+
+  <h3>1.3 O cliente não sabia quem tinha seus dados</h3>
+  <p><strong>Opacidade.</strong> Você não sabia quais empresas tinham seus dados, quem repassou, com base em quê, por quanto tempo — e não havia <strong>botão</strong>: nada de pedir cópia, correção ou exclusão. Leis pontuais (CDC, Cadastro Positivo, Marco Civil) cobriam pedaços; nenhuma dava um direito geral sobre o próprio dado.</p>
+
+  <h3>1.4 A resposta: uma lei geral, com autoridade e com dente</h3>
+  <p>A <strong>Lei 13.709/2018</strong>, inspirada no GDPR europeu, faz quatro movimentos:</p>
+  <ul>
+    <li><strong>Inverte o padrão.</strong> Antes: tratar dado era livre, salvo proibição. Depois: só é lícito se você apontar uma <strong>autorização legal específica</strong> — a "base legal". O silêncio não autoriza mais nada.</li>
+    <li><strong>Cria direitos.</strong> O titular ganha botões: confirmar, acessar, corrigir, eliminar, portar, revogar, pedir revisão.</li>
+    <li><strong>Cria uma autoridade.</strong> A <strong>ANPD</strong> regula, fiscaliza e sanciona.</li>
+    <li><strong>Cria consequência.</strong> Multa de até 2% do faturamento, limitada a R$ 50 milhões <strong>por infração</strong>, além de bloqueio e eliminação de bases.</li>
+  </ul>
+  <p class="muted">Linha do tempo: sancionada em <strong>2018</strong>, em vigor em <strong>setembro de 2020</strong>, <strong>sanções administrativas</strong> desde <strong>agosto de 2021</strong> — a lei valeu antes de poder multar. A ANPD foi criada por lei posterior (13.853/2019), que alterou a própria LGPD.</p>
+  <div class="trap">🪤 A LGPD não "proíbe" tratar dados — erro mental nº 1 de quem vem da TI. Ela <strong>disciplina</strong>: exige base legal, finalidade e transparência. Alternativa dizendo que a LGPD "veda o tratamento sem consentimento" erra duas vezes: não veda, e consentimento é só uma das bases.</div>
+
+  <h2 id="sec-2-onde-a-lgpd-se-aplica-e-onde-nao-entra">2. Onde a LGPD se aplica — e onde não entra</h2>
+  <ul>
+    <li><strong>Só pessoa natural.</strong> Protege dado de <em>gente</em>. Dado de pessoa jurídica — CNPJ, faturamento, endereço da matriz — <strong>não é dado pessoal</strong>. Mas o meio-termo volta para dentro: CPF do sócio, e-mail nominal do gerente, dado do MEI (pessoa natural com CNPJ) identificam uma pessoa.</li>
+    <li><strong>Meio físico E digital.</strong> A pasta de papel na agência está tão dentro quanto o Oracle. A LGPD não é "lei de internet".</li>
+    <li><strong>Setor público E privado.</strong></li>
+    <li><strong>Alcance extraterritorial.</strong> Vale para tratamento realizado no Brasil, ou que ofereça bens/serviços a pessoas no Brasil, ou que trate dados de quem estava aqui na coleta — <em>não importa onde fica o servidor ou a sede</em>.</li>
+  </ul>
+  <p><strong>Fora da LGPD:</strong> tratamento por pessoa natural para fins <strong>exclusivamente particulares e não econômicos</strong>; fins <strong>jornalísticos, artísticos ou acadêmicos</strong>; e fins exclusivos de <strong>segurança pública, defesa nacional, segurança do Estado ou investigação e repressão penal</strong> — vácuo consciente, a ser tratado por lei específica.</p>
+  <div class="trap">🪤 "Aplica-se a dados de qualquer pessoa, física ou jurídica" → ERRADO. "Só se aplica a meio digital" → ERRADO. "Não se aplica a empresa estrangeira sem filial no Brasil" → ERRADO, se ela oferece serviço a pessoas aqui.</div>
+
+  <h2 id="sec-3-o-vocabulario-juridico-em-linguagem-de-gent">3. O vocabulário jurídico, em linguagem de gente</h2>
+  <p>Metade das questões de LGPD é, na verdade, questão de definição.</p>
+
+  <h3>3.1 Tratamento</h3>
+  <p><strong>Tratamento é qualquer coisa que você faça com um dado pessoal</strong> — coletar, classificar, usar, acessar, transmitir, arquivar, armazenar, eliminar, avaliar, compartilhar. A lei lista uma dúzia de verbos, e a lista é <em>exemplificativa</em>.</p>
+  <p>Traduzindo: <code>SELECT</code> é tratamento. Backup é tratamento. <code>DROP TABLE</code> é tratamento (eliminação). Copiar produção para homologação é tratamento — e é um dos mais comumente ilícitos do Brasil corporativo. <strong>Não existe "só estou olhando": olhar é tratar.</strong></p>
+  <div class="tip">💡 A frase deste bloco: <strong>toda operação com dado pessoal é tratamento, e todo tratamento precisa de base legal e finalidade</strong>. Não há operação neutra.</div>
+
+  <h3>3.2 Finalidade</h3>
+  <p><strong>Finalidade é o propósito específico, explícito e informado ao titular</strong> pelo qual você trata o dado. Definida <strong>antes</strong> da coleta, comunicada ao titular, ela depois <strong>vincula</strong> você: não se troca de finalidade no caminho para outra incompatível com a original.</p>
+  <p>O banco coleta seu telefone <strong>para autenticar transações</strong>; meses depois o marketing quer usá-lo para <strong>ofertar consórcio</strong>. Mesmo dado, mesmo sistema — e é <strong>outro tratamento</strong>, com outra finalidade, que precisa da própria base legal. O dado não é seu por ter sido coletado uma vez; ele é seu <em>para aquilo</em>.</p>
+
+  <h3>3.3 Base legal — a "permissão" que a lei dá</h3>
+  <p><strong>Base legal (ou hipótese de tratamento) é o fundamento jurídico que autoriza você a tratar aquele dado</strong> — a resposta a "com que direito você está com isso?". A LGPD lista <strong>dez</strong> respostas possíveis (art. 7º): encaixou em uma, é lícito; não encaixou em nenhuma, é ilícito — por mais seguro, útil ou bem-intencionado que seja.</p>
+  <p>A analogia que funciona: <strong>base legal é autorização; segurança é autenticação e controle de acesso</strong> — camadas diferentes. Em SQL: a base legal é o <code>WHERE</code> que o negócio tinha direito de rodar; a criptografia é o disco onde a tabela mora. Nada no disco conserta um <code>WHERE</code> que não podia existir.</p>
+  <ul>
+    <li><strong>Uma base por finalidade, não por dado.</strong> O mesmo CPF pode ser tratado sob "execução de contrato" para a conta e sob "obrigação legal" para o reporte ao Coaf.</li>
+    <li><strong>As bases não formam hierarquia.</strong> Consentimento não é "mais forte" nem "mais nobre" que obrigação legal. São alternativas.</li>
+    <li><strong>Base não se troca por conveniência.</strong> Escolhe-se <em>antes</em>, e documenta. Trocar quando a primeira fracassa ("ele negou o consentimento, então chamo de legítimo interesse") é fraude à lei.</li>
+  </ul>
+
+  <h3>3.4 Os demais termos</h3>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Termo</th><th>Em linguagem de gente</th><th>Exemplo no banco</th></tr>
+    <tr><td><strong>Titular</strong></td><td>a pessoa natural de quem o dado fala</td><td>o cliente, o não cliente que simulou, o funcionário</td></tr>
+    <tr><td><strong>Agente de tratamento</strong></td><td>guarda-chuva: controlador + operador</td><td>o banco e seus fornecedores</td></tr>
+    <tr><td><strong>Uso compartilhado</strong></td><td>transferir/comunicar dados entre organizações</td><td>banco → bureau de crédito</td></tr>
+    <tr><td><strong>Bloqueio</strong></td><td>suspender temporariamente o tratamento, guardando o dado</td><td>congelar registro sob disputa</td></tr>
+    <tr><td><strong>Eliminação</strong></td><td>excluir o dado de vez</td><td>expurgo após o prazo legal de guarda</td></tr>
+    <tr><td><strong>Consentimento</strong></td><td>o "sim" livre, informado e inequívoco, <em>para finalidade determinada</em></td><td>marketing, Open Finance, biometria</td></tr>
+    <tr><td><strong>RIPD / DPIA</strong></td><td>relatório de impacto: descreve tratamentos de risco e salvaguardas</td><td>exigível pela ANPD; típico em biometria e scoring</td></tr>
+  </table>
+  </div>
+  <div class="trap">🪤 Cuidado com "titular = dono do dado" ao pé da letra: a LGPD <strong>não</strong> cria propriedade sobre dado, cria <em>direitos de controle</em>. É por isso que o titular pode pedir eliminação e ouvir "não" — dono, em sentido civil, não ouve "não". Guarde: <strong>não existe direito absoluto ao esquecimento na LGPD</strong>.</div>
+
+  <h2 id="sec-4-tipos-de-dados-a-classificacao-que-muda-o-r">4. Tipos de dados — a classificação que muda o regime</h2>
+  <p>A categoria em que o dado cai <strong>muda quais bases legais você pode usar</strong>. Por isso classificação é assunto de prova, não detalhe.</p>
+
+  <h3>4.1 Dado pessoal</h3>
+  <p><strong>Informação relacionada a pessoa natural identificada ou identificável.</strong> A palavra que carrega tudo é <em>identificável</em>: não precisa ter o nome — se o dado, sozinho ou combinado com outros, permite chegar a uma pessoa, é dado pessoal.</p>
+  <p>Entram nome, CPF, endereço, telefone, conta, cartão, <strong>IP</strong>, cookie identificador, <strong>geolocalização</strong>, ID de dispositivo, histórico transacional, gravação de voz. A dúvida clássica — "IP é dado pessoal?" — resolve-se pela identificabilidade: sim, porque combinado com o log do provedor chega a uma pessoa. Dados usados para <strong>formar perfil comportamental</strong> de pessoa identificada também contam: fecha a porta do "mas eu só tenho o segmento, não o nome".</p>
+
+  <h3>4.2 Dado pessoal sensível</h3>
+  <p><strong>Categoria fechada</strong> — decore a lista, porque a banca cobra a lista: origem <strong>racial</strong> ou étnica; convicção <strong>religiosa</strong>; opinião <strong>política</strong>; filiação a <strong>sindicato</strong> ou a organização religiosa, filosófica ou política; dado de <strong>saúde</strong> ou <strong>vida sexual</strong>; dado <strong>genético</strong> ou <strong>biométrico</strong> vinculado a pessoa natural.</p>
+  <p>Por que essas? Porque são as categorias historicamente usadas para <strong>discriminar</strong>. O critério não é "é constrangedor", é "já serviu de base para perseguição" — o que explica por que <em>renda</em> e <em>saldo</em>, que qualquer um consideraria íntimos, <strong>não são</strong> sensíveis.</p>
+  <div class="trap">🪤 A pegadinha favorita: <strong>dado financeiro não é dado sensível</strong>. Saldo, salário, score, extrato = dados pessoais comuns. Sensível é a lista fechada acima. Mas cuidado com inferência: doação registrada a uma igreja pode revelar convicção religiosa e arrastar o tratamento para o regime de sensível.</div>
+
+  <h3>4.3 Dado anonimizado</h3>
+  <p><strong>Anonimização</strong> é o processo pelo qual o dado <strong>perde a possibilidade de associação a um indivíduo</strong>, considerados os meios técnicos razoáveis e disponíveis na ocasião. Dado anonimizado <strong>não é dado pessoal</strong> — sai da LGPD, sem base legal e sem direitos de titular.</p>
+  <p>Mas a lei impõe uma condição que é <strong>um problema técnico do seu domínio</strong>: se a anonimização puder ser <strong>revertida com esforços razoáveis</strong>, o dado <strong>volta</strong> a ser pessoal. Você sabe o nome disso: <strong>reidentificação por cruzamento</strong>. Remover nome e CPF não anonimiza nada se sobrarem CEP + data de nascimento + sexo — essa tripla identifica sozinha a maioria da população. Um extrato "anônimo" com data, valor e estabelecimento é reidentificável com meia dúzia de transações conhecidas. E o parâmetro é móvel ("meios razoáveis <strong>na ocasião</strong>"): <em>uma base anonimizada hoje pode deixar de estar amanhã</em>. Anonimização não é estado permanente; é uma aposta que envelhece.</p>
+
+  <h3>4.4 Dado pseudonimizado — o falso amigo</h3>
+  <p><strong>Pseudonimização</strong> é trocar o identificador direto por um código, mantendo em separado a chave que reverte: o <code>id_cliente</code> no lugar do CPF. O ponto que derruba gente de TI: <strong>dado pseudonimizado continua sendo dado pessoal e continua 100% dentro da LGPD</strong>. Óbvio quando você pensa como engenheiro — existe chave, logo é reversível; a reversibilidade é a <em>feature</em>. É <strong>medida de segurança</strong> (excelente, e a lei a incentiva), <strong>não</strong> saída da lei.</p>
+  <div class="table-scroll">
+  <table>
+    <tr><th></th><th>Anonimizado</th><th>Pseudonimizado</th></tr>
+    <tr><td>Existe chave de reversão?</td><td>não</td><td><strong>sim</strong>, guardada em separado</td></tr>
+    <tr><td>É dado pessoal?</td><td><strong>não</strong> (enquanto irreversível)</td><td><strong>sim</strong></td></tr>
+    <tr><td>Está sob a LGPD?</td><td>fora</td><td><strong>dentro</strong>, integralmente</td></tr>
+    <tr><td>Natureza</td><td>mudança de categoria jurídica</td><td>medida de segurança</td></tr>
+    <tr><td>Analogia de TI</td><td>agregação irreversível</td><td>tokenização com <em>vault</em></td></tr>
+  </table>
+  </div>
+  <div class="trap">🪤 Biometria (digital, face, íris, voz) no app do banco = dado <strong>SENSÍVEL</strong>. Dado de pessoa jurídica <strong>NÃO</strong> é protegido pela LGPD (só pessoa natural). Dado <strong>anonimizado</strong> sai da LGPD; <strong>pseudonimizado</strong> NÃO sai. E "criptografado" não é nenhum dos dois: dado cifrado é dado pessoal com uma boa medida de segurança em cima — a chave existe, senão o banco não operaria.</div>
+
+  <h2 id="sec-5-os-papeis-quem-e-quem-e-quem-paga-a-conta">5. Os papéis — quem é quem, e quem paga a conta</h2>
+  <p>Papel não é cargo: é <strong>posição funcional</strong>, definida pelo que se faz. A mesma empresa pode ser controladora em um tratamento e operadora em outro. O que define é sempre: <strong>quem decide?</strong></p>
   <div class="table-scroll">
   <table>
     <tr><th>Papel</th><th>Quem é</th><th>No contexto do banco</th></tr>
@@ -26,61 +149,274 @@
   </table>
   </div>
 
-  <h3>Tipos de dados</h3>
-  <ul>
-    <li><strong>Dado pessoal:</strong> identifica ou torna identificável uma pessoa natural (nome, CPF, IP, localização, dados bancários).</li>
-    <li><strong>Dado sensível:</strong> origem racial/étnica, convicção religiosa, opinião política, filiação sindical, saúde, vida sexual, <strong>dado genético ou biométrico</strong>. Tratamento com regras mais rígidas.</li>
-    <li><strong>Dado anonimizado:</strong> perdeu o vínculo com o titular por meios razoáveis → em regra, <strong>fora</strong> da LGPD (se reversível, volta a ser pessoal).</li>
-    <li>A LGPD vale para meio <strong>físico E digital</strong>, setor público e privado.</li>
-  </ul>
-  <div class="trap">🪤 Biometria (digital, face) usada no app do banco = dado SENSÍVEL. E dado de pessoa jurídica NÃO é protegido pela LGPD (só pessoa natural).</div>
+  <h3>5.1 Controlador × operador — a distinção que cai sempre</h3>
+  <p>O <strong>controlador</strong> toma as <strong>decisões</strong>: finalidade, meios essenciais, base legal, prazo de guarda. É o dono da decisão — e da responsabilidade. O <strong>operador</strong> trata <strong>em nome do</strong> controlador, seguindo instruções, sem finalidade própria. A mecânica: <strong>quem decide o "para quê" é controlador; quem só executa o "como" é operador.</strong> Teste decisivo: se o fornecedor usar os dados <strong>para finalidade própria</strong> — a fintech resolve treinar o modelo dela com a base do banco — ele <strong>vira controlador</strong> daquele tratamento, com a responsabilidade junto.</p>
+  <p><strong>Quem responde?</strong> O controlador. O <strong>operador responde solidariamente</strong> quando (a) <strong>descumprir as obrigações da LGPD</strong> ou (b) <strong>não seguir as instruções lícitas do controlador</strong> — caso em que se equipara a controlador. Daí a consequência que a banca adora: <strong>o banco não terceiriza responsabilidade contratando fornecedor</strong>. Se a cloud vaza, o titular reclama do <em>banco</em> e a ANPD sanciona o <em>banco</em>; o contrato serve para o banco cobrar dela depois (regresso), não para se esconder atrás dela antes.</p>
+  <p class="muted">Excludentes de responsabilidade: provar que <strong>não realizou</strong> o tratamento; que realizou mas <strong>não houve violação</strong>; ou <strong>culpa exclusiva do titular ou de terceiro</strong>. O ônus é do agente.</p>
 
-  <h3>Bases legais (art. 7º) — consentimento é só UMA delas</h3>
-  <ul>
-    <li>Consentimento do titular (livre, informado e inequívoco; revogável a qualquer momento);</li>
-    <li><strong>Cumprimento de obrigação legal/regulatória</strong> (ex.: prevenção à lavagem — o banco guarda dados mesmo sem consentimento);</li>
-    <li><strong>Execução de contrato</strong> (dados necessários à conta/empréstimo);</li>
-    <li><strong>Proteção ao crédito</strong> (base específica — sustenta bureaus como SPC/Serasa);</li>
-    <li>Legítimo interesse do controlador (com teste de balanceamento);</li>
-    <li>Outras: pesquisa, tutela da saúde, proteção da vida, processo judicial, políticas públicas.</li>
-  </ul>
-  <div class="trap">🪤 "O tratamento de dados SÓ pode ocorrer com consentimento" = alternativa ERRADA, sempre. São 10 bases legais.</div>
+  <h3>5.2 Encarregado (DPO) — é um papel, não um crachá</h3>
+  <p>O <strong>encarregado</strong> é o <strong>canal de comunicação</strong> entre controlador, titulares e ANPD: recebe reclamações dos titulares e presta esclarecimentos, recebe comunicações da ANPD, orienta funcionários e contratados.</p>
+  <p>A ponte: <strong>o encarregado é para dados o que o CISO é para segurança</strong> — papel de governança, com autonomia e acesso à alta administração, ponto único de responsabilização. E, como o CISO, <strong>não é quem executa</strong>: não cifra base, não configura firewall, não roda expurgo. Duas diferenças caem: <strong>a identidade e o contato dele são públicos</strong> (preferencialmente no site — canal secreto não é canal); e <strong>pode ser pessoa natural ou jurídica</strong>, funcionário ou terceiro.</p>
+  <div class="trap">🪤 Encarregado <strong>não</strong> precisa ser advogado, <strong>não</strong> precisa ser empregado, e <strong>não</strong> é quem responde pela multa (quem responde é o agente de tratamento). Mas a identidade dele <strong>é</strong> pública. E ele não se confunde com o <strong>diretor responsável pela política de segurança cibernética</strong> da Res. 4.893 — dois papéis, dois normativos, dois destinatários (ANPD × Bacen).</div>
 
-  <h3>Direitos do titular (art. 18)</h3>
+  <h3>5.3 ANPD</h3>
+  <p>A <strong>Autoridade Nacional de Proteção de Dados</strong> é <strong>autarquia de natureza especial</strong>, com autonomia técnica e decisória. Ela <strong>regula</strong> (edita normas que preenchem as lacunas da lei), <strong>fiscaliza</strong> e <strong>sanciona</strong>, além de apreciar petições de titulares — quando a lei diz "prazo razoável", quem diz o que é razoável é ela.</p>
+  <p>Ponto essencial no setor bancário: <strong>a ANPD não substitui o Bacen</strong>. O banco tem <strong>dois</strong> reguladores olhando o mesmo incidente por ângulos diferentes — ANPD pelo dado pessoal, Bacen pela solidez do sistema financeiro. Não é redundância: é dupla obrigação, e essa dualidade organiza o resto da matéria.</p>
+
+  <h2 id="sec-6-os-principios-art-6-o-privacy-by-design-esc">6. Os princípios (art. 6º) — o "privacy by design" escrito em lei</h2>
+  <p>Você já pratica quase todos; só não sabia que tinham nome jurídico e força de lei. É aqui que sua bagagem mais rende — desde que aprenda os <strong>rótulos</strong>, porque a banca cobra rótulo, não conceito. Princípio não é enfeite: ele <strong>preenche lacuna e resolve caso duvidoso</strong>, e é por violação de princípio que a ANPD sanciona quando não há regra específica descumprida.</p>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Princípio</th><th>O que exige</th><th>Traduzindo para o seu mundo</th></tr>
+    <tr><td><strong>Finalidade</strong></td><td>propósito legítimo, específico, explícito e informado; sem tratamento posterior incompatível</td><td>escopo declarado antes da coleta — e vinculante depois</td></tr>
+    <tr><td><strong>Adequação</strong></td><td>compatibilidade do tratamento com a finalidade informada</td><td>o que você faz bate com o que disse que faria</td></tr>
+    <tr><td><strong>Necessidade</strong></td><td>limitação ao <strong>mínimo necessário</strong> — dados pertinentes, proporcionais, não excessivos</td><td><strong>minimização</strong>. Idêntico a menor privilégio: só o dado indispensável, como só a permissão indispensável</td></tr>
+    <tr><td><strong>Livre acesso</strong></td><td>consulta facilitada e gratuita sobre forma, duração e integralidade dos dados</td><td>o titular tem "read" sobre o próprio registro</td></tr>
+    <tr><td><strong>Qualidade dos dados</strong></td><td>exatidão, clareza, relevância e atualização</td><td>integridade — orientada ao titular, não ao sistema</td></tr>
+    <tr><td><strong>Transparência</strong></td><td>informações claras, precisas e acessíveis sobre o tratamento e os agentes</td><td>documentação legível por humano, o oposto de <em>security through obscurity</em></td></tr>
+    <tr><td><strong>Segurança</strong></td><td>medidas técnicas e administrativas contra acesso não autorizado, destruição, perda, alteração, difusão</td><td>a CID inteira, escrita em lei. Repare: <strong>técnicas E administrativas</strong></td></tr>
+    <tr><td><strong>Prevenção</strong></td><td>medidas para <strong>prevenir</strong> danos</td><td><strong>privacy/security by design</strong>: agir antes, não só reagir</td></tr>
+    <tr><td><strong>Não discriminação</strong></td><td>impossibilidade de tratamento para fins discriminatórios ilícitos ou abusivos</td><td>viés algorítmico — o princípio que morde o modelo de crédito</td></tr>
+    <tr><td><strong>Responsabilização e prestação de contas</strong></td><td>demonstrar medidas eficazes e capazes de <strong>comprovar</strong> a observância da lei</td><td><em>accountability</em>: não basta cumprir, tem que <strong>provar</strong> — logs, ROPA, RIPD, evidência</td></tr>
+  </table>
+  </div>
+  <p>Três leituras que valem mais que a tabela:</p>
   <ul>
-    <li>Confirmação do tratamento e <strong>acesso</strong> aos dados;</li>
-    <li>Correção de dados incompletos/desatualizados;</li>
-    <li>Anonimização, bloqueio ou <strong>eliminação</strong> de dados desnecessários/excessivos;</li>
-    <li><strong>Portabilidade</strong> a outro fornecedor (é a alma do Open Finance);</li>
-    <li>Informação sobre compartilhamentos e sobre a possibilidade de negar consentimento;</li>
-    <li><strong>Revogação</strong> do consentimento e revisão de decisões automatizadas (ex.: score de crédito).</li>
+    <li><strong>Necessidade é o princípio mais violado do Brasil corporativo.</strong> O formulário que pede nome da mãe para baixar um e-book viola necessidade; o legado em que todo atendente enxerga a base inteira viola necessidade. É <em>menor privilégio</em> — e você sabe que quase ninguém implementa direito.</li>
+    <li><strong>Segurança aqui é obrigação de meio, não de resultado.</strong> A lei <strong>não</strong> diz "não pode vazar"; diz "adote medidas técnicas e administrativas <em>aptas</em>". Logo, <strong>vazar não é, por si só, infração</strong> — vazar tendo sido negligente é. O banco com controles proporcionais ao risco, documentados e testados, que responde e comunica corretamente, está em posição defensável: o que a ANPD pune é a <em>desproporção entre risco e controle</em>.</li>
+    <li><strong>Responsabilização inverte o jogo probatório.</strong> Não é a ANPD que prova que você fez errado; é você que <strong>demonstra</strong> que fez certo. Um banco sem registro das operações, sem relatório de impacto e sem trilha de decisão sobre bases legais está indefeso mesmo sendo tecnicamente competente. Documentação não é burocracia — <strong>é a sua defesa</strong>.</li>
+  </ul>
+  <div class="trap">🪤 Não confunda <strong>segurança</strong> (medidas protetivas), <strong>prevenção</strong> (agir antes para evitar o dano) e <strong>responsabilização</strong> (demonstrar conformidade). Três princípios distintos, e a banca troca um pelo outro. E "livre acesso" é o acesso <strong>do titular aos dados dele</strong> — não é dado aberto, não é acesso público.</div>
+
+  <h2 id="sec-7-as-10-bases-legais-art-7-o-coracao-da-mater">7. As 10 bases legais (art. 7º) — o coração da matéria</h2>
+
+  <h3>7.1 A ideia que precisa ficar cristalina</h3>
+  <p>Diga em voz alta: <strong>consentimento é apenas UMA das dez bases legais — e, no banco, quase nunca é a usada.</strong></p>
+  <p>Existe um mito, alimentado por dez anos de pop-up de cookie, de que a LGPD é "a lei do aceito". Não é. O consentimento é a base <strong>mais frágil</strong> das dez, e um jurista competente foge dela sempre que pode: <strong>é revogável a qualquer momento</strong>, por procedimento gratuito e facilitado; <strong>o ônus da prova é do controlador</strong>; <strong>autorizações genéricas são NULAS</strong>; e <strong>consentimento viciado é nulo</strong> — se o serviço for condicionado a um consentimento desnecessário para prestá-lo, ele não é "livre".</p>
+  <p>Agora some o contexto bancário. Um banco é entidade <strong>compulsoriamente vigiada</strong>: obrigado por lei a identificar clientes, guardar registros, reportar operações suspeitas ao Coaf, informar a Receita, alimentar o SCR do Bacen. Se tudo isso dependesse de consentimento, bastaria o lavador de dinheiro clicar em "não autorizo" para desmontar a prevenção à lavagem do país inteiro. É absurdo — <strong>e é por isso que a lei nunca fez do consentimento a regra</strong>.</p>
+  <div class="tip">💡 Regra prática que resolve questão: no banco dominam <strong>obrigação legal/regulatória</strong>, <strong>execução de contrato</strong> e <strong>proteção ao crédito</strong>. Consentimento sobra para o que é <em>opcional para o cliente e não essencial ao serviço</em>: marketing, compartilhamento com parceiros, biometria, Open Finance. Se a atividade é obrigatória para o banco ou indispensável ao contrato, a base <strong>não</strong> é consentimento.</div>
+
+  <h3>7.2 As dez, uma a uma</h3>
+  <div class="table-scroll">
+  <table>
+    <tr><th>#</th><th>Base legal</th><th>Quando se aplica</th><th>Exemplo no banco</th></tr>
+    <tr><td>1</td><td><strong>Consentimento</strong> do titular</td><td>tratamento opcional; o titular pode dizer não sem perder o serviço</td><td>marketing, oferta de parceiros, biometria, Open Finance</td></tr>
+    <tr><td>2</td><td><strong>Cumprimento de obrigação legal ou regulatória</strong></td><td>quando uma lei ou norma <em>manda</em> o banco tratar</td><td>PLD/FT e reporte ao Coaf, KYC, guarda de registros, Receita, SCR</td></tr>
+    <tr><td>3</td><td>Execução de <strong>políticas públicas</strong></td><td>base exclusiva do poder público</td><td>benefícios sociais operados por banco público</td></tr>
+    <tr><td>4</td><td>Realização de <strong>estudos por órgão de pesquisa</strong></td><td>pesquisa, com anonimização sempre que possível</td><td>convênio com universidade sobre inclusão financeira</td></tr>
+    <tr><td>5</td><td><strong>Execução de contrato</strong> ou de procedimentos preliminares</td><td>quando o dado é <em>necessário</em> para entregar o contratado</td><td>abrir conta, processar TED, cobrar parcela, simular empréstimo</td></tr>
+    <tr><td>6</td><td><strong>Exercício regular de direitos</strong> em processo judicial, administrativo ou arbitral</td><td>quando o banco precisa se defender ou cobrar</td><td>juntar extratos em ação judicial, instruir defesa no Procon</td></tr>
+    <tr><td>7</td><td><strong>Proteção da vida</strong> ou da incolumidade física</td><td>emergência</td><td>raro no banco</td></tr>
+    <tr><td>8</td><td><strong>Tutela da saúde</strong>, por profissionais/serviços de saúde</td><td>base do setor de saúde</td><td>quase nada; eventualmente saúde ocupacional</td></tr>
+    <tr><td>9</td><td><strong>Legítimo interesse</strong> do controlador ou de terceiro</td><td>interesse concreto e legítimo, respeitadas as expectativas do titular</td><td>prevenção a fraude, segurança do ambiente</td></tr>
+    <tr><td>10</td><td><strong>Proteção do crédito</strong></td><td>base específica, criada para viabilizar o sistema de crédito</td><td>bureaus (SPC/Serasa), score, cadastro positivo</td></tr>
+  </table>
+  </div>
+
+  <h3>7.3 As três que dominam no banco</h3>
+  <p><strong>Obrigação legal ou regulatória.</strong> A base mais confortável, porque a decisão não é do banco: outra norma mandou. Ele identifica o cliente, guarda registro e reporta operação atípica ao Coaf porque a regulação manda — e aqui <strong>não pode nem avisar o cliente</strong>, porque a lei de lavagem veda a comunicação (<em>tipping off</em>). Repare: a transparência da LGPD <strong>cedeu</strong> diante de outra norma. Não é contradição; é o sistema jurídico se acomodando.</p>
+  <p><strong>Execução de contrato.</strong> Contratou conta corrente, o banco trata seus dados para <em>entregar a conta corrente</em>: não pede licença para debitar tarifa, calcular juros ou emitir extrato — isso <em>é</em> o contrato. A palavra que limita é <strong>necessário</strong>: cobre o indispensável ao contrato, não tudo que o banco gostaria de fazer com o dado de quem tem contrato. Vender seu perfil de gastos a um parceiro <strong>não</strong> é execução de contrato. <span class="muted">Detalhe fino: a base cobre também os <strong>procedimentos preliminares</strong> — a simulação que você faz sem virar cliente está coberta, mesmo que o contrato nunca se realize.</span></p>
+  <p><strong>Proteção do crédito.</strong> Uma <em>jabuticaba</em> — o GDPR não tem equivalente. O legislador criou base própria porque o sistema de crédito depende de informação sobre inadimplência e não podia ficar refém do consentimento do devedor (ninguém consentiria em ser negativado). É a base que sustenta juridicamente os bureaus, o score e o cadastro positivo.</p>
+  <div class="tip">💡 Isso responde à pergunta clássica do balcão: "<em>eu não autorizei o Serasa a ter meus dados!</em>". Não precisava. A base não é consentimento, é <strong>proteção do crédito</strong> — decisão do legislador, não do banco nem do cliente. O que o titular tem é o direito de acessar, corrigir erro e entender o que o afeta.</div>
+
+  <h3>7.4 Legítimo interesse e o teste de balanceamento</h3>
+  <p>O <strong>legítimo interesse</strong> é a base mais sofisticada e a mais perigosa: cobre o que é razoável, útil e esperado, mas não se encaixa em outra base. Por ser <strong>cláusula aberta</strong>, é o esconderijo preferido de quem quer tratar dado sem justificativa — e a lei impõe limites reais: interesse <strong>legítimo e concreto</strong> (não hipotético); só os dados <strong>estritamente necessários</strong>; respeito às <strong>legítimas expectativas</strong> do titular e a seus direitos fundamentais; <strong>transparência</strong> reforçada; a ANPD <strong>pode exigir o RIPD</strong>; e <strong>não vale para dado sensível</strong>, nem para tratamento com efeito discriminatório.</p>
+  <p><strong>O teste de balanceamento</strong> (<em>LIA — Legitimate Interest Assessment</em>) é o exercício documentado feito <em>antes</em> de invocar a base:</p>
+  <ol>
+    <li><strong>Propósito:</strong> existe interesse real, concreto e lícito? (não "seria bom ter")</li>
+    <li><strong>Necessidade:</strong> o tratamento é necessário, e não há caminho menos invasivo? (se dá para fazer com dado anonimizado ou com menos dado, não era necessário)</li>
+    <li><strong>Balanceamento:</strong> o interesse do controlador contra os direitos e as legítimas expectativas do titular — quem ganha, e que salvaguardas reduzem o impacto?</li>
+  </ol>
+  <p>A pergunta que resolve a maioria dos casos é a da <strong>legítima expectativa</strong>: <em>o titular ficaria surpreso ao descobrir isso?</em> Se a resposta é "sim, e ficaria bravo", não é legítimo interesse.</p>
+  <p><strong>No banco, o caso-rei é a prevenção a fraude e a segurança do titular.</strong> Detectar anomalia no padrão transacional, bloquear compra atípica, checar geolocalização do login, manter logs — nada disso passa por consentimento (o fraudador diria "não") e não é exatamente execução de contrato. É legítimo interesse: concreto, necessário e dentro da expectativa do cliente, que <em>quer</em> ser protegido. Efeito colateral bonito: <strong>a LGPD dá base jurídica ao seu SIEM</strong> — monitorar para proteger é legítimo por lei, desde que proporcional, minimizado e transparente.</p>
+  <p>Contra-exemplo para calibrar: <strong>marketing agressivo com perfilamento</strong> geralmente <em>não</em> passa. Interesse existe (vender), mas falha na expectativa — o cliente não espera que seu extrato vire insumo de segmentação para terceiros. Por isso marketing invasivo cai em consentimento: não porque a lei diga, mas porque <strong>o teste reprova</strong>.</p>
+  <div class="trap">🪤 Três de uma vez: (1) legítimo interesse <strong>não</strong> serve para dado sensível; (2) o <strong>teste de balanceamento não é aprovado pela ANPD</strong> — é feito e documentado <em>pelo controlador</em>, e a ANPD o exige/audita depois; (3) legítimo interesse <strong>não</strong> é "eu decido sozinho": é base condicionada, com ônus de prova e documentação. Quem escreve "legítimo interesse" numa planilha sem LIA não tem base legal — tem uma frase.</div>
+
+  <h3>7.5 Por que o banco fica com seus dados se você "revoga o consentimento"</h3>
+  <p>Cliente liga: "<em>revogo meu consentimento, apaguem tudo</em>". O banco apaga? <strong>Não. E está certo.</strong> A explicação cabe numa frase: <strong>revogar consentimento só derruba o tratamento que estava apoiado em consentimento.</strong> Se o tratamento nunca esteve apoiado nele, não há o que revogar.</p>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Dado / tratamento</th><th>Base legal real</th><th>A revogação derruba?</th><th>Por quê</th></tr>
+    <tr><td>Telefone usado para <strong>ofertar consórcio</strong></td><td>consentimento</td><td><strong>SIM</strong> — para imediatamente</td><td>era consentimento; revogou, acabou</td></tr>
+    <tr><td>Compartilhamento com <strong>parceiros comerciais</strong></td><td>consentimento</td><td><strong>SIM</strong></td><td>idem</td></tr>
+    <tr><td><strong>Cadastro, CPF, ficha KYC</strong></td><td>obrigação legal/regulatória</td><td><strong>NÃO</strong></td><td>a regulação de PLD manda identificar e guardar</td></tr>
+    <tr><td><strong>Registro das transações</strong></td><td>obrigação legal + contrato</td><td><strong>NÃO</strong></td><td>o banco é obrigado a manter pelo prazo legal</td></tr>
+    <tr><td><strong>Saldo devedor do empréstimo</strong></td><td>execução de contrato</td><td><strong>NÃO</strong></td><td>o contrato está vigente; apagar seria não cobrar</td></tr>
+    <tr><td><strong>Informação de inadimplência</strong></td><td>proteção do crédito</td><td><strong>NÃO</strong></td><td>base própria, independente da vontade do devedor</td></tr>
+    <tr><td><strong>Logs de acesso e antifraude</strong></td><td>legítimo interesse (+ obrigação legal)</td><td><strong>NÃO</strong></td><td>segurança do próprio titular e do sistema</td></tr>
+    <tr><td>Extratos para <strong>defesa em ação judicial</strong></td><td>exercício regular de direitos</td><td><strong>NÃO</strong></td><td>o banco tem direito de se defender</td></tr>
+  </table>
+  </div>
+  <p>Ou seja: <strong>o cliente revoga e para de receber oferta de consórcio — e mais nada acontece.</strong> A conta continua, a dívida continua, o cadastro continua, e o banco está integralmente dentro da LGPD porque nada disso jamais dependeu do "sim" dele. Dois detalhes finos: <strong>a revogação não retroage</strong> (ficam <em>ratificados</em> os tratamentos já realizados sob o consentimento anterior, enquanto não houver pedido de eliminação); e <strong>tem de ser gratuita e facilitada</strong> (cobrar, dificultar ou exigir ida à agência é, isso sim, infração).</p>
+  <p><strong>Cenário — o cliente pede exclusão e o banco recusa.</strong> O direito de eliminação (art. 18) tem dois recortes: dados <strong>desnecessários, excessivos ou tratados em desconformidade</strong>; e dados <strong>tratados com base no consentimento</strong>, quando revogado. <em>Nenhum dos dois</em> alcança dado necessário, tratado em conformidade, sob outra base. E a lei ainda autoriza a <strong>conservação após o término do tratamento</strong> para: obrigação legal ou regulatória; estudo por órgão de pesquisa (anonimizando quando possível); transferência a terceiro com requisitos atendidos; e uso exclusivo do controlador, vedado acesso por terceiro e <strong>desde que anonimizados</strong>.</p>
+  <p>Então a resposta correta do banco não é "não", é: "<em>excluímos o que era opcional e não é mais necessário; mantemos o que a lei nos obriga a manter e o que o contrato exige, e vamos te dizer exatamente o quê e por quê</em>". Recusar é lícito; recusar <strong>sem explicar</strong> não é.</p>
+  <div class="trap">🪤 "Revogado o consentimento, o controlador deve eliminar todos os dados do titular" → <strong>ERRADO</strong>: elimina-se o que era tratado <em>com base naquele consentimento</em>. "O titular tem direito ao esquecimento na LGPD" → <strong>ERRADO</strong>: esse direito não está na LGPD. "A revogação apaga os tratamentos passados" → <strong>ERRADO</strong>: ficam ratificados. E o clássico: "o tratamento SÓ pode ocorrer com consentimento" = ERRADO, sempre. São 10 bases legais.</div>
+
+  <h2 id="sec-8-dado-sensivel-e-o-caso-da-biometria-facial">8. Dado sensível e o caso da biometria facial</h2>
+
+  <h3>8.1 O regime é outro</h3>
+  <p>Dado sensível <strong>não segue a lista de dez do art. 7º</strong>: tem <strong>lista própria, mais curta e restrita</strong> (art. 11) — e as ausências são o que importa.</p>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Base</th><th>Dado comum?</th><th>Dado sensível?</th></tr>
+    <tr><td>Consentimento</td><td>sim (livre, informado, inequívoco)</td><td>sim — mas <strong>específico e destacado</strong>, para finalidades específicas</td></tr>
+    <tr><td>Obrigação legal ou regulatória</td><td>sim</td><td><strong>sim</strong></td></tr>
+    <tr><td>Exercício regular de direitos</td><td>sim</td><td><strong>sim</strong></td></tr>
+    <tr><td>Proteção da vida / tutela da saúde</td><td>sim</td><td><strong>sim</strong></td></tr>
+    <tr><td>Estudos / políticas públicas</td><td>sim</td><td>sim (com condições)</td></tr>
+    <tr><td><strong>Legítimo interesse</strong></td><td>sim</td><td><strong>NÃO</strong></td></tr>
+    <tr><td><strong>Proteção do crédito</strong></td><td>sim</td><td><strong>NÃO</strong></td></tr>
+    <tr><td><strong>Execução de contrato</strong> (base autônoma)</td><td>sim</td><td><strong>NÃO</strong> — não figura como hipótese própria no regime do sensível</td></tr>
+    <tr><td><strong>Prevenção à fraude e segurança do titular</strong>, nos processos de identificação e autenticação de cadastro em sistemas eletrônicos</td><td>—</td><td><strong>SIM</strong> — hipótese exclusiva do regime de sensível</td></tr>
+  </table>
+  </div>
+  <p><strong>Legítimo interesse não vale para sensível</strong> — é o que mais cai. E repare no presente de grego da última linha: existe uma hipótese, <em>que só existe para dado sensível</em>, de tratamento sem consentimento para <strong>prevenção à fraude e segurança do titular nos processos de identificação e autenticação</strong>. Foi escrita, na prática, para a biometria.</p>
+
+  <h3>8.2 O banco quer usar biometria facial — que cuidado extra?</h3>
+  <p><strong>Primeiro: classifique.</strong> Biometria vinculada a pessoa natural é <strong>dado sensível</strong> — ponto de partida obrigatório, e o passo que as pessoas pulam.</p>
+  <p><strong>Segundo: escolha a base — há duas rotas.</strong> Ou <strong>consentimento específico e destacado</strong> (cláusula apartada, não embutida no termo geral de uso), ou a hipótese de <strong>prevenção à fraude e segurança do titular na autenticação</strong>. A segunda sustenta biometria como antifraude sem depender do "sim" e é sob ela que o setor financeiro opera — mas é estreita: cobre <em>identificação e autenticação</em>, e não autoriza usar a mesma face para medir reação a propaganda na agência.</p>
+  <p><strong>Terceiro: os cuidados extras</strong>, onde sua bagagem é decisiva:</p>
+  <ul>
+    <li><strong>Alternativa não biométrica.</strong> Se a única forma de acessar a conta for entregar a face, o consentimento não é livre — está condicionado ao serviço.</li>
+    <li><strong>Template, não imagem.</strong> Armazene o vetor biométrico cifrado e segregado do cadastro, não a foto.</li>
+    <li><strong>Irrevogabilidade — o ponto que só quem é da área enxerga.</strong> Senha vazada, você troca. <strong>Face vazada, você não troca.</strong> A biometria é o único credencial vitalício e sem <em>rotate</em>, e o dano do vazamento é permanente. Quando a prova perguntar "por que biometria é sensível?", a resposta profunda é essa.</li>
+    <li><strong>Minimização e prazo.</strong> Só o necessário à autenticação, pelo tempo necessário — nada de guardar "para treinar modelo depois": outra finalidade, outra base.</li>
+    <li><strong>Prova de vida</strong> (<em>liveness</em>): autenticação biométrica burlável não protege ninguém — falhar aqui viola <em>segurança</em> e <em>prevenção</em> de uma vez.</li>
+    <li><strong>Viés e não discriminação.</strong> Reconhecimento facial tem taxa de erro desigual entre grupos demográficos — fato empírico consolidado. Se a falsa rejeição é maior para clientes de pele mais escura, o banco produziu <strong>discriminação algorítmica</strong> ainda que sem intenção: o princípio não pergunta pela intenção, pergunta pelo <em>efeito</em>.</li>
+    <li><strong>RIPD.</strong> Sensível em larga escala é o caso-padrão de relatório de impacto. Faça antes, não depois da intimação.</li>
+  </ul>
+  <div class="trap">🪤 "O banco pode tratar biometria com base no legítimo interesse" → <strong>ERRADO</strong>: não alcança sensível. "Consentimento para sensível é igual ao comum" → <strong>ERRADO</strong>: tem de ser <strong>específico e destacado</strong>. E o inverso também cai: "dado sensível só pode ser tratado com consentimento" → <strong>ERRADO</strong> — há hipóteses sem consentimento (obrigação legal, exercício de direitos, prevenção à fraude na autenticação...).</div>
+
+  <h2 id="sec-9-direitos-do-titular-art-18-os-botoes-que-o-">9. Direitos do titular (art. 18) — os botões que o cliente ganhou</h2>
+  <p>Aqui a LGPD vira produto: <strong>cada direito é um endpoint que alguém no banco tem que implementar</strong>. Pense assim e a lista deixa de ser decoreba.</p>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Direito</th><th>O titular pede</th><th>O banco faz</th><th>Analogia</th></tr>
+    <tr><td><strong>Confirmação</strong> do tratamento</td><td>"vocês tratam dados meus?"</td><td>responder sim/não</td><td><code>EXISTS</code></td></tr>
+    <tr><td><strong>Acesso</strong></td><td>"me mostrem"</td><td>formato <strong>simplificado, imediatamente</strong>; ou <strong>declaração clara e completa em até 15 dias</strong> do requerimento</td><td><code>SELECT</code> + export</td></tr>
+    <tr><td><strong>Correção</strong></td><td>"está errado"</td><td>corrigir dado incompleto, inexato ou desatualizado</td><td><code>UPDATE</code></td></tr>
+    <tr><td><strong>Anonimização, bloqueio ou eliminação</strong></td><td>"isso é desnecessário/excessivo/ilegal"</td><td>avaliar e agir — <em>ou</em> justificar a recusa</td><td><code>DELETE</code> condicional</td></tr>
+    <tr><td><strong>Portabilidade</strong></td><td>"mande para outro banco"</td><td>transferir a outro fornecedor, conforme regulamentação da ANPD</td><td>export interoperável</td></tr>
+    <tr><td><strong>Eliminação do tratado com consentimento</strong></td><td>"revoguei, apaguem"</td><td>apagar <em>o que dependia daquele consentimento</em>, com as ressalvas de conservação</td><td><code>DELETE ... WHERE base='consentimento'</code></td></tr>
+    <tr><td><strong>Informação sobre compartilhamento</strong></td><td>"para quem mandaram?"</td><td>listar entidades públicas e privadas com quem compartilhou</td><td>trilha de linhagem</td></tr>
+    <tr><td><strong>Informação sobre não consentir</strong></td><td>"o que perco se disser não?"</td><td>informar consequências da negativa</td><td>—</td></tr>
+    <tr><td><strong>Revogação</strong> do consentimento</td><td>"retiro meu sim"</td><td>procedimento <strong>gratuito e facilitado</strong></td><td><em>toggle</em> off</td></tr>
+    <tr><td><strong>Revisão de decisão automatizada</strong></td><td>"a máquina me negou"</td><td>ver 9.1 — é caso à parte</td><td>—</td></tr>
+  </table>
+  </div>
+  <p>Os direitos são exercidos <strong>gratuitamente</strong>, mediante requerimento. Se o banco recusar, tem de <strong>comunicar a recusa e a justificativa</strong> — e o titular pode peticionar à ANPD ou aos órgãos de defesa do consumidor: <strong>não existe o direito de "recusar caladinho"</strong>. A <strong>portabilidade</strong>, guarde, é a alma do Open Finance (bloco 13).</p>
+
+  <h3>9.1 Cenário: o score de crédito nega o empréstimo</h3>
+  <p>Cliente pede R$ 30 mil. O motor roda, o score volta baixo, o sistema nega em 400 ms, sem humano no caminho. <strong>Que direito ele tem?</strong></p>
+  <p>O de <strong>solicitar a revisão de decisões tomadas unicamente com base em tratamento automatizado</strong> que afetem seus interesses — incluindo as destinadas a definir seu perfil pessoal, profissional, de consumo e <strong>de crédito</strong>. Crédito está literalmente escrito na lei: é <em>a</em> norma brasileira sobre decisão algorítmica, o dispositivo mais próximo do seu mundo em toda a LGPD.</p>
+  <p>E também o de obter <strong>informações claras e adequadas sobre os critérios e os procedimentos</strong> da decisão — observados os <strong>segredos comercial e industrial</strong>. Essa ressalva é a tensão central do artigo: o banco deve explicar sem entregar o modelo. Na prática, entregam-se os <em>fatores</em> que pesaram ("histórico de atraso", "comprometimento de renda", "tempo de relacionamento"), não os pesos nem o algoritmo — é <em>explicabilidade</em> em sentido jurídico, não de <em>machine learning</em>. E se o banco se recusar alegando segredo, a ANPD <strong>pode realizar auditoria</strong> para verificar aspectos discriminatórios: o segredo protege o modelo contra o <em>cliente</em>, não contra a <em>autoridade</em>.</p>
+  <div class="trap">🪤 A pegadinha mais fina de toda a LGPD: <strong>a lei NÃO garante revisão por pessoa natural</strong>. O texto originalmente dizia "revisão por pessoa natural" e essa expressão <strong>foi retirada</strong>. Hoje o titular tem direito à <em>revisão</em> — que pode ser feita por outro processo automatizado. Alternativa dizendo "o titular tem direito a que a decisão seja revista por um ser humano" está <strong>ERRADA</strong>. Guarde também: o direito é de <em>solicitar revisão</em>, não de reverter o resultado; e o gatilho é decisão tomada <strong>unicamente</strong> de forma automatizada — se houve análise humana no fluxo, o art. 20 não incide.</div>
+
+  <h2 id="sec-10-incidente-de-seguranca-o-fluxo-de-resposta">10. Incidente de segurança — o fluxo de resposta com camada jurídica</h2>
+  <p>Você já sabe: detectar, conter, erradicar, recuperar, aprender. O que a LGPD e a Res. 4.893 acrescentam é uma <strong>trilha paralela de comunicação obrigatória</strong>, com destinatários e prazos próprios — a mesma resposta a incidente, com dois <em>stakeholders</em> que não podem ser esquecidos no calor do fogo: <strong>a autoridade e a vítima</strong>.</p>
+
+  <h3>10.1 O gatilho</h3>
+  <p>A LGPD manda comunicar <strong>incidente de segurança que possa acarretar risco ou dano relevante aos titulares</strong>. Duas leituras obrigatórias:</p>
+  <ul>
+    <li><strong>Nem todo incidente é comunicável.</strong> Um laptop com <em>full disk encryption</em> perdido, sem indício de comprometimento da chave, tende a não gerar risco relevante. Uma base de CPF + conta + telefone exfiltrada, gera.</li>
+    <li><strong>O critério é o risco ao TITULAR, não o transtorno ao banco.</strong> Um <em>ransomware</em> que derruba o core por seis horas sem exfiltrar nada é um desastre operacional gigantesco e pode não ser comunicável à ANPD — mas é <em>certamente</em> comunicável ao Bacen, por interrupção de serviço relevante. E o inverso: um vazamento silencioso de 2 GB que não derruba nada é um não evento operacional e um evento gravíssimo de LGPD. <strong>Os dois reguladores enxergam eventos diferentes</strong> — entendeu isso, entendeu o bloco.</li>
   </ul>
 
-  <h3>Sanções da ANPD</h3>
-  <ul>
-    <li>Advertência → multa simples de até <strong>2% do faturamento</strong> do grupo no Brasil, limitada a <strong>R$ 50 milhões POR INFRAÇÃO</strong> → multa diária → publicização → bloqueio → eliminação dos dados.</li>
-    <li>Vazamento com risco relevante: comunicar <strong>à ANPD e ao titular</strong> em prazo razoável.</li>
-  </ul>
+  <h3>10.2 Quem comunica o quê, para quem</h3>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Quem comunica</th><th>Para quem</th><th>Quando</th><th>Fundamento</th></tr>
+    <tr><td>Controlador (o <strong>banco</strong>)</td><td><strong>ANPD</strong></td><td>incidente com risco ou dano relevante ao titular</td><td>LGPD</td></tr>
+    <tr><td>Controlador (o <strong>banco</strong>)</td><td><strong>o titular</strong> (o cliente)</td><td>mesmo gatilho</td><td>LGPD</td></tr>
+    <tr><td><strong>Operador</strong> (a cloud, a processadora)</td><td><strong>o controlador</strong> — <em>não</em> a ANPD</td><td>ao tomar conhecimento</td><td>LGPD + contrato</td></tr>
+    <tr><td>Instituição financeira</td><td><strong>Bacen</strong></td><td>incidentes relevantes e interrupções de serviços</td><td>Res. CMN 4.893</td></tr>
+  </table>
+  </div>
+  <p>A linha do <strong>operador</strong> é ouro de prova: <strong>quem comunica à ANPD e ao titular é o CONTROLADOR</strong>. O operador comunica ao controlador, que decide e comunica adiante — faz sentido, porque o operador nem sabe quem são os titulares nem qual a base legal. Quem tem a relação com o cliente é o banco.</p>
 
-  <h2>Resolução CMN 4.893/2021 — cibersegurança nas IFs</h2>
+  <h3>10.3 O prazo e o conteúdo</h3>
+  <p>O texto da lei diz <strong>"em prazo razoável, conforme definido pela autoridade"</strong> — é a resposta segura quando a questão cobra a letra da LGPD. A ANPD, exercendo essa competência, regulamentou a comunicação de incidentes em 2024 e fixou prazo em <strong>dias úteis</strong> contados do conhecimento (3 dias úteis, na regulamentação vigente). <span class="muted">Se a questão cobrar "o que diz a LGPD", responda <em>prazo razoável definido pela ANPD</em>; o número vem de resolução da ANPD, não do texto legal.</span></p>
+  <p>O <strong>conteúdo</strong> é cobrado e é próximo de um relatório de incidente que você já escreve: <strong>natureza dos dados</strong> afetados; informações sobre os <strong>titulares</strong> envolvidos; <strong>medidas técnicas e de segurança</strong> utilizadas para proteção (inclusive anonimização/cifragem — você é premiado por ter feito o dever de casa); os <strong>riscos</strong>; os <strong>motivos da demora</strong>, se não foi imediata; e as <strong>medidas adotadas</strong> para reverter ou mitigar. Verificada a gravidade, a ANPD pode determinar a <strong>ampla divulgação do fato</strong> na imprensa — sanção reputacional com efeito prático maior que a multa.</p>
+  <div class="tip">💡 Ponte que vale ponto: no fluxo NIST (preparação → detecção e análise → contenção, erradicação e recuperação → pós-incidente), a comunicação regulatória <strong>não</strong> é uma fase nova — mora dentro de "detecção e análise" e corre <em>em paralelo</em> à contenção. Por isso o <em>playbook</em> de banco tem, na primeira hora, "acionar o encarregado e o jurídico". O relógio do regulador começa no <strong>conhecimento</strong> do incidente, não na conclusão da investigação: quem espera "fechar o forense" para comunicar já perdeu o prazo — e aí tem duas infrações, a original e a demora.</div>
+  <div class="trap">🪤 (1) O <strong>operador não comunica à ANPD</strong> — comunica ao controlador. (2) Nem todo incidente é comunicável: o gatilho é <strong>risco ou dano relevante ao titular</strong>. (3) A LGPD fixa "<strong>prazo razoável</strong>"; números vêm de regulamento da ANPD. (4) Comunicar ao Bacen <strong>não</strong> desobriga de comunicar à ANPD, e vice-versa: <strong>dois reguladores, dois fundamentos, duas comunicações</strong>. (5) Vazar não é, por si só, infração — segurança é obrigação de meio; <strong>não comunicar</strong>, essa sim, é infração autônoma.</div>
+
+  <h2 id="sec-11-sancoes-e-responsabilidade">11. Sanções e responsabilidade</h2>
+  <p>A escala: advertência → multa simples de até <strong>2% do faturamento</strong> do grupo no Brasil, limitada a <strong>R$ 50 milhões POR INFRAÇÃO</strong> → multa diária → publicização → bloqueio → eliminação dos dados. Cada palavra da multa é cobrada:</p>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Elemento</th><th>Leitura correta</th></tr>
+    <tr><td><strong>até 2%</strong></td><td>teto percentual, não valor fixo. A ANPD dosa</td></tr>
+    <tr><td><strong>do faturamento</strong></td><td>da pessoa jurídica, <strong>grupo ou conglomerado</strong> no Brasil — <em>excluídos os tributos</em></td></tr>
+    <tr><td><strong>no Brasil</strong></td><td>não é o faturamento global. Diferença relevante em relação ao GDPR</td></tr>
+    <tr><td><strong>no último exercício</strong></td><td>o anterior ao da sanção</td></tr>
+    <tr><td><strong>limitada a R$ 50 milhões</strong></td><td>teto absoluto, que corta o percentual quando este seria maior</td></tr>
+    <tr><td><strong>por infração</strong></td><td>a expressão decisiva: o teto é <em>por infração</em> — não por processo, nem por ano, nem por empresa</td></tr>
+  </table>
+  </div>
+  <p>A lei prevê ainda <strong>suspensão parcial do funcionamento do banco de dados</strong>, <strong>suspensão da atividade de tratamento</strong> e <strong>proibição parcial ou total do exercício de atividades</strong> de tratamento — aplicáveis depois de já ter havido ao menos uma sanção anterior pelo mesmo caso. Pense no que "suspender a atividade de tratamento" significa para um banco: é o desligamento do negócio. É por isso que LGPD virou pauta de conselho, e não de TI.</p>
+  <p><strong>Como a ANPD dosa a pena:</strong> gravidade e natureza da infração; boa-fé; vantagem auferida; condição econômica; reincidência; grau do dano; <strong>cooperação</strong> do infrator; adoção <strong>reiterada e demonstrada</strong> de mecanismos internos de minimização do dano; <strong>política de boas práticas e governança</strong>; <strong>pronta adoção de medidas corretivas</strong>; e proporcionalidade. Leia com olhos de engenheiro: <strong>o programa de conformidade é, literalmente, um atenuante legal</strong> — governança documentada, cooperação e correção rápida <em>reduzem a multa por previsão expressa da lei</em>. É a tradução jurídica do que você já sabe: o que separa duas empresas que sofreram o mesmo ataque é a preparação e a resposta.</p>
+  <p class="muted">Fora da esfera administrativa ainda existem <strong>responsabilidade civil</strong> (dano patrimonial, moral, individual ou coletivo), atuação de <strong>Ministério Público</strong> e <strong>Procons</strong>, e o dano reputacional — a multa da ANPD é frequentemente o <em>menor</em> dos custos. Vazamento com risco relevante: comunicar <strong>à ANPD e ao titular</strong> em prazo razoável (bloco 10).</p>
+  <div class="trap">🪤 "Multa de 2% do faturamento <strong>global</strong>" → ERRADO, é <strong>no Brasil</strong>. "Até R$ 50 milhões por ano/por processo" → ERRADO, é <strong>por infração</strong>. "A ANPD aplica multa direto" → ERRADO: há processo administrativo, contraditório e gradação. "A LGPD prevê prisão" → ERRADO: as sanções da LGPD são <strong>administrativas</strong>.</div>
+
+  <h2 id="sec-12-resolucao-cmn-4-893-2021-ciberseguranca-na">12. Resolução CMN 4.893/2021 — cibersegurança nas IFs</h2>
+  <p>Muda o eixo: aqui não é ANPD nem dado pessoal, é <strong>Bacen</strong> — e a preocupação não é a privacidade do cliente, é a <strong>solidez e a continuidade do sistema financeiro</strong>. Por isso os dois normativos convivem sem se anular: <em>protegem coisas diferentes</em>.</p>
+  <p>A 4.893 é do <strong>CMN</strong>, de <strong>2021</strong>, e substituiu a antiga Res. 4.658/2018. Aplica-se às instituições autorizadas a funcionar pelo Bacen, com espírito de <strong>proporcionalidade</strong>: exigências compatíveis com <strong>porte, perfil de risco e modelo de negócio</strong> — a corretora pequena não cumpre o mesmo que o BB. Em resumo, ela exige:</p>
   <ul>
-    <li>Obriga as instituições a manter <strong>política de segurança cibernética</strong> formal, aprovada pelo conselho de administração, compatível com porte e perfil de risco.</li>
-    <li>Exige <strong>plano de ação e de resposta a incidentes</strong>, com cenários e testes.</li>
-    <li><strong>Incidentes relevantes</strong> e interrupções de serviços devem ser <strong>comunicados ao Bacen</strong>.</li>
-    <li><strong>Computação em nuvem é PERMITIDA</strong> — com requisitos: verificação da capacidade do provedor, previsão contratual de acesso do Bacen a dados e auditorias, e comunicação prévia ao Bacen para serviços relevantes no exterior.</li>
+    <li><strong>Política de segurança cibernética</strong> formal, aprovada pelo conselho de administração, compatível com porte e perfil de risco.</li>
+    <li><strong>Plano de ação e de resposta a incidentes</strong>, com cenários e testes.</li>
+    <li><strong>Incidentes relevantes</strong> e interrupções de serviços <strong>comunicados ao Bacen</strong>.</li>
+    <li><strong>Computação em nuvem PERMITIDA</strong>, com requisitos: verificação da capacidade do provedor, previsão contratual de acesso do Bacen a dados e auditorias, e comunicação prévia ao Bacen para serviços relevantes no exterior.</li>
     <li>Designação de <strong>diretor responsável</strong> pela política de segurança cibernética.</li>
-    <li>Relatório anual sobre a implementação do plano.</li>
-  </ul>
-  <div class="trap">🪤 "A resolução proíbe nuvem/exterior" = ERRADO. Ela CONDICIONA (governança + contrato + comunicação ao Bacen), não proíbe.</div>
-
-  <h2>A ponte com o Open Finance</h2>
-  <ul>
-    <li>O compartilhamento no Open Finance materializa a <strong>portabilidade</strong> da LGPD: o dado é do CLIENTE.</li>
-    <li>Exige <strong>consentimento</strong> específico: finalidade determinada, prazo limitado (renovável) e revogável a qualquer momento em qualquer participante.</li>
-    <li>Só participam instituições <strong>autorizadas pelo Bacen</strong>, com responsabilidade pela segurança da transmissão.</li>
+    <li><strong>Relatório anual</strong> sobre a implementação do plano.</li>
   </ul>
 
-  <h2>Quadro de fixação</h2>
+  <h3>12.1 A política de segurança cibernética</h3>
+  <p>Não é documento de TI: é documento <strong>de governança</strong>, e a exigência que carrega a norma é ser <strong>aprovada pelo conselho de administração</strong> (ou, na inexistência dele, pela diretoria). Traduzindo: a norma proíbe que segurança cibernética more só na TI — força o assunto a subir até o colegiado que responde pela instituição, porque quem aprova, responde.</p>
+  <p>Ela deve, entre outros pontos: declarar objetivos e diretrizes; prever procedimentos e controles para reduzir vulnerabilidade e lidar com incidentes; contemplar controles em serviços de <strong>terceiros</strong>; prever <strong>classificação de dados</strong> quanto à relevância; estabelecer <strong>disseminação da cultura</strong> de segurança (capacitação, treinamento, exercícios); e prever <strong>compartilhamento de informações sobre incidentes relevantes</strong> com as demais instituições. Deve ser <strong>divulgada a funcionários e prestadores</strong>, e a instituição deve <strong>publicar um resumo</strong> com as diretrizes.</p>
+  <p class="muted">O compartilhamento de incidentes entre instituições é uma escolha regulatória interessante: o Bacen tratou o setor como um <em>sistema</em>, não como concorrentes isolados. É a lógica de <em>threat intelligence</em> — o ataque que atinge um banco hoje atinge o outro amanhã.</p>
+
+  <h3>12.2 O plano de ação e de resposta a incidentes</h3>
+  <p>Seu terreno, com nome de norma. Deve prever as ações para <strong>adequar a estrutura organizacional e operacional</strong> aos princípios da política; as <strong>rotinas e procedimentos</strong> para lidar com o incidente; os <strong>cenários</strong> considerados nos testes; e a área responsável. Exige <strong>testes</strong> — plano não testado é ficção, e a norma sabe disso.</p>
+  <p>E fecha com prestação de contas: <strong>relatório anual</strong> sobre a efetividade da implementação, com <strong>data-base de 31 de dezembro</strong>, submetido ao conselho de administração (ou à diretoria) no início do ano seguinte e mantido à disposição do Bacen. Trata da efetividade, dos incidentes relevantes do período, dos resultados dos testes e da adequação da estrutura.</p>
+
+  <h3>12.3 O diretor responsável</h3>
+  <p>A instituição deve designar <strong>diretor responsável</strong> pela política de segurança cibernética e pela execução do plano de resposta. A norma admite que ele desempenhe outras funções, <strong>desde que não haja conflito de interesses</strong> — não pode ser quem responde pela área auditada, nem quem tem incentivo a esconder o incidente.</p>
+  <div class="trap">🪤 Não confunda os três, porque a banca coloca os três na mesma alternativa: <strong>encarregado/DPO</strong> (LGPD, canal com titulares e <strong>ANPD</strong>, identidade pública) × <strong>diretor responsável pela política de segurança cibernética</strong> (Res. 4.893, responde perante o <strong>Bacen</strong>) × <strong>CISO</strong> (cargo de mercado, não existe em norma nenhuma). Podem ser pessoas diferentes; a lei não manda unificar.</div>
+
+  <h3>12.4 Nuvem — o cenário que a prova adora</h3>
+  <p>O banco quer contratar nuvem pública para rodar parte do core. Primeiro, a resposta à pergunta implícita: <strong>pode</strong>. A norma <strong>não proíbe</strong> nuvem, nem nuvem no exterior — ela <strong>condiciona</strong>. Houve um tempo em que se acreditava que banco brasileiro não podia usar cloud pública; a regulação resolveu isso <em>criando requisitos</em>, não vedação, porque proibir empurraria o setor para infraestrutura pior. O regulador preferiu <strong>governar o risco</strong>:</p>
+  <ol>
+    <li><strong>Política de contratação de serviços relevantes</strong> — critérios formais antes de sair contratando.</li>
+    <li><strong>Verificação prévia da capacidade do prestador</strong> — <em>due diligence</em>: ele tem capacidade técnica e controles para cumprir a legislação e assegurar <strong>confidencialidade, integridade, disponibilidade e recuperação</strong> dos dados?</li>
+    <li><strong>Previsão contratual de acesso do Bacen</strong> — o contrato tem de garantir ao Bacen (e à instituição e aos auditores) <strong>acesso aos dados, às informações e à documentação</strong>, e a realização de <strong>auditorias</strong>. É o item que mais reprova provedor: se o contrato-padrão global não permite auditoria do supervisor brasileiro, ele não serve — daí as grandes clouds terem <em>addendum</em> específico para IFs brasileiras.</li>
+    <li><strong>Comunicação ao Bacen</strong> da contratação de serviços relevantes. Repare no verbo: é <strong>comunicação</strong>, não pedido de autorização — o Bacen não aprova, ele fica sabendo e pode determinar medidas depois.</li>
+    <li><strong>Continuidade e reversibilidade</strong> — migração/devolução dos dados em formato utilizável no encerramento. É o antídoto ao <em>lock-in</em> como risco sistêmico.</li>
+    <li><strong>Subcontratação</strong> dentro de regras: a cadeia inteira permanece visível.</li>
+    <li><strong>No exterior, camada extra</strong>: exige-se, entre outros pontos, <strong>convênio/acordo de troca de informações entre o Bacen e a autoridade supervisora do país</strong> onde os serviços serão prestados; definição prévia dos <strong>países e localidades</strong> em que os serviços poderão ser prestados e os dados armazenados; e garantia de que a prestação não cause <strong>prejuízo ao funcionamento regular</strong> da instituição nem <strong>embaraço à fiscalização</strong> do Bacen.</li>
+  </ol>
+  <p>Sobreposta a tudo, a camada da LGPD: a nuvem é <strong>operadora</strong>; precisa de <strong>contrato</strong> com instruções e obrigações de segurança; se os dados saem do país, é <strong>transferência internacional</strong>, com regime próprio na LGPD; e, se a nuvem vazar, <strong>quem comunica à ANPD e ao cliente é o banco</strong>. <strong>A nuvem não é o controlador, e o banco não pode apontar para ela</strong> — o banco escolheu, o banco responde.</p>
+  <div class="tip">💡 Enxergue a arquitetura e nunca mais erre o tema: a mesma contratação de nuvem é lida <strong>três vezes</strong>, por três lentes. <strong>Bacen/4.893</strong>: o serviço financeiro pode parar? posso fiscalizar? · <strong>LGPD/ANPD</strong>: o dado pessoal está protegido, com base legal e contrato de operador? · <strong>Contrato</strong>: quem paga o quê quando der errado.</div>
+  <div class="trap">🪤 "A resolução proíbe nuvem/exterior" = ERRADO. Ela CONDICIONA (governança + contrato + comunicação ao Bacen), não proíbe. É <strong>comunicação</strong>, não autorização prévia. E "o banco transferiu o tratamento para a nuvem, logo a responsabilidade é da nuvem" → <strong>ERRADO</strong>: o controlador continua sendo o banco, perante a ANPD e perante o cliente.</div>
+
+  <h2 id="sec-13-a-ponte-com-o-open-finance">13. A ponte com o Open Finance</h2>
+  <p>A tese antes dos detalhes: <strong>o Open Finance é a portabilidade da LGPD transformada em infraestrutura</strong>. A LGPD deu o direito — mas direito sem trilho não anda: não adianta ter direito à portabilidade se cada banco entrega os dados num PDF diferente. O Bacen construiu o trilho (padrão de API, diretório de participantes, certificados, jornada de consentimento padronizada): <strong>a LGPD declarou; o Open Finance implementou</strong>. Daí decorre que o compartilhamento materializa a <strong>portabilidade</strong> (o dado é do CLIENTE); que exige <strong>consentimento</strong> específico, com finalidade determinada, prazo limitado (renovável) e revogável a qualquer momento em qualquer participante; e que só participam instituições <strong>autorizadas pelo Bacen</strong>, responsáveis pela segurança da transmissão.</p>
+  <p><strong>Por que aqui o consentimento VOLTA a ser a base?</strong> Esta pergunta é a melhor prova de que você entendeu o bloco 7. O banco não é <em>obrigado</em> a compartilhar seus dados com um concorrente — não há obrigação legal. Não é necessário ao contrato: a conta funciona sem isso. Não é proteção do crédito. E não é legítimo interesse — entregar a base ao concorrente jamais passaria no teste de balanceamento do <em>banco</em>. Sobra <strong>consentimento</strong>, e desta vez ele é a base <em>certa</em>, porque o tratamento é genuinamente opcional, iniciado pelo cliente e no interesse exclusivo dele. <strong>Consentimento é adequado exatamente no caso em que o titular está no comando.</strong></p>
+  <p>E é o consentimento da LGPD <em>levado a sério</em>, com tudo o que a lei exige e quase ninguém cumpre: finalidade <strong>determinada</strong>, <strong>granular</strong> (dá para compartilhar cadastro sem compartilhar transação), <strong>prazo determinado</strong> — a regulamentação fixa um teto, hoje 12 meses, renovável — e <strong>revogável a qualquer momento, em qualquer ponta</strong>. Compare com o pop-up de cookie que você aceita no automático e veja a diferença entre consentimento de verdade e teatro de consentimento.</p>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Conceito da LGPD</th><th>Como aparece no Open Finance</th></tr>
+    <tr><td>Portabilidade (art. 18)</td><td>o compartilhamento em si — via API padronizada</td></tr>
+    <tr><td>Consentimento livre, informado, para finalidade determinada</td><td>a jornada de consentimento padronizada, granular e com prazo</td></tr>
+    <tr><td>Revogação gratuita e facilitada</td><td>botão de revogar em qualquer participante</td></tr>
+    <tr><td>Necessidade / minimização</td><td>escopo granular: só as categorias marcadas</td></tr>
+    <tr><td>Transparência</td><td>tela que mostra quais dados, para quem, por quanto tempo</td></tr>
+    <tr><td>Segurança</td><td>participantes autorizados pelo Bacen, certificados, diretório</td></tr>
+    <tr><td>Controlador × operador</td><td>ambas as instituições são <strong>controladoras</strong> — cada uma responde pelo seu tratamento</td></tr>
+  </table>
+  </div>
+  <div class="trap">🪤 Open Finance é <strong>voluntário para o cliente</strong> (e obrigatório para as maiores instituições participarem). O consentimento é <strong>revogável a qualquer momento</strong> e tem <strong>prazo</strong> — não é "para sempre". E o compartilhamento é <strong>iniciado pelo cliente</strong>, jamais venda de base entre bancos: a instituição receptora <strong>não</strong> é operadora da transmissora — as duas são controladoras.</div>
+
+  <h2 id="sec-14-quadro-de-fixacao">14. Quadro de fixação</h2>
   <div class="table-scroll">
   <table>
     <tr><th>Pergunta da banca</th><th>Resposta</th></tr>
@@ -92,6 +428,24 @@
     <tr><td>Res. 4.893 proíbe nuvem?</td><td>Não — regula a contratação e exige comunicação ao Bacen</td></tr>
     <tr><td>Incidente cibernético relevante?</td><td>Comunicar ao Bacen (e, se vazamento com risco, ANPD + titular)</td></tr>
     <tr><td>Dado anonimizado?</td><td>Fora da LGPD, enquanto irreversível</td></tr>
+    <tr><td>Dado pseudonimizado?</td><td><strong>Dentro</strong> da LGPD — é dado pessoal (a chave existe)</td></tr>
+    <tr><td>Dado financeiro (saldo, score) é sensível?</td><td>Não — é dado pessoal comum</td></tr>
+    <tr><td>Legítimo interesse vale para dado sensível?</td><td>Não</td></tr>
+    <tr><td>Quem faz o teste de balanceamento?</td><td>O controlador — documenta; a ANPD pode exigir depois</td></tr>
+    <tr><td>Revogado o consentimento, apaga tudo?</td><td>Não — só o que se apoiava naquele consentimento; e sem efeito retroativo</td></tr>
+    <tr><td>Banco pode recusar exclusão?</td><td>Sim — obrigação legal, contrato, proteção ao crédito, defesa em juízo. Mas deve justificar</td></tr>
+    <tr><td>Decisão automatizada: revisão por humano?</td><td><strong>Não é garantida</strong> — "por pessoa natural" foi retirado. Há direito à revisão e a informação sobre critérios</td></tr>
+    <tr><td>Prazo do acesso aos dados?</td><td>Simplificado <strong>imediatamente</strong>; declaração completa em até <strong>15 dias</strong></td></tr>
+    <tr><td>Prazo de comunicação de incidente?</td><td>LGPD: "prazo razoável, conforme definido pela ANPD"</td></tr>
+    <tr><td>Operador comunica incidente a quem?</td><td>Ao <strong>controlador</strong> — nunca direto à ANPD</td></tr>
+    <tr><td>Vazou: é infração automática?</td><td>Não — segurança é obrigação de <strong>meio</strong>. Mas <strong>não comunicar</strong> é infração</td></tr>
+    <tr><td>Encarregado = diretor da Res. 4.893?</td><td>Não — papéis distintos: ANPD × Bacen. E a identidade do encarregado é pública</td></tr>
+    <tr><td>Operador responde?</td><td>Solidariamente, se descumprir a LGPD ou não seguir instrução lícita do controlador</td></tr>
+    <tr><td>Nuvem: autorização ou comunicação ao Bacen?</td><td><strong>Comunicação</strong> — e contrato com acesso do Bacen a dados e auditorias</td></tr>
+    <tr><td>Quem aprova a política de segurança cibernética?</td><td>O <strong>conselho de administração</strong> (ou a diretoria, se não houver conselho)</td></tr>
+    <tr><td>Open Finance: qual a base legal?</td><td><strong>Consentimento</strong> — específico, granular, com prazo, revogável em qualquer participante</td></tr>
+    <tr><td>LGPD vale para papel?</td><td>Sim — meio físico e digital</td></tr>
+    <tr><td>LGPD prevê prisão?</td><td>Não — as sanções da LGPD são administrativas</td></tr>
   </table>
   </div>
 

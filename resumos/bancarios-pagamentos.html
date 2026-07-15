@@ -12,18 +12,199 @@
   <h1>⚡ Pagamentos, Inovação e Atualidades</h1>
   <p class="sub">A parte mais "nova" da prova — e a mais provável de crescer no próximo edital. Aqui é onde seu perfil de TI vira vantagem: você entende a infraestrutura, só precisa da terminologia regulatória.</p>
 
-  <h2>1. Pix</h2>
+  <div class="card" id="sumario">
+    <h2 id="sec-sumario" style="margin-top:0">📑 Sumário</h2>
+    <ol style="columns:2;column-gap:28px">
+      <li><a href="#sec-1-o-problema-e-o-vocabulario-minimo">1. O problema — e o vocabulário mínimo</a></li>
+      <li><a href="#sec-2-pix">2. Pix</a></li>
+      <li><a href="#sec-3-open-finance">3. Open Finance</a></li>
+      <li><a href="#sec-4-drex-real-digital">4. Drex (Real Digital)</a></li>
+      <li><a href="#sec-5-instituicoes-de-pagamento-e-fintechs">5. Instituições de pagamento e fintechs</a></li>
+      <li><a href="#sec-6-sistemas-de-pagamentos-e-liquidacao">6. Sistemas de pagamentos e liquidação</a></li>
+      <li><a href="#sec-7-atualidades-o-que-esta-no-radar">7. Atualidades — o que está no radar</a></li>
+    </ol>
+    <p class="muted" style="margin-top:8px">Apostila longa de propósito — use o sumário para ir direto ao ponto. Cada 🪤 é uma pegadinha de banca; cada 💡 é um atalho de prova.</p>
+  </div>
+
+
+  <div class="card">
+    <p><strong>Como ler.</strong> Esta apostila não começa pelo Pix, e sim pelo <em>problema</em> que o Pix resolve — regra decorada evapora; regra entendida fica. A ordem é: <strong>vocabulário e problema</strong> → <strong>Pix</strong> (o dinheiro) → <strong>Open Finance</strong> (os dados) → <strong>Drex</strong> (a liquidação de ativos) → <strong>quem são os jogadores</strong> → <strong>onde o dinheiro se move</strong> → <strong>atualidades</strong>.</p>
+    <p class="muted">Você vai reconhecer muita coisa: DNS, OAuth, transação atômica, 2PC. As pontes estão marcadas com 💡 — mas cuidado: a analogia serve para <em>entender</em>; na prova, a palavra é a do regulador.</p>
+  </div>
+
+  <h2 id="sec-1-o-problema-e-o-vocabulario-minimo">1. O problema — e o vocabulário mínimo</h2>
+
+  <h3>1.1 O que é, fisicamente, o seu dinheiro</h3>
+  <div class="card">
+    <p>Quase todo o dinheiro do país <strong>não é papel</strong>: é um número numa linha de tabela, no banco de dados de alguma instituição. A prova dá nomes a esses números:</p>
+    <ul>
+      <li><strong>Moeda manual:</strong> cédulas e moedas emitidas pelo Bacen. Tem <strong>curso legal e forçado</strong> — o credor é obrigado a aceitar em pagamento de dívida em reais.</li>
+      <li><strong>Moeda escritural (bancária):</strong> o saldo do seu <strong>depósito à vista</strong>. Juridicamente é um <em>crédito seu contra o banco</em> — ele te deve. É criada pelos bancos comerciais quando emprestam (multiplicador bancário) e é a maior parte dos meios de pagamento.</li>
+      <li><strong>Moeda eletrônica:</strong> definida na <strong>Lei 12.865/2013</strong> — recursos em reais armazenados em meio eletrônico que permitem pagar. É o saldo da <strong>conta de pagamento pré-paga</strong> numa instituição de pagamento. <strong>Não é depósito à vista</strong> e a instituição <strong>não pode emprestá-la</strong>.</li>
+      <li><strong>CBDC:</strong> o real emitido pelo <strong>Bacen</strong> em forma digital, em registro distribuído — o <strong>Drex</strong>. É moeda soberana; os dois anteriores ou são papel ou são passivo de um privado.</li>
+    </ul>
+    <div class="tip">💡 Pense em <strong>quem deve</strong>. Moeda manual e CBDC: passivo do <strong>Banco Central</strong> (não quebra). Moeda escritural: passivo de um <strong>banco comercial</strong> — se ele quebra, você é credor na massa falida (daí o FGC). Moeda eletrônica: passivo de uma <strong>IP</strong>, mas com recursos <em>segregados</em> (seção 5). Esse "quem deve" é a raiz de metade das pegadinhas do tema.</div>
+  </div>
+
+  <h3>1.2 Pagar não é mover dinheiro — é trocar mensagem e depois acertar contas</h3>
+  <div class="card">
+    <p>Quando você paga alguém, <strong>nada se move</strong>. O que acontece é: (1) alguém <strong>manda uma mensagem</strong> ("debite 100 de A, credite 100 em B"); (2) alguém <strong>valida</strong> (A existe? tem saldo? é mesmo A?); (3) alguém <strong>escreve o resultado</strong> num livro que todos aceitam como verdade — isso é <strong>liquidar</strong>.</p>
+    <p>Se A e B são do <em>mesmo</em> banco, o passo 3 é trivial: muda dois números na própria tabela (transferência <strong>intrabancária</strong>, <em>on-us</em>). O problema é quando A é do Banco X e B é do Banco Y: X debita A, mas quem credita B é Y — <strong>e Y não credita de graça</strong>. X precisa entregar dinheiro de verdade a Y.</p>
+    <p>E o dinheiro "de verdade" entre bancos não é papel: é o saldo que cada um mantém <strong>numa conta dentro do Banco Central</strong> — a <strong>Conta Reservas Bancárias</strong> (bancos comerciais/múltiplos com carteira comercial) ou a <strong>Conta de Liquidação</strong> (demais autorizadas). É o livro que todos aceitam, porque quem escreve nele é a autoridade monetária.</p>
+    <div class="tip">💡 É o padrão de sistemas distribuídos: cada banco tem seu banco de dados local (a conta do cliente) e existe uma <strong>fonte única de verdade</strong> compartilhada (a conta no Bacen) onde os acertos entre nós são gravados. O Bacen é o <em>coordenador de transação</em>. Todo o resto desta apostila é sobre <em>como</em> e <em>quando</em> esse commit acontece.</div>
+  </div>
+
+  <h3>1.3 Liquidação bruta × líquida — a distinção mais cobrada da matéria</h3>
+  <div class="card">
+    <p><strong>Liquidar</strong> é extinguir a obrigação: o dinheiro saiu de um e entrou no outro, de forma <strong>final e irrevogável</strong>. Há dois jeitos:</p>
+    <p><strong>Liquidação bruta (LBTR — Liquidação Bruta em Tempo Real):</strong> cada ordem é liquidada <strong>uma a uma, no momento em que chega</strong>. Chegou, confere saldo, debita, credita — é final. Sem saldo, rejeita; não existe "confia que depois acerta".</p>
+    <ul>
+      <li><span class="pill">vantagem</span> elimina o <strong>risco de crédito</strong> entre participantes: não há janela em que Y "está devendo" a X.</li>
+      <li><span class="pill">custo</span> exige <strong>muita liquidez parada</strong> na conta do Bacen, o tempo todo.</li>
+    </ul>
+    <p><strong>Liquidação líquida diferida (LDL):</strong> o sistema <strong>acumula</strong> ordens numa janela, faz a <strong>compensação</strong> (<em>netting</em>) e liquida <strong>um único saldo</strong> por participante.</p>
+    <ul>
+      <li><span class="pill">vantagem</span> economiza liquidez: se X deve 100 mi a Y e Y deve 98 mi a X, movimenta-se <strong>2 mi</strong>.</li>
+      <li><span class="pill">custo</span> cria <strong>risco de liquidação</strong>: durante a janela as obrigações existem e não estão pagas. Se um participante quebra antes do fechamento, os outros ficam a ver navios — <em>risco sistêmico</em>, efeito dominó.</li>
+    </ul>
+    <p><strong>Compensação (<em>clearing</em>)</strong> é apurar quem deve quanto a quem, líquido. <strong>Compensar não é liquidar:</strong> a compensação <em>calcula</em>, a liquidação <em>paga</em>. A câmara apura; o sistema de liquidação executa.</p>
+    <div class="trap">🪤 "O STR faz a compensação das TEDs" — <strong>errado</strong>: o STR não compensa nada, liquida <strong>bruto, uma a uma</strong>. Quem compensa são as câmaras (CIP, Compe). E o inverso: "a liquidação líquida é mais segura porque agrupa" — é o contrário: mais <em>eficiente em liquidez</em>, mais <em>arriscada</em> em contraparte.</div>
+  </div>
+
+  <h3>1.4 Arranjo de pagamento, instituidor, participantes</h3>
+  <div class="card">
+    <p>Quem define o formato da mensagem, o prazo do acerto, quem entra, quanto se cobra e o que fazer quando dá errado? Alguém escreve esse <em>rulebook</em>. A <strong>Lei 12.865/2013</strong> deu nome a isso:</p>
+    <ul>
+      <li><strong>Arranjo de pagamento:</strong> o <strong>conjunto de regras e procedimentos</strong> que disciplina a prestação de um serviço de pagamento ao público, aceito por mais de um recebedor. <strong>Arranjo é regra — não é empresa nem software.</strong></li>
+      <li><strong>Instituidor:</strong> a pessoa jurídica que <strong>define as regras</strong> e responde pelo arranjo. Visa, Mastercard e Elo instituem os arranjos de cartão. <strong>No Pix, o instituidor é o Banco Central.</strong></li>
+      <li><strong>Participantes:</strong> as instituições que <strong>operam</strong> dentro daquelas regras.</li>
+      <li><strong>Usuário final:</strong> <em>pagador</em> e <em>recebedor</em>.</li>
+    </ul>
+    <div class="table-scroll">
+    <table>
+      <tr><th>Papel (arranjo de cartão)</th><th>O que faz</th><th>Exemplo</th></tr>
+      <tr><td><strong>Instituidor</strong></td><td>define as regras da bandeira, o padrão da mensagem, a marca</td><td>Visa, Mastercard, Elo</td></tr>
+      <tr><td><strong>Emissor</strong></td><td>dá o cartão ao portador, gerencia o limite, assume o risco de crédito</td><td>o banco do cliente</td></tr>
+      <tr><td><strong>Credenciadora</strong></td><td>habilita o lojista a aceitar, captura a transação e o paga</td><td>Cielo, Rede, Stone</td></tr>
+      <tr><td><strong>Subcredenciadora</strong></td><td>entra entre credenciadora e lojista (facilitador)</td><td>marketplaces, gateways</td></tr>
+    </table>
+    </div>
+    <p>Nem todo arranjo é regulado: o Bacen pode <strong>dispensar</strong> de autorização os de <strong>pequeno volume</strong> (vale de âmbito restrito, cartão de loja). O critério é a <strong>relevância sistêmica</strong>, não o tamanho da empresa.</p>
+    <div class="trap">🪤 <strong>Arranjo ≠ instituição.</strong> "Pix é uma instituição de pagamento" — errado, é <em>arranjo</em>. "O Nubank é um arranjo" — errado, é <em>participante</em>. Quem regula arranjos e IPs é o <strong>Bacen</strong>, sob diretrizes do <strong>CMN</strong>. Decore: <strong>Lei 12.865/2013</strong> = arranjos + IPs + moeda eletrônica.</div>
+  </div>
+
+  <h3>1.5 Como era antes do Pix</h3>
+  <div class="card">
+    <p>Em 2019, para mandar dinheiro a alguém no Brasil, você tinha:</p>
+    <div class="table-scroll">
+    <table>
+      <tr><th>Instrumento</th><th>Quando liquidava</th><th>Custo</th><th>Atrito</th></tr>
+      <tr><td><strong>TED</strong></td><td>mesmo dia, em minutos — mas só em <strong>horário bancário</strong>, dia útil</td><td>tarifada, cara</td><td>exigia banco, agência, conta, dígito, tipo, CPF do favorecido</td></tr>
+      <tr><td><strong>DOC</strong></td><td><strong>D+1</strong></td><td>tarifada, valor limitado</td><td>mesmo atrito, com atraso; <strong>hoje descontinuado</strong></td></tr>
+      <tr><td><strong>Boleto</strong></td><td>compensação em <strong>D+1 ou mais</strong></td><td>tarifa por emissão</td><td>registro, conciliação manual, papel</td></tr>
+      <tr><td><strong>Cheque</strong></td><td>dias, com risco de devolução</td><td>talão + tarifa</td><td>papel, fraude, risco de crédito</td></tr>
+      <tr><td><strong>Cartão</strong></td><td>lojista recebe em <strong>D+1</strong> (débito) ou <strong>D+30</strong> (crédito)</td><td><strong>MDR</strong>: % de cada venda</td><td>maquininha, aluguel, antecipação com deságio</td></tr>
+      <tr><td><strong>Espécie</strong></td><td>instantâneo</td><td>"grátis" — custa logística, sangria, segurança</td><td>troco, roubo, informalidade</td></tr>
+    </table>
+    </div>
+    <p>Somando: <strong>caro, lento, restrito a horário comercial e dependente de você conhecer os dados bancários do outro</strong>. Pior: os incentivos empurravam todos para o cartão, cujo MDR o lojista embutia no preço — <em>quem pagava em dinheiro subsidiava quem pagava no crédito</em>.</p>
+    <p>E havia um problema estrutural: <strong>o mercado sozinho não constrói esse trilho</strong>. Pagamento tem <em>efeito de rede</em> — só vale se todos estiverem nele. Cada banco grande tinha incentivo para construir a <em>sua</em> solução fechada; ninguém tinha incentivo para construir o trilho <strong>aberto, universal e barato</strong>, porque isso destrói a própria receita.</p>
+    <div class="tip">💡 É o problema do <strong>protocolo comum</strong>: cada banco tinha sua "intranet de pagamento", e ninguém ia construir o TCP/IP porque não se monetiza um protocolo. Quando o mercado não converge, quem publica o padrão aberto costuma ser quem não tem interesse comercial nele — aqui, o <strong>Bacen</strong>, cujo mandato inclui a eficiência do sistema de pagamentos. Por isso ele não só escreveu a regra (instituidor) como <em>rodou o servidor</em> (operador do SPI). Isso é raríssimo no mundo.</div>
+    <p><strong>Objetivos declarados do Pix</strong> (caem literalmente): reduzir <strong>custo</strong>, aumentar <strong>velocidade</strong> (24/7, segundos), promover <strong>competição</strong>, ampliar a <strong>inclusão financeira</strong>, <strong>digitalizar</strong> (reduzir espécie) e melhorar a <strong>experiência</strong>. Palavra-chave: o Pix é pilar da <strong>Agenda BC#</strong>.</p>
+  </div>
+
+  <h2 id="sec-2-pix">2. Pix</h2>
   <div class="card">
     <p><strong>O que é:</strong> arranjo de pagamentos instantâneos <strong>criado, gerido e operado pelo Banco Central</strong>. Liquidação em segundos, <strong>24/7</strong>, inclusive fins de semana e feriados.</p>
     <p><strong>Infraestrutura:</strong> liquidado no <strong>SPI</strong> (Sistema de Pagamentos Instantâneos), com contas <strong>PI</strong> no Bacen; o <strong>DICT</strong> é o diretório que associa a chave à conta.</p>
   </div>
-  <ul>
-    <li><strong>Chaves:</strong> CPF/CNPJ, e-mail, celular, chave aleatória (EVP). Limite: 5 chaves por conta PF, 20 por conta PJ.</li>
-    <li><strong>Gratuito para PF</strong> (em regra, exceto uso comercial); <strong>PJ pode ser tarifada</strong>.</li>
-    <li><strong>Obrigatório</strong> para instituições com mais de 500 mil contas de clientes.</li>
-  </ul>
 
-  <h3>Modalidades e mecanismos</h3>
+  <h3>2.1 As três camadas — arranjo, sistema e diretório</h3>
+  <div class="card">
+    <p>"Pix" na boca do povo é uma coisa só. Para o regulador são <strong>três camadas</strong>, todas do Bacen — mas <strong>distintas</strong>:</p>
+    <div class="table-scroll">
+    <table>
+      <tr><th>Camada</th><th>Nome</th><th>O que é</th><th>Analogia</th></tr>
+      <tr><td><strong>Regra</strong></td><td><strong>Pix</strong> (o arranjo)</td><td>o rulebook: quem participa, prazos, limites, tarifas, o que fazer em fraude</td><td>a <strong>especificação</strong> / RFC</td></tr>
+      <tr><td><strong>Liquidação</strong></td><td><strong>SPI</strong></td><td>debita e credita as <strong>contas PI</strong> no Bacen, 24/7</td><td>o <strong>ledger</strong> que faz o commit</td></tr>
+      <tr><td><strong>Endereçamento</strong></td><td><strong>DICT</strong></td><td>traduz <em>chave</em> → <em>dados da conta</em>. <strong>Não move dinheiro</strong></td><td>o <strong>DNS</strong></td></tr>
+    </table>
+    </div>
+    <p class="muted">Se a questão disser "o DICT liquida" ou "o SPI armazena as chaves", está errada.</p>
+  </div>
+
+  <h3>2.2 O DICT — um DNS para contas bancárias</h3>
+  <div class="card">
+    <p><strong>DICT = Diretório de Identificadores de Contas Transacionais.</strong> Resolveu o atrito de UX: você não precisa mais de banco + agência + conta + dígito + tipo + CPF. Você sabe um <strong>apelido</strong> (a <strong>chave</strong>) e o sistema resolve o resto. Os tipos são <strong>fechados</strong>:</p>
+    <div class="table-scroll">
+    <table>
+      <tr><th>Chave</th><th>Característica</th><th>Observação</th></tr>
+      <tr><td><strong>CPF / CNPJ</strong></td><td>vinculada ao titular</td><td>única por pessoa — não dá para tê-la em dois bancos ao mesmo tempo</td></tr>
+      <tr><td><strong>Celular</strong></td><td>validada por código</td><td>o número é do titular</td></tr>
+      <tr><td><strong>E-mail</strong></td><td>validado por link/código</td><td>idem</td></tr>
+      <tr><td><strong>Aleatória (EVP)</strong></td><td>UUID gerado pelo sistema</td><td>a mais privada: não revela nada e pode ser descartada</td></tr>
+    </table>
+    </div>
+    <ul>
+      <li><strong>Chaves:</strong> CPF/CNPJ, e-mail, celular, chave aleatória (EVP). Limite: 5 chaves por conta PF, 20 por conta PJ.</li>
+      <li>Uma chave aponta para <strong>uma única conta</strong>; uma conta pode ter <strong>várias chaves</strong>.</li>
+      <li>A chave é <strong>portável</strong>: muda de banco, leva a chave — sem isso, ela viraria <em>lock-in</em>, o oposto do objetivo pró-competição.</li>
+      <li>Chave <strong>não é obrigatória</strong>: dá para pagar por <strong>dados da conta</strong>, por <strong>QR Code</strong> ou <strong>Copia e Cola</strong>. É conveniência, não requisito.</li>
+    </ul>
+    <div class="tip">💡 <strong>Ponte com precisão.</strong> O DICT é um <em>serviço de resolução</em>: recebe a chave, devolve o registro (ISPB do participante, agência, conta, tipo, nome e CPF/CNPJ mascarado). Igual ao DNS resolvendo <code>host</code> → <code>IP</code>: <strong>lookup antes da conexão</strong>, <strong>autoritativo</strong>, <strong>portável</strong>. As <em>diferenças</em> também caem: o DICT é <strong>centralizado e único</strong> (não hierárquico), <strong>fechado</strong> (só participantes autorizados consultam, com autenticação mútua) e tem <strong>limitação de consultas</strong> — alguém enumerando o DICT montaria uma base de CPF+nome+banco de meio país. Aqui, <em>rate limiting é regra prudencial</em>, não detalhe de engenharia.</div>
+    <p>O DICT também guarda a <strong>marcação antifraude</strong>: chaves/contas com histórico de notificações ficam marcadas, e o PSP do pagador vê isso <em>antes</em> de concluir o pagamento — é o alerta "esta chave tem notificações de fraude" na tela.</p>
+  </div>
+
+  <h3>2.3 As contas PI — onde o dinheiro do Pix realmente está</h3>
+  <div class="card">
+    <p>O Pix precisava rodar <strong>24/7</strong>, mas a Conta Reservas e o STR operam em <strong>horário de funcionamento</strong>. Não dá para manter o núcleo do SPB aberto de madrugada no Natal. A solução foi a <strong>Conta PI (Pagamentos Instantâneos)</strong>, mantida no Bacen por cada participante direto:</p>
+    <ul>
+      <li><strong>Exclusiva</strong> para liquidar Pix — não se mistura com a tesouraria.</li>
+      <li><strong>Pré-fundeada</strong>: precisa <strong>ter saldo antes</strong>. O SPI <strong>não concede crédito intradia</strong>, não tem fila por liquidez. Sem saldo, rejeita na hora.</li>
+      <li><strong>Reabastecida</strong> a partir da conta Reservas/Liquidação <strong>durante o horário do STR</strong> — ou seja, o participante precisa <em>prever</em>, antes de o STR fechar, quanto sairá de Pix na madrugada e no fim de semana. Gestão de liquidez virou disciplina nova por causa disso.</li>
+      <li>O saldo <strong>não é remunerado</strong> como aplicação: é caixa parado — o custo da conveniência do 24/7.</li>
+    </ul>
+    <div class="tip">💡 A conta PI é um <em>saldo pré-alocado</em>. A regra "sem saldo, rejeita" é o que garante que <strong>toda liquidação no SPI é bruta, final e irrevogável</strong>: não existe estado "pendente" que possa ser desfeito. É <em>design</em> deliberado — trocou-se eficiência de liquidez por <strong>eliminação do risco de crédito</strong> num sistema que roda quando o mercado está dormindo. Se houvesse netting no Pix, uma quebra às 3h de domingo contaminaria todo mundo até segunda.</div>
+    <div class="trap">🪤 "O Pix usa liquidação líquida porque agrupa milhões de transações" — <strong>errado</strong>: o SPI é <strong>LBTR</strong>, igual ao STR. A diferença SPI × STR <em>não</em> é bruta × líquida; é <strong>24/7 + conta PI + varejo em alto volume</strong> contra <strong>horário de funcionamento + Reservas + grandes valores</strong>.</div>
+  </div>
+
+  <h3>2.4 Quem participa e quem é obrigado</h3>
+  <div class="card">
+    <p><strong>PSP = Prestador de Serviço de Pagamento</strong>: quem oferece o Pix ao usuário final (banco, cooperativa, IP). No SPI:</p>
+    <ul>
+      <li><strong>Participante direto:</strong> tem conta PI própria e liquida diretamente.</li>
+      <li><strong>Participante indireto:</strong> não tem conta PI; contrata um direto (o <em>liquidante</em>). É a porta de entrada das menores — barateia o acesso, é peça da estratégia pró-competição.</li>
+      <li><strong>PSTI (Provedor de Serviço de TI):</strong> conecta e opera a infraestrutura para os PSPs. <strong>Não é participante do arranjo</strong> — é fornecedor, não toca no dinheiro.</li>
+    </ul>
+    <ul>
+      <li><strong>Gratuito para PF</strong> (em regra, exceto uso comercial); <strong>PJ pode ser tarifada</strong>.</li>
+      <li><strong>Obrigatório</strong> para instituições com mais de 500 mil contas de clientes.</li>
+    </ul>
+    <p>Destrinchando essas duas linhas, que são das mais cobradas:</p>
+    <ul>
+      <li>A <strong>gratuidade para PF</strong> é <em>regra do arranjo</em>, não liberalidade do banco: o PSP <strong>não pode</strong> tarifar envio e recebimento por PF em conta de PF, salvo <strong>finalidade comercial</strong> (a PF que usa a conta como maquininha) e situações previstas na regulamentação. <strong>PJ</strong> pode ser tarifada livremente — e como o custo do Pix para o lojista é ordens de grandeza menor que o MDR, o preço do serviço despencou.</li>
+      <li>A <strong>obrigatoriedade</strong> atinge instituições autorizadas com mais de <strong>500 mil contas de clientes ativas</strong>. A lógica: obriga-se quem tem <em>massa crítica</em>, porque efeito de rede só funciona com os grandes dentro no dia 1. Os menores entram por <strong>adesão facultativa</strong> — e entraram, porque ficar fora virou desvantagem imediata.</li>
+    </ul>
+    <div class="trap">🪤 (1) "obrigatório para todas as instituições financeiras" — <strong>não</strong>: o corte é <strong>500 mil contas</strong>, e o Pix não é privativo de instituição financeira (IP participa). (2) "gratuito para todos" — <strong>não</strong>: para <strong>PF, em regra</strong>; PJ e PF com uso comercial podem pagar.</div>
+  </div>
+
+  <h3>2.5 O caminho do dinheiro, passo a passo</h3>
+  <div class="card">
+    <p>Cenário: <strong>Guilherme (Banco X)</strong> paga <strong>R$ 50 à Ana (Banco Y)</strong>, às 23h47 de um domingo, pela chave <code>ana@email.com</code>.</p>
+    <p><span class="pill">1</span> <strong>Autenticação local.</strong> Guilherme se autentica no app do Banco X (o <strong>PSP do pagador</strong>). Nada saiu do celular.</p>
+    <p><span class="pill">2</span> <strong>Resolução da chave.</strong> O Banco X consulta o <strong>DICT</strong>, que devolve: <strong>ISPB do Banco Y</strong>, agência, conta, tipo, nome do titular e CPF mascarado. O app <strong>obrigatoriamente</strong> exibe isso — é aqui que o pagador confirma para quem está pagando, e é aqui que aparece o alerta se a chave estiver <strong>marcada por fraude</strong>. Até agora o DICT só respondeu uma pergunta; ele não sabe o valor e não participará da liquidação.</p>
+    <p><span class="pill">3</span> <strong>Validação e débito no PSP do pagador.</strong> O Banco X confere saldo/limite, aplica o <strong>limite noturno</strong> e o <strong>antifraude</strong> próprio (dispositivo, comportamento, valor atípico). Passando, <strong>debita/bloqueia</strong> os R$ 50 — <em>moeda escritural</em> saindo.</p>
+    <p><span class="pill">4</span> <strong>Mensagem ao SPI.</strong> O Banco X monta a ordem no padrão <strong>ISO 20022</strong> e a envia pela <strong>RSFN</strong> (Rede do Sistema Financeiro Nacional — rede fechada e segura, não é internet pública), assinada e cifrada.</p>
+    <p><span class="pill">5</span> <strong>Liquidação no SPI — o commit.</strong> O SPI confere o saldo da <strong>conta PI do Banco X</strong>; havendo, <strong>debita R$ 50 dela e credita a conta PI do Banco Y</strong>, individualmente, na hora. <strong>Aqui houve a liquidação</strong> — bruta, em tempo real, <strong>final e irrevogável</strong>. Sem saldo na PI, a ordem seria <strong>rejeitada</strong> e o Banco X estornaria Guilherme.</p>
+    <p><span class="pill">6</span> <strong>Notificação.</strong> O SPI informa o Banco Y.</p>
+    <p><span class="pill">7</span> <strong>Crédito.</strong> O Banco Y <strong>credita Ana de imediato</strong> — obrigatoriamente. Ele já recebeu na conta PI dele; segurar o crédito descumpriria a regra do arranjo.</p>
+    <p><span class="pill">8</span> <strong>Confirmação.</strong> Comprovante para Guilherme, push para Ana. Total: <strong>segundos</strong>.</p>
+    <div class="tip">💡 <strong>A melhor ponte do capítulo.</strong> São <strong>duas transações locais</strong> (débito no X, crédito no Y) e <strong>uma liquidação central</strong> no SPI, que é a fonte da verdade — um <em>commit em duas fases</em> com o SPI como coordenador. O passo 5 é o <strong>ponto de não retorno</strong>: antes dele dá para rejeitar; depois, <strong>não existe rollback</strong> — só existe <em>nova transação em sentido contrário</em> (a devolução). Guarde essa frase: é ela que explica por que o MED (2.7) precisou ser inventado. Num sistema irrevogável por design, a resposta à fraude não pode ser "cancela"; tem que ser um mecanismo separado de devolução.</div>
+    <p><strong>E se fossem do mesmo banco?</strong> Pix <strong>intrabancário</strong>: o banco debita um e credita o outro na própria base e <strong>não passa pelo SPI</strong> — não há o que liquidar entre instituições. O DICT ainda pode ser consultado. Para o usuário é idêntico; para a infraestrutura, é outro caminho.</p>
+    <div class="trap">🪤 "O Pix passa pelo STR" — <strong>não</strong>: liquida no <strong>SPI</strong>, em contas <strong>PI</strong>. O STR entra só <em>indiretamente</em>, para <strong>reabastecer</strong> a conta PI. E: "o Bacen transfere da conta de Guilherme para a de Ana" — <strong>não</strong>: o Bacen movimenta as contas <strong>dos participantes</strong> (PI × PI); quem mexe na conta do cliente é o <strong>PSP</strong>. O Bacen não tem conta de pessoa física.</div>
+  </div>
+
+  <h3>2.6 Modalidades e mecanismos</h3>
   <div class="table-scroll">
   <table>
     <tr><th>Recurso</th><th>O que faz</th></tr>
@@ -36,15 +217,125 @@
     <tr><td><strong>Pix por aproximação</strong></td><td>pagamento via NFC pela carteira digital</td></tr>
   </table>
   </div>
-  <p><strong>Segurança:</strong> limite noturno (20h–6h) ajustável, bloqueio cautelar (até 72h para análise de suspeita), marcação de chaves/contas com histórico de fraude no DICT.</p>
-  <div class="trap">🪤 Três pegadinhas: (1) quem gere o Pix é o <strong>Bacen</strong> — nunca Febraban/bancos; (2) MED é para <strong>fraude/falha</strong>, não para quem se arrependeu; (3) Pix <strong>não</strong> é moeda digital — é transferência de reais.</div>
 
-  <h2>2. Open Finance</h2>
+  <div class="card">
+    <p><strong>QR: estático × dinâmico.</strong> O QR do Pix segue o <strong>BR Code</strong> (baseado no padrão EMV® de QR) — qualquer app lê qualquer QR: de novo, <em>interoperabilidade por padrão aberto</em>.</p>
+    <div class="table-scroll">
+    <table>
+      <tr><th></th><th>QR estático</th><th>QR dinâmico</th></tr>
+      <tr><td>Conteúdo</td><td>a chave e, opcionalmente, um valor fixo</td><td>um <strong>link</strong> para <em>payload</em> gerado sob demanda pelo PSP do recebedor</td></tr>
+      <tr><td>Reuso</td><td>reutilizável (o adesivo na padaria)</td><td><strong>uso único</strong>, com identificador próprio</td></tr>
+      <tr><td>Valor</td><td>fixo ou digitado pelo pagador</td><td>definido na hora; pode ter vencimento, juros, multa, desconto</td></tr>
+      <tr><td>Conciliação</td><td>manual — o lojista não sabe qual venda é qual</td><td><strong>automática</strong>: o <em>txid</em> amarra pagamento e pedido</td></tr>
+      <tr><td>Uso típico</td><td>ambulante, doação, mesa de bar</td><td>e-commerce, PDV, cobrança</td></tr>
+    </table>
+    </div>
+    <p class="muted">O <strong>Copia e Cola</strong> é o mesmo payload em texto — mesma coisa, canal diferente (útil quando você já está <em>no</em> celular).</p>
+    <p><strong>Pix Cobrança.</strong> QR dinâmico com <strong>informações de cobrança</strong> (vencimento, juros, multa, desconto, dados do devedor). Desenhado para <strong>matar o boleto</strong>, e o argumento é econômico: boleto custa tarifa por emissão, liquida em D+1 ou mais e exige conciliação; o Pix Cobrança custa uma fração, liquida em segundos e já vem conciliado pelo <em>txid</em>.</p>
+    <p><strong>Pix Saque e Pix Troco.</strong> Problema resolvido: <strong>capilaridade</strong>. Caixa eletrônico é caro e é alvo de ataque; e o comércio <strong>já tem dinheiro em caixa</strong> — que para ele é um <em>problema</em> (sangria, transporte de valores, roubo). Então: no <strong>Saque</strong> você faz um Pix ao estabelecimento e ele te entrega espécie, sem comprar nada; no <strong>Troco</strong> você compra R$ 20, faz um Pix de R$ 100 e leva R$ 80. Nos dois, o comerciante <strong>troca espécie por saldo digital</strong> e o cidadão saca onde antes não dava. O estabelecimento é o <strong>agente de saque</strong> e <em>pode</em> tarifar o serviço, dentro dos limites do arranjo. Tecnicamente é <strong>um Pix comum com marcação de finalidade</strong> — não é sistema novo.</p>
+    <p><strong>Pix Agendado.</strong> O agendamento é uma <strong>instrução guardada no PSP do pagador</strong>; o Pix só existe e só liquida <strong>na data</strong>. Sem saldo naquele dia, falha. <strong>Não é dinheiro reservado desde já.</strong></p>
+  </div>
+
+  <div class="card">
+    <p><strong>Pix Automático.</strong> <strong>O problema:</strong> para cobrar todo mês (academia, escola, streaming, condomínio), havia três opções ruins:</p>
+    <ul>
+      <li><strong>Débito automático:</strong> é <em>fechado</em> — depende de <strong>convênio bilateral</strong> entre a empresa e cada banco. Caro de montar, favorece os grandes: uma escola pequena não tem convênio com ninguém.</li>
+      <li><strong>Cartão recorrente:</strong> paga MDR, o cartão vence e é cancelado (<em>churn</em> involuntário), e exclui quem não tem cartão.</li>
+      <li><strong>Boleto mensal:</strong> caro e depende de o cliente lembrar — inadimplência por esquecimento.</li>
+    </ul>
+    <p><strong>A solução:</strong> trazer a recorrência para dentro do arranjo, <strong>aberta e padronizada</strong>. O cliente dá uma <strong>autorização prévia única</strong> no app do <em>próprio banco dele</em> e, a partir daí, o recebedor dispara as cobranças conforme o combinado. <strong>Sem convênio bilateral</strong>: qualquer recebedor de qualquer PSP cobra qualquer pagador de qualquer PSP. O que muda na prática:</p>
+    <ul>
+      <li><strong>É o pagador quem autoriza e quem cancela</strong>, a qualquer momento, no app do banco dele — sem ligar para a empresa e implorar. Desloca o poder de quem vende para quem paga.</li>
+      <li>A autorização tem <strong>escopo</strong>: quem pode cobrar, periodicidade e, conforme o combinado, teto de valor. Não é procuração em branco.</li>
+      <li>A liquidação é <strong>Pix normal</strong>: instantânea, sem MDR, sem D+30.</li>
+      <li>Falhando por falta de saldo, há <strong>retentativa</strong> conforme a regra do arranjo — a maior dor do débito automático.</li>
+      <li>Em operação desde <strong>2025</strong>. Leitura de prova: <strong>é o Pix atacando o débito automático e a recorrência no cartão</strong>, como o Pix Cobrança atacou o boleto.</li>
+    </ul>
+    <div class="tip">💡 Autorização prévia, com escopo, revogável pelo titular no ambiente do provedor, sem o cobrador jamais ter a credencial do pagador: isso é <strong>OAuth, no dinheiro</strong>. O recebedor tem algo equivalente a um <em>token de escopo limitado</em>, não a senha da conta. Compare com o cartão recorrente, em que o lojista literalmente <em>guarda o seu número</em> — delegação por token × compartilhamento de credencial. Mesma ideia do consentimento do Open Finance (seção 3).</div>
+  </div>
+
+  <div class="card">
+    <p><strong>Pix Parcelado — a pegadinha embutida.</strong> Releia: "produto de crédito do banco (<strong>não é do arranjo em si</strong>)". O que acontece de fato: o <strong>banco empresta</strong> ao pagador e faz <strong>um único Pix à vista</strong> ao recebedor, que recebe o valor cheio na hora como qualquer Pix. Depois, o pagador paga <strong>parcelas ao banco, com juros</strong>, numa relação de crédito que <strong>nada tem a ver com o Pix</strong>. É uma <strong>operação de crédito comum</strong> embalada numa interface de Pix.</p>
+    <p>Consequências cobradas: o Bacen <strong>não o regula como modalidade do arranjo</strong>; juros, prazo e aprovação são <strong>de cada banco</strong>; <strong>tem juros</strong> (é crédito, não há gratuidade); e o recebedor <strong>não sabe nem precisa saber</strong> que foi parcelado.</p>
+    <div class="trap">🪤 "Pix Parcelado é modalidade criada pelo Bacen, com juros regulados" — <strong>tudo errado</strong>. Raciocínio-mestre: <strong>Pix não é crédito</strong> — o arranjo transfere saldo <em>existente</em>. Todo crédito que aparece perto do Pix é produto do PSP, por fora.</div>
+  </div>
+
+  <div class="card">
+    <p><strong>Pix por aproximação.</strong> Pagamento via <strong>NFC</strong> pela carteira digital, sem QR e sem abrir o app. O ponto conceitual: <strong>o trilho continua sendo o Pix</strong> — SPI, contas PI, liquidação bruta, tudo igual. O NFC é <strong>só a camada de captura</strong>. Por isso o lojista continua sem pagar MDR de bandeira: ele recebeu um Pix, não uma transação de cartão, ainda que o gesto do cliente seja idêntico. É a jogada estratégica: <strong>disputar o gesto</strong> no PDV físico, último território do cartão.</p>
+    <div class="tip">💡 Separe <em>camada de captura</em> (QR, NFC, copia-e-cola, digitação, API) de <em>camada de liquidação</em> (SPI). São ortogonais — transporte × protocolo de aplicação. Trocar QR por NFC não muda uma linha da liquidação. Quando a questão descrever "aproximação", pergunte: <strong>liquidou no SPI (Pix) ou no arranjo de cartão (emissor, credenciadora, MDR)?</strong> Mesmo gesto, economia completamente diferente.</div>
+  </div>
+
+  <h3>2.7 MED — o que fazer quando você cai num golpe</h3>
+  <div class="card">
+    <p>A liquidação no SPI é <strong>final e irrevogável</strong>. Não existe "cancelar Pix" — e isso é <em>propriedade</em>, não defeito: é o que permite ao recebedor confiar no crédito imediato, sem o risco de estorno (<em>chargeback</em>) que assombra o cartão. Mas e quando o pagamento foi arrancado por <strong>golpe</strong>? Daí o <strong>MED — Mecanismo Especial de Devolução</strong>, que não desfaz nada: <strong>cria um caminho regulado de devolução</strong>.</p>
+    <p><span class="pill">1</span> <strong>A vítima notifica o PSP dela</strong> (o do pagador) informando fraude. Conforme a regulamentação vigente, o pedido deve ser feito em <strong>até 80 dias</strong> da transação.</p>
+    <p><span class="pill">2</span> <strong>O PSP do pagador registra</strong> e encaminha ao <strong>PSP do recebedor</strong>, marcando a ocorrência no <strong>DICT</strong> — é assim que a chave do golpista fica marcada para os próximos pagadores.</p>
+    <p><span class="pill">3</span> <strong>O PSP do recebedor bloqueia cautelarmente</strong> o valor, se ainda houver saldo. O <strong>bloqueio cautelar</strong> dura <strong>até 72 horas</strong> e serve para congelar o dinheiro enquanto se analisa.</p>
+    <p><span class="pill">4</span> <strong>Análise.</strong> O PSP do recebedor apura se houve fraude, no prazo da regulamentação (em regra, poucos dias), ouvindo o recebedor — que pode ser inocente (um lojista que vendeu de verdade) ou o próprio golpista.</p>
+    <p><span class="pill">5</span> <strong>Devolução.</strong> Confirmada a fraude e havendo saldo, devolve-se à vítima — <strong>total ou parcialmente</strong>. Se o golpista já esvaziou a conta, <strong>devolve-se o que sobrou</strong>. Aqui a expectativa costuma quebrar: <strong>o MED não garante o dinheiro de volta e não é seguro</strong>. É uma corrida contra o relógio.</p>
+    <p><strong>Cabe MED</strong> (hipóteses fechadas): <strong>fundada suspeita de fraude</strong> (golpe, engenharia social, conta invadida) ou <strong>falha operacional</strong> do PSP (duplicidade, erro de processamento).</p>
+    <p><strong>Não cabe:</strong></p>
+    <ul>
+      <li><strong>Arrependimento.</strong> Pagou e mudou de ideia: problema seu.</li>
+      <li><strong>Erro do próprio pagador.</strong> Digitou a chave errada e pagou um desconhecido: <strong>não é fraude</strong>. O caminho é pedir ao PSP que <em>solicite</em> a devolução ao recebedor — que pode <strong>recusar</strong>. Sobra a via civil (enriquecimento sem causa). É duro, e é o que a regra diz.</li>
+      <li><strong>Discordância comercial.</strong> Produto não chegou, veio errado, serviço ruim: é <strong>relação de consumo</strong> (vendedor/CDC/Procon). <strong>O MED não é chargeback</strong> — confusão nº 1 dos candidatos.</li>
+    </ul>
+    <div class="tip">💡 No cartão, o <em>chargeback</em> existe porque a liquidação para o lojista é <strong>diferida</strong> (D+30): há janela em que a rede ainda segura o dinheiro — é <em>rollback dentro da transação</em>. No Pix, a transação já <strong>commitou</strong> no passo 5; o MED só pode ser uma <strong>transação compensatória</strong> (padrão <em>Saga</em>). E toda compensação tem o mesmo limite: só funciona <strong>se o estado ainda estiver lá</strong>. Sumiu o saldo, não há o que compensar. É literalmente por isso que existe prazo e bloqueio cautelar — uma tentativa de <em>lock</em> tardio num sistema que não tem lock.</div>
+    <div class="trap">🪤 (1) "é para arrependimento" — não, é <strong>fraude ou falha operacional</strong>; (2) "garante devolução integral" — não, <strong>até o saldo existente</strong>; (3) "quem analisa é o Bacen" — não, quem bloqueia e analisa é o <strong>PSP do recebedor</strong>; o Bacen escreve a regra, não julga caso a caso; (4) "é igual ao chargeback" — não, chargeback cobre disputa comercial.</div>
+  </div>
+
+  <h3>2.8 Segurança</h3>
+  <p><strong>Segurança:</strong> limite noturno (20h–6h) ajustável, bloqueio cautelar (até 72h para análise de suspeita), marcação de chaves/contas com histórico de fraude no DICT.</p>
+  <div class="card">
+    <p>O raciocínio por trás de cada camada é de <strong>gestão de risco</strong>, não de tecnologia:</p>
+    <ul>
+      <li><strong>Limite noturno (20h–6h).</strong> A observação é dura: sequestros-relâmpago e coações acontecem à noite, e o valor levado dependia do limite diurno. A resposta foi <strong>reduzir o dano possível na janela de maior risco</strong> — em regra <strong>R$ 1.000</strong>, ajustável pelo cliente. E a assimetria que importa: <strong>reduzir vale na hora</strong>; <strong>aumentar exige carência</strong> (a regra é de 24 a 48 horas). Ela existe para que o criminoso, com a vítima e o celular na mão, <strong>não consiga elevar o limite ali mesmo</strong>. É <em>delay</em> deliberado como controle antifraude.</li>
+      <li><strong>Bloqueio cautelar (até 72h).</strong> Poder do <strong>PSP</strong>, por <strong>fundada suspeita</strong>: aceita-se o custo de travar um inocente por até 72h em troca de recuperar dinheiro de vítima.</li>
+      <li><strong>Marcação no DICT.</strong> Cada notificação marca a chave/conta: vira <strong>sinal reputacional compartilhado</strong>. O golpista não "recomeça limpo" em outro banco com a mesma chave.</li>
+      <li><strong>Antifraude do PSP.</strong> Modelos próprios (dispositivo, comportamento, horário, geolocalização) podem bloquear ou pedir confirmação. Não é do arranjo: é obrigação prudencial de cada um.</li>
+      <li><strong>Autorregulação:</strong> bases compartilhadas de contas e dispositivos suspeitos — informação isolada virando defesa coletiva.</li>
+    </ul>
+    <div class="tip">💡 <strong>A ponte mais importante do capítulo.</strong> Repare no que <em>não</em> está na lista: criptografia. O canal já é forte (RSFN, autenticação mútua, assinatura, ISO 20022) — <strong>ninguém quebra o Pix atacando o protocolo</strong>. Os controles são <strong>limites, atrasos, listas e revisão humana</strong>, porque o vetor real é <strong>engenharia social</strong>: o criminoso não invade o SPI, ele convence <em>você</em> a assinar a transação. Quando a superfície técnica está fechada, a defesa migra para <em>reduzir o dano de uma transação legítima feita sob engano</em>. É a moldura para qualquer questão de "segurança no Pix".</div>
+  </div>
+  <div class="trap">🪤 Três pegadinhas: (1) quem gere o Pix é o <strong>Bacen</strong> — nunca Febraban/bancos; (2) MED é para <strong>fraude/falha</strong>, não para quem se arrependeu; (3) Pix <strong>não</strong> é moeda digital — é transferência de reais.</div>
+  <p>A terceira merece uma frase: <strong>Pix é trilho, Drex é moeda.</strong> O Pix movimenta <strong>moeda escritural</strong> que já existe, usando contas PI para acertar entre instituições; ele <strong>não cria</strong> unidade monetária nenhuma. O Drex é <strong>o real digital emitido pelo Bacen</strong>. Camadas diferentes — e complementares, não concorrentes.</p>
+
+  <h2 id="sec-3-open-finance">3. Open Finance</h2>
   <div class="card">
     <p><strong>Premissa:</strong> o dado bancário pertence ao <strong>cliente</strong>, não ao banco. Ele pode compartilhá-lo com quem quiser, para obter melhores ofertas.</p>
     <p><strong>Requisitos do consentimento:</strong> finalidade determinada, prazo definido (renovável), <strong>revogável a qualquer momento</strong>, concedido em ambiente da própria instituição.</p>
   </div>
-  <h3>As 4 fases</h3>
+
+  <h3>3.1 O problema — por que o seu histórico virou uma jaula</h3>
+  <div class="card">
+    <p>Você é cliente do mesmo banco há 12 anos. Ele sabe seu salário, sua estabilidade, que você nunca atrasou nada. Com isso consegue te avaliar com precisão e te dar crédito barato — <em>se quiser</em>. Agora um concorrente quer te oferecer algo melhor. O que ele sabe sobre você? <strong>Quase nada</strong> — um score genérico e um CPF. Diante da incerteza, ele faz o que qualquer credor racional faz: <strong>cobra caro</strong>, porque está precificando a ignorância dele, não o seu risco. <strong>A oferta boa nunca chega até você.</strong></p>
+    <p>Isso tem nome: <strong>assimetria de informação</strong>. E a consequência é perversa — <strong>o seu bom histórico, que é ativo seu, virou ativo do banco onde está guardado</strong>. Trocar de banco significa recomeçar do zero com condições piores; o incumbente não precisa te dar o melhor preço, basta ser um pouco melhor que o concorrente cego. <strong>O dado, retido, virou barreira à concorrência.</strong></p>
+    <p>O <strong>Open Banking</strong> — depois <strong>Open Finance</strong> — é a resposta: se o dado é do cliente, ele pode <strong>mandar o banco entregá-lo</strong> a quem escolher, em formato padronizado e canal seguro. O concorrente passa a te enxergar como você é, e o preço passa a refletir seu risco real. É <strong>desmontar a assimetria por regulação</strong>.</p>
+    <div class="tip">💡 Antes, quem queria seus dados fazia <em>screen scraping</em>: o app pedia a <strong>sua senha do banco</strong>, logava como você e raspava a tela. Desastre em todas as dimensões — credencial compartilhada, sem escopo, sem prazo, sem revogação granular, sem auditoria, e quebrando a cada mudança de layout. O Open Finance troca isso por <strong>API padronizada + OAuth 2.0 + consentimento explícito</strong>. É a mesma migração de "me dá sua senha do Gmail" para "Entrar com o Google". Se você entende por que <em>token com escopo</em> é melhor que <em>senha compartilhada</em>, você já entende o Open Finance inteiro.</div>
+  </div>
+
+  <h3>3.2 O consentimento — e o cenário na prática</h3>
+  <div class="card">
+    <div class="table-scroll">
+    <table>
+      <tr><th>Requisito</th><th>O que significa</th><th>Equivale a</th></tr>
+      <tr><td><strong>Finalidade determinada</strong></td><td>diz <em>para quê</em>: "avaliar minha proposta de crédito". Não vale "melhorar sua experiência"</td><td><strong>scope</strong></td></tr>
+      <tr><td><strong>Prazo definido</strong></td><td>tem validade (renovável); vencido, o fluxo <strong>para sozinho</strong></td><td><strong>expiração do token</strong></td></tr>
+      <tr><td><strong>Revogável a qualquer momento</strong></td><td>o cliente desliga quando quiser, com corte <strong>imediato</strong>; revogar deve ser tão fácil quanto conceder</td><td><strong>token revocation</strong></td></tr>
+      <tr><td><strong>No ambiente da própria instituição</strong></td><td>a autorização é dada <strong>dentro do app/site do banco onde estão os dados</strong>; o terceiro <strong>nunca</strong> vê sua senha</td><td><strong>redirect ao authorization server</strong></td></tr>
+    </table>
+    </div>
+    <p><strong>Na prática.</strong> Você quer um empréstimo mais barato na fintech Z:</p>
+    <p><span class="pill">1</span> No app da <strong>Z</strong>, você escolhe "compartilhar meus dados do Banco X". A Z mostra <strong>o quê</strong>, <strong>para quê</strong> e <strong>por quanto tempo</strong>.</p>
+    <p><span class="pill">2</span> Você é <strong>redirecionado ao Banco X</strong> — app ou site <em>dele</em>. Aqui mora a segurança: você digita a senha <strong>no Banco X</strong>, nunca na Z.</p>
+    <p><span class="pill">3</span> O <strong>Banco X</strong> mostra exatamente o que a Z pede (cadastro? saldo? extrato de 12 meses?) e você <strong>autoriza ou recusa</strong>. <strong>Autenticar não é consentir</strong>: são duas telas e duas coisas.</p>
+    <p><span class="pill">4</span> Você <strong>volta à Z</strong>, que passa a receber do Banco X, por API, <strong>só o que está no escopo</strong> e <strong>só durante o prazo</strong>.</p>
+    <p><span class="pill">5</span> A Z lê seu histórico real e te oferece uma taxa que jamais ofereceria no escuro.</p>
+    <p><span class="pill">6</span> <strong>Semanas depois você muda de ideia.</strong> Entra no app do Banco X (ou da Z), vê a lista de <strong>consentimentos ativos</strong> e <strong>revoga</strong>. Dali em diante o Banco X <strong>para de enviar</strong>. Ponto de prova: revogar <strong>interrompe o fluxo futuro</strong>; não apaga o que a Z já recebeu — o destino <em>desses</em> dados é governado pela <strong>LGPD</strong> (finalidade, necessidade, eliminação), e é lá que você exerce seus direitos.</p>
+    <div class="trap">🪤 (1) "o consentimento é dado no app da fintech" — <strong>não</strong>, é confirmado <strong>no ambiente da instituição detentora</strong>; (2) "é irrevogável durante o prazo" — <strong>não</strong>, é revogável <strong>a qualquer momento</strong>; (3) "o cliente entrega a senha ao terceiro" — <strong>jamais</strong>, é o modelo que o Open Finance veio destruir; (4) "a adesão do cliente é obrigatória" — <strong>não</strong>, e aqui está a distinção mais elegante do tema: <strong>para o cliente é 100% facultativo</strong> (sem consentimento, nada acontece); <strong>para as instituições, a participação é obrigatória conforme porte/segmento</strong> (S1 e S2 obrigatoriamente; as demais, facultativo). <em>O cliente escolhe; o banco grande não escolhe.</em></div>
+  </div>
+
+  <h3>3.3 As 4 fases</h3>
   <div class="table-scroll">
   <table>
     <tr><th>Fase</th><th>O que abriu</th></tr>
@@ -54,10 +345,72 @@
     <tr><td>4</td><td><strong>Ampliação</strong>: câmbio, investimentos, seguros, previdência → daí o nome Open <em>Finance</em></td></tr>
   </table>
   </div>
-  <p><strong>ITP (Iniciador de Transação de Pagamento):</strong> instituição autorizada que inicia um pagamento na conta do cliente <strong>sem ter a posse do dinheiro</strong> nem manter conta — apenas comanda a ordem.</p>
-  <div class="tip">💡 A ponte com a <a href="lgpd-bancaria.html">LGPD</a>: o Open Finance é a materialização do direito de <strong>portabilidade de dados</strong> (art. 18). Consentimento é a palavra que liga os dois temas.</div>
+  <div class="card">
+    <p>A sequência não é burocrática: é <strong>risco crescente</strong>.</p>
+    <ul>
+      <li><strong>Fase 1 — dado público, risco zero.</strong> Tarifas, taxas, canais, produtos. <strong>Não há cliente nem consentimento</strong>, porque não há dado pessoal: é o que já está no site, padronizado e legível por máquina. Rendeu <strong>comparadores de tarifas</strong> e permitiu ao ecossistema testar o encanamento (certificados, diretório, padrões) sem risco. <em>Começou-se pelo que não podia dar errado.</em></li>
+      <li><strong>Fase 2 — dado pessoal, risco de privacidade.</strong> Cadastro, saldo, extrato, faturas, crédito. <strong>Entra o consentimento</strong> e entra a LGPD. Resolve a assimetria de 3.1, mas ainda é <strong>leitura</strong>: ninguém move dinheiro.</li>
+      <li><strong>Fase 3 — <em>escrita</em>, risco financeiro.</strong> Salto qualitativo: de <em>ler</em> para <em>ordenar</em>. Surge a <strong>iniciação de pagamento</strong> (ITP) e o <strong>encaminhamento de proposta de crédito</strong> (pedir proposta a vários credores de uma vez). Transforma o Open Finance de <em>informação</em> em <em>transação</em>.</li>
+      <li><strong>Fase 4 — ampliação.</strong> Sai do estritamente bancário e entra em <strong>câmbio, investimentos, seguros e previdência</strong> — daí Open <em>Finance</em>. Envolve <strong>outros reguladores</strong> além do Bacen (CVM, Susep).</li>
+    </ul>
+    <div class="tip">💡 Mnemônico: 1 = <em>catálogo</em> (sem cliente) · 2 = <em>ler</em> · 3 = <em>escrever</em> · 4 = <em>expandir</em>. Falou em <strong>consentimento</strong>, é da 2 em diante. Falou em <strong>mover dinheiro</strong>, é 3. Falou em <strong>seguro/investimento/câmbio</strong>, é 4.</div>
+  </div>
 
-  <h2>3. Drex (Real Digital)</h2>
+  <h3>3.4 O ITP</h3>
+  <p><strong>ITP (Iniciador de Transação de Pagamento):</strong> instituição autorizada que inicia um pagamento na conta do cliente <strong>sem ter a posse do dinheiro</strong> nem manter conta — apenas comanda a ordem.</p>
+  <div class="card">
+    <p><strong>O que ele faz:</strong> oferece a <strong>interface</strong> para pagar. Você está no checkout da loja, escolhe "pagar pela conta do meu banco", e o ITP <strong>comanda a ordem</strong> — sem você sair dali, sem copiar QR, sem abrir o app do banco.</p>
+    <p><strong>O que ele NÃO faz</strong> — e é aqui que está a prova:</p>
+    <ul>
+      <li><strong>Não detém seus recursos</strong> em momento algum: o dinheiro vai da <em>sua conta</em> direto para a <em>conta do lojista</em>. Ele não é escala, o dinheiro <strong>não passa por ele</strong>.</li>
+      <li><strong>Não mantém conta</strong> de pagamento nem de depósito; <strong>não gerencia conta</strong> — quem faz isso é o seu banco/IP.</li>
+      <li><strong>Não tem sua senha</strong>: autenticação e consentimento ocorrem <strong>no ambiente do seu banco</strong>.</li>
+    </ul>
+    <p><strong>Por que importa juridicamente:</strong> como ele <strong>não toca no dinheiro</strong>, não há risco de quebrar com o seu saldo dentro. Por isso é <strong>modalidade de instituição de pagamento</strong> com requisitos próprios (mais leves em capital que um emissor de moeda eletrônica, porque não custodia recursos) — mas <strong>autorizada e supervisionada pelo Bacen</strong>.</p>
+    <p><strong>Por que importa economicamente:</strong> permite que o pagamento por conta bancária concorra <strong>de igual para igual com o cartão</strong> no e-commerce, com a mesma fluidez e usando o trilho do <strong>Pix</strong> por baixo — sem MDR. É a convergência dos dois temas: <strong>o Open Finance dá a interface, o Pix dá o trilho.</strong></p>
+    <div class="tip">💡 O ITP é um <em>cliente OAuth com escopo de escrita</em>: autorizado a <strong>disparar uma ordem</strong>, não a ler a conta nem a guardar valores. Compare com o gateway de cartão, que <em>captura e repassa</em> o dinheiro (tem custódia, logo tem risco). O ITP é <em>stateless</em> quanto ao dinheiro — e é exatamente essa diferença que a regulação reconhece ao dar a ele requisitos prudenciais próprios.</div>
+    <div class="trap">🪤 "O ITP recebe o dinheiro e repassa ao recebedor" — <strong>errado</strong>, isso é <em>credenciadora/subcredenciadora</em>. "O ITP precisa ser banco" — <strong>errado</strong>, é modalidade de <em>IP</em>. "Depois do consentimento, inicia pagamentos quando quiser" — <strong>errado</strong>: dentro do <em>escopo e prazo</em>, e revogável a qualquer tempo.</div>
+  </div>
+
+  <h3>3.5 A infraestrutura</h3>
+  <div class="card">
+    <p>O Open Finance brasileiro não é "cada banco publica sua API". É um <strong>ecossistema com confiança gerenciada</strong>:</p>
+    <ul>
+      <li><strong>Padrão de API único</strong>, publicado pela estrutura de <strong>governança</strong> do Open Finance, sob supervisão do Bacen. Todos expõem o <em>mesmo</em> contrato — sem isso, cada integração seria bilateral e o custo mataria a competição.</li>
+      <li><strong>Diretório de participantes:</strong> registro central de quem está autorizado. Antes de qualquer chamada, verifica-se <strong>se o outro lado é quem diz ser e ainda está autorizado</strong>. Funcionalmente, uma <em>PKI</em> com <em>allowlist</em> de identidades vivas.</li>
+      <li><strong>Autenticação mútua (mTLS):</strong> as duas pontas se autenticam. Não existe chamada anônima.</li>
+      <li><strong>Perfil FAPI</strong> (<em>Financial-grade API</em>): o OAuth 2.0/OpenID Connect endurecido para o setor financeiro — tokens vinculados ao certificado do cliente, requisições assinadas, proteção contra reuso. Não é "OAuth de blog".</li>
+      <li><strong>Rastreabilidade:</strong> cada consentimento tem identificador e cada chamada é auditável — dá para responder "quem acessou o quê, quando, sob qual consentimento".</li>
+    </ul>
+    <div class="tip">💡 Os "requisitos do consentimento" mapeiam 1:1 nos controles: <em>finalidade</em> → scope; <em>prazo</em> → expiração; <em>revogação</em> → revocation; <em>ambiente da instituição</em> → redirect. É a mesma ideia escrita duas vezes: uma em português jurídico, outra em RFC. Guarde o mapeamento — mas <strong>responda com o vocabulário do regulador</strong>.</div>
+  </div>
+
+  <div class="tip">💡 A ponte com a <a href="lgpd-bancaria.html">LGPD</a>: o Open Finance é a materialização do direito de <strong>portabilidade de dados</strong> (art. 18). Consentimento é a palavra que liga os dois temas.</div>
+  <div class="card">
+    <div class="table-scroll">
+    <table>
+      <tr><th></th><th>LGPD</th><th>Open Finance</th></tr>
+      <tr><td>Natureza</td><td><strong>lei geral</strong>, toda a economia</td><td><strong>regulação setorial</strong> do Bacen, só o sistema financeiro</td></tr>
+      <tr><td>O que faz</td><td>declara o <strong>direito</strong>: consentimento, finalidade, portabilidade (art. 18)</td><td>constrói o <strong>encanamento</strong>: API, padrão, diretório, prazos</td></tr>
+      <tr><td>Fiscal</td><td><strong>ANPD</strong></td><td><strong>Bacen</strong> (e CVM/Susep na fase 4)</td></tr>
+      <tr><td>Alcance</td><td>direito a "receber os dados" — sem dizer como</td><td>o dado vai <strong>de instituição a instituição</strong>, padronizado, sob comando do titular</td></tr>
+    </table>
+    </div>
+    <p>Em uma frase: <strong>a LGPD diz que o dado é seu; o Open Finance construiu o cano por onde ele anda.</strong> Uma é o direito, a outra é a infraestrutura do direito — e elas <strong>não se substituem</strong>: o participante cumpre <em>as duas</em>.</p>
+    <div class="trap">🪤 "Como é regulado pelo Bacen, a LGPD não se aplica" — <strong>errado</strong>, aplicam-se cumulativamente. E: o consentimento do Open Finance é <strong>específico daquele compartilhamento</strong>; não é consentimento genérico da LGPD nem substitui as demais bases legais de tratamento.</div>
+  </div>
+
+  <h2 id="sec-4-drex-real-digital">4. Drex (Real Digital)</h2>
+
+  <h3>4.1 O problema — por que um país com Pix ainda quer uma CBDC</h3>
+  <div class="card">
+    <p>Pergunta legítima e quase certa em prova: <strong>se o Pix já transfere reais em segundos, 24/7, de graça, para que serve o Drex?</strong> Porque o Pix resolveu <strong>o pagamento</strong> — mover reais de A para B. Ele <strong>não</strong> resolveu <strong>a transação com dois lados</strong>.</p>
+    <p>Você compra um apartamento. O pagamento é trivial. O que não é trivial: <strong>o dinheiro só deveria sair se a propriedade for transferida, e a propriedade só deveria mudar se o dinheiro sair.</strong> Essas duas coisas vivem em mundos separados — o dinheiro no banco, o imóvel no cartório — e ninguém consegue fazer as duas ao mesmo tempo. Então o mundo inventou muletas: escritura, tabelião, cheque administrativo, escrow, prazo, seguro de título. Tudo isso existe <strong>para gerenciar o intervalo</strong> entre uma perna e a outra — o <strong>risco de contraparte</strong> e o <strong>risco de liquidação</strong>.</p>
+    <p>Nos mercados financeiros esse intervalo tem nome e custa caro: é o <strong>D+2</strong>. Entre negociar e liquidar existem dias em que alguém pode quebrar — e para gerenciar isso há uma indústria inteira de câmaras, garantias, margem e capital regulatório. <strong>Tudo isso é custo do intervalo.</strong> A pergunta do Drex é: <strong>e se o dinheiro e o ativo morassem no mesmo lugar?</strong> Sendo registros no mesmo livro, a troca pode ser <strong>um único movimento indivisível</strong>: sem intervalo, sem contraparte, sem margem.</p>
+    <div class="tip">💡 <strong>A analogia central do tema.</strong> Você conhece isso: <strong>atomicidade</strong>. Numa transação ACID você não faz <code>UPDATE saldo</code> e depois <code>UPDATE titularidade</code> torcendo para os dois darem certo — você põe os dois em <code>BEGIN ... COMMIT</code> e o banco garante que <strong>ou os dois acontecem, ou nenhum</strong>. Toda a parafernália de tabelião, escrow e D+2 existe porque dinheiro e ativo estão em <strong>bases diferentes, de donos diferentes</strong> — não dá para abrir uma transação que abranja as duas. O Drex é a tentativa de criar uma <strong>plataforma onde os dois registros coabitam</strong>, para que a troca vire um <strong>commit atômico</strong>. Se você entende por que 2PC entre organizações é um problema difícil, entende exatamente o que o Drex ataca.</div>
+  </div>
+
+  <h3>4.2 CBDC × cripto × stablecoin</h3>
   <div class="table-scroll">
   <table>
     <tr><th></th><th>Drex (CBDC)</th><th>Criptomoeda (Bitcoin)</th><th>Stablecoin</th></tr>
@@ -67,10 +420,92 @@
     <tr><td>Tecnologia</td><td>DLT permissionada</td><td>blockchain pública</td><td>varia</td></tr>
   </table>
   </div>
-  <p><strong>A grande promessa do Drex:</strong> <em>smart contracts</em> permitindo <strong>liquidação atômica</strong> (DvP — a entrega do ativo e o pagamento acontecem no mesmo instante, ou nenhum dos dois). Casos de uso: compra de imóvel, veículo e ativos financeiros tokenizados, com menos intermediários e menos risco de contraparte.</p>
-  <p><strong>Marco legal dos criptoativos:</strong> Lei 14.478/2022 — o <strong>Bacen</strong> é o regulador das prestadoras de serviços de ativos virtuais (VASPs); a <strong>CVM</strong> cuida quando o token for valor mobiliário.</p>
+  <div class="card">
+    <p>A tabela é ouro, mas só funciona se você souber o que cada linha quer dizer:</p>
+    <p><strong>Emissor</strong> = "quem responde por isso?". O Drex é <strong>passivo do Banco Central</strong> — é a cédula, digital. Bitcoin não tem emissor: novas unidades surgem por regra de protocolo numa rede sem dono, não há a quem reclamar. Stablecoin tem <strong>emissor privado</strong>: uma empresa promete que o token vale 1 dólar — e a promessa vale o que valer <strong>a solvência dela e a qualidade da reserva</strong>.</p>
+    <p><strong>Curso legal</strong> = o credor é <strong>obrigado a aceitar</strong> em pagamento de dívida em reais. Só o Drex tem. Bitcoin e stablecoin <strong>não têm curso legal</strong> no Brasil: aceitar é acordo entre as partes. <strong>Isso não os torna ilegais</strong> — negociar cripto é lícito, só não é moeda. <em>Ilegal</em> × <em>sem curso legal</em> é armadilha frequente.</p>
+    <p><strong>Lastro.</strong> O Drex <strong>é</strong> o real. Bitcoin não tem lastro — preço é oferta e demanda, daí a volatilidade. Stablecoin tem <strong>ativo de referência</strong>, e aí está o risco: reserva ruim, ilíquida ou insuficiente quebra a paridade (<em>depeg</em>) — uma <strong>corrida bancária</strong> clássica, sem banco central atrás. Já aconteceu mais de uma vez, e é por isso que os reguladores do mundo estão em cima.</p>
+    <div class="table-scroll">
+    <table>
+      <tr><th>Tecnologia</th><th>Blockchain pública</th><th>DLT permissionada</th></tr>
+      <tr><td>Quem valida</td><td>qualquer um, anônimo</td><td>nós <strong>identificados e autorizados</strong></td></tr>
+      <tr><td>Consenso</td><td>PoW/PoS — caro, feito para funcionar entre desconhecidos hostis</td><td>entre nós conhecidos — <strong>barato e rápido</strong>, a identidade já filtra</td></tr>
+      <tr><td>Privacidade</td><td>tudo público por padrão</td><td><strong>requisito</strong> — sigilo bancário é lei</td></tr>
+      <tr><td>Reversão</td><td>praticamente impossível — imutável por design</td><td><strong>possível</strong> — bloqueio judicial, correção, ordem de autoridade</td></tr>
+      <tr><td>Objetivo do design</td><td><strong>eliminar a autoridade central</strong></td><td><strong>dar ferramentas novas a uma autoridade central</strong></td></tr>
+    </table>
+    </div>
+    <div class="tip">💡 <strong>Onde o candidato de TI mais escorrega.</strong> "Blockchain" no Bitcoin resolve o <em>problema dos generais bizantinos</em>: consenso <strong>sem confiar em ninguém</strong>. Custa caríssimo (PoW queima energia justamente para encarecer o ataque) e você paga isso <em>porque não tem autoridade</em>. No Drex, <strong>a autoridade existe e é o Bacen</strong> — quase todo o custo do consenso bizantino é desnecessário. Sobra o que interessa: <strong>livro compartilhado + programabilidade + atomicidade entre ativos diferentes no mesmo livro</strong>. O Drex <strong>não é descentralizado e não quer ser</strong>: usa DLT como <em>arquitetura de dados compartilhada e programável</em>, não como ideologia. Se a questão disser que o Drex é descentralizado, anônimo, imutável ou "igual ao Bitcoin", está errada nas quatro.</div>
+    <div class="trap">🪤 (1) <strong>Drex ≠ Pix</strong> — Pix é <em>arranjo</em> (move moeda escritural), Drex é <em>moeda</em>; (2) <strong>Drex ≠ criptomoeda</strong> — tem emissor soberano, curso legal, rede permissionada; (3) <strong>Drex ≠ stablecoin</strong> — a stablecoin <em>promete</em> valer a moeda, o Drex <em>é</em> a moeda; (4) "cripto é proibido no Brasil" — <strong>não</strong>: é lícito, regulado (Lei 14.478/2022) e apenas <strong>sem curso legal</strong>.</div>
+  </div>
 
-  <h2>4. Instituições de pagamento e fintechs</h2>
+  <h3>4.3 A arquitetura em duas camadas</h3>
+  <div class="card">
+    <p>Peça que a banca gosta: o Drex, como desenhado, <strong>não coloca o Bacen em contato direto com você</strong>. Preserva o modelo de <strong>dois níveis</strong>:</p>
+    <ul>
+      <li><strong>Atacado — o Drex propriamente dito.</strong> O Bacen emite e ele circula <strong>entre as instituições autorizadas</strong> na plataforma. É, em essência, uma <em>versão tokenizada das reservas</em>: dinheiro de banco central, agora programável.</li>
+      <li><strong>Varejo — os depósitos tokenizados.</strong> O que <strong>você</strong> teria na carteira não é o Drex de banco central, e sim um <strong>depósito tokenizado</strong> emitido pelo <em>seu banco</em>, lastreado no Drex que ele mantém na plataforma. Na prática, o seu banco continua sendo o seu banco.</li>
+    </ul>
+    <p><strong>Por quê?</strong> Duas razões de política monetária: (1) <strong>não desintermediar os bancos</strong> — se o cidadão tivesse conta direto no Bacen, na primeira crise todos sacariam do banco comercial e correriam para quem não quebra: uma <strong>corrida bancária estrutural e permanente, induzida pelo próprio desenho</strong>, e o crédito, que nasce dos depósitos, secaria; (2) <strong>não transformar o Bacen num banco de varejo</strong> — KYC, SAC, ouvidoria e PLD para 200 milhões de pessoas não é o mandato dele, e ele faria pior que o mercado.</p>
+    <div class="tip">💡 <em>Separação de camadas</em>: o Bacen opera a <strong>plataforma e o ativo de liquidação</strong> (o núcleo confiável); os bancos operam a <strong>camada de aplicação</strong>. É o mesmo padrão do Pix (SPI/DICT × app do PSP): <strong>o Bacen constrói o trilho, não o vagão</strong>. Perceber que isso se repete nos dois temas responde questão que você nunca viu.</div>
+  </div>
+
+  <h3>4.4 Smart contract, liquidação atômica e DvP</h3>
+  <p><strong>A grande promessa do Drex:</strong> <em>smart contracts</em> permitindo <strong>liquidação atômica</strong> (DvP — a entrega do ativo e o pagamento acontecem no mesmo instante, ou nenhum dos dois). Casos de uso: compra de imóvel, veículo e ativos financeiros tokenizados, com menos intermediários e menos risco de contraparte.</p>
+  <div class="card">
+    <p><strong>Smart contract</strong>, sem misticismo: <strong>código que roda na plataforma e executa sozinho quando as condições combinadas se realizam</strong>. Não é "contrato" jurídico nem é "inteligente" — é cláusula <em>autoexecutável</em>. A vantagem não é esperteza: é que <strong>ninguém precisa confiar que o outro vai cumprir</strong>, porque o cumprimento é o próprio código, no livro que ambos enxergam.</p>
+    <p><strong>DvP (Delivery versus Payment)</strong> — entrega e pagamento <strong>condicionados um ao outro</strong>: ou os dois, ou nenhum. E atenção: <strong>DvP não é novidade do Drex</strong> — o <strong>Selic</strong> já faz DvP com títulos públicos há décadas, e é por isso que é seguro. A novidade é <strong>estender o DvP a ativos que hoje não estão em nenhum sistema de liquidação</strong>: imóvel, veículo, recebível, energia, carbono — coisas que hoje se resolvem no cartório, no Detran ou no papel.</p>
+    <p class="muted">Primo do DvP: <strong>PvP (Payment versus Payment)</strong>, usado em câmbio, em que as duas pernas são pagamentos em moedas diferentes.</p>
+    <div class="table-scroll">
+    <table>
+      <tr><th>A compra do apartamento</th><th>Hoje</th><th>No desenho do Drex</th></tr>
+      <tr><td>Garantia</td><td>tabelião, escritura, cheque administrativo, escrow, seguro de título</td><td>o próprio código: ativo tokenizado e dinheiro presos ao contrato</td></tr>
+      <tr><td>Intervalo</td><td><strong>dias ou semanas</strong> entre pagar e registrar</td><td><strong>nenhum</strong></td></tr>
+      <tr><td>Risco de contraparte</td><td>real — o outro pode não cumprir, vender duas vezes, ter dívida oculta</td><td><strong>eliminado na liquidação</strong> — a troca é indivisível</td></tr>
+      <tr><td>Execução</td><td>humana, sequencial, com fé pública</td><td><strong>atômica</strong>: token do imóvel → comprador e Drex → vendedor, no mesmo evento</td></tr>
+    </table>
+    </div>
+    <div class="tip">💡 DvP é <strong>atomicidade</strong> (o "A" do ACID) aplicada às duas pernas de uma troca. Hoje seria preciso um 2PC entre o banco e o cartório, com um coordenador em quem ambos confiassem — não existe, e por isso o mundo usa <em>tabelião como coordenador humano de commit</em>: lento, caro, falível. A aposta do Drex: <strong>traga os dois registros para a mesma plataforma e o commit atômico volta a ser possível</strong>, com o smart contract como coordenador. Frase para a prova: <strong>ou as duas pernas acontecem, ou nenhuma — não existe estado intermediário.</strong></div>
+    <p><strong>Tokenizar</strong> é o pré-requisito: <strong>representar um ativo real como registro na plataforma</strong>, para que possa ser transferido, fracionado e programado. Sem o imóvel tokenizado, não há o que entregar atomicamente — por isso a agenda de tokenização (seção 7) anda colada à do Drex.</p>
+    <p><strong>Outros efeitos cobráveis:</strong> <strong>fracionamento</strong> (1/100 de um imóvel — democratiza o acesso), <strong>colateral programável</strong> (garantia que se libera sozinha na quitação), <strong>menos intermediários</strong> e um ganho silencioso: <strong>menos capital regulatório parado</strong>, porque capital existe em boa parte para cobrir risco de contraparte — e sem intervalo não há esse risco.</p>
+    <div class="trap">🪤 O Drex <strong>não elimina o cartório nem o banco</strong> — muda o <em>papel</em> deles: alguém continua tendo que atestar que aquele token <em>é</em> aquele imóvel e que o vendedor <em>é</em> o dono (o <strong>problema do oráculo</strong>: a atomicidade garante a troca dos registros, <strong>não</strong> a veracidade do que representam). E: liquidação <strong>atômica ≠ instantânea</strong>. "Atômica" é <strong>indivisibilidade</strong> (tudo ou nada); "instantânea" é <strong>velocidade</strong>. O Pix é instantâneo e <em>não</em> é atômico entre duas pernas — ele só tem uma perna.</div>
+  </div>
+
+  <h3>4.5 Marco legal dos criptoativos</h3>
+  <p><strong>Marco legal dos criptoativos:</strong> Lei 14.478/2022 — o <strong>Bacen</strong> é o regulador das prestadoras de serviços de ativos virtuais (VASPs); a <strong>CVM</strong> cuida quando o token for valor mobiliário.</p>
+  <div class="card">
+    <p><strong>O que a lei fez:</strong></p>
+    <ul>
+      <li>Definiu <strong>ativo virtual</strong>: representação digital de valor negociável/transferível por meio eletrônico, usada para pagamento ou investimento. <strong>Exclui expressamente</strong> a moeda nacional, moedas estrangeiras, a moeda eletrônica (Lei 12.865) e o que já seja <strong>valor mobiliário</strong>.</li>
+      <li>Criou a <strong>VASP</strong> (prestadora de serviços de ativos virtuais — exchanges, custodiantes) e a submeteu a <strong>autorização prévia</strong>.</li>
+      <li>Fixou <strong>diretrizes de conduta</strong>: governança, segurança da informação, <strong>PLD/FT</strong> e <strong>segregação patrimonial</strong> dos recursos de clientes.</li>
+      <li>Criou o crime de <strong>fraude com ativos virtuais</strong> (estelionato qualificado) e agravou penas de lavagem com ativos virtuais.</li>
+    </ul>
+    <p><strong>O que ela NÃO fez:</strong> <strong>não deu curso legal</strong> a cripto; <strong>não proibiu</strong> nada (ao contrário — trouxe para dentro do perímetro); <strong>não garantiu</strong> recursos: cripto <strong>não tem FGC</strong>, e o risco de mercado continua do investidor.</p>
+    <div class="table-scroll">
+    <table>
+      <tr><th>Regulador</th><th>Quando entra</th><th>Exemplo</th></tr>
+      <tr><td><strong>Bacen</strong></td><td>ativo virtual como <strong>meio de pagamento/troca</strong> e a atividade das <strong>VASPs</strong></td><td>exchange que negocia e custodia; token de pagamento</td></tr>
+      <tr><td><strong>CVM</strong></td><td>quando o token <strong>for valor mobiliário</strong></td><td>token que promete rendimento de um empreendimento; oferta pública</td></tr>
+      <tr><td><strong>COAF</strong></td><td>inteligência financeira, comunicação de operações suspeitas</td><td>PLD/FT no ecossistema</td></tr>
+      <tr><td><strong>Receita Federal</strong></td><td>obrigações acessórias e tributação</td><td>declaração de operações com cripto</td></tr>
+    </table>
+    </div>
+    <p class="muted">O Bacen foi designado responsável pela regulação da lei e vem editando a <strong>regulamentação infralegal das VASPs</strong> — autorização, capital, governança, segregação de recursos de clientes, regras para stablecoins e transferência de ativos. Para prova, guarde o <em>desenho</em>: <strong>atividade regulada, com autorização prévia e supervisão do Bacen</strong>, e a fatia da CVM quando houver valor mobiliário.</p>
+    <div class="tip">💡 <strong>O critério da CVM não é a tecnologia — é a essência econômica.</strong> Não importa se está em blockchain; importa se aquilo é, materialmente, um <em>contrato de investimento coletivo</em>: investimento em dinheiro, em empreendimento comum, com <strong>expectativa de lucro derivada do esforço de terceiros</strong>. Se for, é valor mobiliário e valem as regras de oferta pública. Chamar de "token" não muda nada: <strong>substância sobre forma</strong>.</div>
+    <div class="trap">🪤 "A Lei 14.478/2022 regulamentou o Bitcoin como moeda" — <strong>errado</strong>: regulou <em>as prestadoras</em>, não o ativo, e não deu curso legal. "Toda cripto é da CVM" — <strong>errado</strong>: só quando for valor mobiliário; a regra é <strong>Bacen</strong>. "O Drex é regulado pela Lei 14.478" — <strong>errado</strong>: o Drex é o <em>real</em>, e a lei <strong>exclui expressamente</strong> a moeda nacional do conceito de ativo virtual.</div>
+  </div>
+
+  <h2 id="sec-5-instituicoes-de-pagamento-e-fintechs">5. Instituições de pagamento e fintechs</h2>
+
+  <h3>5.1 O problema — a licença bancária era tudo ou nada</h3>
+  <div class="card">
+    <p>Até pouco tempo, para oferecer <em>qualquer</em> serviço financeiro você precisava ser <strong>banco</strong> — e ser banco é caríssimo: capital mínimo alto, compliance, auditoria, Basileia, supervisão pesada. Faz sentido: <strong>quem guarda o depósito do público e o empresta pode derrubar o sistema se quebrar</strong>.</p>
+    <p>O efeito colateral era absurdo: quem queria apenas <strong>oferecer uma carteira digital</strong> — sem emprestar, sem captar, sem alavancagem, sem criar moeda — precisava da mesma licença de um banco múltiplo. <strong>Regulação desproporcional ao risco</strong>: barrava a inovação sem proteger ninguém. A resposta foi <strong>fatiar a licença</strong>: figuras menores, cada uma autorizada a fazer <em>uma coisa</em>, com exigências <strong>proporcionais ao risco daquela coisa</strong>.</p>
+    <div class="tip">💡 É o <strong>princípio do menor privilégio</strong> aplicado a licença: cada instituição recebe só as permissões da atividade que exerce e carrega só os requisitos correspondentes. Um monólito com root (banco múltiplo) × serviços com escopo restrito (IP, SCD, SEP). A pergunta que resolve qualquer questão desta seção é sempre a mesma: <strong>ela guarda dinheiro do público? empresta? cria moeda?</strong> A resposta <em>deduz</em> a regra — você não precisa decorar.</div>
+  </div>
+
+  <h3>5.2 A tabela — e o que cada linha esconde</h3>
   <div class="table-scroll">
   <table>
     <tr><th>Figura</th><th>O que faz</th><th>Pode captar depósito?</th></tr>
@@ -80,9 +515,68 @@
     <tr><td><strong>Banco digital</strong></td><td>é banco (múltiplo/comercial) sem agência física</td><td>✅ sim</td></tr>
   </table>
   </div>
+
+  <div class="card">
+    <p><strong>IP.</strong> Criada pela <strong>Lei 12.865/2013</strong>. Ela <strong>não é instituição financeira</strong> — o que parece absurdo quando a IP tem 90 milhões de clientes, mas tem explicação. O que define juridicamente uma <strong>instituição financeira</strong> (Lei 4.595/1964) é a <strong>coleta, intermediação e aplicação de recursos financeiros de terceiros</strong> — ou seja, <em>captar do público e emprestar</em>. Isso é o que cria moeda escritural e gera risco sistêmico. A IP recebe seu dinheiro, <strong>guarda</strong> e <strong>não empresta</strong> — logo, não se enquadra. Mas <strong>é autorizada, regulada e supervisionada pelo Bacen</strong>, porque movimenta pagamentos e integra o SPB. <em>Não ser instituição financeira não é ser desregulada.</em></p>
+    <div class="table-scroll">
+    <table>
+      <tr><th>Modalidade de IP</th><th>O que faz</th><th>Exemplo</th></tr>
+      <tr><td><strong>Emissor de moeda eletrônica</strong></td><td><strong>conta pré-paga</strong>: você deposita antes e gasta o que tem</td><td>carteiras digitais, vale-refeição</td></tr>
+      <tr><td><strong>Emissor pós-pago</strong></td><td><strong>conta pós-paga</strong>: gasta e paga depois (cartão de crédito)</td><td>emissoras não bancárias</td></tr>
+      <tr><td><strong>Credenciadora</strong></td><td>habilita o <strong>lojista</strong>, captura a transação e o liquida</td><td>Cielo, Rede, Stone</td></tr>
+      <tr><td><strong>ITP</strong></td><td>inicia o pagamento <strong>sem deter recursos</strong> nem manter conta (3.4)</td><td>iniciadores do Open Finance</td></tr>
+    </table>
+    </div>
+    <p><strong>A segregação — o coração da proteção.</strong> Os recursos de <strong>moeda eletrônica</strong> devem ser <strong>integralmente</strong> depositados em conta no <strong>Bacen</strong> ou aplicados em <strong>títulos públicos federais</strong>. E, por <strong>determinação legal</strong>, esses recursos <strong>não se confundem com o patrimônio da IP</strong>, <strong>não respondem por dívidas dela</strong>, <strong>não podem ser dados em garantia</strong> e <strong>não entram na massa falida</strong>.</p>
+    <div class="table-scroll">
+    <table>
+      <tr><th></th><th>Depósito à vista (banco)</th><th>Conta de pagamento pré-paga (IP)</th></tr>
+      <tr><td>Natureza</td><td><strong>moeda escritural</strong> — você é <em>credor</em> do banco</td><td><strong>moeda eletrônica</strong> — o recurso é <em>seu</em>, custodiado</td></tr>
+      <tr><td>O que fazem com ele</td><td><strong>emprestam</strong> (é o negócio deles)</td><td><strong>não emprestam</strong> — fica no Bacen ou em título público</td></tr>
+      <tr><td>Se quebra</td><td>você é credor na massa falida — daí o <strong>FGC</strong></td><td>o dinheiro <strong>não entra na massa</strong> — é seu, segregado</td></tr>
+      <tr><td>Precisa de FGC?</td><td><strong>sim</strong></td><td><strong>não</strong> — a proteção vem da <em>segregação</em></td></tr>
+      <tr><td>Cria moeda?</td><td><strong>sim</strong> (multiplicador)</td><td><strong>não</strong> — é 1:1 com o que entrou</td></tr>
+    </table>
+    </div>
+    <div class="tip">💡 Depósito bancário é <em>ponteiro</em>: o banco pegou o dinheiro, pôs para trabalhar, e você tem uma <em>promessa</em>. Conta de pagamento é <em>cópia isolada</em>: o valor está lá, sem alavancagem. É por isso que a IP não precisa de FGC — <strong>o FGC existe para cobrir o risco de o banco ter emprestado o seu dinheiro e não conseguir devolver</strong>. Se ninguém emprestou, não há o que garantir.</div>
+  </div>
+
+  <div class="card">
+    <p><strong>SCD.</strong> A palavra que resolve tudo é <strong>próprio</strong>: empresta <strong>capital próprio</strong>, exclusivamente por <strong>plataforma eletrônica</strong>, e <strong>não capta do público</strong>. <strong>Por que a regra é mais leve?</strong> Porque ela arrisca <strong>o dinheiro dela</strong>: se quebrar por emprestar mal, <strong>quem perde são os sócios</strong> — não há depositante lesado, não há corrida, não há risco sistêmico.</p>
+    <ul>
+      <li><strong>Também pode</strong>, conforme a regulamentação: <strong>ceder/vender</strong> os créditos que originou, atuar como <strong>correspondente</strong>, prestar <strong>análise de crédito</strong>, <strong>emitir moeda eletrônica</strong> e distribuir <strong>seguro</strong> ligado às operações.</li>
+      <li><strong>Não pode</strong>: <strong>captar do público</strong> (nem depósito, nem CDB, nem LCI) e participar do capital de instituição financeira.</li>
+    </ul>
+    <p><strong>SEP.</strong> <strong>Peer-to-peer</strong> puro: é <strong>plataforma</strong>, não credora — conecta quem tem dinheiro a quem precisa, formaliza e opera a cobrança. <strong>O risco de inadimplência é do credor</strong>, integralmente.</p>
+    <ul>
+      <li><strong>A regra de ouro:</strong> a SEP <strong>não pode assumir o risco de crédito</strong> — nem com capital próprio, nem por garantia, nem por coobrigação. Se garantisse, estaria, na essência, <em>captando do público e emprestando</em> — intermediação financeira sem licença de banco. <strong>A vedação de garantia é o que impede a SEP de virar banco disfarçado.</strong></li>
+      <li><strong>Limite de exposição:</strong> a regulamentação limita quanto <strong>um credor</strong> pode emprestar a <strong>um mesmo devedor</strong> na mesma plataforma (em regra, <strong>R$ 15 mil</strong>) — proteção do investidor PF contra concentração.</li>
+    </ul>
+    <div class="tip">💡 <strong>SCD × SEP em uma pergunta:</strong> <em>de quem é o dinheiro emprestado?</em> <strong>SCD = dela</strong> (balanço próprio, risco dela); <strong>SEP = de terceiros</strong> (é só o encanamento; risco do credor). Em TI: SCD <em>executa</em>; SEP é <em>middleware</em> — casa as pontas e não guarda estado de risco. Ambas vêm da <strong>Resolução CMN 4.656/2018</strong>, ambas são supervisionadas pelo Bacen e ambas <strong>são instituições financeiras</strong> — repare: diferente da IP, elas <em>intermedeiam crédito</em>.</div>
+    <p><strong>Banco digital.</strong> Não existe "licença de banco digital": <strong>é banco</strong> (comercial ou múltiplo) que <strong>escolheu não ter agência</strong>. <strong>Digital é modelo de atendimento, não categoria jurídica.</strong> Ele capta depósito à vista, empresta, cria moeda escritural, tem <strong>FGC</strong>, cumpre <strong>Basileia</strong> e responde a toda a regulação bancária — mesmas obrigações do banco de esquina.</p>
+    <div class="trap">🪤 <strong>Nem toda fintech "de conta" é banco digital.</strong> Muitas nasceram como <strong>IP</strong> (conta de pagamento, sem depósito, sem FGC) e só depois obtiveram licença bancária. Na prova o que decide é a <strong>autorização</strong>, não a marca. A pergunta que resolve: <strong>capta depósito à vista?</strong> Se sim, é banco (FGC, cria moeda). Se não, é IP (segregação, sem FGC, não cria moeda).</div>
+  </div>
+
   <div class="trap">🪤 IP <strong>não é</strong> instituição financeira (não intermedia crédito nem capta depósito), mas <strong>é autorizada e supervisionada pelo Bacen</strong>. E o dinheiro na conta de pagamento é segregado — não entra na massa falida da empresa.</div>
 
-  <h2>5. Sistemas de pagamentos e liquidação</h2>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Figura</th><th>É inst. financeira?</th><th>Capta depósito?</th><th>Empresta?</th><th>Dinheiro de quem?</th><th>FGC?</th></tr>
+    <tr><td><strong>Banco (inclusive digital)</strong></td><td>✅</td><td>✅</td><td>✅</td><td>do público</td><td>✅</td></tr>
+    <tr><td><strong>IP</strong></td><td>❌</td><td>❌</td><td>❌</td><td>do cliente, segregado</td><td>❌ (não precisa)</td></tr>
+    <tr><td><strong>SCD</strong></td><td>✅</td><td>❌</td><td>✅ capital <strong>próprio</strong></td><td>dos sócios</td><td>❌</td></tr>
+    <tr><td><strong>SEP</strong></td><td>✅</td><td>❌</td><td>❌ — <strong>conecta</strong></td><td>do credor P2P</td><td>❌</td></tr>
+  </table>
+  </div>
+  <p class="muted">Todas: <strong>autorizadas e supervisionadas pelo Bacen</strong>. Nenhuma escapa do perímetro — o que muda é a <em>intensidade</em> da exigência, proporcional ao risco.</p>
+
+  <h2 id="sec-6-sistemas-de-pagamentos-e-liquidacao">6. Sistemas de pagamentos e liquidação</h2>
+  <div class="card">
+    <p><strong>Como era até 2002.</strong> As transferências entre bancos eram liquidadas <strong>no dia seguinte, por saldo líquido</strong>. Durante o dia inteiro os bancos acumulavam obrigações entre si <strong>sem lastro</strong>. Se um banco grande quebrasse no meio do dia, os outros ficavam com um rombo não previsto — e quem socorria, para evitar o dominó, era o <strong>Banco Central</strong>. Ou seja: <strong>o risco sistêmico estava no colo do contribuinte.</strong></p>
+    <p><strong>A reforma de 2002</strong> mudou isso com uma frase: <strong>o risco tem que ficar com quem o assume</strong>. Criou-se o <strong>STR</strong>, com <strong>LBTR</strong> e a regra "sem saldo, não passa". Os bancos passaram a gerenciar <strong>liquidez intradia</strong> e o Bacen deixou de ser segurador implícito. É a base de tudo que veio depois — inclusive da lógica pré-fundeada da conta PI (2.3), que é a mesma ideia levada ao 24/7.</p>
+    <div class="tip">💡 Foi a troca de um modelo <em>otimista</em> (processa agora, concilia depois, torce) por um <em>pessimista</em> (valida o saldo antes de cada operação, rejeita se não houver). Custa mais recurso parado; elimina a classe inteira de falhas em que "descobre-se no fim do dia que não fecha".</div>
+  </div>
+
   <div class="table-scroll">
   <table>
     <tr><th>Sistema</th><th>Função</th></tr>
@@ -94,18 +588,175 @@
     <tr><td><strong>CIP</strong></td><td>compensação de boletos e TEDs (privada)</td></tr>
   </table>
   </div>
-  <div class="tip">💡 Cuidado com o nome duplo: <strong>Selic</strong> é ao mesmo tempo a <em>taxa</em> básica de juros e o <em>sistema</em> de custódia de títulos públicos (a taxa nasce das operações compromissadas registradas nele).</div>
 
-  <h2>6. Atualidades — o que está no radar</h2>
+  <div class="card">
+    <p><strong>SPB.</strong> Não é software: é o <strong>conjunto</strong> de entidades, sistemas e procedimentos de transferência de fundos e ativos no país. Quem regula e supervisiona é o <strong>Bacen</strong> (com a CVM na parte de valores mobiliários). Base legal: <strong>Lei 10.214/2001</strong>, que consagrou a ideia central — as câmaras assumem a <strong>posição de contraparte central</strong> e as garantias prestadas são <strong>impenhoráveis</strong> e não se sujeitam a concurso de credores; sem isso, a falência de um participante travaria a câmara inteira.</p>
+    <p><strong>STR — o coração.</strong> Operado pelo <strong>Bacen</strong>, desde <strong>2002</strong>. <strong>LBTR</strong>: liquida ordem a ordem, em <strong>Reservas Bancárias</strong>/<strong>Conta de Liquidação</strong>, de forma <strong>final e irrevogável</strong>. Passam por ele: <strong>TEDs</strong>, operações do Bacen com o mercado (redesconto, compulsório), arrecadação federal e — importante — <strong>os saldos líquidos apurados pelas câmaras</strong>. A câmara <em>compensa</em>; quem <em>liquida</em> é sempre o STR. <strong>Toda liquidação interbancária termina no STR.</strong></p>
+    <div class="table-scroll">
+    <table>
+      <tr><th></th><th>STR</th><th>SPI</th></tr>
+      <tr><td>Liquidação</td><td>bruta, tempo real</td><td>bruta, tempo real (<strong>igual</strong>)</td></tr>
+      <tr><td>Horário</td><td><strong>horário de funcionamento</strong>, dias úteis</td><td><strong>24/7/365</strong></td></tr>
+      <tr><td>Conta</td><td>Reservas Bancárias / Conta de Liquidação</td><td><strong>Conta PI</strong> (pré-fundeada, exclusiva)</td></tr>
+      <tr><td>Perfil</td><td>grandes valores, baixo volume</td><td><strong>varejo</strong>: valores pequenos, volume gigantesco</td></tr>
+      <tr><td>Instrumento</td><td>TED e a liquidação das câmaras</td><td><strong>Pix</strong></td></tr>
+      <tr><td>Crédito intradia</td><td>existe (concedido pelo Bacen, com garantia em título)</td><td><strong>não existe</strong> — sem saldo, rejeita</td></tr>
+    </table>
+    </div>
+    <p><strong>Selic (sistema) — DvP de título público.</strong> <strong>Depositário central</strong> dos títulos públicos federais; liquida em <strong>tempo real</strong>, no modelo <strong>entrega contra pagamento</strong>: o título só muda de dono se o dinheiro mudar, no mesmo evento. Ou seja — <strong>o Selic já faz liquidação atômica</strong> (4.4), há décadas. É <em>essa</em> propriedade que o Drex quer estender a imóveis e recebíveis. Faça essa conexão na prova: mostra que você entendeu que a novidade do Drex é o <strong>escopo de ativos</strong>, não o conceito de DvP.</p>
+    <p><strong>B3 (ex-Cetip).</strong> <strong>Registro, custódia e liquidação</strong> de <strong>títulos privados</strong> (CDB, LCI, LCA, debênture, CRI, CRA) e <strong>ativos de bolsa</strong> (ações, derivativos, câmbio). Atua como <strong>contraparte central (CCP)</strong>: interpõe-se entre comprador e vendedor e <strong>assume o risco de contraparte</strong> — por isso exige garantias e margem. Na bolsa, a liquidação é <strong>líquida e diferida</strong>, com o resultado liquidado no <strong>STR</strong>.</p>
+    <p><strong>CIP.</strong> <strong>Câmara privada</strong> (hoje sob a marca <em>Nuclea</em>), não é do Bacen. Faz a <strong>compensação</strong> de <strong>boletos</strong> e do encanamento de varejo — apura saldos líquidos e envia o resultado para liquidação no <strong>STR</strong>. Liquidação <strong>líquida e diferida</strong>. Também opera registros como o de <strong>recebíveis de cartão</strong>.</p>
+    <p><strong>Compe.</strong> A Centralizadora da Compensação de <strong>Cheques</strong>: compensa por saldo líquido, liquidando no STR. Sobrevive porque o cheque sobrevive. Questão falou em <em>cheque</em> → <strong>Compe</strong>.</p>
+  </div>
+
+  <div class="card">
+    <div class="table-scroll">
+    <table>
+      <tr><th>O que se liquida</th><th>Onde</th><th>Como</th><th>Quem opera</th></tr>
+      <tr><td>TED</td><td><strong>STR</strong></td><td>bruta, tempo real</td><td>Bacen</td></tr>
+      <tr><td>Pix</td><td><strong>SPI</strong></td><td>bruta, tempo real, 24/7</td><td>Bacen</td></tr>
+      <tr><td>Título público federal</td><td><strong>Selic</strong></td><td>bruta, tempo real, <strong>DvP</strong></td><td>Bacen</td></tr>
+      <tr><td>Título privado / ação / derivativo</td><td><strong>B3</strong></td><td>líquida diferida, com <strong>CCP</strong></td><td>B3 (privada)</td></tr>
+      <tr><td>Boleto</td><td><strong>CIP</strong> (Nuclea) → STR</td><td>líquida diferida</td><td>privada</td></tr>
+      <tr><td>Cheque</td><td><strong>Compe</strong> → STR</td><td>líquida diferida</td><td>privada</td></tr>
+    </table>
+    </div>
+    <p><strong>Duas regras que fecham tudo:</strong> (1) <strong>o Bacen opera o núcleo</strong> (STR, SPI, Selic) e <strong>o privado opera as câmaras</strong> (B3, CIP/Nuclea, Compe); (2) <strong>toda câmara compensa, mas quem liquida o resultado é o STR</strong> — a câmara nunca é o fim da linha.</p>
+  </div>
+
+  <div class="tip">💡 Cuidado com o nome duplo: <strong>Selic</strong> é ao mesmo tempo a <em>taxa</em> básica de juros e o <em>sistema</em> de custódia de títulos públicos (a taxa nasce das operações compromissadas registradas nele).</div>
+  <div class="card">
+    <ul>
+      <li><strong>Selic (sistema):</strong> Sistema Especial de Liquidação e de Custódia — onde os títulos públicos federais são registrados, custodiados e negociados com DvP.</li>
+      <li><strong>Selic <em>meta</em>:</strong> o número que o <strong>Copom</strong> define a cada reunião. É um <strong>alvo</strong> de política monetária, não um preço praticado.</li>
+      <li><strong>Selic <em>efetiva</em> (over):</strong> a taxa <strong>média</strong> das <strong>operações compromissadas de um dia</strong> lastreadas em <strong>títulos públicos federais</strong>, registradas <strong>no sistema Selic</strong>. É número <em>observado</em>, apurado pelo Bacen a partir das operações reais.</li>
+    </ul>
+    <p>Ou seja: <strong>o Copom define a meta; o Bacen atua no mercado (compromissadas) para que a taxa efetiva fique perto dela; a efetiva é medida nas operações registradas no sistema Selic.</strong> A taxa se chama Selic porque <strong>é medida no sistema Selic</strong> — o nome é a origem do dado.</p>
+    <div class="trap">🪤 "O sistema Selic define a taxa Selic" — <strong>errado</strong>: quem define a <em>meta</em> é o <strong>Copom</strong>; o sistema apenas <strong>registra</strong> as operações de onde a taxa <em>efetiva</em> é calculada. E: o Selic custodia <strong>título público federal</strong>; título <strong>privado</strong> é <strong>B3</strong>.</div>
+  </div>
+
+  <h2 id="sec-7-atualidades-o-que-esta-no-radar">7. Atualidades — o que está no radar</h2>
+  <p class="muted">Atualidades não se estuda como lista, e sim como <strong>tendência com causa</strong>: a banca descreve um fenômeno e pede a consequência, ou planta um absoluto na alternativa.</p>
   <ul>
     <li><strong>Digitalização:</strong> os canais digitais (sobretudo mobile) respondem pela maior parte das transações bancárias; agências migram para consultoria/negócios complexos.</li>
+  </ul>
+  <div class="card">
+    <p>A migração para o mobile não é só preferência: é <strong>custo</strong> — uma transação em agência custa ordens de grandeza mais que uma no app, e o Pix esvaziou o que restava de transacional. A consequência estratégica é o que cai: a agência <strong>não desaparece, muda de função</strong>. Some o <em>transacional</em> (pagar, transferir, sacar) e sobra o <strong>relacional e o complexo</strong>: crédito imobiliário, investimentos, previdência, câmbio, agro, empresas. O modelo vira <strong>menos agências, mais especializadas</strong>, com o funcionário como <strong>consultor</strong>, não caixa. Palavras-chave: <strong>hub de negócios</strong> e o par <strong>digitalização + humanização</strong> (o digital resolve o simples; a pessoa resolve o que exige confiança).</p>
+    <p class="muted">Efeito colateral que também cai: <strong>exclusão digital</strong> — idosos e populações sem conectividade dependem do canal físico, daí a ênfase em <strong>correspondentes bancários</strong> e capilaridade. "Fechar tudo" não é resposta aceita.</p>
+  </div>
+  <ul>
     <li><strong>IA generativa nos bancos:</strong> atendimento, análise de crédito, detecção de fraude e produtividade interna. Riscos cobrados em prova: <strong>alucinação</strong>, viés/discriminação algorítmica, vazamento de dados e a exigência de <strong>supervisão humana</strong> e governança de modelos. A LGPD garante ao titular a <strong>revisão de decisões automatizadas</strong>.</li>
+  </ul>
+  <div class="card">
+    <div class="table-scroll">
+    <table>
+      <tr><th>Uso</th><th>Ganho</th><th>Risco dominante</th></tr>
+      <tr><td><strong>Atendimento</strong></td><td>escala, 24/7, custo por atendimento</td><td><strong>alucinação</strong> — informar taxa ou regra errada gera dano e responsabilidade do banco</td></tr>
+      <tr><td><strong>Análise de crédito</strong></td><td>mais dados, mais rápido, mais inclusão</td><td><strong>viés e discriminação algorítmica</strong>; falta de <strong>explicabilidade</strong></td></tr>
+      <tr><td><strong>Fraude e PLD</strong></td><td>vê padrão que humano não vê, em tempo real</td><td><strong>falso positivo</strong> (bloquear cliente legítimo) e falso negativo</td></tr>
+      <tr><td><strong>Produtividade interna</strong></td><td>velocidade</td><td><strong>vazamento</strong> — dado de cliente em modelo externo é incidente de segurança e de LGPD</td></tr>
+    </table>
+    </div>
+    <ul>
+      <li><strong>Alucinação:</strong> resposta <em>plausível e falsa</em>, com a mesma confiança da certa. Num banco, é <strong>informação incorreta ao consumidor</strong>, com consequência jurídica.</li>
+      <li><strong>Viés:</strong> o modelo aprende do histórico; se o histórico discrimina (CEP, gênero, raça), ele <strong>reproduz e escala</strong> a discriminação com aparência de neutralidade matemática. É o risco mais grave em crédito.</li>
+      <li><strong>Opacidade:</strong> sem saber <em>por que</em> o modelo negou, o banco não justifica ao cliente nem ao regulador — e <strong>justificar é obrigação</strong>.</li>
+      <li><strong>Vazamento:</strong> dado de cliente em prompt externo é <strong>tratamento de dado pessoal</strong> e pode ser <strong>quebra de sigilo bancário</strong> (LC 105/2001) — lei mais antiga e mais dura que a LGPD.</li>
+      <li><strong>Risco de terceiro/concentração:</strong> depender de poucos fornecedores é risco operacional e de continuidade — e o Bacen tem regra sobre contratação de serviços relevantes de processamento e nuvem.</li>
+    </ul>
+    <p><strong>A resposta é governança, não proibição:</strong> <strong>humano no circuito</strong> para decisões que afetam direitos; <strong>inventário e ciclo de vida de modelos</strong>; <strong>monitoramento de deriva</strong>; <strong>testes de viés</strong>; <strong>trilha de auditoria</strong>; <strong>classificação do dado</strong> antes do uso; e enquadramento na estrutura de <strong>gestão de risco operacional</strong> já exigida pelo Bacen.</p>
+    <div class="tip">💡 <strong>Nuance de LGPD que separa o bom do ótimo.</strong> O <strong>art. 20</strong> garante ao titular <strong>solicitar a revisão</strong> de decisões tomadas unicamente com base em tratamento automatizado que afetem seus interesses — inclusive <strong>crédito</strong> e definição de perfil — e o controlador deve <strong>informar os critérios e procedimentos</strong> (respeitado o segredo comercial). Ponto fino: o dispositivo que <em>exigia que a revisão fosse feita por pessoa natural</em> foi <strong>vetado</strong>. Ou seja: existe <strong>direito à revisão</strong>; a <em>literalidade</em> do art. 20, após o veto, não impõe que ela seja humana. A <strong>expectativa regulatória e as boas práticas de governança</strong> apontam para supervisão humana — mas não diga que a LGPD a <em>obriga</em>.</div>
+    <div class="trap">🪤 Alternativas erradas garantidas: "o Bacen proibiu IA na análise de crédito" (não proibiu — <em>condiciona</em> a governança); "a IA dispensa supervisão humana em decisões de crédito" (o oposto do que a regulação espera); "a LGPD não se aplica a decisões automatizadas" (aplica-se, art. 20); "modelos são neutros porque são matemáticos" (falso — herdam o viés do dado de treino).</div>
+  </div>
+  <ul>
     <li><strong>Golpes e engenharia social:</strong> como os sistemas estão robustos, o elo atacado é o humano (falsa central, falso funcionário, WhatsApp clonado). Respostas: MED, limites noturnos, bloqueio cautelar, educação do cliente.</li>
+  </ul>
+  <div class="card">
+    <p><strong>A tese central:</strong> a infraestrutura é <strong>tecnicamente robusta</strong> — ninguém quebra a criptografia do SPI, forja mensagem ISO 20022 ou invade o DICT. Logo, o atacante <strong>migrou de alvo</strong>: ataca <strong>o usuário autorizado</strong>, para que <em>a própria vítima</em> faça a transação. Do ponto de vista do sistema, <strong>a transação é 100% legítima</strong>: dispositivo certo, biometria certa, titular certo. <strong>Não há controle técnico que a distinga de uma transação normal</strong> — e é essa frase que explica todos os controles da seção 2.8.</p>
+    <div class="table-scroll">
+    <table>
+      <tr><th>Golpe</th><th>Como funciona</th><th>Vetor psicológico</th></tr>
+      <tr><td><strong>Falsa central</strong></td><td>ligam alegando compra suspeita e pedem "transferir para conta segura"</td><td>medo + urgência + autoridade</td></tr>
+      <tr><td><strong>Falso funcionário</strong></td><td>"gerente/segurança" pede senha, cartão ou um Pix "de teste"</td><td>autoridade + confiança na marca</td></tr>
+      <tr><td><strong>WhatsApp clonado</strong></td><td>"mãe, mudei de número, me manda um Pix urgente"</td><td>afeto + urgência</td></tr>
+      <tr><td><strong>Falso emprego / prêmio</strong></td><td>promete algo e cobra taxa antecipada</td><td>ganância + esperança</td></tr>
+      <tr><td><strong>Mão fantasma</strong></td><td>convencem a instalar app de acesso remoto e operam a conta <em>já autenticada</em></td><td>socorro técnico</td></tr>
+      <tr><td><strong>Phishing / smishing</strong></td><td>link falso captura credencial ou instala malware</td><td>urgência + imitação de marca</td></tr>
+      <tr><td><strong>Sequestro-relâmpago</strong></td><td>coação física para transferir</td><td>violência direta</td></tr>
+    </table>
+    </div>
+    <p><strong>Por que o Pix virou o instrumento preferido do golpe</strong> — e isto é análise, não crítica: ele é <strong>instantâneo</strong> (sem janela para cancelar), <strong>irrevogável</strong> (sem chargeback), <strong>24/7</strong> (dá para agir quando ninguém confere) e <strong>universal</strong>. <em>São exatamente as virtudes dele.</em> A mesma propriedade que faz o lojista confiar no crédito imediato impede a vítima de reverter — <strong>não dá para ter uma sem a outra</strong>. É por isso que a resposta não pôde ser "tornar o Pix reversível", e sim <strong>MED + limites + atrasos + marcação</strong>. Articular esse <em>trade-off</em> é resposta de discursiva.</p>
+    <p><strong>Camadas de defesa:</strong> <strong>regulatória</strong> (MED, limite noturno com carência, bloqueio cautelar, marcação no DICT); <strong>da instituição</strong> (antifraude comportamental, reconhecimento de dispositivo, atrito adicional em transação atípica); <strong>do ecossistema</strong> (bases compartilhadas de contas e dispositivos suspeitos); e <strong>do cliente</strong> — <strong>educação financeira e digital</strong>, o único controle que age <em>antes</em>. Daí cair em prova: <strong>o banco nunca liga pedindo senha, nunca pede Pix "de teste" e nunca pede transferência para "conta segura"</strong>. Conta segura <strong>não existe</strong>.</p>
+    <div class="trap">🪤 "O Pix é inseguro" — <strong>não</strong>: o <em>arranjo</em> é seguro; o vetor é o <strong>usuário</strong>. "O MED devolve sempre" — não (2.7). "O banco é sempre responsável pelo golpe" — cuidado: depende do caso concreto e da existência de <strong>falha na prestação do serviço</strong> (a jurisprudência distingue <em>fortuito interno</em>, que responsabiliza, de <em>culpa exclusiva da vítima</em>). Alternativa com <strong>"sempre"</strong> ou <strong>"nunca"</strong> aqui é armadilha.</div>
+  </div>
+  <ul>
     <li><strong>Banking as a Service (BaaS) e embedded finance:</strong> empresas não financeiras oferecendo serviços bancários via API de um banco licenciado.</li>
+  </ul>
+  <div class="card">
+    <p><strong>O problema:</strong> uma varejista ou um app de mobilidade quer oferecer conta, cartão ou crédito. Tem <strong>marca, clientes e dados</strong>; não tem <strong>licença</strong> — e obter uma leva anos e capital. Do outro lado, um banco licenciado tem licença ociosa e quer volume. <strong>BaaS é o encaixe:</strong> o banco <strong>disponibiliza licença e infraestrutura via API</strong>; a empresa põe marca e distribuição. <strong>Embedded finance</strong> é o resultado visto pelo cliente: o serviço financeiro <strong>desaparece dentro</strong> da jornada não financeira — você paga a corrida e o pagamento aconteceu; o crédito é ofertado no checkout (BNPL); o seguro é contratado no app da loja. <strong>A distribuição sai do banco e vai para onde o cliente já está.</strong></p>
+    <div class="table-scroll">
+    <table>
+      <tr><th>Camada</th><th>Quem faz</th><th>Fica com</th></tr>
+      <tr><td><strong>Licença, risco, compliance, PLD</strong></td><td><strong>banco/IP licenciada</strong></td><td>a responsabilidade regulatória — <strong>que não se terceiriza</strong></td></tr>
+      <tr><td><strong>API, ledger, core</strong></td><td>o banco ou um provedor de BaaS</td><td>a infraestrutura</td></tr>
+      <tr><td><strong>Marca, cliente, experiência</strong></td><td><strong>a empresa não financeira</strong></td><td>o relacionamento</td></tr>
+    </table>
+    </div>
+    <div class="tip">💡 BaaS é <em>infraestrutura como serviço</em> aplicada a banco: a licença vira uma <strong>API multi-tenant</strong>. E tem exatamente o problema do modelo de responsabilidade compartilhada da nuvem: <strong>a empresa terceiriza a operação, mas o banco não terceiriza a responsabilidade</strong>. Se a parceira faz KYC ruim, quem responde perante o Bacen é <strong>a instituição licenciada</strong> — por isso o tema anda junto de <strong>risco de terceiros</strong>.</div>
+    <div class="trap">🪤 "No BaaS a empresa não financeira passa a ser regulada pelo Bacen" — <strong>errado</strong>: quem é autorizada e responsável é a <strong>instituição licenciada</strong>. A parceira <strong>não</strong> pode exercer atividade privativa por conta própria — captar ou emprestar em nome próprio sem licença é <strong>irregular</strong>. A licença não se empresta: contrata-se a <em>prestação de serviço sob a licença de quem a tem</em>.</div>
+  </div>
+  <ul>
     <li><strong>Tokenização e ativos digitais:</strong> representar ativos reais (imóveis, recebíveis) em DLT — a agenda do Drex.</li>
+  </ul>
+  <div class="card">
+    <ul>
+      <li><strong>O que se tokeniza:</strong> <strong>recebíveis</strong>, <strong>imóveis</strong> e fundos imobiliários, <strong>crédito privado</strong>, <strong>crédito de carbono</strong>, <strong>agronegócio</strong> (CPR — mercado enorme e pouco líquido), royalties e direitos.</li>
+      <li><strong>Os três ganhos que a banca cita:</strong> <strong>fracionamento</strong> (democratiza — 1/1000 de um galpão), <strong>liquidez</strong> (ativo antes intransferível ganha mercado secundário) e <strong>eficiência</strong> (menos intermediário, liquidação atômica, menos custo).</li>
+      <li><strong>O limite honesto:</strong> tokenizar <strong>não cria valor</strong> e <strong>não elimina o risco do ativo</strong> — recebível podre tokenizado continua podre, só circula mais rápido. E permanece o <strong>problema do oráculo</strong>: alguém <em>fora</em> da rede precisa garantir que o token corresponde ao ativo e que o emissor é o dono. A tecnologia garante a <em>transferência</em>, nunca a <em>verdade</em>.</li>
+      <li><strong>Regulação:</strong> token que na essência for <strong>valor mobiliário</strong> → <strong>CVM</strong>, com regras de oferta pública. Meio de pagamento ou atividade de VASP → <strong>Bacen</strong> (Lei 14.478/2022). <strong>Substância sobre forma.</strong></li>
+    </ul>
+  </div>
+  <ul>
     <li><strong>ASG/ESG e risco climático:</strong> o Bacen exige gerenciamento dos riscos social, ambiental e climático (Res. 4.945) e a divulgação do relatório <strong>GRSAC</strong>.</li>
   </ul>
+  <div class="card">
+    <p><strong>Por que um banco central se importa com clima?</strong> A resposta <strong>não é ambientalismo</strong> — é <strong>estabilidade financeira</strong>, que é o mandato dele:</p>
+    <ul>
+      <li><strong>Risco físico:</strong> seca destrói a safra → o produtor não paga o custeio → o banco toma o prejuízo. Enchente destrói o imóvel que era garantia → a garantia evaporou. <strong>Clima virou risco de crédito.</strong></li>
+      <li><strong>Risco de transição:</strong> mudam regulação, tecnologia ou mercado e ativos intensivos em carbono <strong>perdem valor</strong> (<em>ativos encalhados</em>); quem financiou fica com crédito deteriorado.</li>
+      <li><strong>Risco social:</strong> financiar quem usa trabalho análogo à escravidão, invade terra indígena ou desmata ilegalmente é <strong>risco legal e reputacional</strong> direto.</li>
+      <li><strong>Litígio e reputação:</strong> processos, embargo, boicote, <em>greenwashing</em> (anunciar sustentabilidade inexistente) — risco de conduta.</li>
+    </ul>
+    <p>Ou seja: o Bacen não pede que o banco seja bonzinho. Ele diz que <strong>risco socioambiental e climático é risco financeiro</strong> e, portanto, tem que estar <strong>dentro da estrutura de gerenciamento de riscos</strong>, como crédito, mercado, liquidez e operacional. <strong>É prudencial.</strong></p>
+    <div class="table-scroll">
+    <table>
+      <tr><th>Peça</th><th>O que exige</th></tr>
+      <tr><td><strong>PRSAC</strong> — Política de Responsabilidade Social, Ambiental e Climática (<strong>Res. CMN 4.945/2021</strong>)</td><td><strong>ter e divulgar</strong> a política, com princípios, diretrizes e governança, aprovada pelo conselho</td></tr>
+      <tr><td><strong>GRSAC</strong> — gerenciamento dos riscos social, ambiental e climático</td><td>identificar, mensurar, monitorar e mitigar esses riscos <strong>integrados à gestão de riscos</strong></td></tr>
+      <tr><td><strong>Relatório GRSAC</strong></td><td><strong>divulgação pública</strong> padronizada — permite <strong>comparação</strong> entre instituições</td></tr>
+    </table>
+    </div>
+    <p class="muted">Guarde os três blocos do relatório: <strong>governança</strong> (quem responde), <strong>estratégia</strong> (como o risco afeta o negócio, inclusive em cenários) e <strong>gerenciamento de riscos</strong> (processos e métricas). Ligado à agenda de <strong>sustentabilidade</strong> da <strong>Agenda BC#</strong>.</p>
+    <div class="trap">🪤 "ESG é ação voluntária de marketing" — <strong>errado</strong>: há <strong>norma do CMN/Bacen</strong>, com política e relatório obrigatórios. "O Bacen proíbe financiar setor poluente" — <strong>errado</strong>: exige <strong>gerenciar, mensurar e divulgar</strong>, não proíbe. De novo o padrão: <strong>a regulação brasileira condiciona; não proíbe.</strong></div>
+  </div>
+
   <div class="trap">🪤 Em Atualidades, alternativas <strong>absolutas</strong> ("dispensa revisão humana", "não apresenta riscos", "foi proibido pelo Bacen") quase sempre estão erradas. A regulação brasileira tende a <em>condicionar</em>, não a proibir.</div>
+
+  <div class="card">
+    <p><strong>O fio que costura o capítulo inteiro</strong> — se você guardar uma só coisa, guarde este padrão, porque ele responde questão que você nunca viu:</p>
+    <div class="table-scroll">
+    <table>
+      <tr><th>Tema</th><th>Problema</th><th>Resposta do regulador</th><th>Padrão</th></tr>
+      <tr><td><strong>Pix</strong></td><td>pagar era caro, lento e em horário comercial; o mercado não construiria o trilho aberto sozinho</td><td>o Bacen escreveu a regra <em>e</em> operou a infraestrutura</td><td>infraestrutura pública, aberta, obrigatória para os grandes</td></tr>
+      <tr><td><strong>Open Finance</strong></td><td>o dado do cliente, retido, virou barreira à concorrência</td><td>padrão de API + consentimento do titular</td><td>o dado é do cliente; o banco é depositário</td></tr>
+      <tr><td><strong>Drex</strong></td><td>dinheiro e ativo vivem em bases distintas; o intervalo custa caro</td><td>plataforma comum com DLT e smart contract</td><td>atomicidade — ou os dois, ou nenhum</td></tr>
+      <tr><td><strong>IP / SCD / SEP</strong></td><td>a licença era tudo ou nada e barrava inovação de baixo risco</td><td>fatiar a licença por atividade</td><td>regulação proporcional ao risco</td></tr>
+      <tr><td><strong>SPB / STR</strong></td><td>o risco intradia dos bancos acabava no colo do Bacen</td><td>LBTR e "sem saldo, não passa"</td><td>o risco fica com quem o assume</td></tr>
+      <tr><td><strong>IA, ESG, cripto</strong></td><td>tecnologia e externalidades novas</td><td>governança, mensuração, divulgação, autorização</td><td><strong>condicionar, não proibir</strong></td></tr>
+    </table>
+    </div>
+    <p>Repare como <strong>o Bacen constrói o trilho e o mercado constrói o vagão</strong> aparece em todos: no Pix (SPI × app do banco), no Open Finance (padrão × produto da fintech), no Drex (plataforma × depósito tokenizado). Quando a questão descrever algo que você nunca estudou, aposte no padrão: <strong>infraestrutura pública neutra, competição na camada de cima, exigência proporcional ao risco e <em>condicionar em vez de proibir</em></strong>.</p>
+  </div>
 
   <div class="tip">📇 Rotina de atualidades: 15 min, 2×/semana, no site do Bacen (notas à imprensa e notícias). Anote Selic e IPCA vigentes — a banca cobra o número do momento.</div>
 </div>

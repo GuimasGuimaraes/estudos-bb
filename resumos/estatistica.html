@@ -12,7 +12,60 @@
   <h1>📊 Probabilidade e Estatística</h1>
   <p class="sub">Cai pouco, mas <strong>não zerar nenhuma disciplina</strong> é regra do BB. O conteúdo é finito e mecânico — garanta o básico bem feito.</p>
 
-  <h2>1. Tipos de variáveis</h2>
+  <div class="card" id="sumario">
+    <h2 id="sec-sumario" style="margin-top:0">📑 Sumário</h2>
+    <ol style="columns:2;column-gap:28px">
+      <li><a href="#sec-0-o-vocabulario-que-trava-todo-mundo">0. O vocabulário que trava todo mundo</a></li>
+      <li><a href="#sec-1-tipos-de-variaveis">1. Tipos de variáveis</a></li>
+      <li><a href="#sec-2-medidas-de-posicao-tendencia-central">2. Medidas de posição (tendência central)</a></li>
+      <li><a href="#sec-3-separatrizes-quartis-decis-e-percentis">3. Separatrizes — quartis, decis e percentis</a></li>
+      <li><a href="#sec-4-assimetria-por-que-as-tres-medidas-discorda">4. Assimetria — por que as três medidas discordam</a></li>
+      <li><a href="#sec-5-medidas-de-dispersao">5. Medidas de dispersão</a></li>
+      <li><a href="#sec-6-probabilidade-os-fundamentos">6. Probabilidade — os fundamentos</a></li>
+      <li><a href="#sec-7-distribuicoes-de-probabilidade">7. Distribuições de probabilidade</a></li>
+      <li><a href="#sec-8-amostragem">8. Amostragem</a></li>
+      <li><a href="#sec-9-teorema-central-do-limite-e-erro-padrao">9. Teorema Central do Limite e erro padrão</a></li>
+      <li><a href="#sec-10-correlacao-e-regressao">10. Correlação e regressão</a></li>
+      <li><a href="#sec-fechando-o-mapa-da-materia">Fechando — o mapa da matéria</a></li>
+    </ol>
+    <p class="muted" style="margin-top:8px">Apostila longa de propósito — use o sumário para ir direto ao ponto. Cada 🪤 é uma pegadinha de banca; cada 💡 é um atalho de prova.</p>
+  </div>
+
+
+  <div class="card">
+    <p><strong>Como ler esta página.</strong> Ela não é uma lista de fórmulas para decorar. Cada medida aqui existe porque <em>alguém tinha um problema e precisou resolver</em>. Se você entender o problema, a fórmula vira consequência óbvia e você não precisa memorizar quase nada.</p>
+    <p>Vou usar o vocabulário que você já tem. Um conjunto de dados é uma <strong>tabela</strong>. Uma variável é uma <strong>coluna</strong>. Um registro é uma <strong>linha</strong>. Estatística descritiva é <code>GROUP BY</code>: pegar milhares de linhas e devolver <em>um número</em> que as represente. Probabilidade é o caminho inverso: dado o comportamento do todo, o que esperar de uma linha sorteada.</p>
+  </div>
+
+  <h2 id="sec-0-o-vocabulario-que-trava-todo-mundo">0. O vocabulário que trava todo mundo</h2>
+  <p>Antes de qualquer conta, quatro palavras. Bancas adoram trocá-las de lugar na alternativa e o candidato erra sem perceber.</p>
+
+  <div class="table-scroll">
+  <table>
+    <tr><th>Termo</th><th>O que é</th><th>Na sua cabeça de TI</th></tr>
+    <tr><td><strong>População</strong></td><td>TODOS os elementos de interesse</td><td>a tabela inteira, sem <code>WHERE</code></td></tr>
+    <tr><td><strong>Amostra</strong></td><td>um subconjunto da população, colhido para estudar</td><td><code>SELECT ... SAMPLE(1)</code> — você olha uma parte porque varrer tudo é caro</td></tr>
+    <tr><td><strong>Parâmetro</strong></td><td>número que descreve a <strong>população</strong>. Letras gregas: μ (média), σ (desvio), σ² (variância), p (proporção)</td><td>o valor verdadeiro, que você quase nunca conhece</td></tr>
+    <tr><td><strong>Estatística</strong> (ou estimador)</td><td>número que descreve a <strong>amostra</strong>. Letras latinas: x̄, s, s², p̂</td><td>o valor que você calculou — um <em>chute informado</em> sobre o parâmetro</td></tr>
+  </table>
+  </div>
+
+  <p>A frase que resume a disciplina inteira: <strong>você calcula uma estatística para adivinhar um parâmetro</strong>. A média da amostra (x̄) é o seu palpite sobre a média da população (μ). Toda a inferência — TCL, erro padrão, intervalo de confiança — só existe para responder "quão errado meu palpite pode estar?".</p>
+
+  <div class="tip">💡 Mnemônico que nunca falha: <strong>P</strong>arâmetro ↔ <strong>P</strong>opulação. <strong>E</strong>statística ↔ <strong>E</strong>amostra... não fecha. Então use o outro: <strong>grego = população</strong> (a coisa clássica, ideal, inatingível), <strong>latino = amostra</strong> (o que você mediu na prática).</div>
+
+  <p><strong>Censo × amostragem.</strong> Censo é medir a população inteira (o IBGE de 10 em 10 anos). Amostragem é medir uma parte. Censo não tem erro amostral — mas custa caro, demora, e às vezes é impossível (testar a vida útil de 100% das lâmpadas destrói o estoque inteiro). No banco: medir o tempo de fila de TODOS os clientes do ano é censo; medir 300 atendimentos sorteados é amostra.</p>
+
+  <h2 id="sec-1-tipos-de-variaveis">1. Tipos de variáveis</h2>
+  <p>Primeira pergunta de qualquer análise: <strong>que tipo de coisa é essa coluna?</strong> Isso determina o que você pode calcular. Não faz sentido tirar a média da coluna "agência" mesmo que a agência seja identificada por um número — e é exatamente aí que a banca pega você.</p>
+
+  <p>A árvore de decisão tem só dois níveis:</p>
+  <ol>
+    <li><strong>É número ou é categoria?</strong> Se responde "quanto?" → quantitativa. Se responde "qual?" / "de que tipo?" → qualitativa.</li>
+    <li>Se for <strong>categoria</strong>: existe uma ordem natural entre as opções? Sim → ordinal. Não → nominal.<br>
+        Se for <strong>número</strong>: você <em>conta</em> ou <em>mede</em>? Conta (valores isolados, aos saltos) → discreta. Mede (qualquer valor num intervalo, inclusive quebrado) → contínua.</li>
+  </ol>
+
   <div class="table-scroll">
   <table>
     <tr><th>Classe</th><th>Subtipo</th><th>Exemplo</th></tr>
@@ -22,9 +75,29 @@
     <tr><td>Contínua (medição, qualquer valor no intervalo)</td><td>salário, altura, tempo</td></tr>
   </table>
   </div>
+
+  <h3>Os quatro tipos, um a um</h3>
+
+  <p><strong>Qualitativa nominal.</strong> "Nominal" vem de <em>nome</em>: são rótulos puros, sem hierarquia. Tipo de conta (corrente, poupança, salário), UF da agência, canal do atendimento (app, caixa, telefone). Você pode perguntar "quantos de cada?" e "qual o mais frequente?" — e só. Ordenar não faz sentido: poupança não é "maior" que corrente.</p>
+
+  <p><strong>Qualitativa ordinal.</strong> Ainda é rótulo, mas os rótulos têm uma ordem natural. Rating de crédito (AAA &gt; AA &gt; A &gt; BBB...), escolaridade (fundamental &lt; médio &lt; superior), grau de satisfação (péssimo &lt; ruim &lt; bom &lt; ótimo). Você pode ordenar e portanto pode falar em <em>mediana</em> — mas não em média. Qual é a média entre "bom" e "ótimo"? Não existe: <strong>a distância entre as categorias não é conhecida nem constante</strong>. O salto de AAA para AA não é o mesmo salto de BBB para BB.</p>
+
+  <p><strong>Quantitativa discreta.</strong> Resultado de <strong>contagem</strong>. Os valores possíveis são isolados, dá para listar: 0, 1, 2, 3... Não existe valor entre 2 e 3. Nº de filhos, nº de clientes na fila, nº de transações negadas hoje, nº de dependentes. É o seu <code>INTEGER</code>/<code>NUMBER(p,0)</code>.</p>
+
+  <p><strong>Quantitativa contínua.</strong> Resultado de <strong>medição</strong>. Entre dois valores quaisquer sempre cabe outro — é uma questão de precisão do instrumento, não da natureza da variável. Salário, altura, peso, tempo de espera, saldo, taxa de juros. É o seu <code>NUMBER(p,s)</code>/<code>FLOAT</code>.</p>
+
+  <div class="tip">💡 O teste rápido para discreta × contínua: <strong>faz sentido "e meio"?</strong> "2,5 filhos" → não faz → discreta. "2,5 minutos de fila" → faz → contínua. E cuidado: dinheiro é contínua mesmo tendo só 2 casas decimais. O critério é a <em>natureza</em> da grandeza (ela varia continuamente), não o arredondamento que o sistema aplica. Banca já cobrou isso: <em>"o salário é discreto porque só assume valores múltiplos de centavo"</em> → FALSO.</div>
+
   <div class="trap">🪤 Nº de filhos é <strong>discreta</strong> (não existe 2,5 filhos); salário é <strong>contínua</strong>. E rating "AAA/AA/A" é qualitativa <strong>ordinal</strong>, não quantitativa — o símbolo não é número.</div>
 
-  <h2>2. Medidas de posição (tendência central)</h2>
+  <div class="trap">🪤 <strong>Número escrito não é variável quantitativa.</strong> CPF, número da agência, número da conta, CEP e código do produto são <strong>qualitativos nominais</strong> — são identificadores, um <code>VARCHAR</code> que por acidente só tem dígitos. Teste: a média dos CPFs da agência significa alguma coisa? Não. Logo, não é quantitativa. Mesma lógica para "camisa nº 10" no futebol.</div>
+
+  <h2 id="sec-2-medidas-de-posicao-tendencia-central">2. Medidas de posição (tendência central)</h2>
+
+  <p><strong>O problema que elas resolvem.</strong> Você tem 5.000 salários numa planilha. Alguém pergunta: "quanto se ganha nessa empresa?". Você não vai ler 5.000 números. Precisa de <strong>um número que represente o monte</strong> — um valor típico, central, em torno do qual os dados se agrupam. É literalmente um <code>GROUP BY</code> devolvendo uma linha.</p>
+
+  <p>O detalhe é que existem <strong>três</strong> respostas possíveis para "o valor típico", e elas discordam entre si. Entender <em>por que discordam</em> é 80% da matéria.</p>
+
   <div class="table-scroll">
   <table>
     <tr><th>Medida</th><th>Como calcular</th><th>Característica-chave</th></tr>
@@ -33,10 +106,215 @@
     <tr><td><strong>Moda</strong> (Mo)</td><td>o valor mais frequente</td><td>pode não existir (amodal) ou ser múltipla (bi/multimodal); é a única aplicável a variável <strong>qualitativa</strong></td></tr>
   </table>
   </div>
-  <p><strong>Exemplos:</strong> {2, 3, 5, 8, 10, 12} → mediana = (5+8)/2 = <strong>6,5</strong>. {2, 3, 3, 5, 7} → moda = <strong>3</strong>, mediana = 3, média = 4.</p>
+
+  <h3>Média aritmética — o ponto de equilíbrio</h3>
+
+  <p>Some tudo e divida pela quantidade: <code>x̄ = (x<sub>1</sub> + x<sub>2</sub> + ... + x<sub>n</sub>) ÷ n</code>.</p>
+
+  <p>A interpretação que vale a pena guardar: a média é o <strong>ponto de equilíbrio</strong> dos dados. Imagine os valores como pesos iguais pendurados numa régua, cada um na sua posição. A média é o único ponto onde a régua fica em pé sem tombar. Isso não é poesia — é uma propriedade matemática exata, e é dela que sai a variância (seção 4).</p>
+
+  <p>Consequência prática: <strong>a média usa TODOS os valores</strong>. Mudou um único dado, mudou a média. Isso é uma virtude (nenhuma informação é jogada fora) e é o defeito fatal (um valor absurdo contamina o resultado inteiro).</p>
+
+  <h3>Exemplo resolvido — a agência sem chefe</h3>
+
+  <p>Salários mensais dos 7 funcionários de uma agência, já ordenados:</p>
+  <p><code>2.000 · 3.000 · 4.000 · 4.000 · 4.000 · 5.000 · 6.000</code></p>
+
+  <p><strong>Média:</strong></p>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Passo</th><th>Conta</th><th>Resultado</th></tr>
+    <tr><td>1. Somar tudo</td><td>2.000 + 3.000 + 4.000 + 4.000 + 4.000 + 5.000 + 6.000</td><td>28.000</td></tr>
+    <tr><td>2. Contar</td><td>n = 7</td><td>7</td></tr>
+    <tr><td>3. Dividir</td><td>28.000 ÷ 7</td><td><strong>x̄ = 4.000</strong></td></tr>
+  </table>
+  </div>
+
+  <p><strong>Mediana:</strong> os dados já estão ordenados. Como n = 7 é ímpar, a posição central é <code>(n+1) ÷ 2 = (7+1) ÷ 2 = 4</code>. O 4º valor é <strong>4.000</strong>. Repare: a fórmula <code>(n+1)/2</code> devolve a <em>posição</em>, não o valor. Erro clássico é responder "4" achando que a mediana é 4.</p>
+
+  <p><strong>Moda:</strong> qual valor mais se repete? 4.000 aparece 3 vezes; os outros, 1 vez cada. <strong>Mo = 4.000</strong>.</p>
+
+  <p>As três bateram em 4.000. Distribuição simétrica, sem surpresa. Guarde este cenário — vamos quebrá-lo agora.</p>
+
+  <h3>Exemplo resolvido — chega o gerente regional</h3>
+
+  <p>Troque o salário mais alto (6.000) pelo do gerente regional que passou a ser lotado na agência: <strong>34.000</strong>. Uma linha mudou. Só uma.</p>
+  <p><code>2.000 · 3.000 · 4.000 · 4.000 · 4.000 · 5.000 · 34.000</code></p>
+
+  <div class="table-scroll">
+  <table>
+    <tr><th>Medida</th><th>Conta</th><th>Antes</th><th>Depois</th></tr>
+    <tr><td>Média</td><td>(2.000+3.000+4.000+4.000+4.000+5.000+34.000) ÷ 7 = 56.000 ÷ 7</td><td>4.000</td><td><strong>8.000</strong></td></tr>
+    <tr><td>Mediana</td><td>4º valor da lista ordenada</td><td>4.000</td><td><strong>4.000</strong></td></tr>
+    <tr><td>Moda</td><td>valor mais frequente</td><td>4.000</td><td><strong>4.000</strong></td></tr>
+  </table>
+  </div>
+
+  <p>Leia isso devagar, porque é o coração da seção: <strong>a média DOBROU</strong>. Passou de 4.000 para 8.000. E o dado é honesto — o salário médio da agência realmente é 8.000. Mas <strong>seis dos sete funcionários ganham menos que a média</strong>. Que "valor típico" é esse que não descreve ninguém?</p>
+
+  <p>A mediana não se mexeu um centavo. Ela não faz ideia de <em>quanto</em> vale o maior salário — ela só sabe que ele é o maior. Se o gerente ganhasse 34.000 ou 34 milhões, a mediana continuaria 4.000.</p>
+
+  <div class="tip">💡 <strong>Analogia direta:</strong> a média é um <code>SUM</code> — cada linha entra com o seu valor cheio e um outlier vaza pro resultado. A mediana é um <code>ORDER BY</code> + pegar a linha do meio — ela só usa a <em>posição</em> na ordenação, e o valor extremo vira apenas "a última linha". É o mesmo motivo pelo qual você monitora latência de API por <strong>p50/p95</strong> e não por média: uma requisição travada em 30s destrói a média e não move o p50.</div>
+
   <div class="tip">💡 <strong>Salário é o exemplo clássico:</strong> se o presidente entra na amostra, a <em>média</em> dispara mas a <em>mediana</em> quase não se move. Por isso renda se reporta pela mediana.</div>
 
-  <h3>Assimetria — a relação entre as três</h3>
+  <h3>Mediana — o passo que todo mundo esquece</h3>
+
+  <p>A mediana é o valor que <strong>parte o conjunto ordenado em duas metades iguais</strong>: 50% dos dados abaixo, 50% acima. Por definição ela é o valor que ocupa a posição central.</p>
+
+  <p>O passo esquecido é o primeiro: <strong>ORDENAR</strong>. Mediana de dados fora de ordem não existe. Se a questão te der <code>{7, 2, 9, 4, 1}</code> e você pegar o valor do meio da lista como está (9), errou. Ordene primeiro: <code>{1, 2, 4, 7, 9}</code> → posição (5+1)/2 = 3ª → <strong>Md = 4</strong>.</p>
+
+  <p><strong>Se n for par</strong>, não existe uma posição central — existem duas. A mediana é a média aritmética dos dois valores centrais. Exemplo:</p>
+  <p><code>{2, 3, 5, 8, 10, 12}</code> → n = 6, os centrais são o 3º (5) e o 4º (8) → Md = (5 + 8) ÷ 2 = <strong>6,5</strong>.</p>
+
+  <div class="trap">🪤 Quando n é par, a mediana <strong>pode não ser um valor do conjunto</strong>. Ali, 6,5 não está na lista — e está certo assim. Alternativa que afirma "a mediana é sempre um dos valores observados" é FALSA. (Já a moda, essa sim, é sempre um valor observado — ela é, por definição, um dos dados.)</div>
+
+  <h3>Moda — a única que fala com texto</h3>
+
+  <p>Moda é o valor de <strong>maior frequência</strong>. Só isso. "Está na moda" = o que mais aparece.</p>
+
+  <p>Ela tem uma exclusividade que cai em prova: <strong>é a única medida de posição que funciona em variável qualitativa</strong>. Qual o tipo de conta mais comum na agência? Qual o canal de atendimento mais usado? Você não pode somar "poupança" nem ordenar "app, caixa, telefone" — mas pode contar qual aparece mais. Isso é a moda.</p>
+
+  <p>Em compensação, ela é a mais instável das três: pode não existir, e pode existir mais de uma.</p>
+
+  <div class="table-scroll">
+  <table>
+    <tr><th>Nome</th><th>O que significa</th><th>Exemplo</th></tr>
+    <tr><td><strong>Amodal</strong></td><td>nenhum valor se repete — todos empatam com frequência 1. O conjunto <strong>não tem moda</strong></td><td><code>{1, 2, 3, 4}</code></td></tr>
+    <tr><td><strong>Unimodal</strong></td><td>um único valor mais frequente</td><td><code>{2, 3, 3, 5, 7}</code> → Mo = 3</td></tr>
+    <tr><td><strong>Bimodal</strong></td><td>dois valores empatados na maior frequência — <strong>as duas são moda</strong></td><td><code>{1, 2, 2, 5, 7, 7}</code> → Mo = 2 e 7</td></tr>
+    <tr><td><strong>Multimodal</strong></td><td>três ou mais empatados no topo</td><td><code>{1, 1, 3, 3, 8, 8}</code> → Mo = 1, 3 e 8</td></tr>
+  </table>
+  </div>
+
+  <p><strong>"Amodal"</strong> = sem moda (o prefixo <em>a-</em> de negação, como em <em>assíncrono</em>, <em>atípico</em>). Note a assimetria cruel do vocabulário: quando NENHUM se repete, não há moda. Mas quando TODOS se repetem igualmente — <code>{1, 1, 2, 2}</code> — a leitura padrão de banca é que o conjunto é <strong>bimodal</strong> (1 e 2), porque ambos atingem a frequência máxima.</p>
+
+  <div class="tip">💡 Bimodal em dado real quase sempre significa que você misturou <strong>duas populações diferentes</strong> na mesma tabela. Se o tempo de atendimento da agência tem dois picos, em 3 min e em 20 min, provavelmente são dois serviços distintos (saque × abertura de conta) jogados na mesma coluna. Faltou o <code>GROUP BY</code>. Em prova isso aparece como "distribuição bimodal sugere heterogeneidade" — está correto.</div>
+
+  <p><strong>Exemplos:</strong> {2, 3, 5, 8, 10, 12} → mediana = (5+8)/2 = <strong>6,5</strong>. {2, 3, 3, 5, 7} → moda = <strong>3</strong>, mediana = 3, média = 4.</p>
+  <p class="muted">Conferindo o segundo: ordenado, n = 5 (ímpar), posição central (5+1)/2 = 3ª → Md = 3. Média = (2+3+3+5+7) ÷ 5 = 20 ÷ 5 = 4. Moda = 3 (único repetido). Aqui média (4) &gt; mediana (3) — segure essa observação, ela reaparece em assimetria.</p>
+
+  <h3>Então qual eu uso?</h3>
+
+  <div class="table-scroll">
+  <table>
+    <tr><th>Situação</th><th>Use</th><th>Por quê</th></tr>
+    <tr><td>Dados simétricos, sem extremos (altura, erro de medição)</td><td><strong>Média</strong></td><td>usa toda a informação e é a mais estável de amostra para amostra</td></tr>
+    <tr><td>Dados com outliers ou cauda longa (renda, patrimônio, tempo de resposta, valor de transação)</td><td><strong>Mediana</strong></td><td>não é arrastada pelos extremos</td></tr>
+    <tr><td>Variável qualitativa (tipo de conta, canal, UF)</td><td><strong>Moda</strong></td><td>é a única possível — não dá para somar nem ordenar categorias</td></tr>
+    <tr><td>Variável ordinal (rating, escolaridade, satisfação)</td><td><strong>Mediana ou moda</strong></td><td>dá para ordenar (logo, mediana), mas não somar (logo, nada de média)</td></tr>
+    <tr><td>Precisa reconstruir o total a partir do resumo</td><td><strong>Média</strong></td><td>é a única com <code>x̄ × n = soma</code>. Folha de pagamento = média × nº de funcionários</td></tr>
+  </table>
+  </div>
+
+  <p><strong>Média ponderada.</strong> Aparece quando os valores têm pesos diferentes: <code>x̄<sub>p</sub> = Σ(x<sub>i</sub> · w<sub>i</sub>) ÷ Σw<sub>i</sub></code>. Exemplo: a agência tem 30 contas com saldo médio de 1.000 e 70 contas com saldo médio de 2.000. O saldo médio geral <strong>não é</strong> (1.000 + 2.000)/2 = 1.500 — isso ignora que os grupos têm tamanhos diferentes. É <code>(30×1.000 + 70×2.000) ÷ 100 = (30.000 + 140.000) ÷ 100 = 1.700</code>. A média simples só coincide com a ponderada quando todos os pesos são iguais.</p>
+
+  <div class="trap">🪤 <strong>Média de médias é armadilha.</strong> A agência A tem 10 clientes com ticket médio de 100; a B tem 90 clientes com ticket médio de 200. O ticket médio das duas juntas NÃO é 150. É (10×100 + 90×200) ÷ 100 = (1.000 + 18.000) ÷ 100 = <strong>190</strong>. Só se pode tirar a média das médias diretamente quando os grupos têm o mesmo n.</div>
+
+  <h2 id="sec-3-separatrizes-quartis-decis-e-percentis">3. Separatrizes — quartis, decis e percentis</h2>
+
+  <p><strong>O problema que elas resolvem.</strong> A mediana corta o conjunto em 2 pedaços de 50%. Ótimo — mas e se eu quiser um retrato mais fino? "Quanto ganham os 25% que ganham menos?" "Qual o tempo de fila que 90% dos clientes NÃO ultrapassam?" A mediana não responde. As separatrizes são a generalização dela: <strong>medidas que separam o conjunto ordenado em partes com quantidades iguais de dados</strong>.</p>
+
+  <div class="table-scroll">
+  <table>
+    <tr><th>Separatriz</th><th>Corta em</th><th>Quantas existem</th><th>Notação</th></tr>
+    <tr><td><strong>Mediana</strong></td><td>2 partes de 50%</td><td>1</td><td>Md</td></tr>
+    <tr><td><strong>Quartis</strong></td><td>4 partes de 25%</td><td>3 (não 4!)</td><td>Q<sub>1</sub>, Q<sub>2</sub>, Q<sub>3</sub></td></tr>
+    <tr><td><strong>Decis</strong></td><td>10 partes de 10%</td><td>9</td><td>D<sub>1</sub> ... D<sub>9</sub></td></tr>
+    <tr><td><strong>Percentis</strong> (ou centis)</td><td>100 partes de 1%</td><td>99</td><td>P<sub>1</sub> ... P<sub>99</sub></td></tr>
+  </table>
+  </div>
+
+  <div class="trap">🪤 <strong>Para cortar um bolo em 4 pedaços você dá 3 cortes</strong>, não 4. Por isso são 3 quartis, 9 decis, 99 percentis. Alternativa dizendo "existem 4 quartis" é FALSA. E cuidado com a palavra: <em>quartil</em> é o <strong>corte</strong> (um número); <em>quarto</em> é o <strong>pedaço</strong> (um grupo de dados). "O cliente está no primeiro quartil" é abuso de linguagem que a banca aceita, mas tecnicamente ele está no primeiro <em>quarto</em>.</div>
+
+  <p>Todas dizem a mesma coisa em escalas diferentes, e elas se traduzem entre si:</p>
+  <p><code>Q<sub>1</sub> = P<sub>25</sub></code> · <code>Q<sub>2</sub> = D<sub>5</sub> = P<sub>50</sub> = <strong>Mediana</strong></code> · <code>Q<sub>3</sub> = P<sub>75</sub></code> · <code>D<sub>1</sub> = P<sub>10</sub></code> · <code>D<sub>9</sub> = P<sub>90</sub></code></p>
+
+  <p>O significado de cada uma é sempre "quanto fica ABAIXO":</p>
+  <ul>
+    <li><strong>Q<sub>1</sub> (primeiro quartil):</strong> 25% dos dados estão abaixo dele, 75% acima.</li>
+    <li><strong>Q<sub>2</sub>:</strong> 50% abaixo. É a mediana, com outro nome.</li>
+    <li><strong>Q<sub>3</sub>:</strong> 75% abaixo, 25% acima.</li>
+    <li><strong>P<sub>90</sub>:</strong> 90% dos dados estão abaixo dele.</li>
+  </ul>
+
+  <h3>Exemplo resolvido — tempo de fila na agência</h3>
+
+  <p>Tempo de espera (em minutos) de 11 clientes, já ordenado:</p>
+  <p><code>1 · 2 · 2 · 3 · 4 · 5 · 6 · 7 · 8 · 9 · 25</code></p>
+
+  <p>A regra de posição mais cobrada em concurso usa <code>(n+1)</code>. Com n = 11, então <code>n+1 = 12</code> — número que divide redondo por 2, 4 e 10, o que não é coincidência: bancas escolhem n assim de propósito.</p>
+
+  <div class="table-scroll">
+  <table>
+    <tr><th>Medida</th><th>Fórmula da posição</th><th>Conta</th><th>Posição</th><th>Valor</th></tr>
+    <tr><td>Q<sub>1</sub></td><td><code>(n+1) ÷ 4</code></td><td>12 ÷ 4</td><td>3ª</td><td><strong>2 min</strong></td></tr>
+    <tr><td>Q<sub>2</sub> = Md</td><td><code>2(n+1) ÷ 4</code> = <code>(n+1) ÷ 2</code></td><td>24 ÷ 4</td><td>6ª</td><td><strong>5 min</strong></td></tr>
+    <tr><td>Q<sub>3</sub></td><td><code>3(n+1) ÷ 4</code></td><td>36 ÷ 4</td><td>9ª</td><td><strong>8 min</strong></td></tr>
+  </table>
+  </div>
+
+  <p><strong>Como ler o resultado:</strong> 25% dos clientes esperam até 2 minutos. Metade espera até 5. Três em cada quatro são atendidos em até 8 minutos. E um azarado esperou 25.</p>
+
+  <p><strong>Quando a posição dá quebrada — interpolação.</strong> Vamos achar o P<sub>90</sub> (ou D<sub>9</sub>), o tempo que 90% dos clientes não ultrapassam:</p>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Passo</th><th>Conta</th><th>Resultado</th></tr>
+    <tr><td>1. Posição</td><td><code>90 × (n+1) ÷ 100 = 90 × 12 ÷ 100</code></td><td>10,8ª — não existe!</td></tr>
+    <tr><td>2. Vizinhos</td><td>10º valor = 9 · 11º valor = 25</td><td>a resposta está entre 9 e 25</td></tr>
+    <tr><td>3. Andar a fração</td><td>0,8 do caminho de 9 até 25 → <code>9 + 0,8 × (25 − 9)</code></td><td><code>9 + 0,8 × 16 = 9 + 12,8</code></td></tr>
+    <tr><td>4. Resposta</td><td>—</td><td><strong>P<sub>90</sub> = 21,8 min</strong></td></tr>
+  </table>
+  </div>
+
+  <p class="muted">Existem outras convenções de cálculo de quartil (a do Excel, a do R, o método de Moore...) e elas dão valores levemente diferentes. Em prova de concurso, se a questão não mandar um método específico, use <code>(n+1)</code> e escolha a alternativa mais próxima. Se nenhuma bater, teste o método <code>n/4</code>. Isso é convenção, não matemática profunda — não perca tempo com o assunto.</p>
+
+  <h3>Amplitude interquartil (IQR) e caça a outliers</h3>
+
+  <p><strong>O problema:</strong> "amplitude total" (maior − menor) daquele conjunto é 25 − 1 = 24 minutos. Esse número descreve a fila? Não. Ele descreve <em>o único cliente que travou</em>. A amplitude total é refém dos dois extremos.</p>
+
+  <p>A solução é medir a largura só do <strong>miolo</strong>, ignorando as pontas. Isso é a <strong>amplitude interquartil</strong>:</p>
+  <p><code>IQR = Q<sub>3</sub> − Q<sub>1</sub> = 8 − 2 = <strong>6 minutos</strong></code></p>
+
+  <p>Leitura: os 50% centrais dos clientes ficam espalhados numa faixa de 6 minutos. Esse número, sim, descreve a fila típica — e ele não muda nem se o azarado tivesse esperado 3 horas.</p>
+
+  <p>Melhor ainda: o IQR fornece um <strong>critério objetivo para chamar um dado de outlier</strong>, que é a regra do boxplot. <em>Outlier</em> ("ponto fora da curva") é uma observação atipicamente distante das demais. A regra:</p>
+
+  <div class="card">
+    <p><code>Limite inferior = Q<sub>1</sub> − 1,5 × IQR</code><br>
+       <code>Limite superior = Q<sub>3</sub> + 1,5 × IQR</code><br>
+       Qualquer valor fora desse intervalo é candidato a outlier.</p>
+  </div>
+
+  <div class="table-scroll">
+  <table>
+    <tr><th>Passo</th><th>Conta</th><th>Resultado</th></tr>
+    <tr><td>1. IQR</td><td>8 − 2</td><td>6</td></tr>
+    <tr><td>2. 1,5 × IQR</td><td>1,5 × 6</td><td>9</td></tr>
+    <tr><td>3. Limite inferior</td><td>2 − 9</td><td>−7 min</td></tr>
+    <tr><td>4. Limite superior</td><td>8 + 9</td><td>17 min</td></tr>
+    <tr><td>5. Veredito</td><td>25 &gt; 17</td><td><strong>o cliente de 25 min é outlier</strong></td></tr>
+  </table>
+  </div>
+
+  <p class="muted">O limite inferior deu −7, um tempo negativo — impossível. Isso não é erro de conta: significa apenas que, por baixo, <strong>nenhum</strong> valor é outlier. Não force o limite para zero; a regra é mecânica e o resultado se interpreta como "não há outlier inferior".</p>
+
+  <div class="tip">💡 <strong>Isso é o seu dia a dia de TI.</strong> Detecção de fraude e monitoração de sistema usam exatamente essa lógica: estabelece-se a faixa normal e sinaliza-se quem sai dela. Uma transação de R$ 80.000 numa conta cujo Q<sub>3</sub> histórico é R$ 300 estoura o limite superior por ordens de grandeza — o motor antifraude segura. É a versão estatística de um <code>CHECK</code> constraint aprendido dos dados em vez de escrito na mão.</div>
+
+  <div class="trap">🪤 Não confunda os três "espalhamentos": <strong>amplitude total</strong> = maior − menor (usa 2 dados, refém dos extremos). <strong>IQR</strong> = Q<sub>3</sub> − Q<sub>1</sub> (usa o miolo, robusto). <strong>Desvio padrão</strong> = distância típica até a média (usa todos, sensível a outliers). E outlier <strong>não</strong> significa "erro de digitação" — pode ser o dado mais importante da tabela. Em antifraude, o outlier é justamente o que você está caçando.</div>
+
+  <h2 id="sec-4-assimetria-por-que-as-tres-medidas-discorda">4. Assimetria — por que as três medidas discordam</h2>
+
+  <p><strong>O problema que ela resolve.</strong> Você já viu que média, mediana e moda às vezes coincidem e às vezes não. Isso não é aleatório. <strong>A distância entre elas é uma medida em si</strong> — ela diz o formato da distribuição. E o melhor: você consegue deduzir o formato sem ver gráfico nenhum, só comparando três números. Isso cai muito.</p>
+
+  <p>Antes, dois termos:</p>
+  <ul>
+    <li><strong>Distribuição</strong>: o desenho de como os dados se espalham — onde eles se amontoam e onde rareiam. Pense num <code>GROUP BY valor, COUNT(*)</code>: a distribuição é o resultado desse count.</li>
+    <li><strong>Cauda</strong>: a região onde os dados rareiam mas não acabam — o "rabo" fino e comprido da distribuição, onde moram poucos valores muito distantes do miolo.</li>
+  </ul>
+
+  <p>Assimetria (ou <em>skewness</em>) é justamente <strong>ter uma cauda mais longa que a outra</strong>. E o nome da assimetria vem do lado onde está a cauda comprida — não do lado onde está o pico. Essa inversão é o que derruba o candidato.</p>
+
   <div class="table-scroll">
   <table>
     <tr><th>Distribuição</th><th>Relação</th><th>Cauda</th></tr>
@@ -45,9 +323,96 @@
     <tr><td>Assimétrica <strong>negativa</strong> (à esquerda)</td><td><strong>Média</strong> &lt; Mediana &lt; Moda</td><td>alongada à esquerda</td></tr>
   </table>
   </div>
+
   <p class="muted">Regra de ouro: <strong>a média sempre "corre" para o lado da cauda</strong> — ela é puxada pelos extremos.</p>
 
-  <h2>3. Medidas de dispersão</h2>
+  <h3>Por que a média corre — e a moda não</h3>
+
+  <p>Volte ao ponto de equilíbrio. A <strong>moda</strong> é o pico: ela fica onde os dados se amontoam e ignora completamente o resto. A <strong>mediana</strong> conta cabeças: ela vai onde está a metade da <em>quantidade</em>. A <strong>média</strong> equilibra pesos: um valor lá longe na cauda entra na conta com todo o seu tamanho e puxa a régua para o lado dele.</p>
+
+  <p>Por isso a ordem é sempre a mesma: <strong>moda fica no pico, mediana dá um passo na direção da cauda, média dá o passo maior</strong>. A média é sempre a mais extrema das três, sempre do lado da cauda.</p>
+
+  <h3>Exemplo resolvido — assimetria positiva (o caso da renda)</h3>
+
+  <p>Sete clientes, valor do investimento (em mil reais):</p>
+  <p><code>1 · 2 · 2 · 3 · 4 · 5 · 11</code></p>
+
+  <div class="table-scroll">
+  <table>
+    <tr><th>Medida</th><th>Conta</th><th>Valor</th></tr>
+    <tr><td>Moda</td><td>2 aparece duas vezes; os demais, uma</td><td><strong>2</strong></td></tr>
+    <tr><td>Mediana</td><td>n = 7 → posição (7+1)/2 = 4ª → 4º valor</td><td><strong>3</strong></td></tr>
+    <tr><td>Média</td><td>(1+2+2+3+4+5+11) ÷ 7 = 28 ÷ 7</td><td><strong>4</strong></td></tr>
+  </table>
+  </div>
+
+  <p><code>Moda (2) &lt; Mediana (3) &lt; Média (4)</code> — as três em ordem crescente. Isso é <strong>assimetria positiva</strong>, ou "à direita". A cauda comprida aponta para os valores altos (aquele 11 solitário), e a média foi arrastada para lá.</p>
+
+  <p>Repare no absurdo aparente: a média é 4, mas <strong>cinco dos sete clientes investem menos que 4</strong>. É exatamente o que acontece com renda, patrimônio, valor de transação, tempo de resposta de API e tamanho de arquivo — o mundo é cheio de distribuições positivamente assimétricas. Poucos valores gigantes puxam a média para cima de quase todo mundo.</p>
+
+  <h3>Exemplo resolvido — assimetria negativa (o espelho)</h3>
+
+  <p>Agora o espelho exato do conjunto anterior. Notas de 0 a 12 numa avaliação fácil, onde quase todos vão bem e poucos vão mal:</p>
+  <p><code>1 · 7 · 8 · 9 · 10 · 10 · 11</code></p>
+
+  <div class="table-scroll">
+  <table>
+    <tr><th>Medida</th><th>Conta</th><th>Valor</th></tr>
+    <tr><td>Média</td><td>(1+7+8+9+10+10+11) ÷ 7 = 56 ÷ 7</td><td><strong>8</strong></td></tr>
+    <tr><td>Mediana</td><td>posição 4ª → 4º valor</td><td><strong>9</strong></td></tr>
+    <tr><td>Moda</td><td>10 aparece duas vezes</td><td><strong>10</strong></td></tr>
+  </table>
+  </div>
+
+  <p><code>Média (8) &lt; Mediana (9) &lt; Moda (10)</code> — ordem decrescente. <strong>Assimetria negativa</strong>, ou "à esquerda". O amontoado está nas notas altas; a cauda comprida aponta para o 1 solitário lá embaixo; e a média foi puxada para baixo.</p>
+
+  <div class="tip">💡 <strong>O jeito de nunca mais errar o nome.</strong> Esqueça "onde está o pico". Pergunte só: <strong>para que lado aponta o rabo comprido?</strong> Aponta para os números grandes (direita) → assimetria POSITIVA. Aponta para os números pequenos (esquerda) → NEGATIVA. É o sinal do eixo: direita = positivo, esquerda = negativo. E confirme pela média: <strong>a média está sempre do lado da cauda</strong>. Média &gt; mediana → cauda à direita → positiva.</div>
+
+  <div class="trap">🪤 A intuição visual engana: numa assimétrica positiva o <strong>pico está à ESQUERDA</strong> e o gráfico "parece" torto para a esquerda. Muito candidato olha o pico, vê que está do lado esquerdo e responde "negativa". Errado. <strong>O nome vem da cauda, não do pico.</strong> Ancore na renda: renda é o exemplo universal de assimetria POSITIVA, e nela a maioria ganha pouco (pico à esquerda) com poucos milionários lá na ponta direita.</div>
+
+  <h3>Medindo a assimetria com um número</h3>
+
+  <p>Comparar as três medidas dá o sinal e a direção. Se a questão pedir o <em>grau</em>, existe o <strong>coeficiente de assimetria de Pearson</strong>:</p>
+  <p><code>A<sub>s</sub> = 3 × (Média − Mediana) ÷ σ</code></p>
+
+  <p>A lógica é direta: o numerador mede <em>o quanto a média fugiu da mediana</em> — se fugiu para cima, positivo; para baixo, negativo; se não fugiu, zero. E divide-se por σ para tornar o resultado adimensional, comparável entre conjuntos de escalas diferentes (mesma ideia do CV, seção 5).</p>
+
+  <p>No conjunto <code>{1, 2, 2, 3, 4, 5, 11}</code> temos média 4, mediana 3 e σ ≈ 3,12 (calculado adiante pelo método da seção 5). Então:</p>
+  <p><code>A<sub>s</sub> = 3 × (4 − 3) ÷ 3,12 = 3 ÷ 3,12 ≈ <strong>0,96</strong></code></p>
+
+  <div class="table-scroll">
+  <table>
+    <tr><th>Sinal de A<sub>s</sub></th><th>Significa</th><th>Porque</th></tr>
+    <tr><td><code>A<sub>s</sub> = 0</code></td><td>simétrica</td><td>média = mediana → numerador zera</td></tr>
+    <tr><td><code>A<sub>s</sub> &gt; 0</code></td><td>assimétrica positiva (à direita)</td><td>média &gt; mediana</td></tr>
+    <tr><td><code>A<sub>s</sub> &lt; 0</code></td><td>assimétrica negativa (à esquerda)</td><td>média &lt; mediana</td></tr>
+  </table>
+  </div>
+
+  <p class="muted">Quanto maior |A<sub>s</sub>|, mais torta a distribuição. Na prática se usa: até 0,15 é fraca; de 0,15 a 1, moderada; acima de 1, forte. Isso raramente cai — o que cai é o <strong>sinal</strong>. Existe também a versão com a moda (<code>A<sub>s</sub> = (Média − Moda) ÷ σ</code>), mesma lógica e mesmo sinal.</p>
+
+  <div class="trap">🪤 <strong>Simétrica não é sinônimo de normal.</strong> Toda normal é simétrica, mas nem toda simétrica é normal — a distribuição uniforme (um dado honesto: 1 a 6, todos com 1/6) é perfeitamente simétrica e não tem nada de normal, nem sino tem. Alternativa que conclui "como média = mediana = moda, a distribuição é normal" está ERRADA. Simetria é condição necessária, não suficiente.</div>
+
+  <div class="trap">🪤 E cuidado com o caso degenerado: em <code>{1, 1, 2, 3, 3}</code> a média é 2, a mediana é 2, mas a moda é <strong>1 e 3</strong> (bimodal). Média = mediana e ainda assim "Média = Mediana = Moda" não se sustenta. A relação da tabela vale para distribuições unimodais.</div>
+
+  <h2 id="sec-5-medidas-de-dispersao">5. Medidas de dispersão</h2>
+
+  <p><strong>O problema que elas resolvem.</strong> Duas agências têm tempo médio de atendimento de <strong>10 minutos</strong>. São iguais? Olhe os dados:</p>
+
+  <div class="table-scroll">
+  <table>
+    <tr><th>Agência</th><th>Tempos observados (min)</th><th>Média</th></tr>
+    <tr><td><strong>A</strong></td><td>8 · 9 · 10 · 11 · 12</td><td>10</td></tr>
+    <tr><td><strong>B</strong></td><td>2 · 6 · 10 · 14 · 18</td><td>10</td></tr>
+    <tr><td class="muted">conferindo A</td><td class="muted">(8+9+10+11+12) ÷ 5 = 50 ÷ 5</td><td class="muted">10 ✓</td></tr>
+    <tr><td class="muted">conferindo B</td><td class="muted">(2+6+10+14+18) ÷ 5 = 50 ÷ 5</td><td class="muted">10 ✓</td></tr>
+  </table>
+  </div>
+
+  <p>Mesma média, realidades opostas. Na A, você sabe o que esperar: sai em 10 minutos, dá ou tira 2. Na B, pode ser 2 minutos ou pode ser 18 — é loteria. Se você fosse dimensionar o número de caixas, ou prometer um SLA ao cliente, A e B exigiriam decisões completamente diferentes.</p>
+
+  <p><strong>A média sozinha mente.</strong> Ela diz onde está o centro e não diz nada sobre o quanto os dados se afastam dele. Dispersão (ou variabilidade) é a segunda pergunta obrigatória de qualquer análise: <em>o quanto os dados variam em torno do centro?</em> Média e desvio padrão andam sempre em par — reportar uma sem o outro é análise incompleta.</p>
+
   <div class="table-scroll">
   <table>
     <tr><th>Medida</th><th>Fórmula/ideia</th><th>Unidade</th></tr>
@@ -57,15 +422,290 @@
     <tr><td><strong>Coef. de variação</strong> (CV)</td><td>σ ÷ x̄ (em %)</td><td><strong>adimensional</strong></td></tr>
   </table>
   </div>
+
+  <h3>Tentativa 1: amplitude — e por que ela é fraca</h3>
+
+  <p><strong>Amplitude</strong> (ou <em>range</em>) = maior − menor. Na agência A: 12 − 8 = <strong>4</strong>. Na B: 18 − 2 = <strong>16</strong>. Funcionou! Detectou que B varia mais.</p>
+
+  <p>Mas ela usa <strong>2 dados e joga fora todos os outros</strong>. Se a agência B fosse <code>{2, 10, 10, 10, 18}</code>, a amplitude continuaria 16 — e no entanto essa agência é muito mais previsível que a original, já que 3 dos 5 clientes saem em exatos 10 minutos. A amplitude não vê o miolo. Pior: como depende só dos extremos, um único outlier a destrói (você viu isso nos 25 minutos da seção 3).</p>
+
+  <p>É uma medida honesta para um retrato rápido, e é péssima como medida séria. Precisamos de algo que <strong>use todos os dados</strong>.</p>
+
+  <h3>Tentativa 2: o desvio — e o desastre que sempre acontece</h3>
+
+  <p><strong>Desvio</strong> é a distância de cada dado até a média: <code>d<sub>i</sub> = x<sub>i</sub> − x̄</code>. É a ideia certa. Se os dados estão longe do centro, os desvios são grandes; se estão colados, os desvios são pequenos. Então basta tirar a <em>média dos desvios</em> e teremos a "distância típica até o centro", certo?</p>
+
+  <p>Faça a conta. Agência A, média 10:</p>
+
+  <div class="table-scroll">
+  <table>
+    <tr><th>Tempo (x<sub>i</sub>)</th><th>Conta do desvio</th><th>Desvio (x<sub>i</sub> − x̄)</th></tr>
+    <tr><td>8</td><td>8 − 10</td><td>−2</td></tr>
+    <tr><td>9</td><td>9 − 10</td><td>−1</td></tr>
+    <tr><td>10</td><td>10 − 10</td><td>0</td></tr>
+    <tr><td>11</td><td>11 − 10</td><td>+1</td></tr>
+    <tr><td>12</td><td>12 − 10</td><td>+2</td></tr>
+    <tr><th colspan="2">SOMA</th><th>−2 −1 + 0 + 1 + 2 = <strong>0</strong></th></tr>
+  </table>
+  </div>
+
+  <p>Zero. A dispersão média da agência A é... zero? Mas os dados claramente variam!</p>
+
+  <p>Talvez tenha sido azar do exemplo. Tente a agência B, média 10:</p>
+
+  <div class="table-scroll">
+  <table>
+    <tr><th>Tempo (x<sub>i</sub>)</th><th>Desvio</th></tr>
+    <tr><td>2</td><td>−8</td></tr>
+    <tr><td>6</td><td>−4</td></tr>
+    <tr><td>10</td><td>0</td></tr>
+    <tr><td>14</td><td>+4</td></tr>
+    <tr><td>18</td><td>+8</td></tr>
+    <tr><th>SOMA</th><th>−8 −4 + 0 + 4 + 8 = <strong>0</strong></th></tr>
+  </table>
+  </div>
+
+  <p>Zero de novo. E vai dar zero <strong>sempre</strong>, em qualquer conjunto de dados que existir no universo. Não é coincidência nem azar:</p>
+
+  <div class="card">
+    <p><strong>A soma dos desvios em relação à média é SEMPRE zero.</strong> <code>Σ(x<sub>i</sub> − x̄) = 0</code>, para qualquer conjunto de dados.</p>
+    <p>Por quê? Porque a média <em>é</em>, por construção, o ponto de equilíbrio. Ela é a soma dividida por n, então tudo que está acima dela excede exatamente o tanto que falta ao que está abaixo. Os desvios positivos e negativos se cancelam com precisão perfeita. Não é um defeito do exemplo — é a definição de média se manifestando.</p>
+  </div>
+
+  <p>Ou seja: <strong>a média dos desvios é inútil como medida de dispersão</strong>, porque ela é constante e igual a zero. É como um <code>SUM(valor - media)</code> que sempre retorna 0: tecnicamente correto, informativamente vazio.</p>
+
+  <div class="tip">💡 <strong>Guarde esta frase — ela é meia questão de prova.</strong> "A soma dos desvios em relação à média é sempre zero" é afirmação VERDADEIRA e cai direto. E é por causa dela que existe variância. Toda vez que você se perguntar "por que diabos elevam ao quadrado?", a resposta é: <em>porque sem isso dá zero</em>.</div>
+
+  <h3>Tentativa 3: matar o sinal — e nasce a variância</h3>
+
+  <p>O problema é o <strong>sinal</strong>: os negativos comem os positivos. Precisamos de uma forma de dizer "só me interessa a distância, não a direção". Há dois jeitos de matar o sinal de um número:</p>
+
+  <ol>
+    <li><strong>Módulo</strong>: |−2| = 2. Isso gera o <em>desvio médio absoluto</em>. Na agência A: (2+1+0+1+2) ÷ 5 = 6 ÷ 5 = <strong>1,2</strong>. Funciona, é intuitivo, existe de verdade — e quase não se usa. O módulo é uma função "quebrada" no zero: não tem derivada ali, o que trava toda a matemática que vem depois (mínimos quadrados, inferência, regressão). Álgebra ruim.</li>
+    <li><strong>Quadrado</strong>: (−2)² = 4. Todo número real ao quadrado é ≥ 0. Mata o sinal <em>e</em> é uma função lisa, derivável, que a matemática adora. Bônus: o quadrado <strong>pune desproporcionalmente os afastamentos grandes</strong> — errar por 10 custa 100, errar por 1 custa 1. Como dispersão é, na prática, "risco", faz sentido que um afastamento enorme pese muito mais que dez afastamentos pequenos.</li>
+  </ol>
+
+  <p>Ganhou o quadrado. Elevando cada desvio ao quadrado e tirando a média, temos a <strong>variância</strong>:</p>
+
+  <div class="card">
+    <p><code>σ² = Σ(x<sub>i</sub> − μ)² ÷ N</code> &nbsp;→&nbsp; variância <strong>populacional</strong> (divide por N)</p>
+    <p><code>s² = Σ(x<sub>i</sub> − x̄)² ÷ (n − 1)</code> &nbsp;→&nbsp; variância <strong>amostral</strong> (divide por n − 1)</p>
+    <p class="muted">A variância é, em português, "a média dos quadrados dos desvios em relação à média". Leia essa frase de trás para frente e você tem o algoritmo: (1) ache a média, (2) tire cada dado da média, (3) eleve ao quadrado, (4) some, (5) divida.</p>
+  </div>
+
+  <h3>Exemplo resolvido — variância e desvio padrão das duas agências</h3>
+
+  <p>Vamos tratar cada agência como uma <strong>população</strong> (todos os atendimentos daquele dia), logo dividimos por N = 5.</p>
+
+  <p><strong>Agência A</strong> — <code>{8, 9, 10, 11, 12}</code>, μ = 10:</p>
+  <div class="table-scroll">
+  <table>
+    <tr><th>x<sub>i</sub></th><th>x<sub>i</sub> − μ</th><th>(x<sub>i</sub> − μ)²</th></tr>
+    <tr><td>8</td><td>−2</td><td>4</td></tr>
+    <tr><td>9</td><td>−1</td><td>1</td></tr>
+    <tr><td>10</td><td>0</td><td>0</td></tr>
+    <tr><td>11</td><td>+1</td><td>1</td></tr>
+    <tr><td>12</td><td>+2</td><td>4</td></tr>
+    <tr><th>—</th><th>soma = 0 (sempre!)</th><th>soma = <strong>10</strong></th></tr>
+  </table>
+  </div>
+  <p><code>σ²<sub>A</sub> = 10 ÷ 5 = <strong>2 min²</strong></code> &nbsp;·&nbsp; <code>σ<sub>A</sub> = √2 ≈ <strong>1,41 min</strong></code></p>
+
+  <p><strong>Agência B</strong> — <code>{2, 6, 10, 14, 18}</code>, μ = 10:</p>
+  <div class="table-scroll">
+  <table>
+    <tr><th>x<sub>i</sub></th><th>x<sub>i</sub> − μ</th><th>(x<sub>i</sub> − μ)²</th></tr>
+    <tr><td>2</td><td>−8</td><td>64</td></tr>
+    <tr><td>6</td><td>−4</td><td>16</td></tr>
+    <tr><td>10</td><td>0</td><td>0</td></tr>
+    <tr><td>14</td><td>+4</td><td>16</td></tr>
+    <tr><td>18</td><td>+8</td><td>64</td></tr>
+    <tr><th>—</th><th>soma = 0</th><th>soma = <strong>160</strong></th></tr>
+  </table>
+  </div>
+  <p><code>σ²<sub>B</sub> = 160 ÷ 5 = <strong>32 min²</strong></code> &nbsp;·&nbsp; <code>σ<sub>B</sub> = √32 ≈ <strong>5,66 min</strong></code></p>
+
+  <p><strong>Veredito:</strong> mesma média (10 min), mas a variância de B é <strong>16 vezes</strong> a de A. Agora os números descrevem o que os olhos já viam.</p>
+
+  <h3>Por que o desvio padrão existe, se já temos a variância</h3>
+
+  <p>Olhe a unidade. A variância da agência A é <strong>2 minutos ao quadrado</strong>. O que é um minuto ao quadrado? Nada. Não existe. Ao elevar os desvios ao quadrado, você resolveu o problema do sinal e <strong>destruiu a unidade de medida</strong>. Se os dados fossem salários, a variância viria em "reais ao quadrado" — impossível de interpretar, impossível de comparar com a média.</p>
+
+  <p>O conserto é óbvio: tire a raiz quadrada e volte para a unidade original.</p>
+
+  <div class="card">
+    <p><code>σ = √σ²</code> — o <strong>desvio padrão</strong> é a raiz quadrada da variância, e só existe para desfazer o quadrado que a variância precisou fazer.</p>
+    <p>Interpretação: <strong>é a distância típica entre um dado qualquer e a média</strong>. σ<sub>A</sub> ≈ 1,41 min significa "na agência A, um atendimento se afasta dos 10 minutos, tipicamente, uns 1,4 minuto".</p>
+  </div>
+
+  <div class="tip">💡 A cadeia inteira numa frase: <strong>desvio</strong> (dá zero) → <strong>eleva ao quadrado</strong> (para não zerar) → <strong>tira a média</strong> (isso é a variância, mas a unidade quebrou) → <strong>tira a raiz</strong> (isso é o desvio padrão, unidade recuperada). Entendeu a cadeia, nunca mais precisa decorar as fórmulas.</div>
+
+  <div class="trap">🪤 Consequências diretas das definições, todas já cobradas: <strong>(1)</strong> variância e desvio padrão <strong>nunca são negativos</strong> — são somas de quadrados divididas por número positivo. Alternativa com "σ² = −4" é lixo na hora. <strong>(2)</strong> Se a variância é 4, o desvio padrão é 2 — <em>não</em> 16. Muita gente inverte. <strong>(3)</strong> "A variância é sempre maior que o desvio padrão" é FALSO. Vale quando σ &gt; 1 (σ = 5 → σ² = 25), mas se inverte quando σ &lt; 1 (σ = 0,5 → σ² = 0,25, que é menor). E se σ = 1, os dois são iguais.</div>
+
   <ul>
     <li><strong>Dispersão zero</strong> é possível: todos os dados iguais → σ = 0.</li>
+  </ul>
+  <p class="muted">E é o único caso. Se σ = 0, todo desvio ao quadrado teve de ser 0 (soma de coisas não-negativas só zera se todas forem zero), logo todo dado é igual à média, logo todos são iguais entre si. <code>{7, 7, 7, 7}</code> → média 7, desvios todos 0, σ² = 0, σ = 0. A recíproca também vale: dados todos iguais ⇒ σ = 0. É "se e somente se".</p>
+
+  <h3>Coeficiente de variação — quando o desvio padrão também mente</h3>
+
+  <p><strong>O problema.</strong> Dois investimentos:</p>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Ativo</th><th>Retorno médio</th><th>Desvio padrão</th><th>Qual é mais arriscado?</th></tr>
+    <tr><td>Fundo X</td><td>R$ 100</td><td>R$ 20</td><td rowspan="2">σ diz que é o Y (30 &gt; 20)</td></tr>
+    <tr><td>Fundo Y</td><td>R$ 1.000</td><td>R$ 30</td></tr>
+  </table>
+  </div>
+
+  <p>O desvio padrão do Y é maior. Mas oscilar R$ 30 em cima de R$ 1.000 é chacoalhar 3%. Oscilar R$ 20 em cima de R$ 100 é chacoalhar 20%. <strong>O Fundo X é muito mais volátil</strong>, apesar do σ menor.</p>
+
+  <p>O desvio padrão é uma medida <strong>absoluta</strong>: ele vem na unidade dos dados e não sabe se aquilo é muito ou pouco. Um desvio de R$ 30 é enorme num cafezinho e é ruído num financiamento imobiliário. Falta uma medida <strong>relativa</strong>: dispersão comparada ao tamanho do que está sendo medido.</p>
+
+  <div class="card">
+    <p><code>CV = (σ ÷ x̄) × 100%</code></p>
+    <p>É o desvio padrão expresso <strong>como porcentagem da média</strong>. Como divide unidade por unidade (reais ÷ reais, minutos ÷ minutos), o resultado é <strong>adimensional</strong> — puro número. E é justamente isso que permite comparar o incomparável.</p>
+  </div>
+
+  <div class="table-scroll">
+  <table>
+    <tr><th>Ativo</th><th>Conta</th><th>CV</th><th>Leitura</th></tr>
+    <tr><td>Fundo X</td><td>(20 ÷ 100) × 100</td><td><strong>20%</strong></td><td>mais volátil / mais heterogêneo</td></tr>
+    <tr><td>Fundo Y</td><td>(30 ÷ 1.000) × 100</td><td><strong>3%</strong></td><td>mais estável / mais homogêneo</td></tr>
+  </table>
+  </div>
+
+  <p>O CV inverteu o veredito — e ele é que está certo. Voltando às agências: <code>CV<sub>A</sub> = (1,41 ÷ 10) × 100 ≈ 14,1%</code> e <code>CV<sub>B</sub> = (5,66 ÷ 10) × 100 ≈ 56,6%</code>. Como as médias são iguais, o CV concorda com o σ — o CV só muda o jogo quando as médias diferem.</p>
+
+  <ul>
     <li><strong>CV serve para comparar</strong> conjuntos de médias/unidades diferentes ("qual investimento é mais volátil?"). Menor CV = mais homogêneo.</li>
     <li><strong>Populacional (÷N) × amostral (÷n−1)</strong>: a amostral divide por n−1 (correção de Bessel) e dá valor maior.</li>
   </ul>
+
+  <div class="tip">💡 O CV é o único que compara <strong>peras com maçãs</strong>: "o peso dos clientes varia mais que a altura deles?" — impossível responder com σ (um em kg, outro em cm), trivial com CV (ambos em %). Regra de bolso usual: CV &lt; 15% → baixa dispersão (dados homogêneos); 15% a 30% → média; &gt; 30% → alta dispersão (heterogêneos).</div>
+
+  <div class="trap">🪤 <strong>CV com média perto de zero explode.</strong> A média está no denominador: se x̄ ≈ 0, o CV vai para o infinito e perde qualquer sentido; se x̄ for negativo, o CV vem negativo e não significa nada. Por isso CV só se usa em variáveis <strong>positivas</strong> (peso, salário, tempo, saldo). E CV é o <em>único</em> adimensional da tabela — amplitude, variância e desvio padrão todos carregam unidade.</div>
+
+  <h3>Por que se divide por n − 1: a resposta com números</h3>
+
+  <p>Essa é a pergunta que todo mundo faz e quase ninguém responde direito. A resposta padrão — "porque perde um grau de liberdade" — é verdadeira e não explica nada. Vamos ver acontecendo.</p>
+
+  <p><strong>A intuição primeiro.</strong> Quando você calcula a variância de uma amostra, você não conhece μ (a média verdadeira da população). Você usa x̄, a média <em>da própria amostra</em>. E x̄ é, por construção, <strong>o ponto que minimiza a soma dos desvios ao quadrado daqueles dados</strong> — nenhum outro número dá uma soma menor. Ou seja: você mediu o espalhamento a partir do centro mais favorável possível, um centro que a amostra ajustou para si mesma. O resultado sai <strong>sistematicamente pequeno demais</strong>. Dividir por n − 1 (um número menor que n) infla o resultado para compensar.</p>
+
+  <p>Em linguagem de TI: <strong>é overfitting</strong>. Você ajustou o parâmetro (x̄) nos mesmos dados em que está medindo o erro, e por isso o erro medido é otimista demais. Correção de Bessel é a penalização que corrige o viés.</p>
+
+  <p><strong>Agora a demonstração exata.</strong> População minúscula: <code>{2, 4, 6}</code>. Como é a população inteira, sabemos a verdade:</p>
+  <p><code>μ = (2+4+6) ÷ 3 = 4</code> &nbsp;·&nbsp; <code>σ² = [(2−4)² + (4−4)² + (6−4)²] ÷ 3 = (4 + 0 + 4) ÷ 3 = 8 ÷ 3 ≈ <strong>2,67</strong></code></p>
+
+  <p>Esse 2,67 é o alvo. Vamos sortear <strong>todas</strong> as amostras possíveis de tamanho 2 (com reposição — 3 × 3 = 9 amostras), calcular a variância de cada uma pelos dois métodos, e ver qual acerta o alvo <em>em média</em>.</p>
+
+  <div class="table-scroll">
+  <table>
+    <tr><th>Amostra</th><th>x̄</th><th>Desvios</th><th>Σ(x<sub>i</sub> − x̄)²</th><th>÷ n (=2)</th><th>÷ (n−1) (=1)</th></tr>
+    <tr><td>(2, 2)</td><td>2</td><td>0 · 0</td><td>0</td><td>0</td><td>0</td></tr>
+    <tr><td>(2, 4)</td><td>3</td><td>−1 · +1</td><td>2</td><td>1</td><td>2</td></tr>
+    <tr><td>(2, 6)</td><td>4</td><td>−2 · +2</td><td>8</td><td>4</td><td>8</td></tr>
+    <tr><td>(4, 2)</td><td>3</td><td>+1 · −1</td><td>2</td><td>1</td><td>2</td></tr>
+    <tr><td>(4, 4)</td><td>4</td><td>0 · 0</td><td>0</td><td>0</td><td>0</td></tr>
+    <tr><td>(4, 6)</td><td>5</td><td>−1 · +1</td><td>2</td><td>1</td><td>2</td></tr>
+    <tr><td>(6, 2)</td><td>4</td><td>+2 · −2</td><td>8</td><td>4</td><td>8</td></tr>
+    <tr><td>(6, 4)</td><td>5</td><td>+1 · −1</td><td>2</td><td>1</td><td>2</td></tr>
+    <tr><td>(6, 6)</td><td>6</td><td>0 · 0</td><td>0</td><td>0</td><td>0</td></tr>
+    <tr><th colspan="4">SOMA das 9 estimativas</th><th>12</th><th>24</th></tr>
+    <tr><th colspan="4">MÉDIA das 9 estimativas</th><th>12 ÷ 9 = <strong>1,33</strong></th><th>24 ÷ 9 = <strong>2,67</strong></th></tr>
+  </table>
+  </div>
+
+  <p>Leia o rodapé da tabela com atenção, porque ele é a resposta inteira:</p>
+  <ul>
+    <li>Dividindo por <strong>n</strong>, a média das estimativas foi <strong>1,33</strong>. O alvo era 2,67. <strong>Errou por baixo — e não foi azar de uma amostra, foi o comportamento médio de TODAS elas.</strong> Isso é o que se chama de <strong>viés</strong> (<em>bias</em>): um erro sistemático, que não some nem com mil amostras. Repare que 1,33 é exatamente <em>metade</em> de 2,67, e (n−1)/n = 1/2 aqui. Não é coincidência: dividir por n encolhe a estimativa por esse fator, sempre.</li>
+    <li>Dividindo por <strong>n − 1</strong>, a média das estimativas foi <strong>2,67 = σ² exato</strong>. Cravou o alvo. Estimativas individuais erram (algumas dão 0, outras dão 8) — <em>isso é inevitável e não é o problema</em>. O que importa é que elas erram <strong>em torno</strong> do valor certo, e não sistematicamente abaixo dele. Um estimador com essa propriedade se chama <strong>não-viesado</strong> (ou não-tendencioso).</li>
+  </ul>
+
+  <div class="card">
+    <p><strong>Resumo:</strong> divide-se por n − 1 porque dividir por n produz um estimador <strong>viesado para baixo</strong> — ele subestima a variância da população de forma sistemática. O n − 1 corrige exatamente esse viés.</p>
+    <p>Bônus da mesma tabela: a média das 9 médias amostrais é <code>(2+3+4+3+4+5+4+5+6) ÷ 9 = 36 ÷ 9 = 4 = μ</code>. Ou seja, <strong>x̄ já é não-viesado por natureza</strong> — a média amostral não precisa de correção nenhuma. Só a variância precisa. Isso reforça que o problema não é "amostra é ruim"; o problema é especificamente ter usado x̄ no lugar de μ dentro da conta.</p>
+  </div>
+
+  <p><strong>E "grau de liberdade"?</strong> Agora a frase faz sentido. Dado que x̄ já está calculada, os n desvios <strong>não são todos livres</strong>: como a soma deles tem de dar zero (você provou isso acima), sabendo n − 1 desvios você deduz o último por subtração. Se os desvios são −2, −1, 0, +1 e o total tem de fechar em zero, o quinto <em>obrigatoriamente</em> é +2. Você não tem 5 pedaços independentes de informação sobre a dispersão — tem 4. Daí <strong>n − 1</strong>.</p>
+
+  <div class="tip">💡 <strong>Como decidir na prova.</strong> A questão diz "os salários dos 7 funcionários da agência" → é a população daquele grupo → <code>÷ N</code>. A questão diz "uma amostra de 7 clientes foi selecionada" → <code>÷ (n−1)</code>. Palavras-chave: <em>todos, o total de, a empresa inteira</em> → populacional. <em>Amostra, sorteados, selecionados, uma parte</em> → amostral. Na dúvida absoluta, o enunciado costuma trazer "amostral" ou "populacional" explícito — leia de novo, está lá.</div>
+
+  <p><strong>Confira você mesmo</strong> (é o σ que usei em assimetria): conjunto <code>{1, 2, 2, 3, 4, 5, 11}</code>, média 4, tratado como população. Desvios: −3, −2, −2, −1, 0, +1, +7 (soma = 0 ✓). Quadrados: 9, 4, 4, 1, 0, 1, 49 → soma = <strong>68</strong>. <code>σ² = 68 ÷ 7 ≈ 9,71</code> → <code>σ = √9,71 ≈ <strong>3,12</strong></code>. É esse o valor que entrou no coeficiente de Pearson.</p>
+
+  <h3>Propriedades: somar e multiplicar constante</h3>
+
+  <p><strong>Não decore esta tabela — entenda a régua.</strong> Volte à imagem dos dados como pontos numa régua:</p>
+  <ul>
+    <li><strong>Somar uma constante</strong> a todo mundo é <em>arrastar a régua inteira</em> para o lado. Todo mundo anda junto, na mesma direção, na mesma quantidade. As <strong>distâncias entre os pontos não mudam</strong> — e dispersão é exatamente isso, distância. Logo: posição muda, dispersão não.</li>
+    <li><strong>Multiplicar por uma constante</strong> é <em>esticar a régua</em>. Os pontos se afastam uns dos outros proporcionalmente. Logo: posição muda E dispersão muda.</li>
+  </ul>
+
+  <div class="table-scroll">
+  <table>
+    <tr><th>Operação em todos os dados</th><th>Média</th><th>Mediana / Moda / Quartis</th><th>Desvio padrão</th><th>Variância</th></tr>
+    <tr><td><strong>Somar</strong> constante c</td><td>x̄ + c</td><td>+ c</td><td><strong>não muda</strong></td><td><strong>não muda</strong></td></tr>
+    <tr><td><strong>Subtrair</strong> constante c</td><td>x̄ − c</td><td>− c</td><td><strong>não muda</strong></td><td><strong>não muda</strong></td></tr>
+    <tr><td><strong>Multiplicar</strong> por k</td><td>x̄ · k</td><td>· k</td><td>σ · |k|</td><td>σ² · k²</td></tr>
+    <tr><td><strong>Dividir</strong> por k</td><td>x̄ ÷ k</td><td>÷ k</td><td>σ ÷ |k|</td><td>σ² ÷ k²</td></tr>
+  </table>
+  </div>
+
+  <h3>Exemplo resolvido — as propriedades acontecendo</h3>
+
+  <p>Agência A: <code>{8, 9, 10, 11, 12}</code>, com x̄ = 10, σ² = 2, σ ≈ 1,41.</p>
+
+  <p><strong>Caso 1 — todos ganham +5 minutos</strong> (entrou um passo burocrático novo, igual para todos):</p>
+  <p>Novos dados: <code>{13, 14, 15, 16, 17}</code>. Nova média = 75 ÷ 5 = <strong>15</strong> = 10 + 5 ✓.<br>
+  Desvios: 13−15 = −2, 14−15 = −1, 0, +1, +2. <strong>São os mesmos desvios de antes!</strong> Óbvio: se todo dado subiu 5 e a média subiu 5, a diferença entre eles é idêntica. Logo Σd² = 10, σ² = 10 ÷ 5 = <strong>2</strong> — não mudou nada ✓.</p>
+
+  <p><strong>Caso 2 — todos os tempos dobram</strong> (o sistema ficou 2× mais lento):</p>
+  <p>Novos dados: <code>{16, 18, 20, 22, 24}</code>. Nova média = 100 ÷ 5 = <strong>20</strong> = 10 × 2 ✓.<br>
+  Desvios: −4, −2, 0, +2, +4 — <strong>dobraram também</strong>. Quadrados: 16, 4, 0, 4, 16 → soma 40. σ² = 40 ÷ 5 = <strong>8</strong> = 2 × 2² ✓ (quadruplicou). σ = √8 ≈ <strong>2,83</strong> = 1,41 × 2 ✓ (dobrou).</p>
+
+  <p>Está tudo aí: o desvio padrão acompanha k <em>na primeira potência</em>, a variância acompanha k <em>ao quadrado</em>. E tem de ser assim por coerência de unidade — se a variância vem em "min²", multiplicar o tempo por 2 multiplica os min² por 4.</p>
+
   <div class="trap">🪤 Somar constante a todos os dados: média muda, <strong>dispersão não</strong>. Multiplicar todos por k: média ×k e desvio padrão ×k (variância ×k²).</div>
 
-  <h2>4. Probabilidade — os fundamentos</h2>
+  <div class="trap">🪤 Três derivados que caem: <strong>(1)</strong> a variância multiplica por <strong>k², não por k</strong> — reajuste de 10% (k = 1,1) faz a variância virar 1,21× a original, não 1,1×. <strong>(2)</strong> No desvio padrão é <strong>|k|</strong>: multiplicar todos os dados por −1 mantém σ igual (σ nunca é negativo), embora a média troque de sinal. <strong>(3)</strong> O <strong>CV muda ao somar</strong> constante! Ele parece imune porque nem média nem σ "sobrevivem" sozinhos — mas o σ fica igual e a média muda, então o quociente muda: em A, CV era 1,41/10 = 14,1%; somando 5, vira 1,41/15 = 9,4%. Já ao <strong>multiplicar</strong>, o CV NÃO muda (σ e x̄ são multiplicados pelo mesmo k, que se cancela): 2,83/20 = 14,1% ✓.</div>
+
+  <h2 id="sec-6-probabilidade-os-fundamentos">6. Probabilidade — os fundamentos</h2>
+
+  <p><strong>A virada de chave.</strong> Até aqui você tinha os dados e resumia. Agora é o contrário: <strong>você conhece o mecanismo e quer prever o dado que ainda não veio</strong>. Estatística descritiva olha para trás; probabilidade olha para frente. É a diferença entre relatar quantas transações foram fraudulentas ontem e estimar a chance de a próxima ser.</p>
+
+  <h3>O vocabulário mínimo</h3>
+
+  <div class="table-scroll">
+  <table>
+    <tr><th>Termo</th><th>Definição</th><th>Exemplo (lançar um dado)</th><th>Em TI</th></tr>
+    <tr><td><strong>Experimento aleatório</strong></td><td>procedimento cujo resultado não é previsível, mas cujos resultados possíveis são conhecidos</td><td>lançar o dado</td><td>rodar a query</td></tr>
+    <tr><td><strong>Espaço amostral</strong> (Ω ou S)</td><td>o conjunto de <strong>TODOS</strong> os resultados possíveis</td><td>Ω = {1, 2, 3, 4, 5, 6}, então n(Ω) = 6</td><td>a tabela inteira, sem <code>WHERE</code></td></tr>
+    <tr><td><strong>Ponto amostral</strong></td><td>cada resultado individual</td><td>o "4"</td><td>uma linha</td></tr>
+    <tr><td><strong>Evento</strong></td><td>qualquer <strong>subconjunto</strong> do espaço amostral — uma condição que você quer avaliar</td><td>A = "sair par" = {2, 4, 6}</td><td>o <code>WHERE</code> — o resultado do filtro</td></tr>
+    <tr><td><strong>Evento certo</strong></td><td>é o próprio Ω. P = 1</td><td>"sair um número de 1 a 6"</td><td><code>WHERE 1=1</code></td></tr>
+    <tr><td><strong>Evento impossível</strong></td><td>o conjunto vazio (∅). P = 0</td><td>"sair 7"</td><td><code>WHERE 1=0</code></td></tr>
+    <tr><td><strong>Evento complementar</strong> (Ā)</td><td>tudo que <strong>não</strong> é A</td><td>Ā = "sair ímpar" = {1, 3, 5}</td><td><code>NOT</code></td></tr>
+  </table>
+  </div>
+
   <div class="card"><p><code>P(A) = casos favoráveis ÷ casos possíveis</code> &nbsp;·&nbsp; <code>0 ≤ P(A) ≤ 1</code> &nbsp;·&nbsp; <code>P(Ā) = 1 − P(A)</code></p></div>
+
+  <p>Note a condição escondida em "casos favoráveis ÷ casos possíveis": ela só vale se <strong>todos os pontos amostrais forem igualmente prováveis</strong> (dado honesto, baralho bem embaralhado, sorteio justo). É a definição <em>clássica</em>. Com um dado viciado ela não se aplica — aí você precisa da definição <em>frequentista</em>: jogue muitas vezes e veja a frequência relativa estabilizar. Em prova, salvo aviso, assuma equiprobabilidade.</p>
+
+  <p>Exemplo mínimo: P(sair par) = 3 favoráveis ({2,4,6}) ÷ 6 possíveis = <strong>1/2 = 50%</strong>.</p>
+
+  <div class="tip">💡 <strong>O complementar é a arma secreta.</strong> Toda vez que a questão pedir <strong>"pelo menos um"</strong>, pare e vá pelo complementar: o contrário de "pelo menos um" é "<strong>nenhum</strong>", que costuma ser uma conta só. Calcular "pelo menos um" direto exige somar os casos de exatamente 1, exatamente 2, exatamente 3... — trabalho enorme e cheio de erro. <code>P(pelo menos um) = 1 − P(nenhum)</code>. Essa dica sozinha resolve umas 3 questões por prova.</div>
+
+  <h3>União (OU) — e o erro de contar duas vezes</h3>
+
+  <p><strong>União (A ∪ B)</strong> = ocorre A, <strong>ou</strong> B, <strong>ou os dois</strong>. Esse "ou os dois" é o <code>OR</code> do SQL, não o "ou" excludente do português cotidiano ("ou vai ou fica").</p>
+
+  <p>E é aí que mora a armadilha. Quer a probabilidade de tirar <strong>uma carta de copas OU um rei</strong> de um baralho de 52?</p>
+
+  <p><em>Raciocínio errado:</em> "13 copas + 4 reis = 17 cartas → 17/52". Está errado. Conte as cartas fisicamente: você contou o <strong>rei de copas</strong> duas vezes — uma vez porque é copas, outra porque é rei. Mas ele é <strong>uma carta só</strong>. São 16 cartas distintas, não 17.</p>
+
+  <p>Daí a subtração da fórmula: <code>P(A ∪ B) = P(A) + P(B) − P(A ∩ B)</code>. O termo <code>− P(A∩B)</code> não é decoreba; ele é o conserto da contagem duplicada.</p>
+
   <div class="table-scroll">
   <table>
     <tr><th>Situação</th><th>Regra</th><th>Exemplo</th></tr>
@@ -75,10 +715,205 @@
     <tr><td><strong>Condicional</strong></td><td>P(A|B) = P(A∩B) ÷ P(B)</td><td>"dado que já saiu B..."</td></tr>
   </table>
   </div>
+
+  <p>Fechando a conta do baralho: <code>13/52 + 4/52 − 1/52 = 16/52 = 4/13 ≈ <strong>30,8%</strong></code>.</p>
+
+  <div class="tip">💡 <strong>Isso é literalmente SQL.</strong> <code>SELECT COUNT(*) FROM cartas WHERE naipe='copas' OR valor='rei'</code> devolve 16, não 17 — o banco deduplica sozinho. A fórmula da união é o motor de deduplicação feito na mão. E é o mesmo princípio do <code>UNION</code> (remove duplicatas) versus <code>UNION ALL</code> (não remove, e por isso conta o rei de copas duas vezes — <code>UNION ALL</code> é o candidato que esquece de subtrair a interseção).</div>
+
+  <h3>Exclusivos × independentes — a confusão nº 1</h3>
+
+  <p>Se você levar uma única coisa desta página para a prova, leve esta. As duas palavras parecem sinônimos e são conceitos <strong>de dimensões diferentes</strong>. Pior: elas são quase o oposto uma da outra.</p>
+
+  <div class="table-scroll">
+  <table>
+    <tr><th></th><th>Mutuamente exclusivos (disjuntos)</th><th>Independentes</th></tr>
+    <tr><td><strong>Definição</strong></td><td><strong>Não podem ocorrer juntos.</strong> Se um aconteceu, o outro não aconteceu</td><td><strong>Um não altera a chance do outro.</strong> Saber de A não te ensina nada sobre B</td></tr>
+    <tr><td><strong>Em fórmula</strong></td><td><code>P(A ∩ B) = 0</code></td><td><code>P(A ∩ B) = P(A) × P(B)</code></td></tr>
+    <tr><td><strong>Onde aparece</strong></td><td>na <strong>união</strong> (permite só somar)</td><td>na <strong>interseção</strong> (permite multiplicar)</td></tr>
+    <tr><td><strong>Fala sobre</strong></td><td>a <em>coexistência</em> dos eventos</td><td>a <em>influência informacional</em> entre eles</td></tr>
+    <tr><td><strong>Exemplo</strong></td><td>um lançamento de dado: "sair 2" e "sair 5"</td><td>dois lançamentos: "6 no primeiro" e "6 no segundo"</td></tr>
+    <tr><td><strong>Pista no enunciado</strong></td><td>mesmo experimento, resultados que se excluem</td><td>experimentos separados, repetidos, com reposição</td></tr>
+  </table>
+  </div>
+
+  <p><strong>A demonstração que encerra o assunto.</strong> Um dado. A = "sair 2", B = "sair 5". P(A) = P(B) = 1/6. Eles são claramente exclusivos: um único lançamento não pode dar 2 e 5 ao mesmo tempo, logo <code>P(A ∩ B) = 0</code>.</p>
+
+  <p>Agora, <em>se</em> fossem independentes, teríamos de ter <code>P(A ∩ B) = P(A) × P(B) = 1/6 × 1/6 = 1/36</code>.</p>
+
+  <p>Mas 0 ≠ 1/36. <strong>Contradição.</strong> Logo A e B, sendo exclusivos, são necessariamente <strong>dependentes</strong>.</p>
+
+  <p>E faz todo sentido quando você pensa em <em>informação</em>: se eu te contar que saiu 5, qual a chance de ter saído 2? <strong>Zero.</strong> Era 1/6 e virou 0. A informação sobre B mudou radicalmente a chance de A — isso é a própria definição de dependência. Eventos exclusivos são o caso mais dependente que existe: um exclui o outro por completo.</p>
+
   <div class="trap">🪤 <strong>Exclusivos ≠ independentes!</strong> Exclusivos: não podem ocorrer juntos (soma na união). Independentes: um não afeta o outro (multiplica na interseção). Dois eventos exclusivos com P&gt;0 são, na verdade, <em>dependentes</em>.</div>
+
+  <div class="tip">💡 <strong>Como não errar sob pressão.</strong> Olhe o conectivo. Viu "<strong>OU</strong>" → é união → pergunte-se "eles podem acontecer juntos?" → se não podem (exclusivos), <strong>SOME</strong>. Viu "<strong>E</strong>" (ou "ambos", "os dois", "seguidos", "e depois") → é interseção → pergunte-se "um afeta o outro?" → se não afeta (independentes), <strong>MULTIPLIQUE</strong>. Mnemônico: <em>exclusivos somam, independentes multiplicam</em>.</div>
+
+  <h3>Interseção (E) e o erro de somar independentes</h3>
+
+  <p><strong>Interseção (A ∩ B)</strong> = ocorrem os dois. Se forem independentes: <code>P(A ∩ B) = P(A) × P(B)</code>.</p>
+
+  <p>Dois dados, quero 6 em ambos: <code>1/6 × 1/6 = 1/36 ≈ 2,8%</code>. Faz sentido: são 36 pares possíveis (6 × 6) e só um deles é (6,6).</p>
+
+  <p><em>O erro clássico:</em> "1/6 + 1/6 = 1/3". Por que está errado, além da fórmula? Porque <strong>exigir mais coisas ao mesmo tempo só pode DIMINUIR a probabilidade, nunca aumentar</strong>. Tirar 6 nos dois dados é mais difícil que tirar 6 em um. A resposta tem de ser <em>menor</em> que 1/6 — e 1/3 é maior. A conta já se denuncia sozinha.</p>
+
+  <p><strong>O teste que mata a dúvida:</strong> jogue 10 dados e pergunte a chance de dar 6 em todos. Somando: 10 × 1/6 = <strong>10/6 = 167%</strong>. Probabilidade maior que 100% é impossível — o método está errado, ponto final. Multiplicando: (1/6)¹⁰, um número minúsculo, que é o esperado.</p>
+
+  <div class="card">
+    <p><strong>A regra que resolve:</strong> multiplicar dois números entre 0 e 1 <strong>encolhe</strong> o resultado. Somar <strong>cresce</strong>. Portanto: interseção ("E", mais exigências) → encolhe → <strong>multiplica</strong>. União ("OU", mais alternativas) → cresce → <strong>soma</strong>. Se a sua resposta cresceu quando você exigiu mais coisas, você errou a operação.</p>
+  </div>
+
+  <h3>Exemplo resolvido — "pelo menos um" (onde os dois erros se encontram)</h3>
+
+  <p>Dois dados. Qual a probabilidade de sair <strong>pelo menos um 6</strong>?</p>
+
+  <p><em>Resposta errada mais comum:</em> "6 no primeiro OU 6 no segundo = 1/6 + 1/6 = 2/6 = 1/3 = 12/36". Errado — esqueceu de subtrair a interseção: o caso (6,6) foi contado duas vezes. Mesmo pecado do rei de copas.</p>
+
+  <p><strong>Solução 1 — união feita direito:</strong></p>
+  <p><code>P(A ∪ B) = P(A) + P(B) − P(A ∩ B) = 1/6 + 1/6 − (1/6 × 1/6) = 6/36 + 6/36 − 1/36 = <strong>11/36 ≈ 30,6%</strong></code></p>
+
+  <p><strong>Solução 2 — pelo complementar (mais rápida e mais segura):</strong></p>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Passo</th><th>Raciocínio</th><th>Conta</th></tr>
+    <tr><td>1</td><td>O contrário de "pelo menos um 6" é "<strong>nenhum</strong> 6"</td><td>—</td></tr>
+    <tr><td>2</td><td>Chance de não sair 6 em um dado</td><td>1 − 1/6 = 5/6</td></tr>
+    <tr><td>3</td><td>Nenhum 6 nos dois (independentes → multiplica)</td><td>5/6 × 5/6 = 25/36</td></tr>
+    <tr><td>4</td><td>Complementar</td><td>1 − 25/36 = <strong>11/36 ≈ 30,6%</strong></td></tr>
+  </table>
+  </div>
+
+  <p>Bateu. E repare como 11/36 e a resposta errada 12/36 são <strong>vizinhas</strong> — diferem por exatamente 1/36, o par (6,6) contado em dobro. A banca coloca 1/3 entre as alternativas justamente por isso. Se você fez a conta e caiu redondo num número bonitinho tipo 1/3, desconfie.</p>
+
+  <h3>Probabilidade condicional — o WHERE dentro do WHERE</h3>
+
+  <p><strong>O problema.</strong> A chance de um cliente qualquer ser inadimplente é 15%. Mas eu não estou avaliando "um cliente qualquer" — estou avaliando <em>este</em> cliente, que tem cartão de crédito, atrasou uma fatura ano passado e é PJ. Cada informação que chega <strong>deveria mudar a minha estimativa</strong>. Probabilidade condicional é a máquina de atualizar a crença conforme a informação entra.</p>
+
+  <p><code>P(A|B)</code> lê-se "<strong>probabilidade de A dado que B ocorreu</strong>". A barra significa "dado que", "sabendo que".</p>
+
+  <div class="card">
+    <p><code>P(A|B) = P(A ∩ B) ÷ P(B)</code></p>
+    <p><strong>A intuição:</strong> saber que B ocorreu <strong>encolhe o espaço amostral</strong>. Você não está mais no universo de todos os resultados — está no universo restrito onde B é verdade. Então o novo denominador não é mais Ω; é B. E o numerador não é mais "todo o A"; é só a parte de A que sobreviveu ao filtro, ou seja, A ∩ B.</p>
+  </div>
+
+  <div class="tip">💡 <strong>É exatamente um <code>WHERE</code> aninhado.</strong> Sem condição você faz <code>COUNT(inadimplentes) / COUNT(*)</code>. Com a condição "dado que tem cartão", você faz <code>COUNT(inadimplentes AND cartao) / COUNT(cartao)</code> — o denominador deixou de ser a tabela inteira e virou o resultado do filtro. Condicional é <strong>trocar o denominador</strong>. Se você guardar só isso, acerta todas.</div>
+
+  <h3>Exemplo resolvido — inadimplência e cartão de crédito</h3>
+
+  <p>200 clientes da agência, cruzando duas variáveis. Essa tabela se chama <strong>tabela de contingência</strong> (ou de dupla entrada) e é o formato favorito das bancas:</p>
+
+  <div class="table-scroll">
+  <table>
+    <tr><th></th><th>Tem cartão</th><th>Não tem cartão</th><th><strong>TOTAL</strong></th></tr>
+    <tr><td><strong>Inadimplente</strong></td><td>24</td><td>6</td><td><strong>30</strong></td></tr>
+    <tr><td><strong>Adimplente</strong></td><td>96</td><td>74</td><td><strong>170</strong></td></tr>
+    <tr><td><strong>TOTAL</strong></td><td><strong>120</strong></td><td><strong>80</strong></td><td><strong>200</strong></td></tr>
+  </table>
+  </div>
+
+  <p class="muted">Confira as bordas antes de qualquer conta — é o passo que evita 90% dos erros: 24+6 = 30 ✓ · 96+74 = 170 ✓ · 24+96 = 120 ✓ · 6+74 = 80 ✓ · 120+80 = 200 ✓ · 30+170 = 200 ✓.</p>
+
+  <div class="table-scroll">
+  <table>
+    <tr><th>Pergunta</th><th>Denominador (o universo)</th><th>Conta</th><th>Resposta</th></tr>
+    <tr><td>P(inadimplente) — um cliente qualquer</td><td>todos os 200</td><td>30 ÷ 200</td><td><strong>15%</strong></td></tr>
+    <tr><td>P(tem cartão)</td><td>todos os 200</td><td>120 ÷ 200</td><td><strong>60%</strong></td></tr>
+    <tr><td>P(inadimplente <strong>E</strong> tem cartão) — interseção</td><td>todos os 200</td><td>24 ÷ 200</td><td><strong>12%</strong></td></tr>
+    <tr><td>P(inadimplente <strong>|</strong> tem cartão) — <em>condicional</em></td><td><strong>só os 120 com cartão</strong></td><td>24 ÷ 120</td><td><strong>20%</strong></td></tr>
+    <tr><td>P(inadimplente <strong>|</strong> não tem cartão)</td><td><strong>só os 80 sem cartão</strong></td><td>6 ÷ 80</td><td><strong>7,5%</strong></td></tr>
+    <tr><td>P(tem cartão <strong>|</strong> inadimplente) — <em>invertida!</em></td><td><strong>só os 30 inadimplentes</strong></td><td>24 ÷ 30</td><td><strong>80%</strong></td></tr>
+  </table>
+  </div>
+
+  <p><strong>Conferindo pela fórmula</strong> (para você ver que a tabela e a fórmula são a mesma coisa):</p>
+  <p><code>P(inad | cartão) = P(inad ∩ cartão) ÷ P(cartão) = 0,12 ÷ 0,60 = <strong>0,20</strong></code> ✓ — bate com o 24/120. Os 200 se cancelam no numerador e no denominador; por isso dá na mesma trabalhar com contagens.</p>
+
+  <p><strong>Eles são independentes?</strong> Teste: se fossem, <code>P(inad ∩ cartão)</code> teria de ser <code>P(inad) × P(cartão) = 0,15 × 0,60 = 0,09</code>, o que dá 0,09 × 200 = <strong>18 clientes esperados</strong>. Observamos <strong>24</strong>. Não bate → <strong>dependentes</strong>. Confirma pela outra via: P(inad) = 15%, mas P(inad | cartão) = 20%. <strong>A informação mudou a probabilidade</strong> — logo há dependência. Ter cartão está associado a mais inadimplência nesta agência.</p>
+
+  <div class="card">
+    <p><strong>O teste de independência, em três formas equivalentes.</strong> A e B são independentes se (e só se) qualquer uma destas for verdadeira:</p>
+    <p><code>P(A ∩ B) = P(A) × P(B)</code> &nbsp;·&nbsp; <code>P(A|B) = P(A)</code> &nbsp;·&nbsp; <code>P(B|A) = P(B)</code></p>
+    <p>A segunda é a mais eloquente: <strong>independência é "condicionar não muda nada"</strong>. A informação sobre B é irrelevante para A.</p>
+  </div>
+
+  <div class="trap">🪤 <strong>P(A|B) ≠ P(B|A)</strong> — e a diferença pode ser gigantesca. Na tabela: P(inad | cartão) = <strong>20%</strong>, mas P(cartão | inad) = <strong>80%</strong>. Mesmos dois eventos, quatro vezes de diferença, porque o denominador é outro (120 versus 30). Inverter a condicional se chama <em>falácia da taxa-base</em> e é o motor da próxima seção. Na prova: leia com o dedo <strong>o que vem depois da barra</strong> — aquilo é o seu denominador.</div>
+
+  <h3>Teorema de Bayes — invertendo a condicional</h3>
+
+  <p><strong>O problema que ele resolve.</strong> Você sempre consegue medir a condicional em <em>uma</em> direção, e sempre quer a <em>outra</em>. O time de dados te entrega "o modelo detecta 99% das fraudes" — isso é <code>P(alarme | fraude)</code>. Mas na hora que o alarme toca às 3h da manhã, a pergunta do plantonista é outra: "<strong>tocou o alarme — é fraude mesmo?</strong>" — isso é <code>P(fraude | alarme)</code>. A condicional invertida. Bayes é a máquina de virar a condicional do avesso.</p>
+
   <p><strong>Teorema de Bayes</strong> (probabilidade das causas): <code>P(A|B) = [P(B|A) · P(A)] ÷ P(B)</code>. Cai em contexto de teste/diagnóstico: "sabendo que o alarme disparou, qual a chance de ser fraude real?".</p>
 
-  <h2>5. Distribuições de probabilidade</h2>
+  <p>De onde ele sai? De duas linhas. Você já sabe que <code>P(A|B) = P(A∩B) ÷ P(B)</code> e que <code>P(B|A) = P(A∩B) ÷ P(A)</code>. Isole A∩B na segunda: <code>P(A∩B) = P(B|A) · P(A)</code>. Substitua na primeira. Pronto, é Bayes. <strong>Não é uma fórmula nova</strong> — é a condicional escrita de outro jeito.</p>
+
+  <p>O denominador <code>P(B)</code> costuma não vir de bandeja, e aí se usa a <strong>lei da probabilidade total</strong>: o alarme pode tocar por dois caminhos mutuamente exclusivos — ou é fraude e o modelo acertou, ou não é fraude e o modelo se enganou. Some os dois caminhos:</p>
+  <p><code>P(B) = P(B|A) · P(A) + P(B|Ā) · P(Ā)</code></p>
+
+  <h3>Exemplo resolvido — o antifraude do banco</h3>
+
+  <p>O cenário, que é realista:</p>
+  <ul>
+    <li><strong>1 em cada 1.000</strong> transações é fraudulenta → <code>P(F) = 0,001</code>. Isso se chama <strong>probabilidade a priori</strong> (ou taxa-base): o que você sabia <em>antes</em> de qualquer alarme.</li>
+    <li>O modelo é <strong>ótimo</strong>: pega 99% das fraudes → <code>P(A|F) = 0,99</code>. É a <strong>sensibilidade</strong> (taxa de verdadeiro positivo).</li>
+    <li>O modelo tem <strong>2% de falso positivo</strong>: em transações legítimas, ele dispara à toa 2% das vezes → <code>P(A|F̄) = 0,02</code>.</li>
+  </ul>
+
+  <p><strong>O alarme tocou. Qual a chance de ser fraude de verdade?</strong> Antes de calcular, chute. A maioria das pessoas chuta "uns 95%, o modelo é 99% preciso". Guarde o seu chute.</p>
+
+  <p><strong>Caminho A — pela fórmula.</strong></p>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Passo</th><th>Conta</th><th>Resultado</th></tr>
+    <tr><td>1. P(F̄), o complementar</td><td>1 − 0,001</td><td>0,999</td></tr>
+    <tr><td>2. Caminho "fraude e alarme"</td><td>P(A|F) · P(F) = 0,99 × 0,001</td><td>0,00099</td></tr>
+    <tr><td>3. Caminho "legítima e alarme"</td><td>P(A|F̄) · P(F̄) = 0,02 × 0,999</td><td>0,01998</td></tr>
+    <tr><td>4. P(A), prob. total do alarme tocar</td><td>0,00099 + 0,01998</td><td>0,02097</td></tr>
+    <tr><td>5. Bayes</td><td>P(F|A) = 0,00099 ÷ 0,02097</td><td><strong>≈ 0,0472 = 4,72%</strong></td></tr>
+  </table>
+  </div>
+
+  <p><strong>Caminho B — por frequências naturais</strong> (mais fácil, e é assim que se explica isso para um humano). Imagine <strong>100.000 transações</strong>:</p>
+
+  <div class="table-scroll">
+  <table>
+    <tr><th>Passo</th><th>Raciocínio</th><th>Nº de transações</th></tr>
+    <tr><td>1</td><td>Fraudes: 0,001 × 100.000</td><td><strong>100</strong></td></tr>
+    <tr><td>2</td><td>Legítimas: 100.000 − 100</td><td><strong>99.900</strong></td></tr>
+    <tr><td>3</td><td>Das 100 fraudes, o modelo pega 99% → alarmes CORRETOS</td><td><strong>99</strong></td></tr>
+    <tr><td>4</td><td>Das 99.900 legítimas, 2% disparam à toa → FALSOS alarmes: 0,02 × 99.900</td><td><strong>1.998</strong></td></tr>
+    <tr><td>5</td><td>Total de alarmes que tocaram: 99 + 1.998</td><td><strong>2.097</strong></td></tr>
+    <tr><td>6</td><td>Dos alarmes que tocaram, quantos são fraude real? 99 ÷ 2.097</td><td><strong>≈ 4,72%</strong></td></tr>
+  </table>
+  </div>
+
+  <p><strong>4,72%.</strong> Em 95 de cada 100 alarmes, a transação é legítima e o cliente vai ser incomodado à toa. Com um modelo que acerta 99% das fraudes.</p>
+
+  <p><strong>Por que isso não é um erro de conta?</strong> Porque <strong>as legítimas são 999 vezes mais numerosas que as fraudes</strong>. Mesmo errando pouquíssimo (2%), 2% de um número gigante (99.900) é maior que 99% de um número minúsculo (100). O modelo está afogado no volume. É a <strong>taxa-base</strong> (a priori de 0,1%) dominando o resultado — e ignorá-la é a <em>falácia da taxa-base</em>, o erro cognitivo mais caro da estatística aplicada.</p>
+
+  <div class="tip">💡 <strong>Por que você deveria se importar como analista de TI.</strong> Isso explica por que todo sistema antifraude, todo IDS, todo teste de segurança e todo exame médico de rastreio vivem afogados em falso positivo — e por que o time de operações ignora alarme depois de um tempo. Também explica por que "acurácia" é métrica lixo para evento raro: um modelo que responde <code>return false</code> — nunca acusa nada — tem 99,9% de acurácia neste cenário. E é inútil. É exatamente por isso que se mede <strong>precisão</strong> (dos que acusei, quantos eram? ← é o nosso 4,72%) e <strong>recall</strong> (dos que existiam, quantos peguei? ← é o 99%) separadamente. Bayes é a matemática por trás da matriz de confusão.</div>
+
+  <p><strong>O vocabulário de Bayes</strong>, que a banca usa no enunciado:</p>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Termo</th><th>Quem é</th><th>No exemplo</th></tr>
+    <tr><td><strong>A priori</strong> (taxa-base)</td><td>P(A) — o que você sabia <em>antes</em> da evidência</td><td>P(F) = 0,1%</td></tr>
+    <tr><td><strong>Verossimilhança</strong></td><td>P(B|A) — a qualidade do detector</td><td>P(alarme|fraude) = 99%</td></tr>
+    <tr><td><strong>Evidência</strong></td><td>P(B) — a prob. total do sinal, por todos os caminhos</td><td>P(alarme) = 2,097%</td></tr>
+    <tr><td><strong>A posteriori</strong></td><td>P(A|B) — a crença <em>atualizada</em> depois da evidência</td><td>P(fraude|alarme) = 4,72%</td></tr>
+  </table>
+  </div>
+
+  <p>Repare no que aconteceu: a crença saiu de <strong>0,1%</strong> (a priori) para <strong>4,72%</strong> (a posteriori). O alarme <strong>multiplicou por 47</strong> a suspeita sobre aquela transação! O modelo é excelente — ele é muito informativo. O que ele não consegue é vencer sozinho uma taxa-base de 1 em 1.000. Por isso, na vida real, o alarme não bloqueia o cartão: ele apenas escala para um segundo teste (SMS ao cliente, biometria). Cada nova evidência entra como uma nova rodada de Bayes, e a posteriori de uma rodada vira a priori da próxima. <strong>É assim que 4,72% vira 95% depois de duas confirmações independentes.</strong></p>
+
+  <div class="trap">🪤 O erro que a banca quer: responder <strong>99%</strong> (ou "1 − 0,02 = 98%"). Isso é confundir <code>P(alarme|fraude)</code> com <code>P(fraude|alarme)</code> — a inversão da condicional. Se o enunciado der uma taxa-base baixinha ("1 em 1.000", "0,1% da população"), <strong>é Bayes e a resposta vai ser surpreendentemente pequena</strong>. Se a sua conta deu um número alto e redondo, você inverteu a condicional. E atenção ao denominador: ele é a soma dos DOIS caminhos (0,00099 + 0,01998). Esquecer o caminho dos falsos positivos é o segundo erro mais comum.</div>
+
+  <h2 id="sec-7-distribuicoes-de-probabilidade">7. Distribuições de probabilidade</h2>
+
+  <p><strong>O problema que elas resolvem.</strong> Calcular probabilidade "no braço", contando casos favoráveis, funciona para dado e baralho. Para "qual a chance de 2 dos meus 5 clientes contratarem o consórcio?" a contagem manual vira um inferno. A saída é reconhecer que <strong>certos padrões de aleatoriedade se repetem no mundo</strong> — e que alguém já resolveu a álgebra deles.</p>
+
+  <p>Uma distribuição é um <strong>modelo pronto</strong>: você identifica o padrão do enunciado, pluga os parâmetros e a fórmula cospe a probabilidade. Em TI: é uma <strong>biblioteca</strong>. Você não implementa <em>quicksort</em> toda vez; importa. Aqui é igual — o trabalho todo é <strong>saber qual importar</strong>.</p>
+
+  <p>Antes, um termo: <strong>variável aleatória</strong> é a coluna que guarda o resultado numérico do experimento ("nº de sucessos", "tempo até o próximo cliente"). Escreve-se X maiúsculo para a variável e x minúsculo para um valor concreto. <code>P(X = 2)</code> lê-se "probabilidade de a variável assumir o valor 2".</p>
+
   <div class="table-scroll">
   <table>
     <tr><th>Distribuição</th><th>Modela</th><th>Parâmetros</th><th>Média</th></tr>
@@ -88,18 +923,255 @@
     <tr><td><strong>Exponencial</strong> (contínua)</td><td><strong>tempo entre</strong> eventos (fila, falha)</td><td>λ</td><td>1/λ</td></tr>
   </table>
   </div>
+
+  <div class="card">
+    <p><strong>A árvore de decisão — qual importar:</strong></p>
+    <p>1. O resultado é <strong>contagem</strong> (0, 1, 2, 3...) ou <strong>medição</strong> (qualquer valor)?</p>
+    <p>2. Se é <strong>contagem</strong>: existe um número fixo e conhecido de tentativas? <strong>Sim → Binomial</strong> ("em 5 clientes", "em 20 lançamentos"). Não, é "por hora / por página / por km"? <strong>Poisson</strong>.</p>
+    <p>3. Se é <strong>medição</strong>: é <em>tempo até / entre</em> eventos? <strong>Exponencial</strong>. É uma grandeza que se acumula em torno de um centro (peso, erro, média amostral)? <strong>Normal</strong>.</p>
+  </div>
+
+  <h3>Binomial — contando sucessos em n tentativas</h3>
+
+  <p><strong>Quando usar.</strong> Quatro condições, todas obrigatórias (o mnemônico é <em>BINS</em>):</p>
+  <ul>
+    <li><strong>B</strong>inário: cada tentativa só tem 2 resultados — sucesso ou fracasso. (Contratou ou não; fraudou ou não; passou ou não.)</li>
+    <li><strong>I</strong>ndependentes: uma tentativa não influencia a outra.</li>
+    <li><strong>N</strong>úmero fixo de tentativas: n é conhecido antes de começar.</li>
+    <li><strong>S</strong>empre a mesma probabilidade p em toda tentativa.</li>
+  </ul>
+
+  <p class="muted">"Sucesso" aqui é jargão frio: é só o evento que você está contando. Em antifraude, "sucesso" é a fraude acontecer. Não tem conotação boa nenhuma.</p>
+
+  <div class="card">
+    <p><code>P(X = k) = C(n,k) · p<sup>k</sup> · q<sup>(n−k)</sup></code> &nbsp;onde&nbsp; <code>q = 1 − p</code></p>
+    <p><strong>Lendo a fórmula em português</strong> — ela é só contagem, não decore:</p>
+    <p>· <code>p<sup>k</sup></code> → os k sucessos acontecem: multiplique p por ele mesmo k vezes (são independentes, então multiplica).<br>
+       · <code>q<sup>(n−k)</sup></code> → os outros (n−k) fracassam: mesma lógica.<br>
+       · <code>C(n,k)</code> → <strong>de quantas ordens diferentes isso pode acontecer?</strong> "2 sucessos em 5 clientes" pode ser o 1º e o 2º, ou o 1º e o 5º, ou o 3º e o 4º... Cada arranjo tem a mesma probabilidade, então conte-os e multiplique. É a <strong>combinação</strong>: <code>C(n,k) = n! ÷ [k! · (n−k)!]</code>.</p>
+    <p><code>Média = n·p</code> &nbsp;·&nbsp; <code>Variância = n·p·q</code> &nbsp;·&nbsp; <code>σ = √(n·p·q)</code></p>
+  </div>
+
+  <h3>Exemplo resolvido — consórcio na agência</h3>
+
+  <p>Um gerente aborda <strong>5 clientes</strong>. Por histórico, cada um tem <strong>20%</strong> de chance de contratar o consórcio, independentemente dos demais.</p>
+  <p>Modelo: Binomial com <code>n = 5</code>, <code>p = 0,2</code>, <code>q = 0,8</code>. Passa no teste BINS ✓.</p>
+
+  <p><strong>(a) Qual a chance de exatamente 2 contratarem?</strong></p>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Passo</th><th>Conta</th><th>Resultado</th></tr>
+    <tr><td>1. Combinação C(5,2)</td><td>5! ÷ (2! · 3!) = 120 ÷ (2 · 6) = 120 ÷ 12</td><td><strong>10</strong> (há 10 duplas possíveis)</td></tr>
+    <tr><td>2. Os 2 sucessos: p²</td><td>0,2 × 0,2</td><td>0,04</td></tr>
+    <tr><td>3. Os 3 fracassos: q³</td><td>0,8 × 0,8 × 0,8</td><td>0,512</td></tr>
+    <tr><td>4. Multiplicar tudo</td><td>10 × 0,04 × 0,512</td><td><strong>0,2048 = 20,48%</strong></td></tr>
+  </table>
+  </div>
+
+  <p><strong>(b) Qual a chance de NENHUM contratar?</strong> Aqui k = 0, e C(5,0) = 1 (só existe um jeito de ninguém contratar). Então: <code>1 × 0,2<sup>0</sup> × 0,8<sup>5</sup> = 1 × 1 × 0,32768 = <strong>32,77%</strong></code>.</p>
+
+  <p><strong>(c) Qual a chance de PELO MENOS UM contratar?</strong> Palavra mágica → complementar → você já tem tudo:<br>
+  <code>P(X ≥ 1) = 1 − P(X = 0) = 1 − 0,32768 = <strong>0,67232 = 67,23%</strong></code>.<br>
+  <em>Pelo caminho longo</em> seria P(1) + P(2) + P(3) + P(4) + P(5): cinco fórmulas. O complementar resolveu numa linha.</p>
+
+  <p><strong>(d) Quantos o gerente espera converter?</strong> <code>Média = n · p = 5 × 0,2 = <strong>1 cliente</strong></code>. Variância = <code>n · p · q = 5 × 0,2 × 0,8 = <strong>0,8</strong></code>, logo σ = √0,8 ≈ 0,89.</p>
+
+  <div class="tip">💡 <strong>n·p é a fórmula mais intuitiva da matéria:</strong> 5 clientes, 20% cada → espero converter 1. Você faria essa conta de cabeça sem saber o que é binomial. E note que a média (1) <em>não precisa</em> ser um valor que a variável pode assumir de verdade — com 3 clientes e p = 0,2, a média seria 0,6 cliente. "Valor esperado" é média de longo prazo, não previsão de um caso.</div>
+
+  <div class="trap">🪤 <strong>Sem reposição, não é binomial.</strong> "Sorteio 3 clientes da carteira, sem repor" quebra a condição <em>p constante</em> — a cada retirada o p muda. Aí a distribuição correta é a <strong>hipergeométrica</strong>. Palavras que indicam binomial: "com reposição", "cada cliente, independentemente". Palavras que a matam: "sem reposição", "retirados simultaneamente". (Exceção prática: se a população for enorme frente à amostra — 3 clientes de 500.000 — o p quase não muda e se usa binomial como aproximação.)</div>
+
+  <div class="trap">🪤 <code>C(n,k)</code> conta <strong>combinação</strong> (a ordem NÃO importa: "cliente 1 e 3" é o mesmo par que "cliente 3 e 1"). Se você usar arranjo/permutação, infla o resultado. E lembre: <code>0! = 1</code> e <code>p<sup>0</sup> = 1</code> — é o que faz o caso k = 0 funcionar.</div>
+
+  <h3>Poisson — contando eventos raros num intervalo</h3>
+
+  <p><strong>O problema que ela resolve.</strong> A binomial precisa de um <em>n</em>. Mas qual é o n de "clientes que entram na agência entre 14h e 15h"? Não existe. Não há um número fixo de tentativas — há um <strong>intervalo contínuo de tempo</strong> em que o evento pode acontecer a qualquer instante, quantas vezes for. Poisson é a binomial no limite: <strong>n indo para o infinito e p indo para zero</strong>, com o produto n·p se mantendo num valor finito. Esse produto é o λ.</p>
+
+  <div class="card">
+    <p><code>P(X = k) = (e<sup>−λ</sup> · λ<sup>k</sup>) ÷ k!</code></p>
+    <p><strong>λ (lambda)</strong> = o número <strong>médio</strong> de ocorrências no intervalo considerado. É o único parâmetro. <code>e</code> ≈ 2,71828.</p>
+    <p><code>Média = λ</code> &nbsp;·&nbsp; <code>Variância = λ</code> &nbsp;·&nbsp; <code>σ = √λ</code></p>
+  </div>
+
+  <p><strong>A propriedade que só a Poisson tem:</strong> <code>média = variância = λ</code>. Cai direto ("numa Poisson com média 4, a variância é ___" → 4; "e o desvio padrão?" → √4 = 2). Nenhuma outra distribuição da tabela faz isso.</p>
+
+  <h3>Exemplo resolvido — alertas de fraude por hora</h3>
+
+  <p>A central antifraude recebe, em média, <strong>2 alertas por hora</strong>. Modelo: Poisson com λ = 2.</p>
+
+  <div class="table-scroll">
+  <table>
+    <tr><th>Pergunta</th><th>Conta</th><th>Resposta</th></tr>
+    <tr><td>P(nenhum alerta na próxima hora)</td><td>(e<sup>−2</sup> × 2<sup>0</sup>) ÷ 0! = e<sup>−2</sup> × 1 ÷ 1</td><td><strong>0,1353 = 13,53%</strong></td></tr>
+    <tr><td>P(exatamente 1 alerta)</td><td>(e<sup>−2</sup> × 2<sup>1</sup>) ÷ 1! = 0,1353 × 2 ÷ 1</td><td><strong>0,2707 = 27,07%</strong></td></tr>
+    <tr><td>P(exatamente 2 alertas)</td><td>(e<sup>−2</sup> × 2<sup>2</sup>) ÷ 2! = 0,1353 × 4 ÷ 2</td><td><strong>0,2707 = 27,07%</strong></td></tr>
+    <tr><td>P(<strong>pelo menos 1</strong> alerta)</td><td>1 − P(X = 0) = 1 − 0,1353</td><td><strong>0,8647 = 86,47%</strong></td></tr>
+  </table>
+  </div>
+
+  <p class="muted">Usando e<sup>−2</sup> ≈ 0,1353. Curiosidade útil: P(X=1) e P(X=2) empataram — isso sempre acontece quando λ = 2, porque λ²/2! = λ¹/1! quando λ = 2. Bom sinal de que a conta está certa.</p>
+
+  <p><strong>Mudando o intervalo — o passo que todo mundo erra.</strong> "Qual a chance de nenhum alerta nos próximos <strong>30 minutos</strong>?"</p>
+  <p>Você <strong>não</strong> usa λ = 2. O λ tem de ser reescalonado para o intervalo da pergunta: se são 2 por hora, em meia hora são <code>λ = 2 × 0,5 = <strong>1</strong></code>. Então <code>P(X=0) = e<sup>−1</sup> = <strong>0,3679 = 36,79%</strong></code>. Faz sentido: em menos tempo, é mais provável não acontecer nada (36,79% &gt; 13,53%).</p>
+
+  <div class="trap">🪤 <strong>λ é sempre "por intervalo da pergunta".</strong> Se o enunciado dá a taxa por hora e pergunta por dia, multiplique por 24 antes de calcular. Se dá por dia e pergunta por hora, divida. Esquecer de reescalonar é o erro nº 1 em Poisson. E: <strong>λ não precisa ser inteiro</strong> (1,5 alerta por hora é perfeitamente válido) — o que tem de ser inteiro é o <em>k</em>, porque ele é contagem.</div>
+
+  <div class="tip">💡 Poisson é a distribuição do <strong>SRE</strong>: número de erros 500 por minuto, pacotes perdidos por segundo, chamados abertos por dia, falhas de disco por ano, defeitos por 1.000 linhas de código. Sempre que o enunciado disser "<strong>em média X por [unidade de tempo/espaço]</strong>" e perguntar "qual a chance de ocorrerem exatamente k", é Poisson. A expressão "por" é a assinatura.</div>
+
   <div class="tip">💡 Par confuso: <strong>Poisson conta eventos</strong> num intervalo (quantos clientes chegam por hora); <strong>Exponencial mede o tempo</strong> entre eles (quanto tempo até o próximo cliente).</div>
 
+  <p class="muted">Os dois são <strong>o mesmo processo visto de dois ângulos</strong>, e compartilham o λ. Se chegam 2 clientes por hora (Poisson, λ = 2), então o tempo médio entre chegadas é 1/2 hora = 30 min (Exponencial). Pergunta com "<strong>quantos</strong>" → Poisson. Pergunta com "<strong>quanto tempo</strong>" → Exponencial. É a única coisa que você precisa para separar as duas.</p>
+
+  <h3>Exponencial — o tempo até o próximo evento</h3>
+
+  <p><strong>O que ela modela.</strong> Tempo de espera até que algo aconteça: até o próximo cliente entrar, até o servidor falhar, até a próxima transação. É <strong>contínua</strong> (tempo é medição, não contagem).</p>
+
+  <div class="card">
+    <p><code>P(T &gt; t) = e<sup>−λt</sup></code> → probabilidade de esperar <strong>MAIS</strong> que t (o evento ainda não veio)</p>
+    <p><code>P(T ≤ t) = 1 − e<sup>−λt</sup></code> → probabilidade de o evento acontecer <strong>ATÉ</strong> t</p>
+    <p><code>Média = 1 ÷ λ</code> &nbsp;·&nbsp; <code>Variância = 1 ÷ λ²</code> &nbsp;·&nbsp; <code>σ = 1 ÷ λ</code> (na exponencial, média = desvio padrão)</p>
+  </div>
+
+  <p>A primeira fórmula é fácil de reconstruir: "esperar mais que t" é o mesmo que "<strong>nenhum evento ocorreu em t</strong>", que é o P(X=0) da Poisson com λt no lugar de λ: <code>e<sup>−λt</sup> · (λt)<sup>0</sup> ÷ 0! = e<sup>−λt</sup></code>. As duas distribuições são a mesma moeda.</p>
+
+  <h3>Exemplo resolvido — o tempo entre alertas</h3>
+
+  <p>Mesma central: λ = 2 alertas por hora.</p>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Pergunta</th><th>Conta</th><th>Resposta</th></tr>
+    <tr><td>Tempo médio até o próximo alerta</td><td>1 ÷ λ = 1 ÷ 2</td><td><strong>0,5 h = 30 minutos</strong></td></tr>
+    <tr><td>P(esperar mais de 1 hora)</td><td>e<sup>−λt</sup> = e<sup>−2×1</sup> = e<sup>−2</sup></td><td><strong>0,1353 = 13,53%</strong></td></tr>
+    <tr><td>P(o próximo alerta vir em até 30 min)</td><td>1 − e<sup>−2×0,5</sup> = 1 − e<sup>−1</sup> = 1 − 0,3679</td><td><strong>0,6321 = 63,21%</strong></td></tr>
+  </table>
+  </div>
+
+  <p class="muted">Confira a coerência com a Poisson: "esperar mais de 1 hora" pela exponencial deu 13,53% — exatamente o mesmo valor de "nenhum alerta em 1 hora" pela Poisson. Tem de bater mesmo: é a mesma frase em dois idiomas. Use isso para conferir sua conta na prova.</p>
+
+  <p><strong>Falta de memória.</strong> A exponencial tem uma propriedade estranha e cobrada: <code>P(T &gt; s + t | T &gt; s) = P(T &gt; t)</code>. Traduzindo: <em>já esperei 1 hora sem alerta nenhum; qual a chance de esperar mais 30 minutos?</em> Resposta: <strong>exatamente a mesma</strong> de quando eu cheguei — 63,21% de vir em 30 min. O processo <strong>não tem memória</strong>; ele não "acumula pressão", não está "na hora de acontecer". É a formalização de que <strong>não existe lei dos pequenos números</strong>: o alerta não sabe que você está esperando.</p>
+
+  <div class="trap">🪤 <strong>A "falácia do apostador" em forma de fórmula.</strong> "Já deu 5 caras seguidas, agora vai dar coroa" é falso pelo mesmo motivo: a moeda não tem memória do passado. Em prova de exponencial: "um servidor já funciona há 3 anos sem falhar; a chance de falhar no próximo mês é maior?" → <strong>NÃO, é a mesma de sempre</strong>. (Fisicamente isso é irreal — peça velha quebra mais — e é justamente por isso que confiabilidade real usa a distribuição de Weibull. Mas em prova, exponencial = sem memória.)</div>
+
   <h3>Distribuição Normal (a que mais cai)</h3>
+
+  <p><strong>Por que ela domina tudo.</strong> Sempre que uma grandeza é o resultado da <strong>soma de muitos efeitos pequenos e independentes</strong>, ela tende a ficar normal. Altura é genética + nutrição + sono + mil fatores. Erro de medição é vibração + temperatura + arredondamento + ruído. Cada fator empurra um pouquinho para cada lado, os empurrões se cancelam na maioria das vezes (por isso o miolo é gordo) e só raramente se alinham todos para o mesmo lado (por isso as caudas são finas). Daí o formato de sino. E — o motivo real de ela ser a rainha — <strong>a média de qualquer amostra grande é normal</strong>, venha ela de onde vier. Isso é o TCL da seção 9.</p>
+
   <ul>
     <li><strong>Simétrica</strong> em torno da média → média = mediana = moda.</li>
     <li>Forma de sino; a área total sob a curva = 1 (100%).</li>
     <li><strong>Regra empírica 68–95–99,7:</strong> ±1σ ≈ 68% dos dados · ±2σ ≈ 95% · ±3σ ≈ 99,7%.</li>
     <li><strong>Normal padrão (Z):</strong> μ=0 e σ=1. Padronização: <code>Z = (X − μ) ÷ σ</code> — transforma qualquer normal na padrão para consultar a tabela.</li>
   </ul>
+
+  <p><strong>Como "ler" a curva sem desenhar.</strong> Imagine os dados empilhados numa régua: a pilha é altíssima em cima da média e vai baixando simetricamente para os dois lados, primeiro devagar, depois rápido, depois devagar de novo, chegando quase ao chão a três desvios de distância. Os dois parâmetros fazem coisas distintas: <strong>μ diz ONDE a curva está</strong> (desliza para a esquerda ou direita) e <strong>σ diz QUÃO GORDA ela é</strong> (σ pequeno = pico alto e estreito, dados concentrados; σ grande = curva baixa e espalhada). Mudar μ move; mudar σ estica. A área embaixo é sempre 1, então se ela estica para os lados, tem de afundar no meio.</p>
+
+  <p><strong>Probabilidade = área.</strong> Numa distribuição contínua você nunca pergunta "qual a chance de o salário ser exatamente R$ 5.000,00000?" — a resposta é <strong>zero</strong>, porque existem infinitos valores possíveis e um ponto não tem área. Você sempre pergunta por <em>faixas</em>: entre 4.000 e 6.000, acima de 7.000. A probabilidade é a <strong>área sob a curva</strong> naquele trecho.</p>
+
+  <div class="trap">🪤 Consequência direta: em variável contínua, <code>P(X = 5.000) = 0</code>, e por isso <code>P(X &gt; 7.000)</code> e <code>P(X ≥ 7.000)</code> são <strong>iguais</strong> — o ponto de fronteira não pesa nada. Já em variável discreta (binomial, Poisson) isso é falsíssimo: P(X ≥ 1) e P(X &gt; 1) são bem diferentes. Confundir os dois mundos é erro caro.</div>
+
+  <h3>A regra empírica 68–95–99,7</h3>
+
+  <p>Vale para <strong>qualquer</strong> normal, com qualquer μ e qualquer σ. É a régua universal:</p>
+
+  <div class="table-scroll">
+  <table>
+    <tr><th>Intervalo</th><th>Área (dados dentro)</th><th>Sobra fora (as 2 caudas)</th><th>Cada cauda sozinha</th></tr>
+    <tr><td>μ ± 1σ</td><td><strong>68,27%</strong> (≈ 68%)</td><td>31,73%</td><td>≈ 15,87%</td></tr>
+    <tr><td>μ ± 1,96σ</td><td><strong>95,00%</strong> (exato)</td><td>5,00%</td><td>2,50%</td></tr>
+    <tr><td>μ ± 2σ</td><td><strong>95,45%</strong> (≈ 95%)</td><td>4,55%</td><td>≈ 2,28%</td></tr>
+    <tr><td>μ ± 3σ</td><td><strong>99,73%</strong> (≈ 99,7%)</td><td>0,27%</td><td>≈ 0,135%</td></tr>
+  </table>
+  </div>
+
+  <p><strong>A técnica da metade.</strong> A regra dá sempre a área <em>central</em> (dos dois lados). Se a pergunta é só de um lado, faça: <code>(100% − área central) ÷ 2</code>. O ÷2 existe porque a curva é simétrica e as duas caudas são gêmeas. Esquecer esse ÷2 é o erro nº 1 de normal.</p>
+
+  <h3>Exemplo resolvido — salários da agência</h3>
+
+  <p>Salários seguem normal com <code>μ = 5.000</code> e <code>σ = 1.000</code>.</p>
+
+  <div class="table-scroll">
+  <table>
+    <tr><th>Pergunta</th><th>Raciocínio</th><th>Resposta</th></tr>
+    <tr><td>% entre R$ 4.000 e R$ 6.000</td><td>4.000 = μ − 1σ e 6.000 = μ + 1σ → é o intervalo μ ± 1σ</td><td><strong>≈ 68%</strong></td></tr>
+    <tr><td>% entre R$ 3.000 e R$ 7.000</td><td>é μ ± 2σ</td><td><strong>≈ 95%</strong></td></tr>
+    <tr><td>% acima de R$ 7.000</td><td>μ ± 2σ pega 95% → sobram 5% nas duas caudas → uma cauda só: 5% ÷ 2</td><td><strong>≈ 2,5%</strong></td></tr>
+    <tr><td>% abaixo de R$ 3.000</td><td>a cauda gêmea, por simetria</td><td><strong>≈ 2,5%</strong></td></tr>
+    <tr><td>% acima de R$ 8.000</td><td>8.000 = μ + 3σ → μ ± 3σ pega 99,7% → sobra 0,3% → ÷ 2</td><td><strong>≈ 0,15%</strong></td></tr>
+    <tr><td>% abaixo de R$ 5.000</td><td>5.000 <em>é</em> a média → metade dos dados está abaixo (é a mediana também)</td><td><strong>50%</strong></td></tr>
+    <tr><td>% acima de R$ 4.000</td><td>4.000 = μ − 1σ. Abaixo dele: 15,87% (cauda). Acima: 100% − 15,87%</td><td><strong>≈ 84%</strong></td></tr>
+  </table>
+  </div>
+
+  <p class="muted">A última linha merece atenção: <code>84% = 50% + 34%</code> — os 50% acima da média mais a metade do intervalo de 68% que fica entre μ−1σ e μ. Decompor a curva nesses blocos de <strong>34% · 13,5% · 2,35%</strong> (de dentro para fora, em cada lado) resolve quase toda questão de regra empírica sem tabela nenhuma.</p>
+
+  <h3>Padronização (Z) — por que ela existe</h3>
+
+  <p><strong>O problema.</strong> Existem infinitas normais — uma para cada par (μ, σ). Ninguém vai imprimir infinitas tabelas. E, pior: como comparar um salário de R$ 6.500 numa agência (μ=5.000, σ=1.000) com um de R$ 4.200 em outra (μ=3.000, σ=600)? As escalas são diferentes.</p>
+
+  <p><strong>A solução:</strong> converter tudo para uma régua única, medida em <strong>desvios padrão de distância até a média</strong>. Essa é a <strong>normal padrão</strong>: μ = 0, σ = 1.</p>
+
+  <div class="card">
+    <p><code>Z = (X − μ) ÷ σ</code></p>
+    <p><strong>Leia a fórmula, não decore.</strong> O numerador <code>(X − μ)</code> é o <em>desvio</em>: a que distância bruta o dado está da média. A divisão por σ converte essa distância para a unidade "desvios padrão". <strong>Z é a resposta a "quantos desvios padrão o dado está da média?"</strong> — e só isso.</p>
+    <p>Z = 1 → um desvio acima da média. Z = −2 → dois desvios abaixo. Z = 0 → é a própria média.</p>
+  </div>
+
+  <div class="tip">💡 <strong>É normalização de feature</strong>, exatamente o que você faz antes de treinar um modelo com colunas de escalas diferentes (idade 20-70, salário 2.000-50.000). O <em>z-score</em> do <code>StandardScaler</code> é essa fórmula, letra por letra. E é o mesmo espírito da conversão de unidade: transformar tudo numa moeda comum para poder comparar. Depois de padronizar, a unidade original (reais, minutos, kg) <strong>evapora</strong> — Z é adimensional, igual ao CV.</div>
+
+  <h3>Exemplo resolvido — usando a tabela Z</h3>
+
+  <p>Salários: μ = 5.000, σ = 1.000. <strong>Qual a proporção de funcionários que ganham mais de R$ 6.500?</strong></p>
+
+  <p>6.500 não é μ+1σ nem μ+2σ — a regra empírica não alcança. Precisa de tabela.</p>
+
+  <div class="table-scroll">
+  <table>
+    <tr><th>Passo</th><th>Conta</th><th>Resultado</th></tr>
+    <tr><td>1. Padronizar</td><td>Z = (6.500 − 5.000) ÷ 1.000 = 1.500 ÷ 1.000</td><td><strong>Z = 1,5</strong> (o salário está 1,5 desvio acima da média)</td></tr>
+    <tr><td>2. Consultar a tabela</td><td>a tabela mais comum dá a área <em>entre 0 e Z</em>: P(0 &lt; Z &lt; 1,5)</td><td>0,4332</td></tr>
+    <tr><td>3. O que eu quero</td><td>quero a cauda direita, P(Z &gt; 1,5). Metade da curva à direita de 0 vale 0,5; tiro o pedaço já contado</td><td>0,5 − 0,4332</td></tr>
+    <tr><td>4. Resposta</td><td>—</td><td><strong>0,0668 = 6,68%</strong></td></tr>
+  </table>
+  </div>
+
+  <p>Valores de tabela Z que vale a pena reconhecer (área entre 0 e Z):</p>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Z</th><th>P(0 &lt; Z &lt; z)</th><th>Área central (±z)</th><th>Cauda (P(Z &gt; z))</th><th>Onde aparece</th></tr>
+    <tr><td>1,00</td><td>0,3413</td><td>68,26%</td><td>15,87%</td><td>regra empírica</td></tr>
+    <tr><td>1,50</td><td>0,4332</td><td>86,64%</td><td>6,68%</td><td>o exemplo acima</td></tr>
+    <tr><td>1,64</td><td>0,4495</td><td>89,90%</td><td>5,05%</td><td>IC de 90%</td></tr>
+    <tr><td><strong>1,96</strong></td><td>0,4750</td><td><strong>95,00%</strong></td><td>2,50%</td><td><strong>IC de 95% — decore este</strong></td></tr>
+    <tr><td>2,00</td><td>0,4772</td><td>95,44%</td><td>2,28%</td><td>regra empírica</td></tr>
+    <tr><td>2,58</td><td>0,4951</td><td>99,02%</td><td>0,49%</td><td>IC de 99%</td></tr>
+    <tr><td>3,00</td><td>0,4987</td><td>99,74%</td><td>0,13%</td><td>regra empírica</td></tr>
+  </table>
+  </div>
+
+  <div class="trap">🪤 <strong>Descubra o que a tabela da prova entrega antes de usá-la.</strong> Existem três formatos: (a) área <strong>de 0 até Z</strong> — a mais comum em concurso, é a que usei, e nela P(Z&lt;1,96) = 0,5 + 0,475 = 0,975; (b) área <strong>acumulada da esquerda até Z</strong> — nela o valor tabelado para 1,96 já é 0,975 direto; (c) área da <strong>cauda</strong>. Leia o cabeçalho e o desenhinho da tabela. Aplicar a fórmula certa na tabela errada é o erro que mais dói, porque a conta estava certa.</div>
+
+  <h3>Exemplo resolvido — Z comparando o incomparável</h3>
+
+  <p>Dois analistas foram avaliados em provas diferentes:</p>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Analista</th><th>Nota</th><th>μ da prova</th><th>σ da prova</th><th>Z</th></tr>
+    <tr><td>Ana</td><td>7,0</td><td>5,0</td><td>1,0</td><td>(7 − 5) ÷ 1 = <strong>+2,0</strong></td></tr>
+    <tr><td>Bruno</td><td>8,0</td><td>6,0</td><td>2,0</td><td>(8 − 6) ÷ 2 = <strong>+1,0</strong></td></tr>
+  </table>
+  </div>
+
+  <p>Bruno tirou nota maior (8 &gt; 7). Mas Ana está <strong>2 desvios acima</strong> da turma dela e Bruno, <strong>1 desvio</strong> acima da dele. Em termos relativos, <strong>Ana foi melhor</strong>: ela deixou ~97,7% da turma para trás; Bruno, ~84%. <strong>Z é a nota "moeda comum"</strong> — sem ele, comparar 7 com 8 em provas diferentes não significa nada.</p>
+
   <div class="trap">🪤 "Toda normal tem variância 1" é FALSO — só a <strong>normal padrão</strong>. E Z negativo só significa "abaixo da média", não erro.</div>
 
-  <h2>6. Amostragem</h2>
+  <div class="trap">🪤 Mais três de normal: <strong>(1)</strong> padronizar <strong>não</strong> "normaliza" dados tortos — se a variável não era normal, o Z dela também não é. A fórmula só troca a escala; ela não muda o formato. <strong>(2)</strong> A curva normal <strong>nunca toca o eixo</strong>: ela vai até ±∞. Por isso "100% dos dados estão em μ ± 3σ" é FALSO — são 99,73%, e sempre sobra algo nas caudas. <strong>(3)</strong> Numa normal, média = mediana = moda; mas isso <strong>não</strong> serve como prova de normalidade (a uniforme também tem, e não é normal).</div>
+
+  <h2 id="sec-8-amostragem">8. Amostragem</h2>
+
+  <p><strong>O problema que ela resolve.</strong> O banco tem 80 milhões de clientes. Você quer saber a satisfação média. Perguntar a todos é impossível (custo, tempo, e boa parte não responderia). Então você pergunta a 1.000 e <strong>extrapola</strong>. A pergunta que define tudo é: <em>como escolher esses 1.000 de modo que eles pareçam com os 80 milhões?</em></p>
+
+  <p>Amostragem é a arte de escolher a amostra. Escolha errada e nenhuma matemática salva — <strong>viés de seleção não se conserta com n grande</strong>. Aumentar uma amostra enviesada só te dá mais certeza sobre a resposta errada.</p>
+
   <div class="table-scroll">
   <table>
     <tr><th>Técnica</th><th>Como é</th></tr>
@@ -109,11 +1181,147 @@
     <tr><td><strong>Por conglomerado</strong></td><td>divide em grupos <strong>heterogêneos</strong> (ex.: agências) e sorteia grupos INTEIROS</td></tr>
   </table>
   </div>
+
+  <p>As quatro são <strong>probabilísticas</strong>: todo elemento tem chance conhecida e não-nula de entrar. Isso é o que permite calcular erro e fazer inferência. (Existem as <strong>não-probabilísticas</strong> — por conveniência, por julgamento, bola de neve — que são baratas, comuns e <em>não permitem</em> inferência estatística válida. Pesquisa de site com "clique aqui para responder" é amostra por conveniência: só respondem os muito satisfeitos e os muito irritados.)</p>
+
+  <h3>1. Aleatória simples — o padrão-ouro</h3>
+  <p>Sorteio puro. Numere todos de 1 a N e sorteie n. <strong>Toda</strong> combinação possível de n elementos tem a mesma chance de sair — essa é a definição formal, e é mais forte que "todo mundo tem a mesma chance individual".</p>
+  <p>É o <code>ORDER BY DBMS_RANDOM.VALUE FETCH FIRST 1000 ROWS</code>. Simples, sem viés, teoricamente perfeita. O problema é prático: exige a lista completa da população (o <em>cadastro</em>, ou <em>frame</em>) e pode espalhar a amostra pelo país inteiro, o que inviabiliza pesquisa presencial.</p>
+
+  <h3>2. Sistemática — o "de k em k"</h3>
+  <p>Ordene a população e pegue a cada k elementos, começando de um ponto inicial sorteado. <code>k = N ÷ n</code>.</p>
+  <p><strong>Exemplo:</strong> N = 1.000 clientes, quero n = 100. <code>k = 1.000 ÷ 100 = 10</code>. Sorteio um número de 1 a 10 — digamos 7 — e pego o 7º, 17º, 27º, 37º... até completar 100.</p>
+  <p>Vantagem: é fácil de executar (dá para fazer na porta da agência: "1 a cada 10 que entram"), espalha bem pela lista e não exige o cadastro completo de antemão.</p>
+
+  <div class="trap">🪤 O risco da sistemática é a <strong>periodicidade</strong> da lista. Se você amostra "1 a cada 7 dias" começando num domingo, sua amostra é <strong>só de domingos</strong> — e domingo não parece com quarta. Se a lista de funcionários vier ordenada como (chefe, subordinado, subordinado, chefe, subordinado, subordinado...) e k = 3, você pode sortear <em>só chefes</em>. Se o ciclo escondido da lista bate com o seu k, a amostra fica podre. Aleatória simples não tem esse problema.</div>
+
+  <h3>3. Estratificada — dividir para representar</h3>
+  <p><strong>Estrato</strong> = camada, fatia (mesma raiz de "estratosfera"). Você divide a população em grupos <strong>internamente parecidos</strong> e que <strong>diferem entre si</strong> naquilo que importa, e sorteia <strong>dentro de cada um</strong>.</p>
+
+  <p><strong>Por que fazer isso?</strong> Porque garante representação. Se 30% da carteira é PJ e você sorteia aleatoriamente 100 clientes, pode dar azar e pegar 12 PJ — sua estimativa fica torta. Estratificando, você <em>força</em> os 30%.</p>
+
+  <p><strong>Exemplo resolvido — estratificada proporcional:</strong> carteira de 1.000 clientes, sendo 700 PF e 300 PJ. Quero uma amostra de 100.</p>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Estrato</th><th>Tamanho</th><th>Proporção</th><th>Conta</th><th>Sorteio nesse estrato</th></tr>
+    <tr><td>PF</td><td>700</td><td>70%</td><td>0,70 × 100</td><td><strong>70 clientes</strong></td></tr>
+    <tr><td>PJ</td><td>300</td><td>30%</td><td>0,30 × 100</td><td><strong>30 clientes</strong></td></tr>
+    <tr><th>Total</th><th>1.000</th><th>100%</th><th>—</th><th><strong>100</strong></th></tr>
+  </table>
+  </div>
+  <p>Cada estrato entra na amostra com o mesmo peso que tem na população. Isso se chama <strong>alocação proporcional</strong> e é o que cai em prova. (Se a amostra fosse 50 PF e 50 PJ, seria <em>alocação uniforme</em> — legítima em algumas situações, mas não proporcional.)</p>
+  <p><strong>Bônus técnico:</strong> a estratificada, bem feita, é <em>mais precisa</em> que a aleatória simples de mesmo tamanho — ela elimina a variação entre estratos da conta de erro.</p>
+
+  <h3>4. Conglomerado — sortear grupos inteiros</h3>
+  <p><strong>Conglomerado</strong> (ou <em>cluster</em>) = um agrupamento natural que já existe: uma agência, um bairro, uma escola, um quarteirão. Você sorteia <strong>alguns conglomerados</strong> e pesquisa <strong>todo mundo dentro deles</strong>.</p>
+
+  <p><strong>Por que fazer isso?</strong> Por dinheiro. Se você fizer aleatória simples de 1.000 clientes no Brasil, vai ter de visitar 1.000 cidades. Sorteando 20 agências e entrevistando todos os clientes de cada uma, você visita 20 lugares. É <strong>muito</strong> mais barato — ao custo de menos precisão.</p>
+  <p>O ideal é que cada conglomerado seja um <strong>retrato em miniatura da população</strong> — internamente heterogêneo, contendo toda a variedade. Uma agência tem cliente rico e pobre, jovem e velho, PF e PJ. Se cada agência é um mini-Brasil, sortear algumas basta.</p>
+
+  <h3>Estratificada × conglomerado — a distinção que cai</h3>
+
+  <div class="table-scroll">
+  <table>
+    <tr><th></th><th>Estratificada</th><th>Conglomerado</th></tr>
+    <tr><td><strong>Dentro do grupo</strong></td><td><strong>homogêneo</strong> (todos parecidos)</td><td><strong>heterogêneo</strong> (variado, um mini-mundo)</td></tr>
+    <tr><td><strong>Entre os grupos</strong></td><td>heterogêneo (os estratos diferem muito)</td><td>homogêneo (as agências se parecem entre si)</td></tr>
+    <tr><td><strong>Quantos grupos entram</strong></td><td><strong>TODOS</strong> — sorteia-se dentro de cada um</td><td><strong>ALGUNS</strong> — sorteiam-se os grupos</td></tr>
+    <tr><td><strong>O que se sorteia</strong></td><td>indivíduos, dentro de cada estrato</td><td>o grupo inteiro (e se pesquisa todo mundo dele)</td></tr>
+    <tr><td><strong>Objetivo</strong></td><td>ganhar <strong>precisão</strong></td><td>ganhar <strong>economia</strong></td></tr>
+    <tr><td><strong>Exemplo</strong></td><td>separar PF de PJ e sortear em ambos</td><td>sortear 20 das 4.000 agências e pesquisar todos os clientes delas</td></tr>
+  </table>
+  </div>
+
+  <div class="tip">💡 <strong>O jeito de fixar:</strong> na <strong>EST</strong>ratificada você usa <strong>TODOS os EST</strong>ratos (as duas palavras começam igual — e o "todos" é a chave). No <strong>CON</strong>glomerado você <strong>esCOLHE</strong> alguns e leva o grupo inteiro junto. Segunda âncora: estratificada é <code>GROUP BY segmento</code> e sortear dentro de cada grupo; conglomerado é <code>WHERE agencia IN (20 sorteadas)</code> e pegar tudo delas.</div>
+
+  <div class="trap">🪤 A troca de "homogêneo/heterogêneo" é a pegadinha favorita. Grave pela <strong>lógica, não pela palavra</strong>: se o estrato é homogêneo (todos parecidos), poucos elementos já o representam — mas você precisa passar por <em>todos</em> os estratos, senão perde um tipo de gente. Se o conglomerado é heterogêneo (tem de tudo), <em>um só</em> já representa a população — por isso pode-se pegar só alguns. <strong>A homogeneidade interna é o que obriga a visitar todos; a heterogeneidade interna é o que permite escolher poucos.</strong></div>
+
+  <h2 id="sec-9-teorema-central-do-limite-e-erro-padrao">9. Teorema Central do Limite e erro padrão</h2>
+
+  <p><strong>O problema que ele resolve.</strong> Você sorteou 36 clientes e achou saldo médio de R$ 2.050. Beleza — mas essa é a média <em>daqueles 36</em>. Se eu sortear outros 36, vou achar outro número. E outro. <strong>x̄ é uma variável aleatória</strong>: ela muda a cada amostra. Então como confiar nela para dizer algo sobre os 80 milhões?</p>
+
+  <p>A resposta seria impossível se cada amostra desse qualquer coisa. Mas não dá: <strong>as médias amostrais têm um comportamento previsível, e o TCL diz exatamente qual</strong>.</p>
+
   <p><strong>Teorema Central do Limite (TCL):</strong> para amostras grandes (n ≥ 30), a distribuição das <strong>médias amostrais</strong> se aproxima de uma normal, <em>independentemente</em> da distribuição da população. É o que sustenta toda a inferência.</p>
+
+  <p><strong>Leia de novo o "independentemente".</strong> É aí que mora o milagre. A população pode ser <strong>torta, bimodal, uniforme, exponencial, um horror assimétrico</strong> — a distribuição de <em>saldos</em> de conta corrente é violentamente assimétrica à direita, nada parecida com um sino. E ainda assim, se você tirar médias de 36 saldos, <strong>essas médias formam um sino bonitinho</strong>. A bagunça da população não sobrevive ao processo de tirar média.</p>
+
+  <p><strong>Por que funciona?</strong> Porque a média é uma <em>soma</em> disfarçada, e somar coisas independentes é justamente o que fabrica normalidade (seção 7). Para a média de uma amostra ficar bem alta, <strong>quase todos</strong> os 36 sorteados teriam de ser milionários — e isso é raríssimo. Basta um sorteado pobre para puxar a média de volta. Os extremos <strong>se cancelam entre si dentro da própria amostra</strong>, e o resultado se amontoa em torno de μ. Quanto mais dados na amostra, mais eficiente esse cancelamento.</p>
+
+  <div class="card">
+    <p><strong>O TCL, em três afirmações:</strong> se n é grande, a distribuição das médias amostrais x̄ é</p>
+    <p>1. <strong>aproximadamente normal</strong> (não importa a forma da população);<br>
+       2. com <strong>centro em μ</strong> — a mesma média da população (você já viu isso na tabela das 9 amostras: a média das médias deu 4 = μ);<br>
+       3. com desvio padrão <code>σ ÷ √n</code>, que ganha nome próprio: <strong>erro padrão</strong>.</p>
+  </div>
+
   <p><strong>Erro padrão da média:</strong> σ/√n — aumentar a amostra reduz o erro (mas pela raiz: quadruplicar n só corta o erro pela metade).</p>
 
-  <h2>7. Correlação e regressão</h2>
+  <p><strong>Por que o erro padrão tem nome próprio.</strong> Cuidado com a confusão: <code>σ</code> mede o quanto <strong>os clientes</strong> variam entre si. <code>σ/√n</code> mede o quanto <strong>as médias de amostras</strong> variam entre si. São coisas diferentes! Saldos individuais variam muitíssimo (tem cliente com R$ 50 e cliente com R$ 500.000). Médias de 36 clientes variam pouco, porque dentro de cada amostra os extremos já se cancelaram. <strong>Erro padrão é o desvio padrão da estatística, não dos dados.</strong> Ele é a resposta a "quão longe da verdade meu palpite provavelmente está?".</p>
+
+  <h3>Exemplo resolvido — saldo médio dos clientes</h3>
+
+  <p>Saldos da carteira: μ = R$ 2.000, σ = R$ 600. A distribuição é bem assimétrica (o normal em dinheiro). Vamos sortear <strong>n = 36</strong> clientes.</p>
+
+  <div class="table-scroll">
+  <table>
+    <tr><th>Passo</th><th>Conta</th><th>Resultado</th></tr>
+    <tr><td>1. n ≥ 30? Posso usar o TCL?</td><td>36 ≥ 30 ✓</td><td>x̄ é aproximadamente normal, apesar da população torta</td></tr>
+    <tr><td>2. Centro da distribuição de x̄</td><td>= μ</td><td><strong>R$ 2.000</strong></td></tr>
+    <tr><td>3. Erro padrão</td><td>σ ÷ √n = 600 ÷ √36 = 600 ÷ 6</td><td><strong>R$ 100</strong></td></tr>
+    <tr><td>4. Conclusão</td><td>—</td><td>x̄ ~ Normal(2.000; erro padrão 100)</td></tr>
+  </table>
+  </div>
+
+  <p>E agora tudo da seção 7 volta a valer, porque <strong>x̄ é normal</strong>:</p>
+  <ul>
+    <li><strong>68%</strong> das amostras dão uma média entre 2.000 ± 100 → <strong>R$ 1.900 e R$ 2.100</strong>.</li>
+    <li><strong>95%</strong> das amostras dão média em 2.000 ± 1,96 × 100 = 2.000 ± 196 → <strong>R$ 1.804 e R$ 2.196</strong>.</li>
+    <li>Achar média de R$ 2.500 nessa amostra seria <code>Z = (2.500 − 2.000) ÷ 100 = 5</code> desvios. Praticamente impossível — se acontecesse, eu duvidaria do μ = 2.000, não do acaso. <strong>Esse raciocínio é literalmente o teste de hipótese.</strong></li>
+  </ul>
+
+  <p><strong>Invertendo — o intervalo de confiança.</strong> Na vida real você não conhece μ; você tem x̄ e quer estimar μ. A mesma matemática de trás para frente: se x̄ deu 2.050, o <strong>IC de 95%</strong> é <code>x̄ ± 1,96 × erro padrão = 2.050 ± 196 → [1.854 ; 2.246]</code>. É essa a margem de erro que os jornais publicam nas pesquisas eleitorais — e é o produto final de toda a inferência.</p>
+
+  <h3>Por que √n e não n — a lei dos rendimentos decrescentes</h3>
+
+  <p>O <code>√</code> no denominador tem uma consequência prática brutal: <strong>precisão é cara e fica cada vez mais cara</strong>.</p>
+
+  <div class="table-scroll">
+  <table>
+    <tr><th>n</th><th>√n</th><th>Erro padrão (600 ÷ √n)</th><th>Ganho</th></tr>
+    <tr><td>36</td><td>6</td><td>R$ 100,00</td><td>—</td></tr>
+    <tr><td>144</td><td>12</td><td>R$ 50,00</td><td>4× o custo → erro caiu pela <strong>metade</strong></td></tr>
+    <tr><td>576</td><td>24</td><td>R$ 25,00</td><td>16× o custo → erro caiu para <strong>1/4</strong></td></tr>
+    <tr><td>3.600</td><td>60</td><td>R$ 10,00</td><td>100× o custo → erro caiu para <strong>1/10</strong></td></tr>
+  </table>
+  </div>
+
+  <p><strong>Para dobrar a precisão, você quadruplica a amostra.</strong> Para melhorar 10 vezes, precisa de 100 vezes mais gente. É por isso que pesquisa eleitoral séria usa ~2.000 pessoas e não 200.000 — sair de 2.000 para 200.000 custaria 100× mais para reduzir a margem de erro de 2% para 0,2%, o que não vale o dinheiro. <strong>Existe um ponto em que aumentar a amostra deixa de compensar</strong>, e o √n é quem determina onde ele está.</p>
+
+  <div class="tip">💡 O erro padrão também explica algo que te incomoda como programador: por que a média de 5 execuções de um benchmark é tão instável e a de 500 é confiável? Erro padrão. E por que rodar 5.000 execuções em vez de 500 quase não melhora nada? √n. É a mesma lei.</div>
+
+  <div class="trap">🪤 Quatro confusões de TCL, todas já cobradas: <strong>(1)</strong> o TCL fala da distribuição <strong>DAS MÉDIAS AMOSTRAIS</strong>, <em>não</em> dos dados. Aumentar n <strong>não</strong> torna a população normal — os saldos continuam tortos para sempre; o que fica normal é o comportamento de x̄. <strong>(2)</strong> Aumentar n <strong>não muda σ</strong>: σ é um parâmetro da população, é fixo, você só está medindo melhor. O que encolhe é σ/√n. <strong>(3)</strong> n ≥ 30 é <strong>regra de bolso</strong>, não teorema — se a população já for normal, x̄ é normal com qualquer n, até n = 2; se for monstruosamente assimétrica, 30 pode não bastar. <strong>(4)</strong> O erro padrão só mede o <strong>erro amostral</strong> (o azar do sorteio). Ele <strong>não</strong> captura viés de seleção, pergunta mal formulada nem não-resposta — e nenhum n conserta isso.</div>
+
+  <h2 id="sec-10-correlacao-e-regressao">10. Correlação e regressão</h2>
+
+  <p><strong>O problema que elas resolvem.</strong> Tudo até aqui olhou <strong>uma coluna de cada vez</strong>: qual o salário médio, qual a dispersão dos saldos. Agora são <strong>duas colunas juntas</strong>: <em>quando uma sobe, a outra faz o quê?</em> Anos de relacionamento e nº de produtos contratados andam juntos? Renda e inadimplência? Essa é a pergunta que gera dinheiro no banco, porque é a base de todo modelo preditivo.</p>
+
+  <p>São duas perguntas diferentes, e cada uma tem sua ferramenta:</p>
+  <ul>
+    <li><strong>Correlação (r):</strong> <em>existe</em> relação, e quão forte? Uma resposta, um número. Simétrica: r de X com Y é igual a r de Y com X.</li>
+    <li><strong>Regressão (Y = a + bX):</strong> <em>qual</em> é a relação, em forma de equação, para eu poder <strong>prever</strong>. Não é simétrica: prever Y a partir de X é diferente de prever X a partir de Y.</li>
+  </ul>
+
+  <h3>Correlação de Pearson (r)</h3>
+
   <p><strong>Coeficiente de correlação linear de Pearson (r):</strong> varia de <strong>−1 a +1</strong>.</p>
+
+  <div class="card">
+    <p><code>r = Σ(x<sub>i</sub> − x̄)(y<sub>i</sub> − ȳ) ÷ √[Σ(x<sub>i</sub> − x̄)² · Σ(y<sub>i</sub> − ȳ)²]</code></p>
+    <p><strong>A ideia por trás</strong> (e ela é bonita): o numerador multiplica os desvios das <em>duas</em> variáveis, ponto a ponto. Se um cliente está acima da média em X <strong>e</strong> acima da média em Y, o produto é (+)·(+) = <strong>positivo</strong>. Abaixo nas duas: (−)·(−) = <strong>positivo</strong> também. Mas se ele está acima em X e abaixo em Y: (+)·(−) = <strong>negativo</strong>. Somando todos, os "concordantes" empurram para cima e os "discordantes" para baixo. Se a maioria concorda, a soma é positiva. Se não há padrão, os sinais se cancelam e a soma fica perto de zero. <strong>O numerador é um placar de concordância.</strong></p>
+    <p>E o denominador? É o normalizador: ele divide pelo espalhamento de cada variável, forçando o resultado a ficar sempre entre −1 e +1 — assim r vira <strong>adimensional</strong> e comparável entre contextos, exatamente como o CV e o Z.</p>
+  </div>
+
   <div class="table-scroll">
   <table>
     <tr><th>Valor de r</th><th>Interpretação</th></tr>
@@ -122,9 +1330,145 @@
     <tr><td>próximo de 0</td><td>ausência de relação <strong>linear</strong> (pode haver relação curva!)</td></tr>
   </table>
   </div>
+
+  <p>Duas leituras separadas, e é assim que se responde questão de interpretação:</p>
+  <div class="table-scroll">
+  <table>
+    <tr><th>O que ler</th><th>Onde olhar</th><th>Significa</th></tr>
+    <tr><td><strong>Direção</strong></td><td>o <strong>sinal</strong> de r</td><td>+ → andam no mesmo sentido · − → em sentidos opostos</td></tr>
+    <tr><td><strong>Força</strong></td><td>o <strong>módulo</strong> |r|</td><td>quão colados na reta os pontos estão. |r| = 1 → todos os pontos EM CIMA de uma reta perfeita</td></tr>
+  </table>
+  </div>
+
+  <p class="muted">Escala usual de força (varia entre autores; a banca costuma aceitar): |r| até 0,3 → fraca · 0,3 a 0,7 → moderada · acima de 0,7 → forte · 1 → perfeita.</p>
+
+  <h3>Exemplo resolvido — relacionamento × produtos contratados</h3>
+
+  <p>5 clientes. X = anos de relacionamento com o banco. Y = nº de produtos contratados.</p>
+
+  <div class="table-scroll">
+  <table>
+    <tr><th>Cliente</th><th>X (anos)</th><th>Y (produtos)</th></tr>
+    <tr><td>1</td><td>1</td><td>2</td></tr>
+    <tr><td>2</td><td>2</td><td>3</td></tr>
+    <tr><td>3</td><td>3</td><td>5</td></tr>
+    <tr><td>4</td><td>4</td><td>4</td></tr>
+    <tr><td>5</td><td>5</td><td>6</td></tr>
+  </table>
+  </div>
+
+  <p><strong>Passo 1 — as médias:</strong> <code>x̄ = (1+2+3+4+5) ÷ 5 = 15 ÷ 5 = 3</code> · <code>ȳ = (2+3+5+4+6) ÷ 5 = 20 ÷ 5 = 4</code>.</p>
+
+  <p><strong>Passo 2 — a tabela de desvios</strong> (é sempre a mesma mecânica da variância, só que em duas colunas):</p>
+
+  <div class="table-scroll">
+  <table>
+    <tr><th>X</th><th>Y</th><th>dx = X − 3</th><th>dy = Y − 4</th><th>dx · dy</th><th>dx²</th><th>dy²</th></tr>
+    <tr><td>1</td><td>2</td><td>−2</td><td>−2</td><td>+4</td><td>4</td><td>4</td></tr>
+    <tr><td>2</td><td>3</td><td>−1</td><td>−1</td><td>+1</td><td>1</td><td>1</td></tr>
+    <tr><td>3</td><td>5</td><td>0</td><td>+1</td><td>0</td><td>0</td><td>1</td></tr>
+    <tr><td>4</td><td>4</td><td>+1</td><td>0</td><td>0</td><td>1</td><td>0</td></tr>
+    <tr><td>5</td><td>6</td><td>+2</td><td>+2</td><td>+4</td><td>4</td><td>4</td></tr>
+    <tr><th colspan="2">SOMAS</th><th>0 ✓</th><th>0 ✓</th><th><strong>9</strong></th><th><strong>10</strong></th><th><strong>10</strong></th></tr>
+  </table>
+  </div>
+
+  <p class="muted">Repare que as colunas dx e dy somam zero — as duas. Tinha de ser: é a propriedade da seção 5 valendo para cada variável. <strong>Use isso como checagem</strong>: se dx ou dy não fecharem em zero, você errou uma média ou uma subtração, e não adianta seguir.</p>
+
+  <p><strong>Passo 3 — jogar na fórmula:</strong></p>
+  <p><code>r = 9 ÷ √(10 × 10) = 9 ÷ √100 = 9 ÷ 10 = <strong>0,9</strong></code></p>
+
+  <p><strong>Interpretação:</strong> correlação <strong>positiva e forte</strong>. Quanto mais tempo de relacionamento, mais produtos contratados — e a relação é bem consistente. Note o cliente 4 (4 anos, mas só 4 produtos, abaixo do esperado): ele contribuiu com dx·dy = +1 × 0 = 0 para o placar. Ele "discordou" da tendência e por isso r não chegou a 1. <strong>É esse cliente que impede a perfeição</strong> — e a fórmula o detectou sozinha.</p>
+
+  <h3>Regressão linear simples</h3>
+
+  <p><strong>O que a correlação não faz.</strong> r = 0,9 diz que a relação é forte. E daí? Se chegar um cliente com <strong>6 anos</strong> de casa, quantos produtos ele deve ter? A correlação não responde — ela não é uma equação. Você precisa da <strong>reta</strong>.</p>
+
   <p><strong>Regressão linear simples:</strong> <code>Y = a + bX</code>, onde <em>b</em> é o coeficiente angular (quanto Y varia para cada unidade de X) e <em>a</em> o intercepto (Y quando X=0). O método é o dos <strong>mínimos quadrados</strong> (minimiza a soma dos quadrados dos resíduos).</p>
+
+  <p><strong>Mínimos quadrados, decifrado.</strong> Existem infinitas retas que você poderia passar no meio da nuvem de pontos. Qual é "a" reta? A resposta: <strong>aquela que erra menos</strong>. <em>Resíduo</em> é o erro de cada ponto — a distância vertical entre o Y observado e o Ŷ que a reta previu (<code>resíduo = Y − Ŷ</code>). Some os resíduos... e dá zero, pelo mesmo motivo eterno de sempre (os positivos comem os negativos). <strong>Então eleve ao quadrado antes de somar</strong> — exatamente o truque da variância — e escolha a reta que <strong>minimiza a soma dos quadrados dos resíduos</strong>. Daí o nome. É a mesma ideia da seção 5 reaparecendo: quadrado para matar sinal, e punição extra para erros grandes.</p>
+
+  <div class="card">
+    <p><code>b = Σ(dx · dy) ÷ Σdx²</code> &nbsp;·&nbsp; <code>a = ȳ − b · x̄</code></p>
+    <p>Repare: o numerador de <code>b</code> é <strong>o mesmo numerador de r</strong>. Correlação e regressão bebem da mesma água — por isso r e b <strong>têm sempre o mesmo sinal</strong>. Se r é negativo, a reta desce, sem exceção.</p>
+  </div>
+
+  <h3>Exemplo resolvido — a reta dos mesmos clientes</h3>
+
+  <p>Todos os somatórios já estão na tabela acima. Não há conta nova a fazer:</p>
+
+  <div class="table-scroll">
+  <table>
+    <tr><th>Passo</th><th>Conta</th><th>Resultado</th></tr>
+    <tr><td>1. Coeficiente angular (b)</td><td>Σ(dx·dy) ÷ Σdx² = 9 ÷ 10</td><td><strong>b = 0,9</strong></td></tr>
+    <tr><td>2. Intercepto (a)</td><td>ȳ − b·x̄ = 4 − (0,9 × 3) = 4 − 2,7</td><td><strong>a = 1,3</strong></td></tr>
+    <tr><td>3. A reta</td><td>—</td><td><code><strong>Ŷ = 1,3 + 0,9X</strong></code></td></tr>
+  </table>
+  </div>
+
+  <p><strong>Lendo a equação em português — que é o que a prova cobra:</strong></p>
+  <ul>
+    <li><strong>b = 0,9:</strong> a cada <strong>ano a mais</strong> de relacionamento, o cliente contrata, em média, <strong>0,9 produto a mais</strong>. É a <em>inclinação</em>: o quanto Y anda quando X anda 1.</li>
+    <li><strong>a = 1,3:</strong> um cliente com <strong>zero</strong> ano de casa teria, pela reta, 1,3 produto — ele já entra contratando a conta e algo mais. É o <em>ponto de partida</em>, onde a reta corta o eixo Y.</li>
+  </ul>
+
+  <p><strong>Prevendo:</strong> cliente com 6 anos de relacionamento → <code>Ŷ = 1,3 + 0,9 × 6 = 1,3 + 5,4 = <strong>6,7 produtos</strong></code>.</p>
+
+  <p class="muted">Checagem que sempre vale: <strong>a reta de mínimos quadrados passa obrigatoriamente pelo ponto (x̄, ȳ)</strong>. Teste: <code>Ŷ = 1,3 + 0,9 × 3 = 1,3 + 2,7 = 4 = ȳ</code> ✓. Se não passar, você errou o <em>a</em>.</p>
+
+  <h3>Coeficiente de determinação (R²)</h3>
+
   <p><strong>Coeficiente de determinação (R²)</strong> = r²: o % da variação de Y explicado pelo modelo. r = −0,9 → R² = 0,81 → 81% explicado.</p>
+
+  <p><strong>O que "explicar a variação" significa.</strong> O nº de produtos varia entre os clientes (2, 3, 5, 4, 6) — <em>por quê?</em> Parte dessa variação tem uma causa que o modelo conhece: <strong>eles têm tempos de relacionamento diferentes</strong>. O resto vem de coisas que a reta não vê (perfil, renda, o gerente ser bom de papo, acaso). R² é a fatia da primeira parte.</p>
+
+  <p>No nosso exemplo: <code>R² = r² = 0,9² = <strong>0,81 = 81%</strong></code>. Ou seja: <strong>81% da variação no nº de produtos é explicada pelo tempo de relacionamento; os outros 19% são outros fatores.</strong> Modelo muito bom.</p>
+
+  <div class="table-scroll">
+  <table>
+    <tr><th>Fato sobre R²</th><th>Por quê</th></tr>
+    <tr><td>Vai de <strong>0 a 1</strong> (0% a 100%), nunca negativo</td><td>é r ao quadrado — quadrado não é negativo</td></tr>
+    <tr><td><strong>Perde o sinal</strong> de r</td><td>r = −0,9 e r = +0,9 dão o mesmo R² = 0,81. R² mede <em>quanto explica</em>, não a direção</td></tr>
+    <tr><td>É sempre <strong>≤ |r|</strong></td><td>quadrado de número entre 0 e 1 encolhe: 0,9 → 0,81; 0,5 → 0,25</td></tr>
+    <tr><td>Para voltar de R² a r</td><td><code>r = ±√R²</code> — e <strong>o sinal você tira do b</strong> ou do contexto, não do R²</td></tr>
+  </table>
+  </div>
+
+  <div class="trap">🪤 Um r "razoável" vira um R² decepcionante. r = 0,5 parece meia relação — mas <strong>R² = 0,25</strong>: o modelo explica só <strong>um quarto</strong> da variação de Y. Três quartos são outra coisa. Sempre eleve ao quadrado antes de se animar. E se a questão der R² = 0,64 e pedir r, a resposta é <strong>±0,8</strong> — duas possibilidades; escolha o sinal pelo enunciado.</div>
+
+  <h3>Correlação não é causalidade — a seção mais importante</h3>
+
   <div class="trap">🪤 <strong>Correlação NUNCA implica causalidade</strong> — em prova, alternativa que diz "X causa Y" a partir de r está errada. E |r| mede a força; o sinal, só a direção (r = −0,9 é tão forte quanto +0,9).</div>
+
+  <p><strong>Por que não implica.</strong> Se X e Y andam juntos, existem <strong>quatro</strong> explicações possíveis, e o r é <em>incapaz</em> de distingui-las — ele só vê dois vetores de números subindo juntos:</p>
+
+  <div class="table-scroll">
+  <table>
+    <tr><th>Explicação</th><th>O que está acontecendo</th><th>Exemplo bancário</th></tr>
+    <tr><td>1. X causa Y</td><td>o que você quer concluir — e é só uma das quatro</td><td>mais anos de casa → o gerente oferece mais produtos</td></tr>
+    <tr><td>2. <strong>Y causa X</strong> (causalidade reversa)</td><td>a seta aponta ao contrário</td><td>quem contrata muitos produtos fica preso ao banco e por isso <em>permanece</em> mais anos</td></tr>
+    <tr><td>3. <strong>Z causa os dois</strong> (variável confundidora)</td><td>uma terceira variável, invisível, move ambos</td><td><strong>idade</strong>: cliente mais velho tem mais tempo de banco E mais necessidades financeiras. Nem X causa Y, nem Y causa X</td></tr>
+    <tr><td>4. <strong>Coincidência</strong></td><td>puro acaso, ainda mais fácil com amostra pequena</td><td>com 5 clientes, r = 0,9 pode ser sorte</td></tr>
+  </table>
+  </div>
+
+  <p><strong>O exemplo que fecha o assunto:</strong> o número de sorvetes vendidos tem correlação forte e positiva com o número de afogamentos. Sorvete afoga? Não. <strong>Calor</strong> é o Z: no calor as pessoas comem mais sorvete <em>e</em> vão mais à praia. Proibir sorvete não salvaria ninguém.</p>
+
+  <div class="tip">💡 <strong>Você já viveu isso.</strong> É a diferença entre um <code>JOIN</code> e uma explicação. Duas colunas correlacionadas é um padrão no dado; causa é um mecanismo no mundo. Todo modelo de crédito é construído sobre correlações — e é exatamente por isso que ele acerta <em>predição</em> ("quem tem esse perfil tende a inadimplir") e não autoriza <em>intervenção</em> ("mude o CEP do cliente e ele pagará as contas"). Confundir os dois é como concluir que o alarme causa o incêndio porque os dois sempre aparecem juntos.</div>
+
+  <div class="trap">🪤 Mais quatro de correlação/regressão, todas cobradas: <strong>(1)</strong> <strong>r = 0 não significa "sem relação"</strong> — significa "sem relação <em>linear</em>". Uma parábola perfeita (Y = X²) pode ter r = 0 e ainda assim Y é 100% determinado por X. Pearson só enxerga reta. <strong>(2)</strong> r é <strong>sensível a outlier</strong>: um único ponto absurdo cria ou destrói uma correlação inteira. Mesma doença da média. <strong>(3)</strong> <strong>Extrapolação</strong> é armadilha: a reta Ŷ = 1,3 + 0,9X foi ajustada com X de 1 a 5 anos. Usá-la para prever um cliente de <strong>40 anos</strong> de casa (Ŷ = 37,3 produtos!) é inventar — fora da faixa dos dados o modelo não tem respaldo nenhum. <strong>(4)</strong> <strong>r não muda com escala</strong>: se você converter salário de reais para dólares, r continua idêntico (ele é adimensional). Mas o <strong>b muda</strong> — porque b carrega unidade ("produtos por ano"). Não confunda os dois.</div>
+
+  <h2 id="sec-fechando-o-mapa-da-materia">Fechando — o mapa da matéria</h2>
+
+  <div class="card">
+    <p>Se você entendeu <strong>estas cinco frases</strong>, a disciplina está resolvida:</p>
+    <p>1. <strong>A soma dos desvios é sempre zero</strong> → por isso a variância eleva ao quadrado → e por isso o desvio padrão tira a raiz (para recuperar a unidade). A mesma ideia reaparece nos mínimos quadrados da regressão.</p>
+    <p>2. <strong>A média corre para o lado da cauda</strong> → é sensível a outlier → em dado torto (renda, saldo, tempo de resposta) use a mediana.</p>
+    <p>3. <strong>Exclusivos somam (união); independentes multiplicam (interseção)</strong> → e são conceitos opostos: quem é exclusivo é dependente.</p>
+    <p>4. <strong>Condicional é trocar o denominador</strong> → e P(A|B) ≠ P(B|A), o que faz Bayes devolver números baixos e surpreendentes quando a taxa-base é pequena.</p>
+    <p>5. <strong>x̄ é uma variável aleatória</strong> → o TCL diz que ela é normal, centrada em μ, com erro padrão σ/√n → e é isso que sustenta toda a inferência.</p>
+    <p class="muted">O resto é vocabulário e conta pequena. E repare como o quadrado apareceu em quatro lugares independentes (variância, Pearson, mínimos quadrados, R²): não é coincidência — é sempre o mesmo truque para matar sinal e punir erro grande.</p>
+  </div>
 
   <div class="tip">📇 Fixe com o quiz (aba 🧪 → Matemática/Estatística) — 10 questões de estatística, todas com a pegadinha explicada.</div>
 </div>

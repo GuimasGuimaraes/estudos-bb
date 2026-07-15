@@ -12,6 +12,94 @@
   <h1>🏛️ Sistema Financeiro Nacional (SFN)</h1>
   <p class="sub">O tópico mais cobrado de Conhecimentos Bancários. A lógica: <strong>quem NORMATIZA não executa; quem SUPERVISIONA não opera</strong>.</p>
 
+  <div class="card" id="sumario">
+    <h2 id="sec-sumario" style="margin-top:0">📑 Sumário</h2>
+    <ol style="columns:2;column-gap:28px">
+      <li><a href="#sec-parte-1-por-que-um-pais-precisa-de-tudo-isso">Parte 1 — Por que um país precisa de tudo isso?</a></li>
+      <li><a href="#sec-parte-2-a-arquitetura-em-3-andares">Parte 2 — A arquitetura em 3 andares</a></li>
+      <li><a href="#sec-parte-3-cmn-o-chefe-que-nao-poe-a-mao-na-mass">Parte 3 — CMN, o chefe que não põe a mão na massa</a></li>
+      <li><a href="#sec-parte-4-banco-central-o-executor-e-supervisor">Parte 4 — Banco Central, o executor e supervisor</a></li>
+      <li><a href="#sec-parte-5-copom-e-a-politica-monetaria-como-sis">Parte 5 — Copom e a política monetária como sistema de controle</a></li>
+      <li><a href="#sec-parte-6-instrumentos-de-politica-monetaria-o-">Parte 6 — Instrumentos de política monetária (o tripé clássico)</a></li>
+      <li><a href="#sec-parte-7-cvm-a-xerife-do-mercado-de-capitais">Parte 7 — CVM, a xerife do mercado de capitais</a></li>
+      <li><a href="#sec-parte-8-susep-e-previc-as-outras-duas-colunas">Parte 8 — Susep e Previc: as outras duas colunas</a></li>
+      <li><a href="#sec-parte-9-quem-cuida-de-que-o-teste-dos-4-produ">Parte 9 — Quem cuida de quê: o teste dos 4 produtos</a></li>
+      <li><a href="#sec-quadro-final-de-fixacao">Quadro final de fixação</a></li>
+    </ol>
+    <p class="muted" style="margin-top:8px">Apostila longa de propósito — use o sumário para ir direto ao ponto. Cada 🪤 é uma pegadinha de banca; cada 💡 é um atalho de prova.</p>
+  </div>
+
+
+  <div class="card">
+    <h2 style="margin-top:0">Como ler esta aula</h2>
+    <p>Não comece decorando siglas. Comece entendendo <strong>o problema</strong>. O SFN não caiu do céu: ele é a resposta institucional brasileira para três problemas concretos que qualquer país precisa resolver. Quando você enxerga os problemas, a estrutura de três andares deixa de ser lista para decorar e vira <em>arquitetura óbvia</em> — do mesmo jeito que, quando você entende por que existe controle de concorrência, o conceito de <code>lock</code> deixa de ser trivia e vira consequência.</p>
+    <p>Roteiro: <span class="pill">1. o problema</span> <span class="pill">2. a arquitetura</span> <span class="pill">3. cada órgão</span> <span class="pill">4. os mecanismos</span> <span class="pill">5. fixação</span></p>
+  </div>
+
+  <h2 id="sec-parte-1-por-que-um-pais-precisa-de-tudo-isso">Parte 1 — Por que um país precisa de tudo isso?</h2>
+
+  <h3>O que é dinheiro, na real</h3>
+  <p>Pegue uma nota de R$ 50. Ela é um pedaço de papel-algodão. Não é lastreada em ouro, não vale nada como matéria-prima, e você não pode comê-la. Ela só funciona por um motivo: <strong>todo mundo acredita que todo mundo vai aceitá-la</strong>. Dinheiro moderno é um protocolo de confiança compartilhado — e, como qualquer protocolo, ele tem uma implementação, um mantenedor e modos de falha.</p>
+  <p>Isso não é filosofia; é a chave de leitura de toda a matéria. Se o dinheiro vale porque as pessoas confiam nele, então <strong>a função central do sistema financeiro é produzir e defender essa confiança</strong>. Cada órgão que você vai estudar existe para tapar um buraco específico por onde a confiança vaza.</p>
+
+  <h3>Buraco nº 1 — a quantidade de moeda (o problema da inflação)</h3>
+  <p>Imagine que a emissão de dinheiro fique nas mãos de quem gasta o dinheiro: o governo do momento. Falta verba para pagar salários? Imprime. Ano eleitoral? Imprime mais. Cada nota nova não cria bens novos — cria apenas mais reivindicações sobre os mesmos bens que já existiam. Resultado: mais dinheiro correndo atrás da mesma quantidade de mercadoria. Os preços sobem. Isso é <strong>inflação</strong>: a perda contínua e generalizada do poder de compra da moeda.</p>
+  <p>Você, que trabalha com sistemas, reconhece o padrão: é um <em>loop de realimentação positiva</em>, aquele tipo que não estabiliza, explode. Quando as pessoas percebem que o dinheiro derrete, elas param de segurá-lo: gastam no mesmo dia, remarcam preços por antecipação, indexam contratos. A remarcação por antecipação gera mais inflação, que gera mais antecipação. O Brasil viveu isso: em 1989 e 1990 a inflação passou de 80% <strong>ao mês</strong>. Não é uma abstração histórica — é o motivo pelo qual seus pais falam de gôndola de supermercado sendo remarcada durante a compra.</p>
+  <p>Solução institucional: <strong>tirar a caneta da emissão da mão de quem tem incentivo para abusar dela</strong> e entregá-la a um órgão técnico, com regras e com mandato protegido. Esse órgão é o Banco Central.</p>
+
+  <h3>Buraco nº 2 — a fragilidade estrutural dos bancos (corrida bancária)</h3>
+  <p>Um banco faz algo que, olhado de fora, parece irresponsável — e é, na verdade, a sua razão de existir. Ele capta dinheiro <strong>curto</strong> (sua conta-corrente, seu CDB de liquidez diária: você pode sacar hoje) e empresta <strong>longo</strong> (financiamento imobiliário de 30 anos, capital de giro, crédito consignado). Isso se chama <strong>transformação de prazos</strong>, e é socialmente útil: sem ela, ninguém financiaria uma casa, porque ninguém deixa dinheiro parado 30 anos.</p>
+  <p>O problema: se todos os depositantes pedirem o dinheiro de volta <strong>no mesmo dia</strong>, o banco não tem. Não por ser fraudulento — o dinheiro está lá fora, virou casa, fábrica, carro. É um descasamento estrutural, presente inclusive em bancos absolutamente saudáveis.</p>
+  <p>Pior: isso cria uma profecia autorrealizável. Basta um boato. Se você acha que os outros vão sacar, o racional para <em>você</em> é sacar primeiro, mesmo achando o boato falso — porque quem chega por último não recebe. Todo mundo raciocina assim, todo mundo corre, e o banco quebra. É uma <strong>corrida bancária</strong>: a expectativa da quebra <em>produz</em> a quebra.</p>
+  <div class="tip">💡 <strong>Ponte com o seu mundo:</strong> corrida bancária é <em>thundering herd</em>. O recurso aguenta a carga normal e até picos moderados, mas se todos os clientes baterem ao mesmo tempo, ele derruba — e a queda de um nó contamina os vizinhos que dependiam dele. E a defesa é a mesma família de soluções: reserva de capacidade (<strong>compulsório</strong> e capital mínimo), um circuit breaker / socorro de emergência (<strong>redesconto</strong>) e limitar o pânico na origem (o <strong>FGC</strong> — Fundo Garantidor de Créditos — devolve até R$ 250 mil por CPF por instituição, o que remove o incentivo de correr para sacar).</div>
+  <p>E há o efeito dominó, o <strong>risco sistêmico</strong>: bancos emprestam uns aos outros todo santo dia no mercado interbancário. A quebra do banco A vira prejuízo em B, que vira desconfiança em C. Um sistema financeiro é um grafo altamente conectado — que é exatamente o que o torna eficiente e o que o torna contagioso. Daí a necessidade de alguém que (a) fiscalize a saúde de cada nó antes do problema e (b) tenha poder de fogo para injetar liquidez quando o pânico começar. De novo: Banco Central.</p>
+
+  <h3>Buraco nº 3 — informação assimétrica (o problema do mercado de capitais)</h3>
+  <p>Agora saia do banco e vá para a bolsa. Você compra ação de uma empresa. Você não tem a menor ideia real de como ela vai — quem sabe é a diretoria dela. Isso é <strong>assimetria de informação</strong>: um lado do negócio sabe muito mais que o outro.</p>
+  <p>Sem regras, o desfecho é conhecido: a empresa maquia balanço, o diretor vende as ações dele na véspera de anunciar o prejuízo, o influenciador infla um papel e sai por cima. Depois de tomar duas rasteiras dessas, o poupador comum sai do mercado. E aí o dano não é só dele — some o financiamento de longo prazo para as empresas produtivas do país. <strong>Mercado sem confiança não é mercado injusto; é mercado que deixa de existir.</strong></p>
+  <p>A resposta aqui não é o Banco Central (o problema não é liquidez nem quebra de banco, é <em>informação e conduta</em>). A resposta é um regulador que force <strong>transparência</strong> e puna quem abusa: a CVM.</p>
+
+  <div class="card">
+    <h3 style="margin-top:0">Fechando a Parte 1</h3>
+    <p>Três problemas, três respostas — e já é praticamente o mapa da matéria:</p>
+    <div class="table-scroll">
+    <table>
+      <tr><th>Problema</th><th>Sintoma se ninguém cuidar</th><th>Quem cuida</th></tr>
+      <tr><td>Quantidade de moeda</td><td>Inflação descontrolada, moeda vira pó</td><td><strong>Bacen</strong> executa a política monetária; <strong>CMN</strong> dá as diretrizes e a meta</td></tr>
+      <tr><td>Solidez e liquidez dos bancos</td><td>Corrida bancária, quebras em cadeia, risco sistêmico</td><td><strong>Bacen</strong> supervisiona, socorre e regula prudencialmente</td></tr>
+      <tr><td>Assimetria de informação</td><td>Fraude, insider trading, fuga do investidor</td><td><strong>CVM</strong> exige transparência e pune conduta</td></tr>
+    </table>
+    </div>
+    <p class="muted">Some a isso dois mercados que têm a mesma lógica de "prometer hoje para pagar daqui a décadas" — seguros e previdência — e você tem o SFN inteiro.</p>
+  </div>
+
+  <h2 id="sec-parte-2-a-arquitetura-em-3-andares">Parte 2 — A arquitetura em 3 andares</h2>
+
+  <h3>A ponte: isto é separação de responsabilidades</h3>
+  <p>Aqui está o pulo do gato desta aula, e ele é feito sob medida para quem pensa em arquitetura de sistemas.</p>
+  <p>Você jamais deixaria a mesma pessoa <em>definir o contrato da API</em>, <em>auditar se a implementação obedece ao contrato</em> e <em>ser o time que implementa</em>. Por quê? Porque quem escreve a regra e é fiscalizado por si mesmo sempre acha que está em conformidade. A separação não é burocracia: é o que torna a fiscalização crível.</p>
+  <p>O SFN aplica exatamente isso, em três camadas:</p>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Camada do SFN</th><th>Equivalente na sua cabeça</th><th>O que faz</th><th>O que NÃO faz</th></tr>
+    <tr><td><strong>Normativo</strong></td><td>Especificação / contrato / RFC</td><td>Define as regras gerais, abstratas, para todo mundo</td><td>Não roda nada, não fiscaliza ninguém, não atende cliente</td></tr>
+    <tr><td><strong>Supervisor</strong></td><td>Auditoria, testes de conformidade, observabilidade</td><td>Autoriza quem entra, fiscaliza a execução, pune, intervém — e regulamenta o detalhe técnico da norma</td><td>Não define a política pública em si; não faz banco de varejo</td></tr>
+    <tr><td><strong>Operador</strong></td><td>A aplicação em produção</td><td>Atende o cliente final: capta, empresta, corre risco</td><td>Não escreve as próprias regras nem se autofiscaliza</td></tr>
+  </table>
+  </div>
+  <div class="tip">💡 Guarde esta frase e você acerta metade das questões de SFN: <strong>quem normatiza não executa; quem supervisiona não opera</strong>. Se a banca puser o CMN "fiscalizando um banco" ou "emprestando dinheiro", ela violou a camada. Está errado.</div>
+
+  <h3>Dois termos que você precisa dominar antes de continuar</h3>
+  <p><strong>Normatizar</strong> é criar a regra geral e abstrata: "instituições financeiras deverão manter capital mínimo compatível com os riscos assumidos". Repare no nível de altitude: é diretriz, não é procedimento. Não diz <em>qual</em> percentual, não diz <em>como</em> calcular, não fala de nenhum banco em particular.</p>
+  <p><strong>Supervisionar</strong> (ou fiscalizar) é verificar, no mundo real e no CNPJ específico, se a regra está sendo cumprida — e agir quando não está. É pedir o balanço, mandar equipe in loco, aplicar multa, afastar diretor, decretar liquidação. Note que o supervisor <em>também</em> escreve normas — as Resoluções BCB e Instruções CVM —, só que são normas de detalhamento técnico, dentro do espaço que a camada normativa autorizou. Isso não o torna "órgão normativo" na taxonomia da prova.</p>
+  <div class="trap">🪤 A pegadinha clássica sobre isto: "o Bacen é órgão normativo do SFN". <strong>Errado</strong> na classificação cobrada em prova — o Bacen é órgão <strong>supervisor</strong> (executor/fiscalizador), ainda que edite resoluções. A camada normativa do subsistema de moeda e crédito é o <strong>CMN</strong>, e só ele.</div>
+
+  <h3>Mais um termo: autarquia</h3>
+  <p>Você vai ver "autarquia" em Bacen, CVM, Susep e Previc, então resolva isso de uma vez. <strong>Autarquia é uma pessoa jurídica de direito público criada por lei para executar uma atividade típica de Estado, com patrimônio, orçamento e quadro próprios.</strong> É Estado, mas destacado do ministério — como um serviço extraído do monólito: continua sendo da mesma organização, tem sua própria base, seu deploy e seu time, mas ainda responde à governança geral.</p>
+  <p>Por que fazer isso? Porque certas funções precisam de <strong>continuidade técnica</strong> e não podem parar (nem mudar de rumo) toda vez que troca o ministro. Ninguém quer que a fiscalização bancária dependa do humor político do trimestre.</p>
+  <p>E <strong>autarquia de natureza especial</strong> (ou "em regime especial") é isso com um reforço: dirigentes com <strong>mandato fixo</strong>, que não podem ser demitidos por vontade política, e autonomia técnica reforçada. É a diferença entre um serviço que o time de plantão pode reiniciar a qualquer momento e um serviço com contrato de estabilidade blindado. Bacen e CVM são desse tipo.</p>
+
+  <h3>Agora sim: o mapa</h3>
   <div class="card">
     <h2 style="margin-top:0">A estrutura em 3 andares</h2>
     <div class="table-scroll">
@@ -24,43 +112,210 @@
     </div>
     <div class="tip">💡 Previdência <strong>ABERTA</strong> (PGBL/VGBL, qualquer um contrata) → Susep. Previdência <strong>FECHADA</strong> (fundo de pensão de empresa, ex.: Previ dos funcionários do BB) → Previc.</div>
   </div>
+  <p>Leia a tabela <strong>por coluna</strong>, não por linha. Cada coluna é um <em>subsistema</em> completo e autossuficiente: tem seu conselho no topo, sua autarquia fiscalizando no meio e suas empresas embaixo. É o mesmo padrão instanciado três vezes — três verticais com a mesma arquitetura de camadas. Decorar 8 siglas soltas é difícil; decorar <em>um padrão aplicado três vezes</em> é fácil.</p>
+  <p>Uma assimetria vale destaque: na coluna de moeda e crédito existem <strong>dois</strong> supervisores, não um. Isso não é bagunça — é a Parte 1 aparecendo aqui. São dois problemas de natureza diferente: <em>solidez e liquidez de instituição</em> (Bacen) versus <em>transparência e conduta na oferta pública de investimento</em> (CVM). Ambos obedecem ao mesmo normativo, o CMN.</p>
+  <div class="tip">💡 <strong>Cola dos conselhos:</strong> os três órgãos normativos começam com C e o padrão é "Conselho Nacional de ___" — CMN (Monetário), CNSP (Seguros Privados), CNPC (Previdência Complementar). Os supervisores são autarquias com nome de órgão executivo: Bacen, CVM, Susep, Previc. Se a sigla parece um <em>conselho</em>, é andar 1. Se parece uma <em>repartição que trabalha</em>, é andar 2.</div>
 
-  <h2>CMN — o chefe que não põe a mão na massa</h2>
+  <h2 id="sec-parte-3-cmn-o-chefe-que-nao-poe-a-mao-na-mass">Parte 3 — CMN, o chefe que não põe a mão na massa</h2>
+
+  <h3>Natureza: um conselho, não uma repartição</h3>
+  <p>O CMN foi criado pela <strong>Lei 4.595/1964</strong> — a lei que reorganizou o SFN e criou também o Bacen. Ele é o <strong>órgão máximo</strong> do Sistema Financeiro Nacional e é <strong>exclusivamente normativo</strong>.</p>
+  <p>E aqui vem o detalhe que os alunos custam a engolir: <strong>o CMN não tem prédio, não tem funcionário, não tem 0800 e não atende ninguém</strong>. Ele é um colegiado. Três autoridades que já têm outros empregos se reúnem, deliberam e assinam Resoluções. A Resolução CMN é publicada e passa a valer para todo o sistema — quem vai fazê-la acontecer é outro (o Bacen, a CVM). O suporte técnico (estudos, minutas, pauta) vem da estrutura do Bacen e da <strong>Comoc</strong> (Comissão Técnica da Moeda e do Crédito), mas quem decide são os três.</p>
+  <p>Comparação que fecha a ideia: <strong>o CMN é um comitê de arquitetura, não um time de desenvolvimento</strong>. Ele aprova a especificação. Não escreve código, não sobe deploy, não abre chamado.</p>
+
+  <h3>Composição — 3 membros</h3>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Membro</th><th>Papel no colegiado</th><th>Por que ele está ali</th></tr>
+    <tr><td><strong>Ministro da Fazenda</strong></td><td><strong>Presidente do CMN</strong></td><td>Responde pela política econômica do governo — a moeda não vive isolada da política fiscal</td></tr>
+    <tr><td><strong>Ministro do Planejamento e Orçamento</strong></td><td>Membro</td><td>Traz a visão de orçamento e investimento público</td></tr>
+    <tr><td><strong>Presidente do Banco Central</strong></td><td>Membro</td><td>Traz a visão técnica de quem vai executar a norma na ponta</td></tr>
+  </table>
+  </div>
+  <p>São <strong>três</strong> membros. Não confunda com composições antigas (o CMN já teve dezenas de membros até 1994) nem com o palpite de que "o presidente do BB está lá" — não está.</p>
+  <div class="tip">💡 Repare na elegância institucional: o presidente do Bacen <strong>ajuda a escrever a norma</strong> (é membro do CMN) mas <strong>não a preside</strong> (quem preside é a Fazenda) e é <strong>minoria</strong> (1 voto em 3). Ele participa da camada normativa sem dominá-la — e depois executa. É a mesma lógica de ter o tech lead na reunião de arquitetura: a voz de quem vai implementar é ouvida, mas a decisão não é dele sozinho.</div>
+
+  <h3>O que o CMN faz</h3>
   <ul>
     <li>Órgão <strong>máximo</strong> do SFN, <strong>exclusivamente normativo</strong> (não executa, não fiscaliza, não atende ninguém).</li>
     <li>Formula a política da <strong>moeda e do crédito</strong>; zela pela estabilidade e solvência das instituições.</li>
     <li><strong>Composição (3 membros):</strong> Ministro da Fazenda (preside), Ministro do Planejamento e Orçamento, e Presidente do Bacen.</li>
     <li>Define a <strong>meta de inflação</strong> (que o Bacen persegue via Selic).</li>
+    <li>Autoriza a <strong>emissão de papel-moeda</strong> — quem imprime é o Bacen, mas dentro dos limites e condições que o CMN estabelece.</li>
+    <li>Disciplina o <strong>crédito</strong> em todas as suas modalidades e as operações creditícias.</li>
+    <li>Estabelece as diretrizes de <strong>constituição e funcionamento</strong> das instituições financeiras — quem pode ser banco e sob que regras.</li>
+    <li>Regula a <strong>constituição de reservas</strong> obrigatórias e limita a taxa de <strong>redesconto</strong>.</li>
+    <li>Orienta a aplicação dos recursos das instituições, públicas e privadas.</li>
   </ul>
-  <div class="trap">🪤 Se a alternativa disser que o CMN "executa", "fiscaliza", "emite moeda" ou "concede empréstimo" — está errada. CMN só normatiza.</div>
 
-  <h2>Bacen — o executor e supervisor</h2>
+  <h3>O que o CMN NÃO faz (é aqui que a prova mora)</h3>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Alternativa que a banca escreve</th><th>Veredito</th><th>Quem faz de verdade</th></tr>
+    <tr><td>"O CMN emite papel-moeda"</td><td class="muted">Errado</td><td><strong>Bacen</strong> (o CMN apenas autoriza/limita)</td></tr>
+    <tr><td>"O CMN fiscaliza as instituições financeiras"</td><td class="muted">Errado</td><td><strong>Bacen</strong></td></tr>
+    <tr><td>"O CMN define a taxa Selic"</td><td class="muted">Errado</td><td><strong>Copom</strong> (comitê do Bacen)</td></tr>
+    <tr><td>"O CMN executa a política monetária"</td><td class="muted">Errado</td><td><strong>Bacen</strong> — o CMN <em>formula/fixa diretrizes</em></td></tr>
+    <tr><td>"O CMN concede empréstimo / redesconto a banco"</td><td class="muted">Errado</td><td><strong>Bacen</strong> (o CMN só limita a taxa)</td></tr>
+    <tr><td>"O CMN autoriza o funcionamento de um banco específico"</td><td class="muted">Errado</td><td><strong>Bacen</strong> — o CMN dá a diretriz geral, o Bacen aplica ao CNPJ</td></tr>
+    <tr><td>"O CMN define a meta de inflação"</td><td class="muted"><strong>Certo</strong></td><td>CMN</td></tr>
+    <tr><td>"O CMN é o órgão máximo do SFN"</td><td class="muted"><strong>Certo</strong></td><td>CMN</td></tr>
+  </table>
+  </div>
+  <div class="trap">🪤 Se a alternativa disser que o CMN "executa", "fiscaliza", "emite moeda" ou "concede empréstimo" — está errada. CMN só normatiza.</div>
+  <div class="tip">📝 <strong>Como a banca pergunta isso:</strong> quase sempre por verbo. Ela mantém o órgão certo e troca o <em>verbo</em>: "compete ao CMN <s>fiscalizar</s> as instituições financeiras" (é <em>disciplinar</em>). Leia o verbo antes do substantivo. Verbos do CMN: fixar, formular, disciplinar, estabelecer diretrizes, autorizar, regular, orientar, determinar, limitar. Verbos que NUNCA são do CMN: executar, fiscalizar, supervisionar, emitir, conceder, punir, intervir.</div>
+
+  <h2 id="sec-parte-4-banco-central-o-executor-e-supervisor">Parte 4 — Banco Central, o executor e supervisor</h2>
+
+  <h3>Natureza e a autonomia da LC 179/2021</h3>
   <ul>
     <li><strong>Autarquia de natureza especial</strong> com autonomia (LC 179/2021): mandatos fixos de 4 anos para presidente e diretores, não coincidentes com o do Presidente da República.</li>
+    <li>Sem vinculação a ministério: a LC 179/2021 retirou a subordinação do Bacen ao Ministério da Fazenda e lhe deu autonomia técnica, operacional, administrativa e financeira.</li>
+    <li>Dirigido por uma <strong>Diretoria Colegiada</strong>: presidente + diretores, todos indicados pelo Presidente da República e <strong>sabatinados e aprovados pelo Senado Federal</strong>.</li>
+    <li>Exoneração só nas hipóteses previstas em lei (por exemplo, desempenho insuficiente reconhecido em processo próprio, com aprovação do Senado) — <strong>não por mera vontade política</strong>.</li>
+  </ul>
+  <p>A LC 179/2021 fixou também os objetivos do Bacen, e a hierarquia entre eles cai em prova: o <strong>objetivo fundamental é assegurar a estabilidade de preços</strong>. Sem prejuízo disso, ele deve zelar pela estabilidade e eficiência do sistema financeiro, suavizar as flutuações do nível de atividade econômica e fomentar o pleno emprego. Ou seja: são <strong>quatro</strong> objetivos, mas um é <em>fundamental</em> e os outros três são <em>subordinados a ele</em>. Não é uma lista de iguais.</p>
+
+  <h3>Caso concreto: por que "mandato não coincidente" não é detalhe decorativo</h3>
+  <p>Este é o ponto que separa quem decorou de quem entendeu. Preste atenção no mecanismo.</p>
+  <p><strong>O conflito de interesse.</strong> Combater inflação dói: exige juro alto, que esfria o consumo, segura o emprego e derruba a popularidade — e o benefício (inflação baixa) só aparece <em>meses ou anos depois</em>. Custo agora, benefício depois. Para um político em ano de eleição, o incentivo é sempre o oposto: juro baixo agora, inflação depois — de preferência no mandato do sucessor. É o clássico problema de <strong>inconsistência temporal</strong>: a decisão que é ótima no longo prazo nunca é a mais confortável no curto.</p>
+  <p><strong>O mecanismo de defesa.</strong> Se o presidente do Bacen puder ser demitido por telefonema, a autonomia dele é ficção — ele decide olhando para quem pode demiti-lo. A LC 179/2021 quebra esse canal de duas formas:</p>
+  <ol>
+    <li><strong>Mandato fixo de 4 anos</strong>: dentro do mandato, ele não pode ser trocado por discordância de política.</li>
+    <li><strong>Mandatos não coincidentes</strong>: o mandato do presidente do Bacen começa <strong>no terceiro ano</strong> do mandato do Presidente da República e atravessa a eleição, indo até o segundo ano do governo seguinte. Os diretores também têm mandatos escalonados, com vencimentos distribuídos no tempo.</li>
+  </ol>
+  <p><strong>A consequência prática.</strong> Um presidente da República recém-eleito <em>herda</em> o presidente do Bacen do antecessor e convive com ele por dois anos. Não existe "trocar a diretoria do BC no dia 1º de janeiro". E a diretoria nunca vira de uma vez: por causa do escalonamento, ela se renova aos poucos, o que impede qualquer governo de capturar o colegiado inteiro de um golpe.</p>
+  <div class="tip">💡 <strong>Ponte com o seu mundo:</strong> mandato escalonado é <em>rolling deploy</em>. Você nunca substitui a frota inteira de uma vez — vai trocando nó a nó, para que sempre haja instâncias da versão anterior de pé garantindo continuidade e para que nenhuma mudança ruim derrube o cluster inteiro. Mandato não coincidente é exatamente isso aplicado a pessoas: o objetivo é <strong>continuidade da política através da troca de governo</strong>.</div>
+  <p><strong>E funciona?</strong> O sinal está nos preços. Investidor que acredita que o BC vai perseguir a meta mesmo sob pressão política cobra prêmio de risco menor nos títulos longos, e as expectativas de inflação ficam ancoradas. Autonomia não é um mimo para o BC — <strong>é um redutor do custo da dívida e do juro que você paga no crédito imobiliário</strong>. A credibilidade é o insumo, o juro menor é o produto.</p>
+  <div class="trap">🪤 Autonomia <strong>não é</strong> independência absoluta e <strong>não é</strong> soberania. O Bacen continua: (a) perseguindo a meta de inflação <strong>que o CMN define</strong> — ele não escolhe o alvo, escolhe o caminho; (b) sujeito a fiscalização do Congresso, com prestação de contas ao Senado; (c) submetido ao TCU. Autonomia é de <em>meios</em>, não de <em>fins</em>. Se a alternativa disser que "o Bacen define a meta de inflação" ou que "é independente e não presta contas a ninguém", está errada.</div>
+
+  <h3>O que o Bacen faz — as seis funções</h3>
+  <ul>
     <li><strong>Emite papel-moeda</strong> (exclusividade) e gerencia o meio circulante.</li>
     <li><strong>Executa</strong> a política monetária: open market (compra/venda de títulos), depósito compulsório e redesconto.</li>
     <li><strong>Supervisiona</strong> as instituições financeiras; autoriza funcionamento; decreta intervenções.</li>
     <li>Administra as <strong>reservas internacionais</strong> e o <strong>Pix</strong>; conduz o projeto <strong>Drex</strong>.</li>
     <li>Banco dos bancos (redesconto) e banqueiro do Tesouro Nacional.</li>
   </ul>
+  <p>Agora destrinchando cada uma, porque a prova cobra o entendimento, não a lista.</p>
 
-  <h3>Copom</h3>
+  <h3>1) Emissor de moeda e gestor do meio circulante</h3>
+  <p><strong>Meio circulante</strong> é o conjunto de cédulas e moedas metálicas em poder do público e dos bancos — o dinheiro físico em circulação. "Gerenciar o meio circulante" é um trabalho bem mais chato e bem mais operacional do que parece: estimar quanta cédula o país vai precisar (dezembro pede muito mais que fevereiro), mandar a <strong>Casa da Moeda</strong> imprimir, distribuir para os bancos, recolher a cédula gasta e destruí-la, e cuidar do padrão de segurança contra falsificação.</p>
+  <p>Duas separações que a banca adora:</p>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Papel</th><th>Quem</th><th>Observação</th></tr>
+    <tr><td>Autoriza a emissão / fixa limites</td><td><strong>CMN</strong></td><td>Camada normativa</td></tr>
+    <tr><td>Emite (competência privativa)</td><td><strong>Bacen</strong></td><td>Decide quanto e quando, dentro do autorizado</td></tr>
+    <tr><td><em>Imprime</em> fisicamente</td><td><strong>Casa da Moeda</strong></td><td>Empresa pública — é a gráfica, não a autoridade emissora</td></tr>
+  </table>
+  </div>
+  <div class="trap">🪤 "A Casa da Moeda emite o papel-moeda." <strong>Errado.</strong> Ela <em>fabrica</em>. Quem <em>emite</em> (competência privativa) é o Bacen. E cuidado com o outro lado: a maior parte da moeda que existe hoje nem é física — é escritural, criada pelos bancos comerciais quando concedem crédito. O monopólio do Bacen é sobre o <strong>papel-moeda</strong>.</div>
+  <p>Vale entender esse último ponto, porque explica o compulsório mais à frente. Quando um banco empresta R$ 1.000, ele não tira R$ 1.000 do cofre: ele credita R$ 1.000 na conta do cliente. Esse depósito é moeda — dá para pagar contas com ele. O dinheiro que volta ao sistema é reemprestado, e assim por diante. É o <strong>multiplicador bancário</strong>: o sistema bancário <em>cria moeda escritural</em> a partir de uma base. E é por isso que controlar a quantidade de moeda não é controlar a impressora — é controlar o crédito.</p>
+
+  <h3>2) Banco dos bancos</h3>
+  <p>Todo banco tem conta no Bacen — a <strong>Conta Reservas Bancárias</strong>. É ali que os bancos se acertam entre si e é ali que o Bacen atua. Quando você faz um Pix de R$ 200 do Banco A para alguém do Banco B, os R$ 200 não "viajam": o Bacen debita 200 da reserva do A e credita 200 na reserva do B. <strong>O Bacen é o livro-razão central do sistema — a única fonte de verdade onde o saldo entre bancos é liquidado.</strong></p>
+  <p>Dessa posição decorrem dois poderes enormes: (a) o Bacen consegue enxergar a liquidez do sistema em tempo real, e (b) ele é o único que pode criar reserva do nada para socorrer um banco — o <strong>emprestador de última instância</strong>, via redesconto.</p>
+
+  <h3>3) Banqueiro do Tesouro Nacional</h3>
+  <p>A Conta Única do Tesouro fica no Bacen; ele é o caixa do governo federal e o agente que executa os leilões de títulos públicos por conta do Tesouro. Atenção à divisão:</p>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Ação</th><th>Quem</th><th>Objetivo</th></tr>
+    <tr><td><strong>Emite</strong> títulos públicos (dívida nova, no primário)</td><td><strong>Tesouro Nacional</strong></td><td>Financiar o governo — política <em>fiscal</em></td></tr>
+    <tr><td><strong>Compra e vende</strong> títulos já existentes (secundário)</td><td><strong>Bacen</strong></td><td>Controlar a liquidez — política <em>monetária</em></td></tr>
+  </table>
+  </div>
+  <div class="trap">🪤 "O Bacen emite títulos públicos para financiar o governo." <strong>Errado</strong> em dois pontos: quem emite dívida é o <strong>Tesouro</strong>, e o Bacen está proibido de financiar o Tesouro diretamente (é vedado conceder empréstimo ao Tesouro e comprar título dele na emissão primária). O Bacen opera títulos no <strong>mercado secundário</strong>, com finalidade monetária. Essa vedação existe exatamente para impedir o Buraco nº 1 da Parte 1: o governo imprimindo para pagar suas contas.</div>
+
+  <h3>4) Supervisor do sistema financeiro</h3>
+  <p>Aqui o Bacen usa o chicote. Ele:</p>
+  <ul>
+    <li><strong>Autoriza</strong> a constituição, o funcionamento, a fusão e a transferência de controle de instituição financeira — nenhum banco nasce sem carimbo do Bacen;</li>
+    <li><strong>Fiscaliza</strong>: exige envio de dados, faz inspeção in loco, checa capital, provisões e limites (regulação prudencial);</li>
+    <li><strong>Pune</strong>: multa, adverte, inabilita administrador;</li>
+    <li><strong>Intervém</strong>: pode decretar <strong>intervenção</strong>, <strong>RAET</strong> (Regime de Administração Especial Temporária) ou <strong>liquidação extrajudicial</strong>.</li>
+  </ul>
+  <p>A lógica dos regimes especiais, em uma frase: <em>banco quebrado não vai à falência comum como uma padaria</em>. O Bacen tem o poder de tomar o controle antes, porque a quebra desordenada de um banco contamina o sistema (risco sistêmico — Buraco nº 2).</p>
+
+  <h3>5) Reservas internacionais e câmbio</h3>
+  <p><strong>Reservas internacionais</strong> são os ativos em moeda estrangeira (majoritariamente dólares, boa parte aplicada em títulos do Tesouro americano) que o país mantém. Servem de colchão: se o dólar dispara por pânico, o Bacen pode vender dólar (ou fazer swap cambial) para dar liquidez ao mercado. É o seguro contra crise cambial — e quem administra é o Bacen, executando a política cambial cujas diretrizes vêm do CMN.</p>
+  <div class="trap">🪤 O Brasil adota <strong>câmbio flutuante</strong>. O Bacen <strong>não fixa</strong> a cotação do dólar; ele pode intervir para reduzir volatilidade e dar liquidez, não para defender um preço-alvo. Se a alternativa disser que "o Bacen determina a taxa de câmbio", está errada.</div>
+
+  <h3>6) Infraestrutura do sistema de pagamentos: Pix e Drex</h3>
+  <p>O Bacen regula e opera o <strong>SPB</strong> (Sistema de Pagamentos Brasileiro), e nele estão os dois assuntos que mais te interessam como candidato de TI:</p>
+  <ul>
+    <li><strong>Pix</strong> — sistema de pagamentos instantâneos criado, regulado e <strong>operado</strong> pelo próprio Bacen, 24×7, com liquidação em segundos. Repare na anomalia arquitetural: aqui o Bacen não só normatiza e supervisiona, ele <strong>roda a infraestrutura</strong>. O motivo é que pagamento é um bem de rede: o valor só existe se todos estiverem no mesmo trilho, e um agente privado teria incentivo a fechar o jardim. O Bacen bancou o trilho comum.</li>
+    <li><strong>Drex</strong> — projeto de <strong>moeda digital do banco central</strong> (CBDC) brasileiro, ainda em desenvolvimento/piloto, conduzido pelo Bacen, com uso de tecnologia de registro distribuído e foco em liquidação de ativos tokenizados via contratos inteligentes.</li>
+  </ul>
+  <div class="tip">💡 <strong>Não confunda:</strong> Drex é moeda digital <strong>emitida pelo Bacen</strong> — é real, com o mesmo lastro soberano, só que em formato digital e programável. Criptomoeda tipo bitcoin é ativo privado, sem emissor central e sem garantia estatal. A banca gosta de misturar os dois. E o Pix não é moeda: é <em>meio de pagamento</em>, um trilho para mover reais que já existem.</div>
+
+  <h2 id="sec-parte-5-copom-e-a-politica-monetaria-como-sis">Parte 5 — Copom e a política monetária como sistema de controle</h2>
+
+  <h3>Primeiro, o que é política monetária</h3>
+  <p><strong>Política monetária</strong> é a atuação do Banco Central sobre a quantidade de moeda e o custo do crédito na economia, para atingir um objetivo — no arranjo brasileiro, cumprir a meta de inflação. E <strong>liquidez</strong>, palavra que vai aparecer o tempo todo agora, é a facilidade de transformar algo em dinheiro disponível <em>já</em>. Dinheiro na conta é 100% líquido; um apartamento é ilíquido. "Enxugar a liquidez do sistema" = tirar dinheiro disponível de circulação. "Injetar liquidez" = colocar.</p>
+  <p>Um contraste que a prova cobra: <strong>política monetária</strong> (Bacen: juros, moeda, crédito) é diferente de <strong>política fiscal</strong> (governo/Tesouro: arrecadar imposto e gastar) e de <strong>política cambial</strong> (relação com moeda estrangeira). Quem sobe juro é o Bacen; quem sobe imposto é o governo.</p>
+
+  <h3>A ponte que vale ouro: isto é uma malha de controle com feedback</h3>
+  <p>Você já projetou algo com feedback — um autoscaler, um controle de temperatura, qualquer PID. O regime de metas de inflação brasileiro é literalmente esse desenho:</p>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Elemento da malha</th><th>No SFN</th><th>Quem é o dono</th></tr>
+    <tr><td><strong>Setpoint</strong> (o alvo)</td><td>A <strong>meta de inflação</strong></td><td><strong>CMN</strong> — quem define o alvo NÃO é quem opera o controle</td></tr>
+    <tr><td><strong>Sensor</strong> (a medição)</td><td><strong>IPCA</strong> — Índice Nacional de Preços ao Consumidor Amplo</td><td><strong>IBGE</strong> — terceiro independente, nem CMN nem Bacen</td></tr>
+    <tr><td><strong>Variável de controle</strong> (o botão)</td><td>Meta da <strong>taxa Selic</strong></td><td><strong>Copom</strong> (comitê do Bacen)</td></tr>
+    <tr><td><strong>Atuador</strong> (o que efetiva)</td><td>Operações de mercado aberto na mesa do Bacen, todo dia</td><td><strong>Bacen</strong> (Departamento de Operações do Mercado Aberto)</td></tr>
+    <tr><td><strong>Planta</strong> (o sistema controlado)</td><td>A economia — com atraso de resposta de vários trimestres</td><td>—</td></tr>
+    <tr><td><strong>Erro / alarme</strong></td><td>Meta descumprida → <strong>carta aberta</strong> do presidente do Bacen ao Ministro da Fazenda explicando causas, providências e prazo</td><td><strong>Bacen</strong> presta contas</td></tr>
+  </table>
+  </div>
+  <p>Olhe a coluna da direita e veja a arquitetura se repetir: <strong>quem define o alvo, quem mede e quem atua são três entes diferentes</strong>. Se o Bacen definisse a própria meta, ele mudaria o alvo sempre que fosse errar (o velho "mover a meta até bater o número"). Se o Bacen medisse a própria inflação, ele fabricaria o resultado. Por isso o alvo é do CMN e o sensor é do IBGE. É controle de qualidade institucional pela mesma razão pela qual você não deixa o time medir a própria SLA.</p>
+  <div class="trap">🪤 <strong>A pegadinha campeã de todas as provas:</strong> Copom define a <strong>Selic</strong>; CMN define a <strong>meta de inflação</strong>. Nunca o contrário. Complementos que também caem: quem <strong>mede</strong> a inflação oficial é o <strong>IBGE</strong> (via IPCA), não o Bacen; a meta é <strong>anual/contínua conforme a norma do CMN</strong> e tem um <strong>intervalo de tolerância</strong> — ficar dentro do intervalo é cumprir a meta.</div>
+
+  <h3>O Copom por dentro</h3>
   <ul>
     <li>Comitê do Bacen que define a <strong>meta da taxa Selic</strong>.</li>
     <li><strong>8 reuniões por ano</strong> (a cada ~45 dias), em dois dias; decisão na 4ª feira.</li>
     <li>Divulga ata e, a cada trimestre, o Relatório de Política Monetária (antigo Relatório de Inflação).</li>
+    <li>É composto pela <strong>Diretoria Colegiada do Bacen</strong> — presidente e diretores. Não é órgão externo, não tem representante de banco privado, não tem ministro.</li>
+    <li>Criado em <strong>1996</strong>; o regime de metas para a inflação foi adotado no Brasil em <strong>1999</strong>.</li>
   </ul>
-  <div class="trap">🪤 Copom define a <strong>Selic</strong>; CMN define a <strong>meta de inflação</strong>. A banca troca um pelo outro em TODA prova.</div>
 
-  <h2>CVM — a xerife do mercado de capitais</h2>
-  <ul>
-    <li>Autarquia vinculada ao Ministério da Fazenda; supervisiona <strong>valores mobiliários</strong>: ações, debêntures, cotas de fundos, derivativos.</li>
-    <li>Registra e fiscaliza <strong>companhias abertas</strong>, fundos de investimento, auditores e a bolsa (B3).</li>
-    <li>Protege o investidor: pune insider trading e manipulação de mercado.</li>
-  </ul>
-  <div class="tip">💡 Divisor rápido: CDB, poupança, conta-corrente → <strong>Bacen</strong>. Ação, debênture, fundo → <strong>CVM</strong>. Os dois seguem normas do CMN.</div>
+  <h3>O caminho de uma decisão do Copom, passo a passo</h3>
+  <ol>
+    <li><strong>Primeiro dia (terça).</strong> Apresentações técnicas dos departamentos do Bacen: conjuntura doméstica, economia internacional, mercado financeiro, evolução do IPCA e de seus componentes, expectativas coletadas no <strong>Boletim Focus</strong> (pesquisa semanal com ~100 instituições) e projeções dos modelos do Bacen. Ninguém vota ainda — é levantamento de evidência.</li>
+    <li><strong>Segundo dia (quarta).</strong> Debate e <strong>votação</strong> dos membros da Diretoria Colegiada. Sai a decisão sobre a meta da Selic.</li>
+    <li><strong>Comunicado, no mesmo dia após o fechamento do mercado.</strong> Texto curto com a decisão, o placar e a sinalização sobre os próximos passos (o <em>forward guidance</em>). O mercado lê cada palavra: mudar "cautela" para "serenidade" move bilhões.</li>
+    <li><strong>Ata, na terça seguinte.</strong> O documento detalhado com o raciocínio, os cenários e os riscos considerados. É onde se entende o <em>porquê</em>.</li>
+    <li><strong>Execução, a partir do dia seguinte e todo dia.</strong> Aqui está o ponto que quase ninguém entende: <strong>a decisão do Copom é uma meta, não um decreto</strong>. Ninguém "liga a Selic". A mesa de operações do Bacen passa a comprar e vender títulos diariamente até que a taxa de mercado convirja para a meta anunciada. O Copom define o setpoint; a mesa é o controlador rodando em loop.</li>
+    <li><strong>A cada trimestre</strong>, o Relatório de Política Monetária: a prestação de contas ampla, com as projeções de inflação nos cenários de referência.</li>
+  </ol>
+  <div class="tip">💡 <strong>Selic meta × Selic efetiva.</strong> A <em>meta</em> é o número que o Copom anuncia. A <em>efetiva</em> (Selic over) é a taxa média que realmente saiu das operações compromissadas com títulos públicos registradas no sistema Selic — Sistema Especial de Liquidação e de Custódia. Elas andam quase coladas, e a diferença mínima é justamente a prova de que a mesa está fazendo o trabalho de convergência. Bônus de nomenclatura: "Selic" é, na origem, o nome de um <strong>sistema de custódia e liquidação de títulos públicos</strong>; a taxa se chama assim porque nasce das operações que rodam dentro dele.</div>
 
-  <h2>Instrumentos de política monetária (o tripé clássico)</h2>
+  <h3>Transmissão da política monetária: como a Selic chega ao seu bolso</h3>
+  <p>Você precisa saber contar esta história, porque ela é a resposta de qualquer questão discursiva e o pano de fundo das objetivas. Vamos subir a Selic e seguir o efeito.</p>
+  <p><strong>Passo 0 — o Copom sobe a meta da Selic de 10% para 11%.</strong></p>
+  <p><strong>Passo 1 — a mesa executa.</strong> O Bacen começa a <strong>vender</strong> títulos públicos aos bancos no mercado aberto. Cada título vendido é dinheiro que sai da reserva do banco e some do sistema. Com menos reserva disponível, o dinheiro no interbancário fica escasso e caro. A taxa de um dia sobe até encostar em 11%.</p>
+  <p><strong>Passo 2 — o custo de oportunidade do banco muda.</strong> Agora o banco consegue 11% ao ano emprestando ao <em>governo</em>, com risco praticamente zero e liquidez diária. Pergunte a ele se vale a pena emprestar para uma padaria a 12% correndo risco de calote. Não vale. <strong>A Selic é o piso de todo o resto</strong> — todo crédito no país é precificado como "Selic + risco + custo + margem". Sobe o piso, sobe tudo em cima.</p>
+  <p><strong>Passo 3 — o crédito encarece e encolhe.</strong> Financiamento de carro, cheque especial, capital de giro, crédito imobiliário: tudo fica mais caro. Menos gente toma crédito, e os bancos ficam mais seletivos. Menos crédito = menos moeda escritural sendo criada.</p>
+  <p><strong>Passo 4 — a demanda esfria.</strong> A família adia o carro; a empresa adia a fábrica nova. E o outro lado: com a renda fixa pagando 11%, ficar aplicado vira mais atraente que consumir — poupar rende, gastar custa.</p>
+  <p><strong>Passo 5 — os preços cedem.</strong> Com menos gente comprando, o lojista perde poder de repassar aumento. A inflação desacelera. <strong>Objetivo atingido.</strong></p>
+  <p><strong>Canais paralelos que atuam junto:</strong></p>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Canal</th><th>Mecanismo</th><th>Efeito na inflação</th></tr>
+    <tr><td><strong>Juros/crédito</strong></td><td>Crédito caro → menos consumo e investimento</td><td>Reduz (o canal principal)</td></tr>
+    <tr><td><strong>Câmbio</strong></td><td>Juro alto atrai capital externo → entra dólar → real se valoriza → importado e commodity ficam mais baratos em real</td><td>Reduz (efeito relativamente rápido)</td></tr>
+    <tr><td><strong>Expectativas</strong></td><td>Se o mercado acredita que o BC vai perseguir a meta, já reajusta contratos e preços por uma inflação menor</td><td>Reduz — e é aqui que a <strong>credibilidade</strong> vira ferramenta: um BC crível precisa subir menos o juro para obter o mesmo efeito</td></tr>
+    <tr><td><strong>Preços de ativos</strong></td><td>Juro alto derruba bolsa e imóvel → efeito riqueza negativo → a pessoa se sente mais pobre e gasta menos</td><td>Reduz</td></tr>
+  </table>
+  </div>
+  <p><strong>E o detalhe crítico: a defasagem.</strong> Esse encadeamento não é instantâneo. O Bacen trabalha com a ideia de que o grosso do efeito de uma decisão de hoje aparece na inflação daqui a algo em torno de <strong>6 a 9 meses</strong>, podendo se estender além disso. Consequência prática enorme: <strong>o Copom não decide olhando a inflação de hoje — ele decide olhando a inflação projetada para o horizonte relevante</strong>. Reagir ao número corrente seria como corrigir a rota olhando o retrovisor.</p>
+  <div class="tip">💡 <strong>Ponte final do controle:</strong> sistema com atraso de resposta e ganho alto = oscilação. É a razão de o Copom mexer em passos calibrados (0,25 / 0,50 p.p.) e sinalizar antes: um controlador que corrige demais e cedo demais faz a planta oscilar em vez de estabilizar. Você já viu isso num autoscaler mal ajustado subindo e derrubando máquina em looping. É o mesmo fenômeno, com PIB no lugar de CPU.</div>
+  <p>E no sentido inverso, a simetria completa: <strong>Selic cai</strong> → mesa <strong>compra</strong> títulos e injeta reserva → crédito barateia → consumo e investimento crescem → atividade e emprego sobem → e, se a economia já estiver no limite da capacidade, os preços sobem junto. É o trade-off permanente do Bacen, e é por isso que "estabilidade de preços" é o objetivo fundamental e "fomentar o pleno emprego" vem depois, sem prejuízo daquele.</p>
+
+  <h2 id="sec-parte-6-instrumentos-de-politica-monetaria-o-">Parte 6 — Instrumentos de política monetária (o tripé clássico)</h2>
+  <p>Os três instrumentos atacam o mesmo alvo — <strong>a quantidade de reservas bancárias disponíveis</strong> — por caminhos diferentes. Estude a tabela e depois entenda cada linha.</p>
   <div class="table-scroll">
   <table>
     <tr><th>Instrumento</th><th>O que é</th><th>Para reduzir liquidez (apertar)</th><th>Para aumentar liquidez (afrouxar)</th></tr>
@@ -70,7 +325,159 @@
   </table>
   </div>
 
-  <h2>Quadro final de fixação</h2>
+  <h3>Open market (mercado aberto) — o que EXATAMENTE acontece</h3>
+  <p>"O Bacen vende títulos" é uma frase que todo mundo repete e quase ninguém sabe destrinchar. Destrinchando:</p>
+  <p><strong>Quando o Bacen VENDE título (aperto):</strong></p>
+  <ol>
+    <li>O Bacen oferece ao Banco X um título público que ele já tem em carteira (do estoque, comprado no secundário — <strong>não</strong> é dívida nova; dívida nova é do Tesouro).</li>
+    <li>O Banco X compra por, digamos, R$ 100 milhões.</li>
+    <li>O Bacen <strong>debita R$ 100 milhões da Conta Reservas Bancárias</strong> do Banco X e entrega o título.</li>
+    <li>Resultado: o Banco X trocou <em>dinheiro líquido</em> por <em>papel</em>. Aqueles R$ 100 milhões <strong>desapareceram do sistema</strong> — literalmente. Não foram para outro banco; foram para o Bacen, que é quem cria e destrói reserva. A liquidez do sistema encolheu.</li>
+    <li>Com menos reserva sobrando no mercado, quem precisa de dinheiro no fim do dia paga mais caro por ele. <strong>A taxa de juros sobe.</strong></li>
+  </ol>
+  <p><strong>Quando o Bacen COMPRA título (afrouxamento):</strong> o filme roda ao contrário. O Bacen pega o título do banco e <strong>credita reserva</strong> na conta dele — reserva criada do nada, com um lançamento contábil. Sobra dinheiro no sistema, quem tem excesso disputa para emprestar, <strong>a taxa cai</strong>.</p>
+  <div class="tip">💡 A frase que resolve qualquer questão de open market: <strong>título e dinheiro andam em direções opostas</strong>. Sai título do Bacen → entra dinheiro no Bacen → seca o mercado → juro sobe. Entra título no Bacen → sai dinheiro do Bacen → molha o mercado → juro cai. Se você guardar só isso, acerta a questão mesmo sob pressão.</div>
+  <p>Por que é o instrumento <strong>mais ágil e mais usado</strong>? Porque é fino e reversível. O Bacen calibra o volume exato, todo dia, na dose necessária, e desfaz no dia seguinte se errou a mão — a maior parte é feita via <strong>operações compromissadas</strong> (venda com compromisso de recompra, o "compromissado"), que é literalmente um empréstimo com prazo definido e garantia em título. É o dial de precisão. Os outros dois instrumentos são marreta.</p>
+  <div class="trap">🪤 Duas confusões clássicas: (1) <strong>Bacen não emite título</strong> — desde 2002 (LRF) é vedado; ele opera títulos do <strong>Tesouro</strong> que já existem, no <strong>secundário</strong>. (2) Open market <strong>não</strong> financia o governo: financiar é função do Tesouro emitindo no primário; o objetivo do open market é <strong>monetário</strong> (controlar liquidez e taxa). Mesmo papel, finalidades e atores diferentes.</div>
+
+  <h3>Depósito compulsório — a reserva obrigatória</h3>
+  <p><strong>O que é:</strong> um percentual (alíquota) sobre os depósitos captados pelo banco que ele é <strong>obrigado</strong> a manter recolhido no Bacen, sem poder emprestar. Há alíquotas distintas por tipo de captação (à vista, poupança, a prazo), definidas pelo Bacen dentro dos limites da norma do CMN.</p>
+  <p><strong>Duas funções, e a prova cobra as duas:</strong></p>
+  <ul>
+    <li><strong>Prudencial (a origem):</strong> é o colchão de segurança. Garante que o banco não empreste 100% do que captou e tenha algo em caixa para o saque do dia a dia. É a defesa direta contra o Buraco nº 2.</li>
+    <li><strong>Monetária:</strong> controla o <strong>multiplicador bancário</strong>. Lembre da moeda escritural: cada real que o banco pode emprestar volta ao sistema e é reemprestado. O compulsório determina quanto vaza desse ciclo a cada rodada.</li>
+  </ul>
+  <p><strong>O mecanismo, nos dois sentidos:</strong></p>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Movimento</th><th>Passo a passo</th><th>Efeito</th></tr>
+    <tr><td><strong>Aumenta</strong> a alíquota (aperta)</td><td>Banco captou R$ 100 e a alíquota vai de 20% para 30% → ele precisa recolher R$ 30 em vez de R$ 20 → sobram R$ 70 para emprestar em vez de R$ 80 → cada rodada do multiplicador vaza mais</td><td>Menos crédito, menos moeda escritural criada, <strong>liquidez cai</strong></td></tr>
+    <tr><td><strong>Reduz</strong> a alíquota (afrouxa)</td><td>De 30% para 20% → o banco recebe de volta reserva que estava presa no Bacen → sobra mais para emprestar</td><td>Mais crédito, <strong>liquidez sobe</strong> — foi exatamente o que o Bacen fez em março de 2020, liberando compulsório para irrigar o sistema na crise da pandemia</td></tr>
+  </table>
+  </div>
+  <div class="tip">💡 <strong>Ponte com o seu mundo:</strong> compulsório é <em>connection pool reservado</em>. Você força o serviço a manter conexões ociosas que ele não pode consumir. Ineficiente no dia normal, salvador no pico. Subir a alíquota é apertar a cota de cada serviço; baixar é liberar o pool inteiro para uso.</div>
+  <div class="trap">🪤 O compulsório é <strong>marreta</strong>, não bisturi: mexer nele afeta todo o sistema bancário de uma vez, tem efeito grande, demora a se propagar e é difícil de reverter sem sacudir o mercado. Por isso o instrumento <em>mais usado no dia a dia</em> é o <strong>open market</strong>, não o compulsório — apesar de o compulsório ter o efeito mais potente. Potência e uso frequente são coisas diferentes, e a banca explora essa confusão.</div>
+
+  <h3>Redesconto — o socorro de liquidez</h3>
+  <p><strong>O que é:</strong> empréstimo do Bacen a uma instituição financeira que ficou sem caixa. É a materialização do papel de <strong>emprestador de última instância</strong>. Chama-se "última instância" ao pé da letra: o banco procura o Bacen quando <em>ninguém mais</em> quer lhe emprestar. É a linha de socorro, não a linha de funding do dia.</p>
+  <p><strong>O mecanismo, nos dois sentidos:</strong></p>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Movimento</th><th>Raciocínio do banco</th><th>Efeito</th></tr>
+    <tr><td><strong>Encarece</strong> a taxa de redesconto (aperta)</td><td>"Se eu quebrar o caixa vai me custar caro" → o banco fica conservador, retém liquidez, empresta menos</td><td>Menos crédito, <strong>liquidez cai</strong></td></tr>
+    <tr><td><strong>Barateia</strong> a taxa (afrouxa)</td><td>"Se faltar, eu resolvo barato no Bacen" → o banco se sente seguro para emprestar mais</td><td>Mais crédito, <strong>liquidez sobe</strong></td></tr>
+  </table>
+  </div>
+  <p><strong>Por que a taxa de redesconto é punitiva</strong> (fica acima da Selic)? Por causa do <strong>risco moral</strong>. Se o socorro fosse barato, o banco teria incentivo para ser imprudente de propósito — assume risco alto, embolsa o lucro se der certo e corre para o Bacen se der errado. Lucro privado, prejuízo socializado. Cobrando caro, o Bacen garante que a linha só seja usada em aperto de verdade. <strong>É um circuit breaker com custo embutido</strong>: existe para não deixar o sistema cair, mas é desenhado para você não querer acioná-lo.</p>
+  <div class="tip">💡 <strong>Divisão de competências no redesconto — cai em prova:</strong> quem <strong>concede</strong> o empréstimo é o <strong>Bacen</strong>; quem <strong>limita a taxa</strong> é o <strong>CMN</strong>. É a arquitetura de novo: o normativo fixa o teto, o supervisor executa a operação.</div>
+
+  <h3>Comparando os três de uma vez</h3>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Critério</th><th>Open market</th><th>Compulsório</th><th>Redesconto</th></tr>
+    <tr><td>Iniciativa da operação</td><td>Do <strong>Bacen</strong> (ele decide e vai ao mercado)</td><td>Do <strong>Bacen</strong> (impõe a alíquota)</td><td>Do <strong>banco</strong> (o Bacen só define o preço e espera a procura)</td></tr>
+    <tr><td>Precisão</td><td>Alta — dosagem fina, diária</td><td>Baixa — atinge todo mundo de uma vez</td><td>Baixa — depende de alguém pedir</td></tr>
+    <tr><td>Velocidade</td><td>Imediata</td><td>Lenta</td><td>Depende da demanda</td></tr>
+    <tr><td>Frequência de uso</td><td><strong>Diária — o mais usado</strong></td><td>Rara</td><td>Eventual</td></tr>
+    <tr><td>Potência do efeito</td><td>Calibrável</td><td><strong>A maior</strong></td><td>Menor / focal</td></tr>
+  </table>
+  </div>
+  <div class="tip">📝 <strong>Como a banca pergunta isso:</strong> (1) "Instrumento mais ágil/utilizado?" → <strong>open market</strong>. (2) "Para conter a inflação, o Bacen deve ___ títulos?" → <strong>vender</strong> (enxuga). (3) "Aumento do compulsório ___ a liquidez" → <strong>reduz</strong>. (4) "Emprestador de última instância?" → <strong>redesconto</strong>. (5) Inversão de sentido é o erro plantado em 80% das alternativas: leia se é apertar ou afrouxar <em>antes</em> de olhar o verbo.</div>
+
+  <h2 id="sec-parte-7-cvm-a-xerife-do-mercado-de-capitais">Parte 7 — CVM, a xerife do mercado de capitais</h2>
+
+  <h3>Antes: o que é "valor mobiliário"</h3>
+  <p>O termo assusta, mas a ideia é simples. <strong>Valor mobiliário</strong> é um título de <strong>investimento coletivo</strong> ofertado ao público, no qual o investidor entra com o dinheiro, <strong>não gerencia o negócio</strong> e espera lucro decorrente do esforço de terceiros. Ação, debênture, cota de fundo, contrato de derivativo, CRI e CRA — todos entram nessa definição.</p>
+  <p>Note a lógica por trás do recorte, porque ela explica a divisão Bacen × CVM. Quando você compra um CDB, você tem um <strong>crédito contra um banco</strong>: quem tem que ser sólido é o banco, e a proteção correta é fiscalizar a saúde dele — trabalho do Bacen. Quando você compra uma ação, você tem um <strong>pedaço de risco de um negócio</strong>: ninguém te deve nada, e a única proteção possível é garantir que você tenha <strong>informação verdadeira e completa</strong> na hora de decidir — trabalho da CVM.</p>
+  <div class="tip">💡 <strong>A distinção-chave:</strong> o Bacen protege você contra o <em>banco quebrar</em>. A CVM protege você contra ser <em>enganado</em>. A CVM não garante que seu investimento dê lucro e não impede você de perder dinheiro — ela garante que você perdeu sabendo no que estava entrando. Se a alternativa disser que "a CVM garante a rentabilidade" ou "protege o investidor contra prejuízo", está errada.</div>
+
+  <h3>O que é a CVM</h3>
+  <ul>
+    <li>Autarquia vinculada ao Ministério da Fazenda; supervisiona <strong>valores mobiliários</strong>: ações, debêntures, cotas de fundos, derivativos.</li>
+    <li>Registra e fiscaliza <strong>companhias abertas</strong>, fundos de investimento, auditores e a bolsa (B3).</li>
+    <li>Protege o investidor: pune insider trading e manipulação de mercado.</li>
+    <li>Criada pela <strong>Lei 6.385/1976</strong>; é autarquia <strong>em regime especial</strong>, com personalidade jurídica e patrimônio próprios e <strong>autoridade administrativa independente</strong>.</li>
+    <li>Dirigida por um <strong>colegiado</strong>: presidente + 4 diretores, nomeados pelo Presidente da República após aprovação do Senado, com <strong>mandatos de 5 anos, não coincidentes</strong> — mesma engenharia do Bacen, mesma finalidade: blindar decisão técnica de pressão política e de mercado.</li>
+  </ul>
+
+  <h3>Os três pilares da atuação da CVM</h3>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Pilar</th><th>Como se manifesta</th><th>Exemplo concreto</th></tr>
+    <tr><td><strong>Disclosure</strong> (transparência)</td><td>Obriga a empresa aberta a publicar demonstrações financeiras auditadas, formulário de referência e <strong>fatos relevantes</strong> — qualquer informação capaz de influenciar a decisão de comprar ou vender, divulgada a todos ao mesmo tempo</td><td>A empresa descobriu petróleo? Fato relevante hoje, para o mercado inteiro. Não pode contar primeiro ao amigo do diretor.</td></tr>
+    <tr><td><strong>Registro</strong> (quem entra)</td><td>Registra a companhia aberta, a oferta pública (IPO), os fundos, os administradores de carteira, os analistas, os auditores independentes</td><td>Sem registro na CVM, uma empresa não pode ofertar ações ao público. Oferta sem registro é irregular.</td></tr>
+    <tr><td><strong>Enforcement</strong> (punição)</td><td>Instaura processo administrativo sancionador; aplica advertência, multa, suspensão, inabilitação de administrador, proibição temporária de atuar; celebra <strong>termo de compromisso</strong></td><td>Pode banir um diretor do mercado por anos e multar em milhões</td></tr>
+  </table>
+  </div>
+
+  <h3>Caso concreto: o que a CVM faz num caso de insider trading</h3>
+  <p><strong>Insider trading</strong> é usar informação relevante ainda não divulgada ao mercado para negociar e obter vantagem. Veja o caso rodando:</p>
+  <ol>
+    <li><strong>A informação nasce.</strong> Segunda-feira: o conselho da Empresa Alfa aprova, em sigilo, a compra da concorrente Beta. O anúncio sairá na sexta. Todo mundo sabe que, quando sair, a ação da Beta dispara.</li>
+    <li><strong>O abuso.</strong> Terça-feira: um diretor da Alfa conta ao cunhado. O cunhado compra R$ 500 mil em ações da Beta. Um assessor jurídico do negócio faz o mesmo, mas usa a conta da mãe para "não aparecer".</li>
+    <li><strong>O gatilho.</strong> Sexta-feira: fato relevante publicado, a ação da Beta sobe 30%. E aqui a mecânica de detecção: a <strong>B3</strong> tem sistemas de vigilância que monitoram negociação atípica, e ela é obrigada a comunicar. O alarme dispara sozinho — volume anormal de compra de um papel pouco líquido, concentrado nos dias imediatamente anteriores ao anúncio. Não precisa de denúncia.</li>
+    <li><strong>A investigação.</strong> A CVM abre processo. Ela pede as ordens executadas, identifica os CPFs compradores da semana, cruza com a lista de pessoas que tinham acesso à informação (advogados, diretores, banco assessor) e vai atrás dos vínculos — parentesco, endereço comum, transferências entre contas. É trabalho de correlação: quem comprou <em>exatamente</em> antes, e quem essa pessoa conhece. O laranja é encontrado pelo grafo de relacionamento, não pelo nome na ordem.</li>
+    <li><strong>A punição administrativa.</strong> No processo sancionador, a CVM pode multar em <strong>até três vezes a vantagem obtida</strong>, inabilitar o diretor para cargo de administração em companhia aberta e proibir os envolvidos de atuar no mercado. Alternativamente, pode celebrar termo de compromisso (o investigado paga e ajusta a conduta, sem confissão).</li>
+    <li><strong>A esfera penal.</strong> E aqui um detalhe que a banca adora: <strong>insider trading também é crime</strong> (Lei 6.385/1976, art. 27-D), com pena de reclusão e multa. A <strong>CVM não prende ninguém</strong> — ela pune administrativamente e <strong>comunica ao Ministério Público</strong>, que denuncia. As esferas são independentes e correm em paralelo.</li>
+  </ol>
+  <div class="trap">🪤 A CVM é <strong>autoridade administrativa</strong>: multa, inabilita, suspende, proíbe. Ela <strong>não</strong> prende, <strong>não</strong> julga crime e <strong>não</strong> anula negócio — isso é do Judiciário/MP. Se a alternativa disser que "a CVM condena criminalmente o insider" ou "decreta a prisão", está errada.</div>
+  <div class="tip">💡 <strong>Divisor rápido:</strong> CDB, poupança, conta-corrente → <strong>Bacen</strong>. Ação, debênture, fundo → <strong>CVM</strong>. Os dois seguem normas do CMN.</div>
+  <div class="trap">🪤 Fronteira que a banca explora: e a <strong>corretora</strong>, quem fiscaliza? <strong>Os dois</strong>. A CTVM é instituição financeira autorizada pelo <strong>Bacen</strong> (ele cuida da higidez da instituição) e, na atividade de intermediar valores mobiliários, é fiscalizada pela <strong>CVM</strong> (que cuida da conduta perante o investidor). Regulação dupla não é erro do enunciado — é o desenho.</div>
+
+  <h2 id="sec-parte-8-susep-e-previc-as-outras-duas-colunas">Parte 8 — Susep e Previc: as outras duas colunas</h2>
+
+  <h3>Por que seguro e previdência têm regulador próprio</h3>
+  <p>Seguro e previdência têm uma característica que os separa de tudo o mais: <strong>você paga hoje e recebe daqui a 5, 20, 40 anos</strong>. Isso cria um risco específico — a empresa pode ter cobrado barato demais, calculado errado o risco, aplicado mal o dinheiro, e você só vai descobrir <em>na hora do sinistro</em>, quando não há mais o que fazer. Não é problema de liquidez de banco nem de informação em bolsa: é problema de <strong>solvência atuarial de longuíssimo prazo</strong>. Daí o regulador especializado, que fiscaliza reservas técnicas e cálculo atuarial.</p>
+
+  <h3>A coluna de seguros: CNSP → Susep</h3>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Órgão</th><th>Camada</th><th>O que faz</th></tr>
+    <tr><td><strong>CNSP</strong> — Conselho Nacional de Seguros Privados</td><td>Normativo</td><td>Fixa as diretrizes da política de seguros privados, capitalização e previdência <strong>aberta</strong>. Colegiado presidido pelo <strong>Ministro da Fazenda</strong>.</td></tr>
+    <tr><td><strong>Susep</strong> — Superintendência de Seguros Privados</td><td>Supervisor</td><td>Autarquia vinculada ao Ministério da Fazenda. Autoriza, fiscaliza e pune seguradoras, resseguradoras, sociedades de capitalização, entidades abertas de previdência complementar (EAPC) e corretores de seguros. Fiscaliza reservas e solvência.</td></tr>
+    <tr><td><strong>Operadores</strong></td><td>Operador</td><td>Seguradoras, resseguradoras, sociedades de capitalização (títulos de capitalização), EAPC (PGBL/VGBL)</td></tr>
+  </table>
+  </div>
+
+  <h3>A coluna de previdência fechada: CNPC → Previc</h3>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Órgão</th><th>Camada</th><th>O que faz</th></tr>
+    <tr><td><strong>CNPC</strong> — Conselho Nacional de Previdência Complementar</td><td>Normativo</td><td>Regula o regime de previdência complementar <strong>fechado</strong>. Presidido pelo <strong>Ministro da Previdência Social</strong>.</td></tr>
+    <tr><td><strong>Previc</strong> — Superintendência Nacional de Previdência Complementar</td><td>Supervisor</td><td>Autarquia (Lei 12.154/2009) vinculada ao Ministério da Previdência Social. Fiscaliza as EFPC — aprova estatutos e planos, fiscaliza investimentos e solvência, pode decretar intervenção e liquidação.</td></tr>
+    <tr><td><strong>Operadores</strong></td><td>Operador</td><td><strong>EFPC</strong> — Entidades Fechadas de Previdência Complementar, os fundos de pensão (Previ, Petros, Funcef...)</td></tr>
+  </table>
+  </div>
+
+  <h3>Aberta × Fechada — a distinção que cai sempre</h3>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Critério</th><th>Previdência ABERTA</th><th>Previdência FECHADA</th></tr>
+    <tr><td>Quem pode contratar</td><td><strong>Qualquer pessoa</strong> — basta ir ao banco</td><td>Só quem tem <strong>vínculo</strong>: empregado da patrocinadora ou associado do instituidor</td></tr>
+    <tr><td>Entidade</td><td><strong>EAPC</strong> — geralmente uma seguradora ligada a um banco, <strong>com fins lucrativos</strong></td><td><strong>EFPC</strong> — fundo de pensão, <strong>sem fins lucrativos</strong></td></tr>
+    <tr><td>Produtos típicos</td><td>PGBL, VGBL</td><td>Planos de benefício do fundo (BD, CD, CV)</td></tr>
+    <tr><td>Normatiza</td><td><strong>CNSP</strong></td><td><strong>CNPC</strong></td></tr>
+    <tr><td>Fiscaliza</td><td><strong>Susep</strong></td><td><strong>Previc</strong></td></tr>
+    <tr><td>Exemplo</td><td>Brasilprev, você compra um VGBL na agência</td><td><strong>Previ</strong> — fundo de pensão dos funcionários do Banco do Brasil</td></tr>
+  </table>
+  </div>
+  <div class="tip">💡 <strong>Cola mnemônica:</strong> <strong>abertA</strong> → v<strong>A</strong>i qualquer um → Susep. <strong>fEchada</strong> → só quem é dE dEntro → Previc. E lembre do contexto: a <strong>Previ</strong> é o fundo dos funcionários do BB e um dos maiores fundos de pensão da América Latina. Se você passar, ela é sua. Vale saber que é <strong>fechada</strong>, regulada por <strong>CNPC/Previc</strong> — e essa é exatamente a questão que a banca do BB gosta de fazer.</div>
+  <div class="trap">🪤 Não confunda os três "andares" de previdência: <strong>INSS</strong> = regime geral, público, obrigatório — <strong>não é</strong> previdência complementar e <strong>não está</strong> no SFN. <strong>PGBL/VGBL</strong> = complementar aberta → Susep. <strong>Fundo de pensão</strong> = complementar fechada → Previc. E mais uma: <strong>VGBL é juridicamente um seguro de pessoas</strong>, não um plano de previdência — mas quem fiscaliza continua sendo a Susep, então na prática a resposta não muda.</div>
+
+  <h2 id="sec-parte-9-quem-cuida-de-que-o-teste-dos-4-produ">Parte 9 — Quem cuida de quê: o teste dos 4 produtos</h2>
+  <p>Este é o exercício que amarra a aula toda. Pegue um produto, pergunte "qual é o problema que ele apresenta?", e o regulador cai por gravidade.</p>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Você compra...</th><th>O que você tem na mão</th><th>Qual é o risco</th><th>Normatiza</th><th>Fiscaliza</th></tr>
+    <tr><td><strong>Um CDB</strong> ou abre conta-corrente</td><td>Um crédito contra o banco</td><td>O banco quebrar</td><td><strong>CMN</strong></td><td><strong>Bacen</strong> (+ FGC até R$ 250 mil como rede de proteção)</td></tr>
+    <tr><td><strong>Uma ação</strong> ou uma debênture</td><td>Um pedaço de risco de um negócio</td><td>Ser enganado por informação falsa ou escondida</td><td><strong>CMN</strong></td><td><strong>CVM</strong></td></tr>
+    <tr><td><strong>Um VGBL</strong> ou um seguro de vida</td><td>Uma promessa de pagamento futuro de uma seguradora</td><td>A seguradora não ter reserva quando o sinistro chegar</td><td><strong>CNSP</strong></td><td><strong>Susep</strong></td></tr>
+    <tr><td><strong>Plano do fundo de pensão</strong> da sua empresa</td><td>Direito a benefício de um fundo do qual você é participante</td><td>Déficit atuarial do plano em 30 anos</td><td><strong>CNPC</strong></td><td><strong>Previc</strong></td></tr>
+  </table>
+  </div>
+  <div class="tip">💡 <strong>Casos de fronteira que a banca usa para separar quem entendeu:</strong> <strong>Fundo de investimento</strong> → cota de fundo é valor mobiliário → <strong>CVM</strong>, mesmo que o fundo seja administrado por um banco e vendido na agência. <strong>Cooperativa de crédito</strong> → é instituição financeira → <strong>Bacen</strong>. <strong>Fintech de crédito (SCD/SEP)</strong> → é instituição financeira autorizada → <strong>Bacen</strong>. <strong>Corretora de valores</strong> → <strong>Bacen</strong> (instituição) + <strong>CVM</strong> (conduta no mercado). <strong>Título de capitalização</strong> → <strong>Susep</strong>, não é investimento e não é da CVM.</div>
+
+  <h2 id="sec-quadro-final-de-fixacao">Quadro final de fixação</h2>
   <div class="table-scroll">
   <table>
     <tr><th>Pergunta da banca</th><th>Resposta</th></tr>
@@ -83,7 +490,39 @@
     <tr><td>Seguros e previdência aberta?</td><td>Susep (normas: CNSP)</td></tr>
     <tr><td>Fundos de pensão (previdência fechada)?</td><td>Previc (normas: CNPC)</td></tr>
     <tr><td>Gere o Pix e o Drex?</td><td>Bacen</td></tr>
+    <tr><td>Quem preside o CMN?</td><td>Ministro da Fazenda (CMN tem 3 membros)</td></tr>
+    <tr><td>Quem mede a inflação oficial?</td><td>IBGE, via IPCA (nem CMN nem Bacen)</td></tr>
+    <tr><td>Quem imprime as cédulas?</td><td>Casa da Moeda (quem <em>emite</em> é o Bacen)</td></tr>
+    <tr><td>Quem emite títulos públicos?</td><td>Tesouro Nacional (o Bacen só os negocia no secundário)</td></tr>
+    <tr><td>Instrumento monetário mais ágil e usado?</td><td>Open market</td></tr>
+    <tr><td>Para conter inflação, o Bacen faz o quê com títulos?</td><td>Vende (enxuga liquidez, juro sobe)</td></tr>
+    <tr><td>Aumento do compulsório faz o quê?</td><td>Reduz a liquidez e o multiplicador bancário</td></tr>
+    <tr><td>Emprestador de última instância?</td><td>Bacen, via redesconto (taxa punitiva, contra risco moral)</td></tr>
+    <tr><td>Quem limita a taxa de redesconto?</td><td>CMN (quem concede o empréstimo é o Bacen)</td></tr>
+    <tr><td>Objetivo fundamental do Bacen (LC 179/2021)?</td><td>Assegurar a estabilidade de preços</td></tr>
+    <tr><td>Quantas reuniões do Copom por ano?</td><td>8 (a cada ~45 dias, dois dias, decisão na 4ª feira)</td></tr>
+    <tr><td>Quem compõe o Copom?</td><td>A Diretoria Colegiada do Bacen (presidente + diretores)</td></tr>
+    <tr><td>Meta descumprida — o que acontece?</td><td>Carta aberta do presidente do Bacen ao Ministro da Fazenda</td></tr>
+    <tr><td>A CVM pode prender o insider?</td><td>Não — pune administrativamente e comunica o MP</td></tr>
+    <tr><td>Cota de fundo de investimento?</td><td>Valor mobiliário → CVM (mesmo vendida no banco)</td></tr>
+    <tr><td>Cooperativa de crédito e fintech de crédito?</td><td>Bacen</td></tr>
+    <tr><td>Título de capitalização?</td><td>Susep</td></tr>
+    <tr><td>INSS está no SFN?</td><td>Não — é regime geral público, não é previdência complementar</td></tr>
   </table>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0">Se você só puder levar 8 frases para a prova</h2>
+    <ol>
+      <li><strong>Quem normatiza não executa; quem supervisiona não opera.</strong> Toda questão de competência sai daqui.</li>
+      <li><strong>CMN normatiza, Bacen executa e fiscaliza, CVM fiscaliza o mercado de capitais.</strong> Três camadas, três verbos.</li>
+      <li><strong>CMN = 3 membros; Fazenda preside.</strong> Planejamento e Orçamento e presidente do Bacen completam.</li>
+      <li><strong>CMN define a META DE INFLAÇÃO; Copom define a SELIC; IBGE mede o IPCA.</strong> A troca dessas três é a pegadinha nº 1 do país.</li>
+      <li><strong>Bacen: autarquia de natureza especial, LC 179/2021, mandatos de 4 anos não coincidentes.</strong> Autonomia de meios, não de fins — a meta continua sendo do CMN.</li>
+      <li><strong>Título e dinheiro andam em direções opostas.</strong> Bacen vende título → enxuga → juro sobe. Compra → injeta → juro cai.</li>
+      <li><strong>Open market é o mais ágil e o mais usado; o compulsório é o mais potente.</strong> Não são a mesma coisa.</li>
+      <li><strong>Aberta é para qualquer um (Susep); fechada é para quem tem vínculo (Previc).</strong> Previ = fechada.</li>
+    </ol>
   </div>
 
   <div class="tip">📇 Depois de ler: faça um quiz de Bancários no <a href="../guia.html" style="color:var(--accent)">Guia</a> e revise o cartão "CMN × Bacen × CVM".</div>

@@ -12,10 +12,60 @@
   <h1>⚖️ Compliance, Riscos e Ética</h1>
   <p class="sub">Prevenção à lavagem, Basileia, gestão de riscos, sigilo, autorregulação e ESG. É o bloco que separa quem decorou produtos de quem entendeu o sistema.</p>
 
-  <h2>1. Prevenção à Lavagem de Dinheiro (PLD/FT)</h2>
+  <div class="card" id="sumario">
+    <h2 id="sec-sumario" style="margin-top:0">📑 Sumário</h2>
+    <ol style="columns:2;column-gap:28px">
+      <li><a href="#sec-0-antes-de-tudo-por-que-este-bloco-existe">0. Antes de tudo: por que este bloco existe</a></li>
+      <li><a href="#sec-1-prevencao-a-lavagem-de-dinheiro-pld-ft">1. Prevenção à Lavagem de Dinheiro (PLD/FT)</a></li>
+      <li><a href="#sec-2-sigilo-bancario-lc-105-2001">2. Sigilo bancário — LC 105/2001</a></li>
+      <li><a href="#sec-3-acordos-de-basileia">3. Acordos de Basileia</a></li>
+      <li><a href="#sec-4-gestao-de-riscos-res-cmn-4-557">4. Gestão de riscos (Res. CMN 4.557)</a></li>
+      <li><a href="#sec-5-autorregulacao-etica-e-consumidor">5. Autorregulação, ética e consumidor</a></li>
+      <li><a href="#sec-6-asg-esg-e-financas-sustentaveis">6. ASG/ESG e finanças sustentáveis</a></li>
+      <li><a href="#sec-7-quadro-final-de-fixacao">7. Quadro final de fixação</a></li>
+    </ol>
+    <p class="muted" style="margin-top:8px">Apostila longa de propósito — use o sumário para ir direto ao ponto. Cada 🪤 é uma pegadinha de banca; cada 💡 é um atalho de prova.</p>
+  </div>
+
+
+  <h2 id="sec-0-antes-de-tudo-por-que-este-bloco-existe">0. Antes de tudo: por que este bloco existe</h2>
+
+  <p>Você já trabalha com gestão de risco: ameaça, vulnerabilidade, controle, risco residual. Defesa em profundidade, segregação de funções, trilha de auditoria, menor privilégio. A boa notícia é que <strong>o mundo regulatório bancário usa exatamente essa gramática</strong> — muda o vocabulário, não a lógica. Onde você diz "ameaça", o regulador diz "fator de risco". Onde você diz "risco residual aceito", ele diz <strong>apetite por risco</strong>. Onde você tem camadas de defesa, ele tem <strong>três linhas de defesa</strong>. Onde você faz pentest, ele faz <strong>teste de estresse</strong>.</p>
+
+  <div class="tip">💡 <strong>A ponte central deste material.</strong> Segurança da informação e regulação bancária resolvem o mesmo problema com o mesmo método: <code>identificar → avaliar → tratar → monitorar</code>. Muda o ativo protegido. No seu mundo, o ativo é o dado. No mundo bancário, é <strong>a confiança</strong> — e, por trás dela, o dinheiro de terceiros.</div>
+
+  <h3>O banco não opera com dinheiro dele</h3>
+
+  <p>Se uma fábrica quebra, perdem sócios, credores e empregados. Doloroso, mas contido. Um banco funciona pegando dinheiro de milhares (depósitos) e emprestando para outras milhares; o capital dos sócios é fração pequena do que ele movimenta — o resto é dinheiro dos outros. Ou seja: <strong>o banco erra com o dinheiro alheio</strong>, e a quebra não fica dentro dele — espirra em quem depositou, nos bancos que lhe emprestaram e na economia. Por isso a atividade é das mais reguladas do planeta: o prejuízo bancário é <strong>socializado</strong>.</p>
+
+  <p>Guarde esta frase, que explica quase todas as normas daqui: <strong>toda regra bancária é a cicatriz de um desastre anterior</strong>. Quando não lembrar de uma regra na prova, pergunte <em>que estrago ela tenta evitar</em> — a resposta certa costuma cair de madura.</p>
+
+  <h3>Três palavras que você vai ver o tempo todo</h3>
+
+  <p><strong>Compliance</strong> (de <em>to comply</em>, cumprir): a função interna que garante que a instituição cumpre leis, normas do regulador e as próprias políticas. É <strong>preventivo e contínuo</strong>, roda dentro do processo.</p>
+
+  <p><strong>Diligência</strong> (do latim <em>diligentia</em>, zelo): o dever de se informar antes de agir — fazer a checagem que uma pessoa cuidadosa faria. Quando a norma manda o banco exercer diligência sobre o cliente, manda ele <em>não fechar os olhos</em>. É o oposto de "eu não sabia porque não quis saber".</p>
+
+  <p><strong>Governança</strong>: o desenho de quem decide o quê, com qual autonomia, prestando contas a quem. É a diferença entre "qualquer dev tem root em produção" e "existe aprovação com dono definido". Não impede o erro; garante que haja responsável identificável e alguém independente olhando por cima.</p>
+
+  <h2 id="sec-1-prevencao-a-lavagem-de-dinheiro-pld-ft">1. Prevenção à Lavagem de Dinheiro (PLD/FT)</h2>
   <p><strong>Base legal:</strong> Lei 9.613/1998 (alterada pela Lei 12.683/2012) + Circular Bacen 3.978/2020.</p>
 
-  <h3>As 3 fases (decore a ordem)</h3>
+  <h3>1.1 Comece pelo criminoso, não pela lei</h3>
+
+  <p>Esqueça a lei por cinco minutos. Você é um traficante: vendeu droga a semana toda e tem R$ 3 milhões <strong>em espécie</strong>, em notas, dentro de sacolas. Seu problema é sério — <strong>esse dinheiro é praticamente inútil</strong>. Não dá para comprar um apartamento com sacolas de dinheiro: o cartório registra, a Receita cruza, e a primeira pergunta é "com o que você trabalha?". Não dá para depositar tudo: o banco comunica. Não dá para andar com aquilo: mofa, é roubado e, se a polícia acha, vira prova. Dinheiro sujo em espécie é <strong>ativo tóxico</strong>: você tem, mas não pode usar.</p>
+
+  <p>Então seu objetivo não é ganhar dinheiro — isso já foi feito. É <strong>conseguir gastar</strong> o que já tem sem que liguem ao crime. Lavar dinheiro é isso e só isso: dar ao dinheiro sujo uma <strong>aparência de origem lícita</strong>, uma história que resista a uma pergunta. E se esse é o problema, a solução tem que passar por três etapas, nesta ordem — não é decoreba, é a única sequência que funciona:</p>
+
+  <ol>
+    <li><strong>Livrar-se do papel.</strong> Enquanto for cédula, o dinheiro não existe para o sistema financeiro e não dá para fazer nada com ele. Precisa virar saldo. Essa é a <strong>colocação</strong>.</li>
+    <li><strong>Apagar o rastro.</strong> Porque agora existe registro — com data, valor, origem e destino. Se ficar só um depósito e uma compra, qualquer delegado liga os pontos. Essa é a <strong>ocultação</strong>.</li>
+    <li><strong>Arrumar uma história.</strong> O dinheiro reaparece com explicação plausível: "é o lucro da minha rede de lava-jatos". Essa é a <strong>integração</strong>.</li>
+  </ol>
+
+  <p>A etapa mais frágil é a primeira: depois que vira saldo, o dinheiro se move na velocidade da luz e cruza fronteiras; antes, é papel numa sacola. <strong>Por isso o sistema concentra fogo na colocação</strong> — e por isso o funcionário do caixa é peça central, não figurante.</p>
+
+  <h3>1.2 As 3 fases (decore a ordem)</h3>
   <div class="table-scroll">
   <table>
     <tr><th>Fase</th><th>O que acontece</th><th>Exemplo</th></tr>
@@ -26,30 +76,199 @@
   </div>
   <p class="muted">Mnemônico: <strong>C-O-I</strong>. A banca embaralha a ordem nas alternativas.</p>
 
-  <h3>Pontos que caem</h3>
+  <h3>1.3 Cada fase por dentro</h3>
+
+  <p><strong>Colocação — o cenário do smurfing.</strong> "Smurf" é o personagem pequenininho: usar muita gente pequena para um trabalho grande. Você contrata trinta laranjas com CPF limpo e conta aberta. Entrega R$ 9 mil a cada uma, todo dia, com instrução de depositar em agências diferentes, cidades diferentes, horários diferentes. Trinta pessoas × R$ 9 mil × 20 dias = R$ 5,4 milhões dentro do sistema sem que <em>nenhum depósito individual</em> parecesse relevante.</p>
+
+  <p>Esse é o ponto: smurfing é <strong>ataque ao limiar de detecção</strong>. O criminoso sabe que existe um patamar a partir do qual o sistema comunica, e desenha as operações logo abaixo dele — é o <em>low and slow</em> da exfiltração de dados: não 10 GB de uma vez, mas 10 MB por hora durante seis semanas, porque o alerta está configurado em volume. E a resposta regulatória é a mesma que a sua: <strong>não basta olhar a transação isolada, tem que olhar o comportamento agregado</strong>. Um depósito de R$ 9 mil não diz nada; vinte depósitos de R$ 9 mil no mesmo CPF em duas semanas, num cliente de renda declarada R$ 2 mil, dizem tudo. O nome técnico do fracionamento deliberado é <strong>estruturação</strong> — tratado como suspeito <em>justamente porque</em> a fuga do limite é, em si, sinal de intenção. Outras formas: negócios de fachada com alto giro em dinheiro (posto, lava-jato, casa noturna), onde o faturamento ilícito se mistura ao lícito; mulas e câmbio informal.</p>
+
+  <p><strong>Ocultação — a fase do labirinto.</strong> Também dissimulação, estratificação ou <em>layering</em> (camadas). Agora que é saldo, você move: TED para outra conta, dessa para uma empresa, dessa para offshore em jurisdição de sigilo, cripto, retorno como "investimento estrangeiro", empréstimo simulado entre empresas do mesmo dono, consultoria sem serviço, notas frias. O objetivo não é esconder o dinheiro — é <strong>encarecer a investigação</strong>: cada camada exige nova ordem judicial, cada jurisdição exige cooperação internacional. Quinze camadas em seis países não tornam o rastreamento impossível; tornam-no caro e lento o bastante para prescrever. É ofuscação: não impede a engenharia reversa, faz ela não valer a pena.</p>
+
+  <p><strong>Integração — a hora de aparecer.</strong> O dinheiro volta com roupa nova: imóveis (e revenda com "lucro"), aquisição de empresas, aplicações formais, importação superfaturada, obras de arte. Daqui em diante é indistinguível de qualquer outro — tem nota fiscal, contrato, imposto pago. Ironia final: o lavador <strong>faz questão de pagar imposto</strong>, porque imposto pago é o carimbo de legitimidade mais barato do mercado.</p>
+
+  <div class="tip">💡 Pergunta que confunde: "a lavagem exige as três fases?" Não. As fases são <strong>modelo descritivo</strong> (do GAFI), não requisito legal. O crime se configura com o ato de ocultar ou dissimular a origem de bens provenientes de infração penal — ainda que o dinheiro nunca chegue à integração. O modelo serve para detectar, não para tipificar.</div>
+
+  <h3>1.4 O crime — e por que "qualquer infração penal"</h3>
+
+  <p>Lavagem é <strong>crime derivado</strong>: depende de um crime anterior que gerou o dinheiro — o <strong>crime antecedente</strong>. Sem dinheiro sujo, não há o que lavar. Na redação original da Lei 9.613/1998 havia <strong>rol taxativo</strong>: só era lavagem se o dinheiro viesse de uma lista fechada (tráfico, terrorismo, crimes contra a administração pública etc.). Buraco constrangedor: dinheiro de crime fora da lista podia ser lavado à vontade.</p>
+
+  <p>A <strong>Lei 12.683/2012 extinguiu o rol</strong>. Hoje <strong>qualquer infração penal</strong> pode ser antecedente — inclusive <em>contravenção penal</em>, o que alcançou o jogo do bicho. Repare na palavra: "infração penal" é gênero, abrange crime <em>e</em> contravenção.</p>
+
+  <div class="tip">💡 Como cai: "o rol de crimes antecedentes foi <em>ampliado</em> pela Lei 12.683/2012" — <strong>errado por precisão</strong>. Não foi ampliado, foi <strong>extinto</strong>. Não existe mais rol.</div>
+
+  <h3>1.5 KYC: por que o banco te enche de pergunta</h3>
+
+  <p><strong>KYC</strong> = <em>Know Your Customer</em>. O banco é obrigado a saber <em>quem</em> é o cliente, <em>o que</em> ele faz e <em>quanto</em> é razoável ele movimentar. Por que é o alicerce? Porque detecção de suspeita é <strong>detecção de anomalia</strong> — e anomalia só existe contra uma <em>baseline</em>. SIEM sem linha de base não gera alerta, gera ruído. Se o banco não sabe que o cliente é manicure com renda de R$ 3 mil, um depósito de R$ 80 mil não é anômalo, é só um número. <strong>Sem perfil, não há desvio; sem desvio, não há suspeita.</strong></p>
+
   <ul>
-    <li><strong>Rol de crimes antecedentes acabou (2012):</strong> hoje <strong>qualquer infração penal</strong> pode ser antecedente da lavagem.</li>
-    <li><strong>KYC</strong> (Conheça Seu Cliente): identificação, qualificação e classificação de risco do cliente — dever de <strong>diligência</strong>, contínuo.</li>
-    <li><strong>PEP</strong> (Pessoa Exposta Politicamente): diligência <strong>reforçada</strong>, aprovação em nível hierárquico superior e monitoramento intensificado (inclui familiares e estreitos colaboradores; prazo de 5 anos após deixar o cargo).</li>
-    <li><strong>Comunicação ao Coaf:</strong> operações <strong>suspeitas</strong> (subjetivas) e operações em <strong>espécie a partir de R$ 50 mil</strong> (objetiva, comunicação automática).</li>
-    <li><strong>Sem "tipping off":</strong> é vedado avisar o cliente de que ele foi comunicado ao Coaf.</li>
-    <li><strong>Guarda de registros:</strong> mínimo de <strong>5 anos</strong> (podendo ser estendido por determinação).</li>
-    <li><strong>Coaf</strong> = unidade de inteligência financeira: <em>recebe, analisa e dissemina</em> — não investiga nem pune. Vinculado administrativamente ao <strong>Bacen</strong>.</li>
+    <li><strong>Identificação</strong>: quem é? Documento, CPF/CNPJ, endereço. Na pessoa jurídica, chegar ao <strong>beneficiário final</strong> — a pessoa <em>física</em> que controla ou se beneficia. Sem isso, basta empilhar holdings para virar anônimo.</li>
+    <li><strong>Qualificação</strong>: o que faz, renda/faturamento, origem dos recursos, propósito da relação.</li>
+    <li><strong>Classificação de risco</strong>: o cliente é enquadrado (baixo, médio, alto) e a intensidade dos controles varia conforme a categoria. É a <strong>abordagem baseada em risco</strong>: gastar controle onde há risco — a mesma razão pela qual você não trata servidor de borda e máquina de teste com o mesmo rigor.</li>
   </ul>
+
+  <p>Ponto de prova: o KYC é dever <strong>contínuo</strong>, não formulário de abertura de conta. Uma conta aberta em 2019 com perfil de assalariado que em 2026 movimenta como atacadista é exatamente o caso que a diligência contínua existe para pegar.</p>
+
+  <p class="muted">Também existem <strong>KYE</strong> (<em>employee</em> — a fraude interna existe), <strong>KYP</strong> (<em>partner</em>) e <strong>KYS</strong> (<em>supplier</em>). Mesma lógica, outros sujeitos.</p>
+
+  <h3>1.6 PEP: por que a política entra nisso</h3>
+
+  <p><strong>PEP</strong> = <strong>Pessoa Exposta Politicamente</strong>: quem exerce ou exerceu cargo, emprego ou função pública relevante, no Brasil ou no exterior — presidente, ministro, governador, prefeito, parlamentar, dirigente de estatal, alto magistrado, alto oficial.</p>
+
+  <p>Cuidado com a leitura moral, porque a banca explora: <strong>ser PEP não é acusação, suspeita nem impedimento</strong>. PEP abre conta, toma crédito e investe normalmente. A condição significa outra coisa: essa pessoa <em>decide sobre dinheiro público</em> e portanto <strong>está exposta ao risco de corrupção</strong>. Em linguagem de segurança: PEP é <strong>conta privilegiada</strong> — não é maliciosa, é valiosa para o atacante. E conta privilegiada não se bloqueia: se monitora mais.</p>
+
+  <p>Daí a <strong>diligência reforçada</strong>, que significa três coisas concretas: <strong>aprovação em nível hierárquico superior</strong> para iniciar ou manter a relação (o gerente não decide sozinho — a decisão sobe porque o risco é maior); <strong>averiguação da origem dos recursos</strong> com mais rigor; e <strong>monitoramento intensificado</strong> e contínuo.</p>
+
+  <p>O alcance vai além da pessoa: estende-se a <strong>familiares</strong>, <strong>representantes</strong> e <strong>estreitos colaboradores</strong> — porque o político que recebe propina não recebe no próprio CPF, recebe no do cunhado; regra que só olhasse o titular seria inútil. E a condição persiste por <strong>5 anos</strong> após deixar o cargo: a propina de contrato assinado no fim do mandato costuma ser paga depois, quando a atenção caiu.</p>
+
+  <h3>1.7 As comunicações ao Coaf: a objetiva e a subjetiva</h3>
+
+  <p>Aqui a banca separa quem entendeu de quem decorou. São <strong>dois gatilhos completamente diferentes</strong>, e eles não se confundem.</p>
+
+  <div class="table-scroll">
+  <table>
+    <tr><th>&nbsp;</th><th>Comunicação OBJETIVA</th><th>Comunicação SUBJETIVA</th></tr>
+    <tr><td><strong>Gatilho</strong></td><td>o critério da norma foi atingido</td><td>a análise concluiu que há suspeita fundada</td></tr>
+    <tr><td><strong>Caso clássico</strong></td><td>operação em <strong>espécie a partir de R$ 50 mil</strong></td><td>operação atípica frente ao perfil do cliente</td></tr>
+    <tr><td><strong>Há juízo de valor?</strong></td><td><strong>Não</strong> — é automática</td><td><strong>Sim</strong> — exige análise humana</td></tr>
+    <tr><td><strong>Depende de suspeita?</strong></td><td>Não. Comunica mesmo sendo lícita e explicada</td><td>Sim, é o próprio fundamento</td></tr>
+    <tr><td><strong>Analogia de TI</strong></td><td>regra determinística de log: bateu o critério, registra</td><td>alerta de anomalia triado pelo analista do SOC</td></tr>
+  </table>
+  </div>
+
+  <p><strong>Por que existe um valor objetivo?</strong> Porque um sistema que dependesse <em>só</em> do julgamento humano teria dois defeitos fatais: seria desigual (cada gerente com um critério na cabeça) e seria capturável (bastaria convencer, pressionar ou subornar o funcionário). O critério objetivo <strong>tira a decisão do indivíduo</strong>: bateu o valor, comunica — não importa se o cliente é simpático, antigo, explicou direitinho ou é o maior da agência. Mesmo motivo pelo qual você não deixa a decisão de logar evento crítico a critério do operador.</p>
+
+  <p><strong>E por que R$ 50 mil?</strong> O valor é alto de propósito. Se fosse R$ 5 mil, o sistema afogaria o Coaf em ruído — e excesso de alerta é a morte da detecção, como sabe quem já calibrou mal um IDS. R$ 50 mil <strong>em espécie</strong> é patamar que a economia lícita quase não precisa: quem movimenta esse volume honestamente usa PIX, TED, boleto — mais seguro e mais barato. Quem <em>insiste</em> em papel nesse volume paga um custo (risco de roubo, logística, contagem) por algo que o dinheiro eletrônico faria melhor. E quando alguém paga caro para não deixar rastro, <strong>o próprio fato de pagar caro é a informação relevante</strong>.</p>
+
+  <div class="tip">💡 Entenda a natureza do R$ 50 mil: não é <strong>acusação</strong>, é <strong>registro</strong>. Comunica e pronto; se for lícita, morre no banco de dados do Coaf. Só ganha vida se, cruzada com outras informações, formar padrão. É telemetria, não denúncia.</div>
+
+  <p><strong>A comunicação subjetiva</strong> é a outra ponta: não há valor, há <em>atipicidade</em> — operação incompatível com patrimônio, renda, atividade ou histórico; resistência injustificada a prestar informação; fracionamento aparentemente deliberado; uso de terceiros sem justificativa. A norma lista situações que <em>merecem atenção especial</em> — e atenção especial não é comunicar, é <strong>analisar</strong>. O que se comunica é o resultado da análise.</p>
+
+  <div class="tip">💡 Sequência que a prova inverte: <code>detecção da atipicidade → análise → decisão fundamentada → comunicação (se for o caso)</code>. Perceber atipicidade <strong>não</strong> gera comunicação automática. Mas a decisão de <em>não</em> comunicar tem que ser <strong>fundamentada e registrada</strong> — senão vira porta dos fundos: "analisei e achei normal" sem papel é como desativar um alerta sem ticket.</div>
+
+  <h3>1.8 O funcionário no balcão: o que fazer e o que jamais fazer</h3>
+
+  <p>Cenário. Você é o gerente. Entra o Sr. Aroldo, cliente desde 2014, aposentado, renda declarada R$ 4.500. Nos últimos 22 dias depositou em espécie, em quatro agências diferentes, valores entre R$ 7 mil e R$ 9.500 — total de R$ 160 mil. Hoje chega com mais R$ 9 mil e comenta que "é uma ajuda que o genro tá dando".</p>
+
+  <p><strong>O que você faz:</strong></p>
+  <ul>
+    <li><strong>Atende normalmente.</strong> Você não é polícia: não recusa a operação por conta própria, não interroga, não constrange. O cliente tem direito ao serviço.</li>
+    <li><strong>Registra o que viu</strong>, com objetividade — fatos, não teorias. "Quarto depósito em espécie em agência diversa da de domicílio em 22 dias" é fato; "cliente parece envolvido com tráfico" é chute, e chute contamina a análise.</li>
+    <li><strong>Aciona o canal interno</strong> (área de PLD/compliance). É ela, não você, que consolida, analisa e decide sobre a comunicação. Você é sensor, não decisor — como o analista de nível 1, que escala com evidência em vez de declarar incidente sozinho.</li>
+    <li><strong>Segue o procedimento da instituição</strong> (atualização cadastral, questionamento sobre origem de recursos previsto em política) — aí a pergunta é do processo, não sua.</li>
+  </ul>
+
+  <p><strong>O que você jamais faz:</strong></p>
+  <ul>
+    <li><strong>Avisar o cliente.</strong> Nem explicitamente ("vou ter que reportar"), nem sutilmente ("se depositasse até R$ 8 mil chamava menos atenção"), nem por gentileza ("acima de R$ 50 mil o banco é obrigado a comunicar, viu?"). <strong>Nem por gentileza. Nem por medo. Nem por amizade.</strong></li>
+    <li><strong>Ajudar a estruturar</strong> — orientar a fracionar, usar outro CPF, outra agência. Isso não é falha de compliance: é participação no crime.</li>
+    <li><strong>Comentar o caso fora do canal.</strong> A informação é sigilosa <em>dentro</em> do banco também.</li>
+  </ul>
+
+  <h3>1.9 <em>Tipping off</em>: por que avisar é o pior dos pecados</h3>
+
+  <p><strong>Tipping off</strong> = "dar a dica". É a <strong>vedação de cientificar o cliente</strong> de que ele foi ou será objeto de comunicação ao Coaf. Por que a proibição é tão dura? Porque o valor inteiro da comunicação está em o alvo <strong>não saber</strong>. Ela não é o fim de nada: é o começo de um processo de inteligência que leva meses, cruzando dados de vários bancos, cartórios e Receita. Se o cliente é avisado, ele (1) <strong>muda de método</strong> na hora — troca laranja, banco, rota — e a inteligência acumulada vira lixo; (2) <strong>dissipa o patrimônio</strong>, e o dinheiro que seria bloqueado some; (3) <strong>destrói prova</strong>, e às vezes ameaça testemunha.</p>
+
+  <p>Mesma razão pela qual, num incidente com suspeita de <em>insider</em>, você não manda e-mail avisando "estamos investigando acessos indevidos". Avisar o alvo é queimar a operação. <strong>Aqui o sigilo não protege o banco: protege a investigação.</strong></p>
+
+  <p>E há a contrapartida que faz o sistema funcionar: <strong>a comunicação de boa-fé não gera responsabilidade</strong> — civil nem administrativa — para a instituição, dirigentes ou empregados. Sem essa blindagem ninguém comunicaria, com medo de ser processado por cliente inocente e furioso. A lei escolheu deliberadamente o lado do falso positivo: melhor comunicar dez inocentes do que deixar passar um culpado, <em>porque comunicar não machuca o inocente</em> — não bloqueia conta, não prende, não vai para o SPC. Morre no banco de dados.</p>
+
+  <h3>1.10 Guarda de registros: por que 5 anos</h3>
+
+  <p>A instituição deve manter registros de cadastro e de operações por, no mínimo, <strong>5 anos</strong>, prazo extensível por determinação da autoridade competente, contado do encerramento da conta ou da conclusão da operação.</p>
+
+  <p>Por que 5 e não 1? Porque lavagem é crime que <strong>só aparece depois</strong>, olhando para trás. Ninguém detecta um esquema no dia em que ele começa: detecta-se quando alguém é preso por outro motivo, quando um delator fala, quando uma auditoria tropeça. Aí a investigação precisa <em>reconstruir</em> anos de movimentação — e se o banco descartou os registros, a trilha não existe. Prazo curto de guarda seria anistia por decurso de prazo. É <strong>retenção de log para forense</strong>: log que expira antes de a investigação começar não serve para nada. E há simetria com o resto do direito — prazos prescricionais e de fiscalização vivem nessa casa dos anos.</p>
+
+  <div class="tip">💡 "Mínimo de 5 anos" — a palavra <strong>mínimo</strong> é a pegadinha. Não é "exatamente 5" nem "no máximo 5". É piso, e pode ser esticado.</div>
+
+  <h3>1.11 O Coaf: o que ele é e o que ele não é</h3>
+
+  <p>O <strong>Coaf</strong> (Conselho de Controle de Atividades Financeiras) é a <strong>UIF</strong> brasileira — Unidade de Inteligência Financeira. Todo país do sistema internacional antilavagem tem uma. É vinculado administrativamente ao <strong>Banco Central</strong>. O verbo que o define é um tripé: <strong>recebe, analisa e dissemina</strong>.</p>
+  <ul>
+    <li><strong>Recebe</strong> as comunicações das instituições obrigadas (bancos, corretoras, seguradoras, factorings, imobiliárias, joalherias, cartórios e outros setores sensíveis).</li>
+    <li><strong>Analisa</strong>, cruzando dados entre si e com bases a que tem acesso — transformando comunicação isolada em padrão.</li>
+    <li><strong>Dissemina</strong>: havendo indício de crime, produz um <strong>RIF</strong> (Relatório de Inteligência Financeira) e encaminha às autoridades — Ministério Público, polícia.</li>
+  </ul>
+
+  <p>A parte cobrada à exaustão: <strong>o Coaf não investiga, não indicia, não denuncia, não bloqueia conta e não prende</strong>. Não é polícia nem MP. É <em>inteligência</em>: produz conhecimento e entrega a quem tem poder de agir — a mesma distinção entre o SOC e quem tem mandato para desligar o sistema. Ele tem, sim, poder sancionador administrativo sobre setores obrigados <em>sem regulador próprio</em> (uma joalheria não tem Bacen atrás dela). Mas punir quem descumpre o dever de comunicar é coisa muito diferente de investigar o lavador.</p>
+
   <div class="trap">🪤 A comunicação ao Coaf <strong>não</strong> viola sigilo bancário e <strong>não</strong> depende de certeza do crime: basta a <em>suspeita fundada</em>. E comunicar de boa-fé não gera responsabilidade civil para o funcionário.</div>
 
-  <h2>2. Sigilo bancário — LC 105/2001</h2>
-  <p>O sigilo é a <strong>regra</strong>, mas é <strong>relativo</strong>. Não constitui quebra:</p>
+  <h2 id="sec-2-sigilo-bancario-lc-105-2001">2. Sigilo bancário — LC 105/2001</h2>
+
+  <h3>2.1 O que o sigilo protege (e por que não pode ser absoluto)</h3>
+
+  <p>Sua movimentação bancária é o retrato mais fiel que existe da sua vida: diz onde você esteve, com quem se relaciona, que remédio compra, quanto ganha, se está endividado, se está se separando. <strong>O extrato é o dossiê mais completo que alguém pode ter sobre você</strong> — mais revelador que o e-mail. Daí o sigilo: protege um dado que é, em essência, íntimo.</p>
+
+  <p>Só que, pela mesma razão, o sigilo é o melhor esconderijo que o crime já encontrou. Se ninguém pode olhar nunca, lavagem, corrupção e sonegação ficam impunes por construção. É o conflito que você conhece por outro nome: <strong>privacidade × auditabilidade</strong>. Criptografia forte protege o usuário e o criminoso. Não existe solução mágica; existe <strong>desenho institucional</strong>: quem pode olhar, com qual autorização, para qual finalidade, deixando qual rastro. Daí a frase-síntese: <strong>o sigilo é a regra, mas é relativo</strong> — regra porque o padrão é não revelar; relativo porque cede diante de interesse público qualificado, mediante procedimento.</p>
+
+  <h3>2.2 O que NÃO é quebra</h3>
+
+  <p>Metade das questões se resolve aqui: várias coisas <em>parecem</em> quebra e não são. A LC 105/2001 lista hipóteses que <strong>não constituem violação</strong>:</p>
+
   <ul>
     <li>troca de informações entre instituições para cadastro;</li>
     <li>comunicação de ilícitos às autoridades competentes (incluindo Coaf);</li>
     <li>fornecimento de dados a <strong>bureaus de crédito</strong> (Serasa/SPC);</li>
     <li>fiscalização do <strong>Bacen/CVM</strong> nas suas atribuições.</li>
   </ul>
+
+  <p>Entenda <em>por que</em>, porque o raciocínio se repete. <strong>Troca entre instituições e bureaus</strong>: o dado circula dentro do próprio sistema financeiro, para avaliar crédito — que é a razão de ser da relação; não há revelação a estranho, há uso na finalidade. <strong>Comunicação de ilícitos e ao Coaf</strong>: se comunicar fosse quebrar sigilo, todo o sistema de PLD seria ilegal e o banco viveria uma contradição impossível — obrigado a comunicar por uma norma e proibido por outra; a lei resolveu dizendo que <strong>não é quebra</strong>. <strong>Fiscalização do Bacen e da CVM</strong>: o supervisor não é terceiro curioso, é parte do sistema — sem dado não supervisiona nada; e o dado não sai, porque <strong>o supervisor fica igualmente obrigado ao sigilo</strong>. Não houve revelação ao público, houve <strong>transferência do dever</strong>. Este é o conceito que amarra tudo — <em>sigilo compartilhado</em>: o dado muda de mãos, o dever vai junto.</p>
+
+  <h3>2.3 Quem pode quebrar de verdade</h3>
+
   <p><strong>Quebra propriamente dita:</strong> por <strong>ordem judicial</strong>, por <strong>CPI</strong> (poderes de investigação próprios de autoridade judicial) e pelo Fisco em procedimento fiscal instaurado (validado pelo STF).</p>
+
+  <div class="table-scroll">
+  <table>
+    <tr><th>Quem</th><th>Pode?</th><th>A lógica</th></tr>
+    <tr><td><strong>Poder Judiciário</strong></td><td>Sim</td><td>Regra geral. O juiz é o terceiro imparcial: quem quer o dado não é quem autoriza. Exige decisão fundamentada.</td></tr>
+    <tr><td><strong>CPI</strong> (federal e estadual)</td><td>Sim</td><td>A Constituição lhe dá "poderes de investigação próprios das autoridades judiciais". Exige deliberação do colegiado e fundamentação — não é o presidente da CPI sozinho.</td></tr>
+    <tr><td><strong>CPI municipal</strong></td><td>Não</td><td>Câmara de vereadores não tem esse poder — não há Judiciário municipal para espelhar.</td></tr>
+    <tr><td><strong>Fisco</strong> (Receita)</td><td>Sim, com procedimento</td><td>Exige processo administrativo fiscal <strong>instaurado</strong> e dado <strong>indispensável</strong>. STF validou: é <em>transferência</em> de sigilo (o Fisco também se obriga), não abertura ao público.</td></tr>
+    <tr><td><strong>Bacen / CVM</strong></td><td>Sim, na fiscalização</td><td>Nem é quebra: é o supervisor exercendo a função, carregando o dever junto.</td></tr>
+    <tr><td><strong>Coaf</strong></td><td>Recebe; não requisita como quer</td><td>Recebe o que a lei obriga a comunicar. É destinatário do fluxo, não invasor dele.</td></tr>
+    <tr><td><strong>Ministério Público</strong></td><td><strong>Não</strong>, em regra</td><td>Precisa pedir ao juiz. Exceção consolidada: <strong>verbas públicas</strong> — não há sigilo do dinheiro do contribuinte contra o próprio Estado.</td></tr>
+    <tr><td><strong>Polícia / delegado</strong></td><td>Não</td><td>Representa ao juiz pela quebra. Investigar não dá poder de autorizar.</td></tr>
+    <tr><td><strong>TCU</strong></td><td>Não, em regra</td><td>Mesma lógica do MP: alcança recursos públicos, não a conta privada em geral.</td></tr>
+  </table>
+  </div>
+
+  <p>Repare no princípio que atravessa a tabela e explica por que MP e delegado ficam de fora: <strong>quem tem interesse no dado não pode ser quem autoriza o acesso ao dado</strong>. É segregação de funções pura — o mesmo motivo pelo qual o dev não aprova o próprio deploy e o administrador não audita os próprios logs. E no segundo princípio: <strong>onde o dinheiro é público, o sigilo enfraquece</strong>. Sigilo protege a intimidade do cidadão; recurso público não tem intimidade, tem dever de transparência. Por isso MP e tribunais de contas alcançam verba pública sem juiz, e não alcançam a conta pessoal do particular.</p>
+
   <div class="trap">🪤 "O sigilo bancário é absoluto" = errado. E o <strong>MP não quebra sigilo por conta própria</strong> (salvo verbas públicas) — precisa de autorização judicial.</div>
 
-  <h2>3. Acordos de Basileia</h2>
+  <h2 id="sec-3-acordos-de-basileia">3. Acordos de Basileia</h2>
+
+  <h3>3.1 O problema: o que acontece quando um banco quebra</h3>
+
+  <p><strong>Mecanismo 1 — a corrida bancária (descasamento de prazos).</strong> O banco capta curto e empresta longo: deve <em>à vista</em> aos depositantes e tem a receber <em>em anos</em> dos tomadores. Isso não é defeito — <strong>é a função dele</strong>: transformar poupança de curto prazo em investimento de longo prazo. Mas cria fragilidade estrutural: se todos os depositantes aparecerem no mesmo dia, <strong>nenhum banco do mundo paga</strong>, nem o mais saudável. O dinheiro existe, mas está emprestado.</p>
+
+  <p>Agora a parte cruel. Surge um boato: "o banco X está mal". Se você acredita, saca. Mas — e aqui está o veneno — <strong>você saca mesmo sem acreditar</strong>, desde que ache que os outros vão sacar, porque quem chega por último não recebe. A decisão racional individual é correr para a fila, e a soma das decisões racionais <strong>quebra um banco perfeitamente solvente</strong>. Profecia autorrealizável: o medo da quebra produz a quebra. <strong>Na corrida bancária, o boato é suficiente.</strong></p>
+
+  <p><strong>Mecanismo 2 — o efeito dominó (contágio interbancário).</strong> Bancos emprestam uns aos outros todo dia para fechar o caixa. Se X quebra devendo a Y, Y leva o prejuízo; se o prejuízo comer o capital de Y, Y quebra e leva Z. É <strong>falha em cascata</strong> — a arquitetura daquele serviço central de que tudo depende. O sistema financeiro é rede densamente acoplada, e acoplamento forte propaga falha.</p>
+
+  <p><strong>Mecanismo 3 — a contaminação da confiança.</strong> O depositante comum não lê balanço. Quando um banco quebra, ele não conclui "aquele era mal administrado": conclui <strong>"banco quebra"</strong> — e corre sacar do <em>dele</em>, que estava ótimo. A desconfiança generaliza, o crédito some, a empresa boa fica sem capital de giro e demite; demissão vira inadimplência; inadimplência vira mais prejuízo bancário. A crise sai do sistema financeiro e vira recessão.</p>
+
+  <p>A soma dos três tem nome: <strong>risco sistêmico</strong> — <em>o risco de que o problema de uma instituição contamine o sistema inteiro, em cascata, produzindo dano maior que a soma das partes</em>. Não é o risco de um banco quebrar: é o risco de a quebra virar epidemia. Foi o que 2008 mostrou quando o Lehman caiu e travou o crédito global.</p>
+
+  <div class="tip">💡 Por que a regulação é <strong>internacional</strong> (um comitê na Basileia, Suíça)? Porque capital atravessa fronteira em segundos e a crise vai junto. Se cada país exigisse o que quisesse, banco nenhum ficaria no rigoroso — todos migrariam para o mais frouxo, e o mais frouxo exportaria a crise. Isso é <strong>arbitragem regulatória</strong>, e Basileia existe para fechar essa porta com um <strong>piso comum</strong>. Note: o Comitê <strong>não tem poder de lei</strong> — produz recomendações, e cada país as internaliza. No Brasil, quem as torna obrigatórias é o <strong>CMN/Bacen</strong>.</div>
+
+  <h3>3.2 A solução: capital como colchão</h3>
+
+  <p>Se o problema é o banco errar com dinheiro dos outros, a solução é exigir que <strong>ele erre primeiro com o dinheiro dele</strong>. É esse o conceito de <strong>capital regulatório</strong>. Capital aqui não é "dinheiro em caixa" — esse é o erro de leitura mais comum. Capital é a <strong>parcela do banco que pertence aos sócios</strong>, e não a terceiros: a diferença entre o que ele tem e o que ele deve. A função dele é ser <strong>a primeira coisa queimada</strong> no prejuízo.</p>
+
+  <p>Numericamente: um banco com R$ 100 de ativos, financiado com R$ 92 de depósitos e R$ 8 de capital. Se R$ 5 dos empréstimos viram pó, sobram R$ 95 de ativo para R$ 92 de dívida — apertado, mas <strong>o depositante recebe</strong>. Se o capital fosse R$ 2 e o prejuízo R$ 5, o ativo (R$ 95) não cobriria os depósitos (R$ 98): o depositante perde. <strong>Capital é o para-choque que absorve o impacto antes de chegar no passageiro.</strong></p>
+
+  <p>O espelho disso é a <strong>alavancagem</strong>: operar com muito ativo sobre pouco capital próprio. Ela <em>multiplica o retorno dos sócios</em> — por isso eles adoram — e multiplica a perda na mesma proporção. Um banco alavancado 50x quebra com perda de 2% nos ativos. Alavancagem é aceleração sem freio: ótima até a primeira curva.</p>
+
+  <h3>3.3 Por que ponderar pelo risco</h3>
+
+  <p>Por que não exigir simplesmente uma porcentagem fixa do ativo? Porque isso criaria um incentivo perverso. Regra: "tenha 8% de capital sobre o ativo total, qualquer que seja". Compare dois ativos de R$ 100: um <strong>título público federal</strong> e um <strong>empréstimo sem garantia para empresa em recuperação judicial</strong>. Custam o mesmo capital sob a regra burra, mas o segundo rende muito mais. Qual o banco escolhe? O segundo. Se o custo regulatório é igual, <strong>o banco racional carrega o ativo mais arriscado</strong> — a regra plana, criada para dar segurança, <em>empurra o sistema para o risco</em>.</p>
+
+  <p>Daí a ideia central de Basileia I, viva até hoje: <strong>ponderar o ativo pelo risco</strong>. Cada ativo entra multiplicado por um peso conforme o quão arriscado é — título público federal em moeda local pode ter peso próximo de zero; crédito sem garantia tem peso alto. Essa soma ponderada é o <strong>RWA</strong> (<em>Risk-Weighted Assets</em>), e o capital é exigido sobre o RWA, não sobre o ativo bruto. Com isso o risco passa a ter preço: <strong>quer ganhar mais assumindo mais risco? Pode. Mas ponha mais capital seu na mesa.</strong> É controle proporcional ao risco do ativo — o mesmo motivo pelo qual você exige MFA e revisão de acesso no ambiente crítico e não no de testes.</p>
+
+  <h3>3.4 A linha do tempo</h3>
+
   <div class="table-scroll">
   <table>
     <tr><th>Acordo</th><th>Trouxe</th></tr>
@@ -58,10 +277,79 @@
     <tr><td><strong>Basileia III</strong> (pós-crise 2008)</td><td>mais e melhor capital (Nível I), <strong>colchões</strong> (conservação e contracíclico), <strong>índice de alavancagem</strong> e índices de liquidez <strong>LCR</strong> (curto prazo) e <strong>NSFR</strong> (estrutural)</td></tr>
   </table>
   </div>
+
+  <p><strong>Basileia I (1988) — a ideia certa, grosseira demais.</strong> Trouxe a ponderação, mas só olhava <strong>risco de crédito</strong> e usava poucas faixas de peso. Resultado previsível: os bancos aprenderam a <strong>arbitrar os buckets</strong> — dentro de cada faixa, carregar o pior devedor, já que o custo regulatório era o mesmo. Ignorava risco de mercado (corrigido em 1996) e operacional.</p>
+
+  <p><strong>Basileia II (2004) — a arquitetura de três pilares.</strong> É <em>este</em> acordo o dono dos 3 pilares — a banca cobra direto:</p>
+
+  <div class="table-scroll">
+  <table>
+    <tr><th>Pilar</th><th>Nome</th><th>O que é</th><th>Quem age</th></tr>
+    <tr><td><strong>I</strong></td><td>Requerimento mínimo de capital</td><td>A conta: capital sobre RWA, cobrindo risco de <strong>crédito, mercado e operacional</strong>. Admite modelos internos.</td><td>O banco calcula</td></tr>
+    <tr><td><strong>II</strong></td><td>Revisão pela supervisão</td><td>O supervisor avalia o processo interno de capital e pode <strong>exigir capital acima do mínimo</strong>. Reconhece que a fórmula não pega tudo.</td><td>O supervisor audita</td></tr>
+    <tr><td><strong>III</strong></td><td>Disciplina de mercado</td><td><strong>Transparência</strong>: o banco publica exposição e estrutura de capital, para que o mercado precifique e puna o mau banco.</td><td>O mercado vigia</td></tr>
+  </table>
+  </div>
+
+  <p>Sacou a arquitetura? <strong>Três controles independentes sobre o mesmo risco</strong>: o próprio banco, o Estado e o mercado. Se um falha, os outros continuam. É defesa em profundidade aplicada à solvência.</p>
+
+  <p><strong>Basileia III (pós-2008) — o que a crise ensinou.</strong> Três buracos apareceram:</p>
+  <ul>
+    <li><strong>Capital existia no papel, mas não absorvia perda.</strong> Muito do que se contava como capital era híbrido que, no aperto, não cobria prejuízo nenhum. Resposta: <strong>mais capital e de melhor qualidade</strong>, com ênfase no <strong>Nível I</strong> e, dentro dele, no capital principal (ações e lucros retidos) — o que de fato absorve perda com o banco funcionando.</li>
+    <li><strong>Bancos com capital adequado quebraram por falta de liquidez.</strong> Solventes e ilíquidos: tinham patrimônio, não tinham dinheiro <em>hoje</em>, porque o funding curto evaporou. Resposta: os dois índices de liquidez.</li>
+    <li><strong>O ciclo amplificava tudo.</strong> Na bonança todo mundo emprestava; na crise todo mundo cortava — a regulação era <em>pró-cíclica</em>. Resposta: os colchões.</li>
+  </ul>
+
+  <h3>3.5 Colchões, alavancagem e liquidez</h3>
+
+  <p><strong>Colchão de conservação de capital.</strong> A ideia é astuta: um mínimo puro não funciona, porque encostar no mínimo já é escândalo — ele vira piso intocável e o banco fica sem folga para absorver perda sem violar a regra. Solução: exigir uma camada <strong>a mais</strong>, acima do mínimo, que <em>pode</em> ser consumida em tempos ruins. Com um preço: enquanto estiver dentro do colchão, o banco sofre <strong>restrição na distribuição de lucros</strong> — nada de dividendo e bônus gordos. Traduzindo: <em>"pode usar a reserva para aguentar o tranco, não para pagar os sócios"</em>.</p>
+
+  <p><strong>Colchão contracíclico.</strong> O antídoto contra a pró-ciclicidade. É <strong>ativado pela autoridade</strong> quando o crédito cresce exuberantemente (a hora em que o risco está sendo <em>criado</em>, embora ninguém veja, porque todo mundo paga em dia) e <strong>liberado na crise</strong>, para o banco continuar emprestando em vez de cortar e aprofundar a recessão. O ponto de prova: <strong>o risco nasce no boom e só se manifesta na crise</strong> — por isso a exigência sobe quando tudo parece bem.</p>
+
+  <p class="muted">Há ainda o adicional para instituições <strong>sistemicamente importantes</strong>: quem, se quebrar, derruba o sistema, carrega capital extra. Dano potencial maior, controle maior — como o servidor de autenticação central ter requisito mais duro que a estação do estagiário.</p>
+
+  <p><strong>Índice de alavancagem.</strong> Todo o edifício depende do RWA — e o RWA depende de <em>quem calcula os pesos</em>. Se forem subestimados (erro de modelo, otimismo ou conveniência), o capital exigido cai e a regra vira ficção. Basileia III adicionou uma trava <strong>não ponderada</strong>: capital sobre exposição total, sem peso, sem modelo. Um segundo indicador, burro de propósito, imune a manipulação de modelo — <strong>defesa que não depende do parâmetro que o adversário controla</strong>. É o <em>backstop</em>.</p>
+
+  <p><strong>LCR</strong> (<em>Liquidity Coverage Ratio</em>) — cobertura de liquidez de <strong>curto prazo</strong>: <em>"se der pânico agora, o banco tem ativo líquido de alta qualidade para aguentar as saídas de caixa dos próximos 30 dias?"</em> É o gerador a diesel: não resolve a crise, mantém a luz acesa pelo tempo necessário para alguém agir.</p>
+
+  <p><strong>NSFR</strong> (<em>Net Stable Funding Ratio</em>) — liquidez <strong>estrutural</strong>, de longo prazo: <em>"a estrutura de financiamento é sustentável no horizonte de um ano, ou o banco financia ativo longo com dinheiro que vira todo mês?"</em> Ataca a causa: limita o descasamento de prazos na origem.</p>
+
+  <div class="tip">💡 Não confunda os eixos, porque a banca troca: <strong>capital</strong> responde a <em>"o banco aguenta a perda?"</em> (solvência). <strong>Liquidez</strong> responde a <em>"o banco consegue pagar hoje?"</em> (caixa). Dá para ser solvente e ilíquido — e morrer disso. Foi assim em 2008.</div>
+
+  <h3>3.6 O Índice de Basileia</h3>
+
   <p><strong>No Brasil:</strong> implementado por resoluções do CMN/Bacen. O <strong>Índice de Basileia</strong> = Patrimônio de Referência ÷ ativos ponderados pelo risco (RWA); o mínimo regulatório de referência é <strong>8%</strong> (+ adicionais/colchões — no Brasil, o requerimento total costuma superar 10,5%).</p>
+
+  <p>Leia a fração devagar: no numerador, o <strong>PR</strong> (Patrimônio de Referência) — o capital que o banco tem, medido pela capacidade de absorver perda, não pelo nome contábil; no denominador, o <strong>RWA</strong> — o risco assumido, medido em ativo ponderado; a razão diz quanto de defesa existe por unidade de risco.</p>
+
+  <p>Dois caminhos para melhorar o índice, e aí está a beleza do desenho: <strong>aumentar o capital</strong> ou <strong>reduzir o risco</strong>. O banco escolhe. A norma não diz "não faça"; diz "se fizer, pague". <strong>Regulação por preço, não por proibição</strong> — e por isso funciona melhor que uma lista de vedações, que o mercado contornaria em seis meses. E note o sinal: <strong>índice alto = banco mais sólido</strong> (muito capital para pouco risco). Índice caindo é alerta.</p>
+
   <div class="tip">💡 A lógica: quanto mais arriscado o ativo, mais capital próprio o banco precisa ter para bancá-lo. Capital é o colchão que absorve perdas <strong>antes</strong> que o depositante seja atingido.</div>
 
-  <h2>4. Gestão de riscos (Res. CMN 4.557)</h2>
+  <div class="trap">🪤 Três trocas clássicas. (1) Os <strong>3 pilares</strong> são de <strong>Basileia II</strong> — não de I nem de III. (2) <strong>LCR</strong> é curto prazo (30 dias), <strong>NSFR</strong> é estrutural (1 ano) — a banca inverte. (3) O mínimo de referência é <strong>8%</strong>, mas <strong>8% não é o requerimento total</strong>: somam-se os colchões (no Brasil o total costuma superar 10,5%). E o Comitê de Basileia <strong>não tem poder de lei</strong> — quem obriga no Brasil é o CMN/Bacen.</div>
+
+  <h2 id="sec-4-gestao-de-riscos-res-cmn-4-557">4. Gestão de riscos (Res. CMN 4.557)</h2>
+
+  <h3>4.1 A mesma gramática que você já usa</h3>
+
+  <p>Aqui você joga em casa, desde que troque o vocabulário. A Res. CMN 4.557 exige estrutura de <strong>gerenciamento de riscos e de capital</strong>. O que ela descreve é, literalmente, o seu ciclo:</p>
+
+  <div class="table-scroll">
+  <table>
+    <tr><th>Etapa</th><th>Em segurança da informação</th><th>Em risco bancário</th></tr>
+    <tr><td><strong>Identificar</strong></td><td>inventário de ativos, mapeamento de ameaças</td><td>identificar os riscos relevantes das exposições e produtos</td></tr>
+    <tr><td><strong>Avaliar / mensurar</strong></td><td>impacto × probabilidade</td><td>exposição, provisão, capital exigido, VaR</td></tr>
+    <tr><td><strong>Tratar</strong></td><td>mitigar, transferir, evitar, aceitar</td><td>limitar exposição, exigir garantia, contratar hedge/seguro, sair do negócio</td></tr>
+    <tr><td><strong>Monitorar / reportar</strong></td><td>SIEM, indicadores, relatório à direção</td><td>limites, indicadores, reporte ao CRO e ao conselho</td></tr>
+    <tr><td><strong>Testar</strong></td><td>pentest, red team, simulação de incidente</td><td><strong>teste de estresse</strong>, plano de contingência de liquidez</td></tr>
+    <tr><td><strong>Definir tolerância</strong></td><td>risco residual aceito na política</td><td><strong>RAS</strong> — declaração de apetite por riscos</td></tr>
+  </table>
+  </div>
+
+  <p>Tire os nomes próprios e é a mesma norma. Um ponto de método: <strong>risco não é o mesmo que perda</strong>. Risco é a possibilidade de perda. Banco sem risco não é banco seguro — <strong>é banco morto</strong>, porque a atividade dele <em>é</em> assumir risco remunerado. O objetivo da regulação nunca foi zerar risco: foi garantir que o risco assumido seja <strong>identificado, medido, precificado e coberto por capital</strong>. Idêntico ao seu ofício — você não elimina risco cibernético, você o traz a nível aceitável e conhecido.</p>
+
+  <h3>4.2 Os riscos, um a um</h3>
+
   <div class="table-scroll">
   <table>
     <tr><th>Risco</th><th>Definição</th><th>Exemplo bancário</th></tr>
@@ -73,20 +361,196 @@
     <tr><td><strong>Socioambiental e climático</strong></td><td>perdas por eventos sociais, ambientais e climáticos</td><td>financiar cadeia com dano ambiental; seca afeta agro</td></tr>
   </table>
   </div>
+
+  <p><strong>Crédito</strong> é o risco nativo do banco: emprestei, não voltou. Mas é mais largo que o calote — abrange a <em>deterioração</em> do devedor (que já obriga a provisionar mais, antes de qualquer atraso), o risco de contraparte em derivativos e o risco-país. Tem duas dimensões cobradas: a <strong>perda esperada</strong>, estatística e previsível, coberta por <strong>provisão</strong> (é custo do negócio, entra no preço do juro); e a <strong>perda inesperada</strong>, o desvio ruim, coberta por <strong>capital</strong>. Fixe: <em>provisão cobre o esperado; capital cobre a surpresa</em>.</p>
+
+  <p><strong>Mercado</strong> não depende de ninguém quebrar: depende do <em>preço</em> se mover. O banco tem títulos prefixados, o Copom sobe juros, o título antigo vale menos hoje. Ninguém deu calote — todos vão pagar no vencimento — e mesmo assim há perda a valor de mercado. Fatores: juros, câmbio, ações, commodities. É o risco de estar <em>posicionado</em>.</p>
+
+  <p><strong>Liquidez</strong> é <strong>o risco de estar certo e quebrar quando a hora chega</strong>. O banco tem patrimônio, os empréstimos são bons, mas vencem em 2031 e o depositante quer o dinheiro na quinta. Solvente, ilíquido, morto. Duas caras: liquidez de <em>funding</em> (não consigo captar) e de <em>mercado</em> (não consigo vender sem torrar o preço) — e na crise as duas vêm juntas, porque todos tentam vender a mesma coisa ao mesmo tempo.</p>
+
+  <p><strong>Operacional</strong> — a definição importa mais que tudo, porque é a sua porta de entrada. É a perda por <strong>falha ou inadequação de processos internos, pessoas e sistemas, ou por eventos externos</strong>, e inclui expressamente o <strong>risco legal</strong>. Repare na estrutura: <strong>quatro fontes</strong> — processo, pessoa, sistema, evento externo. Fraude interna e externa, erro de execução, indisponibilidade, falha de fornecedor, desastre natural, ação judicial em massa, multa regulatória.</p>
+
+  <div class="tip">💡 <strong>A ponte que vale ouro para você:</strong> <strong>risco cibernético é espécie de risco operacional</strong> — não é uma sétima categoria. Faz sentido pela definição: ataque é "falha de sistema" ou "evento externo", e a perda dele é perda operacional. Por isso o arcabouço de segurança cibernética do Bacen (<strong>Res. 4.893</strong>: política de segurança cibernética, requisitos para nuvem, resposta a incidentes, comunicação ao Bacen) se pendura na estrutura de risco operacional da 4.557. Consequência prática: o incidente que você trata como técnico é, para o regulador, <strong>perda operacional</strong> — registrada em base de perdas, mensurada e coberta por capital.</div>
+
+  <p><strong>Reputacional</strong> é o mais escorregadio: não tem contraparte nem preço, é o risco de <em>perder a confiança</em> de clientes, mercado, imprensa e regulador. E é traiçoeiro por uma razão específica: <strong>é quase sempre risco de segunda ordem</strong> — não nasce sozinho, nasce como consequência de outro risco materializado. Um vazamento é, na origem, operacional/cibernético; a multa é legal; mas a manchete e a debandada são reputacionais, e essa conta costuma ser <strong>maior que a perda direta</strong>. Por isso não se gerencia reputação com assessoria de imprensa: gerencia-se gerenciando os riscos que a produzem. Num banco, cuja matéria-prima <em>é</em> confiança, o reputacional vira risco de liquidez em 48 horas — basta o cliente sacar.</p>
+
+  <p><strong>Socioambiental e climático.</strong> Parece pauta de ONG numa norma prudencial. Não é. A chave: <strong>o Bacen não trata clima como causa ambiental; trata como fator de risco financeiro</strong>. A pergunta não é "o banco é bonzinho?" — é "essa exposição pode virar perda?".</p>
+
+  <p>Veja um risco climático <strong>virar risco de crédito</strong>, passo a passo. O banco financiou R$ 400 milhões em custeio agrícola para produtores de soja numa região. Vem seca severa — quebra de safra de 60%. O produtor não colheu; sem colheita, sem receita; sem receita, não paga o custeio. A inadimplência da carteira agro salta. O banco executa a garantia — mas a garantia é a terra, e a terra <em>daquela região</em>, agora reclassificada como zona de risco hídrico, desvalorizou. <strong>O evento entrou como chuva e saiu como inadimplência e perda de valor de garantia.</strong> Não houve "risco climático" no balanço: houve risco de crédito, com origem climática. Daí a norma insistir que esses fatores sejam <em>incorporados aos riscos existentes</em>, não tratados como silo.</p>
+
+  <div class="table-scroll">
+  <table>
+    <tr><th>Tipo</th><th>O que é</th><th>Exemplo virando perda financeira</th></tr>
+    <tr><td><strong>Físico</strong></td><td>o evento climático atinge o ativo ou a atividade</td><td>enchente destrói a fábrica financiada; seca quebra a safra; o imóvel dado em garantia fica em área de risco</td></tr>
+    <tr><td><strong>De transição</strong></td><td>a <em>mudança de regras, tecnologia ou preferência</em> rumo à economia de baixo carbono desvaloriza o ativo</td><td>nova legislação de carbono inviabiliza a operação do cliente; a tecnologia dele fica obsoleta; o mercado deixa de comprar o produto — e o financiamento de 12 anos vira crédito podre</td></tr>
+  </table>
+  </div>
+
+  <p>O risco de transição é o mais contraintuitivo: <strong>o dano vem da solução, não do problema</strong>. Quanto mais rápido e rígido o mundo agir contra a mudança climática, <em>mais</em> ativos de carbono intensivo viram pó — os <em>ativos encalhados</em>. O banco tem risco se o clima piorar e risco se a regulação apertar; não há posição neutra. No lado social: financiar cadeia com trabalho análogo ao escravo, invasão de terra indígena, dano a comunidade — vira perda por três canais: <strong>legal</strong> (responsabilização, inclusive solidária em dano ambiental), <strong>reputacional</strong> (boicote, saída de investidor) e <strong>de crédito</strong> (cliente embargado não opera e não paga).</p>
+
+  <h3>4.3 A estrutura: GIR, CRO, RAS e teste de estresse</h3>
+
   <p><strong>Estrutura:</strong> GIR (gerenciamento integrado de riscos) + <strong>CRO</strong> (diretor de riscos) + <strong>RAS</strong> (declaração de apetite por riscos) + testes de estresse. <strong>Risco cibernético</strong> é espécie de risco operacional — daí a Res. 4.893.</p>
+
+  <p><strong>GIR — "integrado" é a palavra que importa.</strong> Antes, cada risco tinha seu feudo e ninguém somava. O problema é que <strong>os riscos se correlacionam justamente na hora ruim</strong>: na crise, o crédito piora <em>e</em> o mercado cai <em>e</em> a liquidez seca <em>e</em> a reputação se abala — tudo junto, mesma causa raiz. Gerir em silo dá a ilusão de que cada risco é pequeno; a soma correlacionada é que mata. É a diferença entre revisar cada controle isolado e modelar a ameaça do sistema inteiro, enxergando a cadeia de exploração que atravessa componentes.</p>
+
+  <p><strong>CRO</strong> (<em>Chief Risk Officer</em>): a norma exige diretor <strong>indicado e responsável</strong> pela gestão de riscos. O detalhe é tudo: ele precisa de <strong>independência</strong> e não pode acumular funções conflitantes — notadamente, <strong>não pode ser dono da área de negócio</strong> nem responder por ela. Por quê? Porque o gerador de risco não pode ser o avaliador do próprio risco: quem tem meta de vender crédito sempre acha que o crédito está bom. É <strong>segregação de funções</strong> pura — o mesmo motivo pelo qual segurança não se reporta ao diretor de desenvolvimento. Independência não é organograma bonito: é a condição para o "não" ser possível.</p>
+
+  <p><strong>RAS</strong> (<em>Risk Appetite Statement</em>): documento aprovado pelo <strong>conselho de administração</strong> que diz <strong>quanto e que tipo de risco a instituição aceita correr</strong>. Não é retórica: traz níveis, limites e tipos de risco assumidos — e, por consequência, os que não se assume. A função real dela é <strong>tirar a decisão de risco do calor do momento</strong>. Sem RAS, cada operação vira negociação: "esse cliente é grande, vamos abrir uma exceção". Com ela, o limite foi decidido a frio, antes, pelo colegiado, por escrito — e a exceção sobe para quem assinou. É a <strong>política de segurança aprovada</strong> versus decidir caso a caso se instala o software sem revisão: política escrita antes é o que permite dizer não depois.</p>
+
+  <p class="muted">Vocabulário fino que a banca explora: <strong>apetite</strong> é o risco que se <em>quer</em> correr (escolha estratégica); <strong>tolerância</strong> é o desvio máximo aceito em torno disso; <strong>capacidade</strong> é o máximo que a instituição aguentaria sem quebrar, dado o capital. Apetite ≤ tolerância ≤ capacidade. Quem iguala apetite e capacidade está apostando a existência.</p>
+
+  <p><strong>Teste de estresse.</strong> Simulação de <strong>cenários severos, porém plausíveis</strong> — recessão profunda, disparada do dólar, salto de juros, queda no preço do imóvel, quebra da maior contraparte — para ver o que acontece com capital, liquidez e resultado. Repare no par de adjetivos: <em>severo</em>, porque cenário fácil não testa nada; <em>plausível</em>, porque meteoro não gera decisão. Para que serve? Não para prever o futuro: <strong>para descobrir onde o banco quebra antes que a realidade descubra</strong>. É pentest de balanço — e a armadilha é a mesma: <strong>cenário complacente é como pentest com escopo negociado até virar nada</strong>, dá relatório verde e falsa sensação de segurança. Daí a norma tratar a governança do cenário (quem define, valida, reporta) como parte do controle. Existe ainda o <em>teste reverso</em>: em vez de "quanto perco neste cenário?", pergunta-se <strong>"que cenário me quebraria?"</strong>.</p>
+
+  <p class="muted">Complementos: o <strong>plano de capital</strong> (o banco projeta se terá capital adiante, não só hoje) e o <strong>plano de contingência de liquidez</strong>. Tudo se conecta: apetite define limite, limite é monitorado, estresse testa se o limite aguenta, capital cobre o que sobra.</p>
+
+  <h3>4.4 As três linhas de defesa</h3>
+
   <p><strong>As 3 linhas de defesa:</strong> 1ª — a área de negócio (dona do risco); 2ª — compliance e gestão de riscos (supervisiona); 3ª — <strong>auditoria interna</strong> (avalia independentemente, reporta ao conselho).</p>
 
-  <h2>5. Autorregulação, ética e consumidor</h2>
+  <p>É <em>defesa em profundidade</em> aplicada à organização. A premissa é a sua: <strong>nenhuma camada isolada é confiável, então se assume que cada uma vai falhar e se coloca outra atrás</strong>. Não existe firewall perfeito; existe firewall + segmentação + EDR + monitoração + auditoria.</p>
+
+  <div class="table-scroll">
+  <table>
+    <tr><th>Linha</th><th>Quem</th><th>Papel</th><th>Reporta a</th><th>Paralelo em segurança</th></tr>
+    <tr><td><strong>1ª</strong></td><td>Áreas de negócio e operacionais (agência, mesa, crédito, TI)</td><td><strong>Assume e é dona do risco</strong>. Executa os controles no dia a dia, dentro do próprio processo.</td><td>Gestão executiva</td><td>O time que constrói e opera o sistema — quem aplica o patch e configura o acesso</td></tr>
+    <tr><td><strong>2ª</strong></td><td>Gestão de riscos e <strong>compliance</strong> (com o CRO)</td><td><strong>Supervisiona, normatiza e desafia</strong> a 1ª linha: define política, limites e metodologia; monitora; questiona.</td><td>Diretoria, com acesso ao conselho</td><td>A área de segurança da informação: escreve a política, monitora e cobra o time de produto</td></tr>
+    <tr><td><strong>3ª</strong></td><td><strong>Auditoria interna</strong></td><td><strong>Avalia de forma independente</strong> se a 1ª e a 2ª funcionam. Não opera controle nenhum — avalia.</td><td><strong>Conselho</strong> (de administração / comitê de auditoria)</td><td>A auditoria/red team independente que testa se a segurança realmente funciona</td></tr>
+  </table>
+  </div>
+
+  <p>Os três pontos cobrados:</p>
+  <ul>
+    <li><strong>A 1ª linha é a dona do risco — não é "quem não faz nada".</strong> O erro comum é achar que risco é assunto do pessoal de risco. Quem gera o risco é quem o gerencia primeiro: o gerente que concede o crédito é a primeira defesa contra o crédito ruim. Se a 1ª linha for negligente, as outras duas enxugam gelo — como segurança não se conserta com uma equipe de segurança se os desenvolvedores não fizerem a parte deles.</li>
+    <li><strong>A 2ª linha supervisiona, mas não é independente de verdade</strong>: está na estrutura executiva, responde à diretoria e convive politicamente com o negócio. Por isso não pode ser a última palavra.</li>
+    <li><strong>A 3ª linha é a única com independência plena, e por isso reporta ao conselho, não ao presidente.</strong> É o detalhe que faz o modelo funcionar: se a auditoria respondesse ao executivo cuja área ela audita, o relatório ruim morreria na gaveta dele. A linha de reporte <em>é</em> o controle — log que o administrador pode apagar não é evidência.</li>
+  </ul>
+
+  <div class="tip">💡 Fora do modelo, mas cercando: <strong>auditoria externa</strong> e o <strong>supervisor</strong> (Bacen) são às vezes chamados de "quarta linha" — não pertencem ao modelo clássico, são externos. Se a alternativa disser que a auditoria independente externa é a 3ª linha, está errada: <strong>a 3ª é a auditoria INTERNA</strong>.</div>
+
+  <div class="trap">🪤 Coleção da 4.557. (1) <strong>Risco cibernético NÃO é categoria autônoma</strong>: é espécie de <strong>operacional</strong>. (2) <strong>Risco legal está dentro do operacional</strong>. (3) O <strong>CRO não pode acumular</strong> função de negócio nem responder pela área que gera o risco. (4) A <strong>RAS é aprovada pelo conselho de administração</strong>. (5) A <strong>1ª linha é a área de negócio</strong>, dona do risco — quem responde "compliance" caiu. (6) A <strong>3ª linha é a auditoria interna</strong> e reporta ao <strong>conselho</strong>. (7) Risco climático não é "tema ESG" na 4.557: é <strong>fator que se materializa nos riscos existentes</strong>.</div>
+
+  <h2 id="sec-5-autorregulacao-etica-e-consumidor">5. Autorregulação, ética e consumidor</h2>
+
+  <h3>5.1 O problema aqui é outro</h3>
+
+  <p>Os blocos anteriores protegiam <em>o sistema</em>: que o banco não quebre, que o crime não o use. Este protege <strong>o cliente contra o banco</strong> — e o problema que ele resolve é a <strong>assimetria</strong>. De um lado do balcão, uma instituição com jurídico, atuários, contrato padrão de 40 páginas e informação completa. Do outro, alguém que não sabe o que é CET, não vai ler o contrato e precisa do dinheiro <em>hoje</em>. Quando uma parte tem toda a informação e a outra tem a necessidade, a liberdade contratual vira ficção — o "acordo" é ditado. O direito responde com a <strong>proteção do vulnerável</strong>: não porque o consumidor seja tolo, mas porque a posição é estruturalmente desigual.</p>
+
+  <h3>5.2 Autorregulação: por que o mercado se regula sozinho</h3>
+
   <ul>
     <li><strong>Autorregulação bancária (Febraban):</strong> adesão voluntária, normativos próprios (SARB), com sanções privadas — <strong>não substitui</strong> a regulação estatal.</li>
+  </ul>
+
+  <p>Por que um banco aceitaria voluntariamente uma regra que ninguém o obriga a cumprir? Três razões, todas de interesse próprio. <strong>Reputação é bem coletivo</strong>: se um banco vende mal, a manchete é "bancos abusam do consumidor" e todos pagam — dano compartilhado dá aos bons interesse em disciplinar os ruins. <strong>É melhor você escrever a regra do que o Congresso</strong>: se o setor não se autodisciplina, chega lei — pior, mais rígida e escrita por quem não conhece a operação. E <strong>velocidade</strong>: um normativo SARB muda em meses; uma lei, em anos.</p>
+
+  <p>Os <strong>normativos SARB</strong> tratam de relacionamento e conduta (correspondentes, consignado, cobrança, publicidade, contas, atendimento). As sanções são <strong>privadas</strong>: advertência, multa da própria entidade, exposição pública do descumprimento. Nada disso é sanção estatal.</p>
+
+  <p>O ponto cobrado com precisão cirúrgica: <strong>autorregulação NÃO substitui a lei nem a norma do Bacen — é complementar e voluntária</strong>. Ela adiciona conduta acima do mínimo legal para quem aderiu. Um banco pode cumprir 100% do SARB e ainda ser punido pelo Bacen ou pelo Judiciário; e o SARB jamais autoriza o que a lei proíbe. É a <em>baseline</em> de segurança adotada por convenção do setor: endurece a configuração acima do mínimo obrigatório, sem revogá-lo.</p>
+
+  <h3>5.3 O CDC dentro do banco</h3>
+
+  <ul>
     <li><strong>CDC aplica-se aos bancos</strong> (Súmula 297 do STJ). Cliente tem direito a informação clara, e há vedação a <strong>venda casada</strong> (ex.: condicionar crédito à compra de seguro).</li>
+  </ul>
+
+  <p>Hoje parece óbvio, mas foi guerra: os bancos sustentaram por anos que serviço financeiro não era serviço de consumo e que a relação era regida só pelo direito bancário e pelo Bacen. Perderam. O <strong>STJ pacificou na Súmula 297 — "O Código de Defesa do Consumidor é aplicável às instituições financeiras"</strong>, e o STF confirmou a constitucionalidade da aplicação. Decore o número: <strong>297</strong>. Cai literal.</p>
+
+  <p>Consequências dentro da agência:</p>
+  <ul>
+    <li><strong>Direito à informação clara e adequada</strong>: taxa, prazo, custo total, encargos de atraso — antes da contratação, em linguagem compreensível. Informação enterrada em letra miúda equivale a informação não prestada.</li>
+    <li><strong>Cláusulas abusivas são nulas</strong>, e a nulidade independe de o cliente ter assinado. Assinar não valida o abusivo.</li>
+    <li><strong>Interpretação mais favorável ao consumidor</strong> nos contratos de adesão, e possibilidade de <strong>inversão do ônus da prova</strong>. Traduzindo: <strong>o ônus de provar é de quem tem o log</strong> — e quem tem o log é o banco. O cliente não tem como provar que não contratou; o banco tem como provar que contratou.</li>
+    <li><strong>Responsabilidade objetiva</strong> pelo defeito do serviço: não se discute culpa. Fraude sofrida pelo cliente no serviço bancário é, em regra, <strong>risco do negócio</strong> — o STJ consolidou que a fraude praticada por terceiro no âmbito do serviço bancário é responsabilidade da instituição (<strong>Súmula 479</strong>).</li>
+  </ul>
+
+  <p><strong>Venda casada — o cenário concreto.</strong> É a prática vedada de <em>condicionar</em> o fornecimento de um produto ao de outro. A cena: Dona Marta precisa de R$ 30 mil de capital de giro. O gerente analisa e diz: <em>"O crédito está aprovado. Mas para sair nessa taxa, o sistema exige o seguro prestamista e a capitalização. Sem isso eu não consigo liberar."</em> Isso é <strong>venda casada</strong> — e o vício está numa frase: <strong>"sem isso eu não consigo liberar"</strong>. O gerente transformou dois produtos independentes num pacote obrigatório, usando a necessidade do cliente como alavanca. Não é venda: é extração de valor via posição dominante.</p>
+
+  <p>Agora a fronteira, que é onde a prova vive: <strong>oferecer não é condicionar</strong>. O gerente pode dizer "seu crédito está aprovado; e temos um seguro prestamista que quita a dívida em caso de falecimento — quer conhecer?". Isso é oferta legítima, mesmo insistente. O que a lei proíbe é <strong>o vínculo</strong>: o "só sai se levar". O teste é sempre esse: <em>o cliente consegue o produto A recusando o produto B?</em> Se sim, venda cruzada (lícita). Se não, venda casada (ilícita).</p>
+
+  <p class="muted">Cuidado com o falso positivo: <strong>garantia exigida não é venda casada</strong>. Exigir alienação fiduciária no financiamento imobiliário, ou que o bem financiado seja segurado, é condição inerente ao risco da operação — desde que o cliente possa escolher a seguradora. O abuso é obrigar a contratar <em>daquele</em> banco, <em>daquela</em> coligada.</p>
+
+  <h3>5.4 Conduta e ouvidoria (Res. CMN 4.949)</h3>
+
+  <ul>
     <li><strong>Res. CMN 4.949</strong> (conduta): atendimento adequado, transparência, tempestividade e <strong>ouvidoria</strong> obrigatória (última instância interna).</li>
+  </ul>
+
+  <p>A 4.949 pega o que o CDC diz em geral e transforma em obrigação fiscalizável pelo Bacen. Traduzindo os princípios:</p>
+  <ul>
+    <li><strong>Atendimento adequado</strong>: serviço com qualidade, sem discriminação, com acessibilidade, assegurando o direito de <strong>encerrar a relação</strong> — porque dificultar o cancelamento é forma de coerção.</li>
+    <li><strong>Transparência</strong>: informação clara, tempestiva e íntegra; sem custo escondido em letra miúda; vedada a conduta que induza a erro. Aqui moram também as vedações à venda casada e à oferta abusiva.</li>
+    <li><strong>Tempestividade</strong>: responder no prazo. Demora deliberada é negativa disfarçada.</li>
+    <li><strong>Governança da conduta</strong>: não é responsabilidade do gerente — é da <strong>diretoria</strong>, que institui política e assegura aderência. Conduta virou tema de governança, não de bom-mocismo individual.</li>
+  </ul>
+
+  <p><strong>A ouvidoria</strong> é a <strong>última instância interna</strong>: o cliente reclama primeiro nos canais normais (agência, SAC, app) e, se não resolver, escala. O que a torna útil: é obrigatória, tem <strong>ouvidor designado</strong>, tem <strong>prazo para responder</strong> e — detalhe crucial — precisa de <strong>independência</strong> e acesso à alta administração, reportando ao conselho de administração ou à diretoria. Subordinada ao diretor comercial, seria o SAC com nome pomposo.</p>
+
+  <p>E há uma segunda função que quase ninguém percebe: a ouvidoria <strong>produz informação de risco</strong>. Ela consolida e reporta reclamações — e um pico de reclamações sobre um produto é o alerta precoce de problema sistêmico naquele produto. <strong>Reclamação é log.</strong> Banco que trata reclamação só como atrito a ser silenciado está descartando o próprio sensor.</p>
+
+  <p class="muted">Escalonamento: canais de atendimento → <strong>ouvidoria</strong> (última instância <em>interna</em>) → canais externos: registro no <strong>Bacen</strong>, Procon, consumidor.gov.br, Judiciário. Quem responder "a ouvidoria é órgão externo de defesa do consumidor" caiu na pegadinha.</p>
+
+  <h3>5.5 Compliance × auditoria: parecem iguais, não são</h3>
+
+  <ul>
     <li><strong>Compliance</strong> ≠ auditoria: compliance é preventivo e contínuo (garante conformidade); auditoria é avaliação independente e periódica.</li>
+  </ul>
+
+  <div class="table-scroll">
+  <table>
+    <tr><th>&nbsp;</th><th>Compliance</th><th>Auditoria interna</th></tr>
+    <tr><td><strong>Linha de defesa</strong></td><td>2ª</td><td>3ª</td></tr>
+    <tr><td><strong>Momento</strong></td><td><em>Ex ante</em> — antes e durante</td><td><em>Ex post</em> — depois</td></tr>
+    <tr><td><strong>Frequência</strong></td><td><strong>Contínuo</strong>, embutido no processo</td><td><strong>Periódico</strong>, por ciclo de trabalho</td></tr>
+    <tr><td><strong>Postura</strong></td><td><strong>Preventiva</strong>: evitar o desvio</td><td><strong>Avaliativa</strong>: verificar se ocorreu e se o controle funciona</td></tr>
+    <tr><td><strong>Independência</strong></td><td>Relativa — está na estrutura executiva</td><td><strong>Plena</strong> — reporta ao conselho</td></tr>
+    <tr><td><strong>Avalia o outro?</strong></td><td>Não avalia a auditoria</td><td><strong>Avalia o compliance também</strong></td></tr>
+    <tr><td><strong>No seu mundo</strong></td><td>O controle no pipeline: barra o deploy fora do padrão</td><td>O auditor/red team que testa se o pipeline realmente barra</td></tr>
+  </table>
+  </div>
+
+  <p>A frase que resolve quase toda questão: <strong>compliance evita o problema; auditoria descobre se o compliance está evitando</strong>. Fundi-las mata a independência, porque ninguém se audita com rigor.</p>
+
+  <h3>5.6 Lei Anticorrupção (12.846/2013)</h3>
+
+  <ul>
     <li><strong>Lei Anticorrupção (12.846/2013):</strong> responsabilidade <strong>objetiva</strong> da pessoa jurídica; programa de integridade atenua a sanção. <strong>FCPA</strong> e <strong>UK Bribery Act</strong> têm alcance extraterritorial.</li>
+  </ul>
+
+  <p>O problema que ela resolve é antigo e frustrante: <strong>a empresa se beneficiava da propina e o gerente pagava a conta</strong>. Punia-se a pessoa física — corrupção ativa é crime de gente, não de empresa — e a companhia dizia "foi um funcionário desalinhado", demitia o sujeito e ficava com o contrato bilionário. O custo caía sobre o indivíduo; o benefício ficava com a pessoa jurídica. Enquanto for assim, corromper é investimento com retorno excelente.</p>
+
+  <p>A Lei 12.846/2013 quebra o arranjo com <strong>responsabilidade objetiva da pessoa jurídica</strong> nas esferas <strong>administrativa e civil</strong>, por atos lesivos contra a administração pública nacional ou estrangeira. O que <strong>objetiva</strong> significa — núcleo da questão de prova: <strong>não se discute culpa nem dolo da empresa</strong>. Basta o ato lesivo, a autoria (por quem agiu em nome ou benefício dela) e o nexo. Não adianta alegar que não sabia, não autorizou, proibia expressamente, que o funcionário agiu por conta própria. <strong>Nada disso afasta a responsabilidade.</strong> Se o ato foi praticado em interesse ou benefício da empresa, ela responde — raciocínio do risco criado: quem põe a atividade no mundo e lucra com ela arca com o que ela produz.</p>
+
+  <p>E aí vem a engenharia de incentivo mais bonita da lei. Se nada afasta a responsabilidade, para que serve ter um <strong>programa de integridade</strong>? Ele <strong>não afasta a responsabilidade — atenua a sanção</strong>. É <strong>fator de dosimetria</strong>: na calibragem da multa, a existência de mecanismos internos de integridade, auditoria e canais de denúncia <em>efetivos</em> conta a favor. Leia o adjetivo: <strong>efetivos</strong>. Programa de fachada — código de ética emoldurado, treinamento que ninguém faz, canal de denúncia que responde ao acusado — não atenua nada. A lei paga por controle que funciona, não por documento que existe: política de segurança impressa não é controle; controle é o que roda.</p>
+
+  <p>Complementos: sanções administrativas de <strong>multa</strong> e <strong>publicação extraordinária da decisão condenatória</strong> (a exposição às vezes dói mais que a multa); na esfera judicial, perdimento de bens, suspensão de atividades, dissolução compulsória. E o <strong>acordo de leniência</strong>, que reduz sanções para a empresa que colabora efetivamente, identifica envolvidos e entrega informação — a lógica do delator aplicada à pessoa jurídica: quebrar a solidariedade do esquema, porque quem falar primeiro leva o desconto.</p>
+
+  <p><strong>FCPA</strong> (<em>Foreign Corrupt Practices Act</em>, EUA) e <strong>UK Bribery Act</strong> importam por uma razão prática: têm <strong>alcance extraterritorial</strong> — alcançam conduta praticada fora do país de origem, mirando empresas com vínculo com aquele mercado (ações listadas em bolsa americana, uso do sistema financeiro americano, presença no Reino Unido). Uma empresa brasileira pode ser punida nos EUA por propina paga na África. Para banco com operação internacional, é risco legal concreto — rendeu algumas das maiores multas corporativas já vistas.</p>
+
+  <h3>5.7 Informação privilegiada, conflito de interesses e o muro</h3>
+
+  <ul>
     <li><strong>Conflito de interesses e informação privilegiada:</strong> <em>insider trading</em> é crime (Lei 6.385, art. 27-D) e infração administrativa punida pela CVM. <strong>Chinese wall</strong> = segregação entre áreas (ex.: gestão de recursos × tesouraria do banco).</li>
   </ul>
 
-  <h2>6. ASG/ESG e finanças sustentáveis</h2>
+  <p><strong>Insider trading</strong> é usar <strong>informação relevante ainda não divulgada ao mercado</strong> para negociar valores mobiliários e obter vantagem. O cenário: o banco assessora a Empresa A na compra da Empresa B; só um punhado de pessoas sabe; quando o anúncio sair, a ação da B dispara. Um funcionário compra ações da B na véspera — ou conta para o cunhado comprar.</p>
+
+  <p>Por que é crime, e não só esperteza? Porque o mercado de capitais só funciona sobre uma premissa: <strong>todos negociam com acesso equivalente à informação relevante</strong>. Se alguns jogam com as cartas viradas, o investidor comum entende que é otário e sai — e sem ele não há mercado, não há capitalização de empresa, não há financiamento produtivo. O dano não é ao vendedor daquela negociação: <strong>é à confiança no mercado inteiro</strong>. Note a dupla punição, que a prova cobra: é <strong>crime</strong> (Lei 6.385, art. 27-D) <em>e</em> <strong>infração administrativa punida pela CVM</strong> — esferas independentes, pode haver punição administrativa sem condenação penal.</p>
+
+  <p><strong>Chinese wall</strong> (muralha da China), ou barreira de informação: <strong>segregação estrutural entre áreas com interesses conflitantes</strong> dentro da mesma instituição. Um banco universal é, por dentro, um cabaré de conflitos: uma área assessora fusões (e sabe do negócio antes de todos); outra administra recursos de terceiros (e deveria buscar só o interesse do cotista); outra opera a tesouraria (posição própria do banco); outra distribui produtos ao varejo; outra emite relatórios de análise.</p>
+
+  <p>Pergunta: se a tesouraria souber, pelo colega do andar de cima, que a fusão vai sair, o que ela faz? Compra. E se o gestor de fundos souber que o banco quer se livrar de um título ruim, para quem vende? Para os cotistas dele. <strong>O conflito não é hipotético: é a tentação estrutural do desenho.</strong> Por isso a segregação é <strong>física, lógica, funcional e informacional</strong>: andares distintos, controle de acesso, sistemas apartados, alçadas separadas, subordinação separada até o topo, restrição de negociação para quem detém a informação, listas restritas. A ponte é literal: <strong>chinese wall é segregação de funções + menor privilégio + segmentação de rede</strong>, aplicados a pessoas — a informação sensível só circula em quem tem <em>need to know</em>. Você já implementou isso, com VLAN e ACL em vez de crachá e andar.</p>
+
+  <div class="trap">🪤 Coleção deste bloco. (1) A <strong>autorregulação não substitui a lei</strong> e é <strong>voluntária</strong> — sanções privadas, não estatais. (2) <strong>Súmula 297 do STJ</strong>: o CDC <em>se aplica</em> aos bancos (o número cai literal). (3) <strong>Oferecer não é condicionar</strong>: venda cruzada é lícita; venda casada é o "só sai se levar". (4) A <strong>ouvidoria é a última instância INTERNA</strong> — não é órgão externo, e vem depois do atendimento comum. (5) Na Lei 12.846 a responsabilidade objetiva é da <strong>pessoa jurídica</strong>, nas esferas <strong>administrativa e civil</strong> — e o <strong>programa de integridade ATENUA, não isenta</strong>. (6) <strong>Compliance é 2ª linha e contínuo; auditoria é 3ª linha e periódica</strong>.</div>
+
+  <h2 id="sec-6-asg-esg-e-financas-sustentaveis">6. ASG/ESG e finanças sustentáveis</h2>
+
+  <h3>6.1 Por que o Banco Central se importa com clima</h3>
+
+  <p>Sem isso, o bloco parece marketing. O Bacen não tem mandato de salvar o planeta: tem mandato de <strong>estabilidade financeira e solidez do sistema</strong>. Então por que existe norma de sustentabilidade saindo do CMN? Porque, como você viu em 4.2, <strong>esses fatores viram perda financeira</strong>. A seca vira inadimplência. O embargo ambiental vira crédito irrecuperável. A transição energética vira ativo encalhado. A garantia em área de risco vira garantia sem valor. O passivo trabalhista da cadeia vira responsabilização do financiador. Nenhuma dessas frases é sobre ética — todas são sobre balanço.</p>
+
+  <p>Fixe a formulação, chave de metade das questões: <strong>para o regulador bancário, ASG não é filantropia nem reputação: é gestão de risco</strong>. A sigla: <strong>ASG</strong> em português (Ambiental, Social e Governança) = <strong>ESG</strong> em inglês. Mesma coisa.</p>
+
   <div class="table-scroll">
   <table>
     <tr><th>Pilar</th><th>No banco significa</th></tr>
@@ -95,16 +559,85 @@
     <tr><td><strong>G</strong>overnança</td><td>conselho independente, ética, transparência, gestão de riscos</td></tr>
   </table>
   </div>
+
+  <p>O que cada pilar quer dizer <em>dentro de um banco</em> — diferente do que quer dizer numa indústria:</p>
+  <ul>
+    <li><strong>Ambiental.</strong> O impacto ambiental direto de um banco é ridículo: ar-condicionado e papel. <strong>O impacto relevante é o que ele financia</strong> — a pegada da carteira. O carbono não sai da agência, sai da usina que a agência financiou. Por isso a régua ambiental do banco é aplicada <em>ao crédito</em>, não ao prédio.</li>
+    <li><strong>Social.</strong> Direitos humanos na cadeia do cliente (trabalho análogo ao escravo, terra indígena, comunidade afetada), relação com empregados e — muito cobrado, muito esquecido — <strong>inclusão financeira</strong>: bancarizar quem estava fora, conta simples, microcrédito, atender baixa renda. É o "S" mais concreto do setor bancário brasileiro.</li>
+    <li><strong>Governança.</strong> Conselho com membros independentes, transparência, ética, gestão de riscos, canal de denúncia, controles internos. <strong>É o pilar que sustenta os outros dois</strong>: sem governança, o "A" e o "S" viram slide, porque não há quem cobre, meça e responda.</li>
+  </ul>
+
+  <h3>6.2 PRSAC e GRSAC</h3>
+
   <ul>
     <li><strong>PRSAC</strong> (Res. 4.945): Política de Responsabilidade Social, Ambiental e Climática — obrigatória.</li>
     <li><strong>GRSAC</strong>: relatório público de riscos sociais, ambientais e climáticos.</li>
+  </ul>
+
+  <p>A banca troca as siglas com prazer. A distinção é simples se você olhar <strong>o que cada uma é</strong> e <strong>para quem fala</strong>:</p>
+
+  <div class="table-scroll">
+  <table>
+    <tr><th>&nbsp;</th><th>PRSAC</th><th>GRSAC</th></tr>
+    <tr><td><strong>O que é</strong></td><td>uma <strong>política</strong> — princípios e diretrizes que orientam conduta e negócios</td><td>um <strong>relatório</strong> de divulgação de riscos sociais, ambientais e climáticos</td></tr>
+    <tr><td><strong>Norma</strong></td><td><strong>Res. CMN 4.945</strong></td><td>divulgação estruturada exigida pelo Bacen</td></tr>
+    <tr><td><strong>Direção</strong></td><td>para <strong>dentro</strong>: orienta a instituição</td><td>para <strong>fora</strong>: informa o mercado — é <strong>público</strong></td></tr>
+    <tr><td><strong>Natureza</strong></td><td>governança e conduta</td><td>transparência</td></tr>
+    <tr><td><strong>Obrigatória?</strong></td><td><strong>Sim</strong> (com proporcionalidade conforme o porte)</td><td>Sim, para as instituições alcançadas</td></tr>
+    <tr><td><strong>Mnemônico</strong></td><td><strong>P</strong> de <strong>P</strong>olítica</td><td><strong>G</strong> de divul<strong>G</strong>ação/relatório</td></tr>
+  </table>
+  </div>
+
+  <p>O GRSAC é, na essência, <strong>o Pilar III de Basileia aplicado ao clima</strong>: disciplina de mercado — obrigar a publicar para que investidores, credores e analistas precifiquem e cobrem. Transparência aqui não é gentileza: é controle que usa o mercado como fiscal.</p>
+
+  <p class="muted">Se a alternativa disser que o risco climático é nova categoria autônoma de risco na estrutura prudencial, desconfie: ele <strong>se materializa</strong> em crédito, mercado, liquidez, operacional e reputacional.</p>
+
+  <h3>6.3 Títulos temáticos e greenwashing</h3>
+
+  <ul>
     <li><strong>Títulos temáticos:</strong> green bonds, social bonds, sustainability-linked (com metas atreladas à taxa).</li>
     <li><strong>Greenwashing:</strong> alegar sustentabilidade sem lastro — risco reputacional e regulatório.</li>
+  </ul>
+
+  <p>Um <strong>título</strong> (<em>bond</em>) é uma dívida: você empresta ao emissor e recebe com juros. "Temático" quer dizer que há compromisso ambiental ou social embutido. Três famílias — e a diferença está em <em>onde</em> mora o compromisso:</p>
+
+  <div class="table-scroll">
+  <table>
+    <tr><th>Tipo</th><th>O compromisso está em</th><th>Como funciona</th></tr>
+    <tr><td><strong>Green bond</strong></td><td><strong>uso dos recursos</strong></td><td>o dinheiro captado é carimbado para projeto ambiental (energia limpa, saneamento, transporte de baixo carbono)</td></tr>
+    <tr><td><strong>Social bond</strong></td><td><strong>uso dos recursos</strong></td><td>mesma lógica, projeto social (habitação popular, saúde, educação, geração de emprego)</td></tr>
+    <tr><td><strong>Sustainability-linked</strong></td><td><strong>no resultado, não no uso</strong></td><td>o dinheiro é livre, mas o emissor assume <strong>metas</strong>; se não cumprir, <strong>a taxa de juros sobe</strong></td></tr>
+  </table>
+  </div>
+
+  <p>O <em>sustainability-linked</em> é o mais engenhoso e o mais cobrado, porque resolve um defeito real dos outros dois: no green bond, o emissor carimba um projeto verde que talvez fizesse de qualquer jeito, e o resto da empresa segue igual — dinheiro é fungível. No atrelado à sustentabilidade, ninguém pergunta onde você gastou: pergunta-se <strong>se você entregou a meta</strong>. Não entregou, paga mais caro. <strong>Ele precifica o descumprimento em vez de tentar vigiar o uso</strong> — a mesma sabedoria de Basileia: em vez de proibir, cobre um preço.</p>
+
+  <p><strong>Greenwashing</strong> ("lavagem verde" — a analogia com lavagem de dinheiro é proposital: em ambos se dá aparência legítima ao que não é) é alegar sustentabilidade sem lastro: rotular de verde um fundo de carteira convencional; anunciar meta de carbono sem metodologia nem verificação; emitir green bond e aplicar em qualquer coisa. Por que o regulador se importa? Primeiro, é <strong>risco reputacional e legal</strong> direto — no limite é publicidade enganosa, com Procon, CVM e ação coletiva no caminho. Segundo, e mais grave: <strong>greenwashing envenena o mecanismo</strong>. Se o investidor não distingue verde real de verde pintado, ele para de pagar mais pelo verde — e o instrumento inteiro morre, inclusive para quem era honesto. É o mercado de limões: <strong>a fraude não punida expulsa o produto bom</strong>. Equivalente que você conhece: selo de segurança que qualquer um obtém sem auditoria não sinaliza nada e destrói o valor do selo para quem se esforçou.</p>
+
+  <h3>6.4 Referências internacionais</h3>
+
+  <ul>
     <li>Referências internacionais: <strong>Princípios do Equador</strong> (project finance), PRI, TCFD, ODS da ONU.</li>
   </ul>
+
+  <p><strong>Princípios do Equador.</strong> O mais cobrado e o mais mal entendido: são <strong>diretrizes voluntárias</strong> adotadas por instituições financeiras para <strong>avaliação e gestão de risco socioambiental em financiamento de grandes projetos</strong> (<em>project finance</em>: hidrelétrica, mineração, rodovia, porto). Na prática, o banco signatário classifica o projeto por categoria de risco socioambiental e, conforme a categoria, exige avaliação de impacto, plano de ação, consulta às comunidades afetadas e monitoramento — podendo recusar o financiamento.</p>
+
+  <p>Repare no desenho: eles não regulam o <em>projeto</em>, regulam <strong>quem financia o projeto</strong>. É controle no ponto de estrangulamento — a obra precisa de dinheiro; se os grandes financiadores exigem a mesma régua, a régua vale mesmo sem lei, porque não há de onde tirar dinheiro fora do clube. Mesma estratégia do KYC: em vez de perseguir cada criminoso, põe-se o controle no gargalo por onde ele obrigatoriamente passa.</p>
+
+  <p>As demais, distinguindo bem, porque a banca mistura:</p>
+  <ul>
+    <li><strong>PRI</strong> (<em>Principles for Responsible Investment</em>): princípios da ONU para <strong>investidores</strong> incorporarem ASG às decisões de investimento. Foco: quem investe.</li>
+    <li><strong>TCFD</strong> (<em>Task Force on Climate-related Financial Disclosures</em>): criou o padrão de <strong>divulgação</strong> de riscos financeiros relacionados ao clima, em quatro eixos — governança, estratégia, gestão de riscos e métricas/metas. É o esqueleto que inspirou reportes como o GRSAC. Foco: transparência.</li>
+    <li><strong>ODS</strong> (Objetivos de Desenvolvimento Sustentável) da ONU: agenda global de <strong>17 objetivos</strong> até 2030. Foco: agenda de desenvolvimento, não norma financeira.</li>
+  </ul>
+
+  <p class="muted">Todas <strong>voluntárias</strong> — nenhuma é lei. A mesma lógica da autorregulação bancária reaparece em escala global. E, como lá, <strong>aderir não dispensa cumprir a norma do Bacen</strong>.</p>
+
   <div class="trap">🪤 O <strong>G</strong> é de <strong>governança corporativa</strong> — não de "governo". E ESG no Bacen entra como <strong>gestão de risco</strong>, não como filantropia.</div>
 
-  <h2>7. Quadro final de fixação</h2>
+  <div class="trap">🪤 Mais deste bloco. (1) <strong>PRSAC = política</strong> (Res. 4.945, para dentro); <strong>GRSAC = relatório público</strong> (para fora). (2) <strong>Green/social bond</strong> se define pelo <strong>uso dos recursos</strong>; <strong>sustainability-linked</strong>, por <strong>metas com juros atrelados</strong> — e uso livre. (3) <strong>Princípios do Equador</strong> = <strong>project finance</strong> e <strong>voluntários</strong>; não são norma do Bacen nem se aplicam a crédito de varejo. (4) Risco climático <strong>físico</strong> (o evento atinge o ativo) × <strong>de transição</strong> (a mudança de regra/tecnologia desvaloriza o ativo) — a banca inverte.</div>
+
+  <h2 id="sec-7-quadro-final-de-fixacao">7. Quadro final de fixação</h2>
   <div class="table-scroll">
   <table>
     <tr><th>Pergunta da banca</th><th>Resposta</th></tr>
@@ -121,6 +654,66 @@
     <tr><td>Autorregulação substitui a lei?</td><td>Não — é complementar e voluntária</td></tr>
   </table>
   </div>
+
+  <h3>7.1 Reforço — o que mais derruba candidato</h3>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Pergunta</th><th>Resposta</th></tr>
+    <tr><td>Rol de crimes antecedentes hoje?</td><td>Não existe — <strong>qualquer infração penal</strong> (a Lei 12.683/2012 <strong>extinguiu</strong> o rol, não ampliou)</td></tr>
+    <tr><td>Comunicar ao Coaf viola sigilo bancário?</td><td>Não. E não gera responsabilidade se de boa-fé</td></tr>
+    <tr><td>Posso avisar o cliente da comunicação?</td><td>Nunca — vedação ao <em>tipping off</em></td></tr>
+    <tr><td>Ser PEP impede abrir conta?</td><td>Não. Exige <strong>diligência reforçada</strong> + aprovação em nível hierárquico superior</td></tr>
+    <tr><td>PEP: por quanto tempo após deixar o cargo?</td><td><strong>5 anos</strong>; alcança familiares e estreitos colaboradores</td></tr>
+    <tr><td>Percebeu atipicidade → comunica direto?</td><td>Não: <strong>analisa</strong>, decide e fundamenta. Não comunicar também exige registro</td></tr>
+    <tr><td>MP quebra sigilo sozinho?</td><td>Não (salvo verbas públicas) — precisa de ordem judicial</td></tr>
+    <tr><td>CPI municipal quebra sigilo?</td><td>Não. CPI federal e estadual, sim</td></tr>
+    <tr><td>Fisco acessa sem juiz?</td><td>Sim, com procedimento fiscal instaurado — STF: é <strong>transferência</strong> de sigilo</td></tr>
+    <tr><td>Basileia I cobria quais riscos?</td><td>Só <strong>crédito</strong> (mercado veio depois; operacional só em Basileia II)</td></tr>
+    <tr><td>Índice de Basileia = ?</td><td>PR ÷ RWA. Alto = mais sólido</td></tr>
+    <tr><td>LCR × NSFR?</td><td><strong>LCR</strong> = curto prazo (30 dias); <strong>NSFR</strong> = estrutural (1 ano)</td></tr>
+    <tr><td>Capital × liquidez?</td><td>Capital = aguenta a <strong>perda</strong> (solvência); liquidez = consegue <strong>pagar hoje</strong> (caixa)</td></tr>
+    <tr><td>Colchão contracíclico sobe quando?</td><td>No <strong>boom</strong> de crédito (e é liberado na crise)</td></tr>
+    <tr><td>Provisão × capital?</td><td>Provisão cobre perda <strong>esperada</strong>; capital cobre a <strong>inesperada</strong></td></tr>
+    <tr><td>Risco legal fica onde?</td><td>Dentro do risco <strong>operacional</strong></td></tr>
+    <tr><td>CRO pode acumular área de negócio?</td><td>Não — exige independência (segregação de funções)</td></tr>
+    <tr><td>Quem aprova a RAS?</td><td><strong>Conselho de administração</strong></td></tr>
+    <tr><td>1ª linha de defesa é quem?</td><td>A <strong>área de negócio</strong> — dona do risco (não é o compliance)</td></tr>
+    <tr><td>Auditoria interna reporta a quem?</td><td>Ao <strong>conselho</strong> — é o que garante independência</td></tr>
+    <tr><td>Compliance × auditoria?</td><td>Compliance: 2ª linha, contínuo, preventivo. Auditoria: 3ª linha, periódica, avaliativa</td></tr>
+    <tr><td>Oferecer seguro junto ao crédito é venda casada?</td><td>Não. <strong>Condicionar</strong> é. Teste: dá para levar o crédito recusando o seguro?</td></tr>
+    <tr><td>Ouvidoria é instância interna ou externa?</td><td><strong>Interna</strong> — a última instância interna</td></tr>
+    <tr><td>Lei 12.846: responsabilidade da PJ é?</td><td><strong>Objetiva</strong> (administrativa e civil) — não se discute culpa</td></tr>
+    <tr><td>Programa de integridade isenta?</td><td>Não — <strong>atenua</strong> a sanção (e só se for efetivo)</td></tr>
+    <tr><td>Insider trading é o quê?</td><td>Crime (Lei 6.385, art. 27-D) <strong>e</strong> infração administrativa (CVM)</td></tr>
+    <tr><td>Chinese wall serve para?</td><td>Segregar áreas em conflito de interesses (<em>need to know</em>)</td></tr>
+    <tr><td>PRSAC × GRSAC?</td><td>PRSAC = <strong>política</strong> (Res. 4.945); GRSAC = <strong>relatório público</strong></td></tr>
+    <tr><td>Risco climático físico × transição?</td><td>Físico = o evento atinge o ativo; transição = a mudança de regra/tecnologia desvaloriza o ativo</td></tr>
+    <tr><td>Princípios do Equador aplicam-se a?</td><td><em>Project finance</em> — e são <strong>voluntários</strong></td></tr>
+  </table>
+  </div>
+
+  <h3>7.2 As pontes com o seu mundo (revisão de 30 segundos)</h3>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Você já sabe</th><th>No banco chama-se</th></tr>
+    <tr><td>Identificar → avaliar → tratar → monitorar</td><td>Gerenciamento de riscos (Res. 4.557)</td></tr>
+    <tr><td>Risco residual aceito na política</td><td><strong>RAS</strong> — apetite por risco, aprovado pelo conselho</td></tr>
+    <tr><td>Defesa em profundidade / camadas</td><td><strong>3 linhas de defesa</strong> e os <strong>3 pilares</strong> de Basileia II</td></tr>
+    <tr><td>Pentest / red team</td><td><strong>Teste de estresse</strong> (cenário severo, porém plausível)</td></tr>
+    <tr><td>Baseline para detectar anomalia</td><td><strong>KYC</strong> — sem perfil não há desvio</td></tr>
+    <tr><td>Evasão <em>low and slow</em> do limiar de alerta</td><td><strong>Smurfing / estruturação</strong></td></tr>
+    <tr><td>Retenção de log para forense</td><td><strong>Guarda de registros</strong> (mínimo 5 anos)</td></tr>
+    <tr><td>Log obrigatório por regra, não por opinião</td><td><strong>Comunicação objetiva</strong> (R$ 50 mil em espécie)</td></tr>
+    <tr><td>Alerta triado pelo analista antes de escalar</td><td><strong>Comunicação subjetiva</strong> (análise → decisão fundamentada)</td></tr>
+    <tr><td>Não avisar o alvo durante a investigação</td><td>Vedação ao <strong><em>tipping off</em></strong></td></tr>
+    <tr><td>Conta privilegiada: não bloqueia, monitora mais</td><td><strong>PEP</strong> — diligência reforçada</td></tr>
+    <tr><td>Segregação de funções / <em>need to know</em></td><td><strong>Chinese wall</strong>; CRO independente; MP não autoriza a própria quebra</td></tr>
+    <tr><td>Falha em cascata por acoplamento forte</td><td><strong>Risco sistêmico</strong> / efeito dominó</td></tr>
+    <tr><td>Incidente cibernético</td><td><strong>Perda operacional</strong> (Res. 4.893 pendurada na 4.557)</td></tr>
+    <tr><td>Selo sem auditoria destrói o valor do selo</td><td><strong>Greenwashing</strong></td></tr>
+  </table>
+  </div>
+
   <div class="tip">📇 Fixe com o cartão "Lavagem — as 3 fases" e o quiz de Bancários (aba 🧪).</div>
 </div>
 </body>

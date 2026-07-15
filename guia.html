@@ -2393,9 +2393,9 @@ function renderMateriais() {
   </div>
 
   <div class="card">
-    <h2>📖 Biblioteca de teoria <span class="muted" style="font-weight:400">· ${BIBLIOTECA.length} apostilas</span></h2>
-    <p class="muted">Teoria filtrada para a prova, escrita para o seu perfil: densa em Bancários e Português, e de <strong>consulta</strong> em TI
-    (você já sabe fazer — precisa da terminologia da banca). Cada uma tem as pegadinhas marcadas 🪤 e quadro de fixação.</p>
+    <h2>📖 Biblioteca de teoria <span class="muted" style="font-weight:400">· ${BIBLIOTECA.length} apostilas · ~1,7 MB</span></h2>
+    <p class="muted">Curso completo, escrito para quem <strong>nunca viu a matéria</strong>: cada conceito começa pelo problema que resolve,
+    tem exemplo resolvido passo a passo e analogia com TI, e só então vira tabela. Pegadinhas marcadas 🪤 e sumário navegável no topo de cada uma.</p>
     <div class="grid-2" style="margin-top:10px">
       ${BIBLIOTECA.map(b => `<a href="${b.href}" target="_blank" rel="noopener" class="block-item" style="text-decoration:none;color:inherit">
         <div class="bt"><div><strong>${esc(b.t)}</strong></div><div class="muted" style="font-size:.82rem">${esc(b.d)}</div></div>

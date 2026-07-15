@@ -12,31 +12,211 @@
   <h1>💰 Matemática Financeira</h1>
   <p class="sub">Matéria de banco, cai todo ano, e é 100% previsível: as bancas repetem os mesmos 8 tipos de questão. Domine as fórmulas e o dinheiro está no bolso.</p>
 
-  <h2>1. Porcentagem — a base de tudo</h2>
-  <ul>
-    <li><strong>Fator de multiplicação:</strong> aumentar 20% = × 1,20. Reduzir 20% = × 0,80. <em>Sempre</em> use fator, nunca "regra de três".</li>
-    <li><strong>Aumentos sucessivos NÃO se somam:</strong> +10% e depois +10% = ×1,1×1,1 = ×1,21 = <strong>+21%</strong>.</li>
-    <li><strong>Aumento seguido de desconto igual dá prejuízo:</strong> +20% e −20% = ×1,2×0,8 = 0,96 = <strong>−4%</strong>.</li>
-  </ul>
-  <div class="trap">🪤 "Subiu 25% e caiu 20%, voltou ao valor original?" → ×1,25×0,80 = 1,00. <strong>Sim</strong>, neste caso. A banca explora essa assimetria: o percentual de volta é sempre calculado sobre uma base diferente.</div>
+  <div class="card" id="sumario">
+    <h2 id="sec-sumario" style="margin-top:0">📑 Sumário</h2>
+    <ol style="columns:2;column-gap:28px">
+      <li><a href="#sec-0-a-ideia-que-sustenta-a-materia-inteira">0. A ideia que sustenta a matéria inteira</a></li>
+      <li><a href="#sec-1-porcentagem-a-base-de-tudo">1. Porcentagem — a base de tudo</a></li>
+      <li><a href="#sec-2-juros-simples">2. Juros simples</a></li>
+      <li><a href="#sec-3-juros-compostos">3. Juros compostos</a></li>
+      <li><a href="#sec-4-taxas-o-coracao-da-materia">4. Taxas — o coração da matéria</a></li>
+      <li><a href="#sec-5-descontos">5. Descontos</a></li>
+      <li><a href="#sec-6-series-de-pagamentos-rendas-anuidades">6. Séries de pagamentos (rendas/anuidades)</a></li>
+      <li><a href="#sec-7-amortizacao-sac-price-americano">7. Amortização — SAC × Price × Americano</a></li>
+      <li><a href="#sec-8-as-8-questoes-que-sempre-caem">8. As 8 questões que sempre caem</a></li>
+    </ol>
+    <p class="muted" style="margin-top:8px">Apostila longa de propósito — use o sumário para ir direto ao ponto. Cada 🪤 é uma pegadinha de banca; cada 💡 é um atalho de prova.</p>
+  </div>
 
-  <h2>2. Juros simples</h2>
-  <p>Os juros incidem <strong>sempre sobre o capital inicial</strong> (crescimento linear).</p>
+
+  <h2 id="sec-0-a-ideia-que-sustenta-a-materia-inteira">0. A ideia que sustenta a matéria inteira</h2>
+  <p>Antes de qualquer fórmula, entenda o único conceito que gera todos os outros: <strong>dinheiro tem data</strong>. R$ 1.000 hoje e R$ 1.000 daqui a um ano <em>não são a mesma coisa</em> — nem por causa da inflação, mas porque com os R$ 1.000 de hoje você poderia ter comprado alguma coisa, emprestado, aplicado. Quem abre mão do dinheiro por um tempo cobra por isso. Esse preço é o <strong>juro</strong>.</p>
+  <p>A analogia que funciona: <strong>juro é o aluguel do dinheiro</strong>. Você aluga um apartamento e paga por mês pelo uso. Você aluga R$ 100.000 do banco e paga por mês pelo uso. A "taxa de juros" é o valor do aluguel expresso em porcentagem do bem alugado, por período.</p>
   <div class="card">
+    <p>O vocabulário inteiro da matéria cabe em cinco letras:</p>
+    <p class="muted">
+      <strong>C</strong> = capital (também chamado de <em>principal</em>, <em>valor presente</em>, <em>PV</em>, <em>VP</em>) — o dinheiro na data zero.<br>
+      <strong>i</strong> = taxa de juros por período, <strong>sempre em decimal na fórmula</strong> (10% → 0,10).<br>
+      <strong>t</strong> ou <strong>n</strong> = número de períodos, na <em>mesma unidade da taxa</em>.<br>
+      <strong>J</strong> = juros — só o aluguel, sem o principal.<br>
+      <strong>M</strong> = montante (também <em>valor futuro</em>, <em>FV</em>, <em>VF</em>) — capital + juros. <code>M = C + J</code>, sempre.
+    </p>
+  </div>
+  <p>Duas palavras que aparecem no enunciado e travam quem nunca viu:</p>
+  <ul>
+    <li><strong>Capitalizar</strong> = incorporar o juro ao capital, transformando juro em capital que também renderá juro. "Capitalização mensal" significa: todo mês o juro do mês vira principal. É literalmente <code>saldo = saldo + juro_do_mes</code>.</li>
+    <li><strong>Amortizar</strong> = abater o principal da dívida. Muita gente acha que pagar a prestação é "pagar a dívida" — não é. Parte da prestação é aluguel (juros, dinheiro que evapora) e parte é amortização (dinheiro que efetivamente diminui o saldo devedor). Só a segunda parte reduz o que você deve.</li>
+  </ul>
+  <div class="tip">💡 <strong>Analogia de TI que vale por meia apostila:</strong> pense em cada período como uma iteração de um loop sobre a variável <code>saldo</code>. Juros <strong>simples</strong> são <code>total = total + C*i</code> — a parcela somada é uma <em>constante</em>, calculada uma vez fora do loop. Juros <strong>compostos</strong> são <code>saldo = saldo * (1+i)</code> — a variável é reatribuída em cima de si mesma, e é por isso que ela explode. Aritmética × geométrica. Linear × exponencial. <code>O(n)</code> × <code>O(k<sup>n</sup>)</code>. Toda a matéria é a diferença entre essas duas linhas de código.</div>
+
+  <h2 id="sec-1-porcentagem-a-base-de-tudo">1. Porcentagem — a base de tudo</h2>
+
+  <h3>1.1 Fator de multiplicação — pare de usar regra de três</h3>
+  <p>"Por cento" é literalmente "dividido por cem": <code>25% = 0,25</code>. E "25% <em>de</em> 800" é uma multiplicação: <code>0,25 × 800 = 200</code>. A palavra "de" é o sinal de vezes.</p>
+  <p>O candidato médio calcula um aumento de 20% assim: acha 20% do valor, depois soma. Duas operações, duas chances de errar. O <strong>fator de multiplicação</strong> faz numa só, e ele se deriva em dois passos:</p>
+  <div class="card">
+    <p>Aumentar <code>V</code> em 20% = <code>V + 0,20·V</code> → colocando V em evidência → <code>V·(1 + 0,20)</code> = <code>V × 1,20</code>.</p>
+    <p>Reduzir 20% = <code>V − 0,20·V</code> = <code>V·(1 − 0,20)</code> = <code>V × 0,80</code>.</p>
+    <p class="muted">Regra geral: <strong>aumento de i% → fator (1 + i)</strong> · <strong>desconto de i% → fator (1 − i)</strong>. Exemplo: notebook de R$ 4.000 com 15% de desconto → 4.000 × 0,85 = <strong>R$ 3.400</strong>, direto.</p>
+  </div>
+  <p>Por que insistir tanto no fator? Porque <strong>fatores se multiplicam entre si</strong>. Percentuais não se somam; fatores se compõem — e é isso que resolve o que vem a seguir.</p>
+
+  <h3>1.2 Variações sucessivas — a pegadinha nº 1 do país</h3>
+  <p>Duas altas de 10% seguidas <strong>não</strong> dão 20%. Veja por quê, com números:</p>
+  <div class="card">
+    <p class="muted">Preço inicial: R$ 100<br>
+    Após +10%: 100 × 1,10 = R$ 110<br>
+    Após +10% <em>de novo</em>: 110 × 1,10 = R$ 121</p>
+    <p class="muted">Variação total: de 100 para 121 = <strong>+21%</strong>, não +20%.</p>
+    <p class="muted">Direto pelos fatores: 1,10 × 1,10 = <strong>1,21</strong> → +21%.</p>
+  </div>
+  <p>O R$ 1 extra tem nome: é o segundo 10% incidindo <em>também sobre os R$ 10 do primeiro aumento</em>. Guarde essa sensação — ela é exatamente o juro composto, que você vai ver no bloco 3. Porcentagem sucessiva e juro composto são o mesmo fenômeno com nomes diferentes.</p>
+  <p><strong>A conta ERRADA que o candidato faz:</strong> <code>10% + 10% = 20%</code>. Falha porque o segundo aumento é calculado sobre uma <strong>base diferente</strong> (110, não 100). Percentual só faz sentido colado à base sobre a qual foi calculado — somar percentuais de bases diferentes é como somar 3 metros com 3 segundos.</p>
+
+  <h3>1.3 Aumento seguido de desconto igual dá prejuízo</h3>
+  <p>Um produto sobe 20% e depois cai 20%. Voltou ao preço original?</p>
+  <div class="card">
+    <p class="muted">Fatores: 1,20 × 0,80 = <strong>0,96</strong><br>
+    De R$ 100 → 100 × 1,20 = 120 → 120 × 0,80 = <strong>R$ 96</strong></p>
+    <p class="muted">Resultado: <strong>−4%</strong>. E note: dá −4% qualquer que seja o preço inicial, porque o fator 0,96 é independente da base.</p>
+  </div>
+  <p>A razão é sempre a mesma: o aumento de 20% foi calculado sobre 100, o desconto de 20% foi calculado sobre 120 — e 20% de 120 (R$ 24) é maior que 20% de 100 (R$ 20). O desconto morde mais do que o aumento acrescentou.</p>
+  <p><strong>Consequência útil:</strong> a ordem não importa. <code>1,20 × 0,80 = 0,80 × 1,20</code>. Se a banca inverter "caiu 20% e depois subiu 20%", o resultado é o mesmo −4%. Multiplicação é comutativa, e é por isso que o fator é rei.</p>
+  <div class="trap">🪤 "Subiu 25% e caiu 20%, voltou ao valor original?" → ×1,25×0,80 = 1,00. <strong>Sim</strong>, neste caso. A banca explora essa assimetria: o percentual de volta é sempre calculado sobre uma base diferente. Um salário de R$ 3.000 sobe 25% → R$ 3.750; cai 20% → 3.750 × 0,80 = R$ 3.000. Fecha. O truque: para desfazer um aumento de fator <code>f</code>, o desconto tem que ter fator <code>1/f</code>. Como <code>1/1,25 = 0,80</code>, precisa-se de exatamente −20%. Já para desfazer +100% (fator 2), precisa-se de −50% (fator 0,5) — e não de −100%.</div>
+  <div class="tip">📌 <strong>Atalho de prova:</strong> variação percentual total = <code>(produto dos fatores − 1) × 100</code>. Se o produto der acima de 1, houve ganho; abaixo de 1, perda. Você nunca precisa saber o valor inicial para responder "de quanto foi a variação total?".</div>
+
+  <h2 id="sec-2-juros-simples">2. Juros simples</h2>
+
+  <h3>2.1 A intuição</h3>
+  <p>No regime simples, o aluguel do dinheiro é calculado <strong>sempre sobre o capital inicial</strong>, e só sobre ele. Os juros que vão sendo gerados ficam "de lado", parados, sem render nada. É como se o banco anotasse num papel "você me deve mais R$ 20 este mês" e esse papel jamais virasse dinheiro que rende.</p>
+  <p>Resultado: todo período soma <strong>exatamente a mesma quantia</strong>. O crescimento é linear — uma reta. Em código:</p>
+  <div class="card">
+    <p><code>juro_do_periodo = C * i</code> &nbsp;← calculado UMA vez, é constante<br>
+    <code>total = C</code><br>
+    <code>para cada periodo: total = total + juro_do_periodo</code></p>
+    <p class="muted">Somar a mesma constante <code>t</code> vezes é multiplicar por <code>t</code>. Daí a fórmula sai sozinha.</p>
+  </div>
+
+  <h3>2.2 Derivando a fórmula</h3>
+  <div class="card">
+    <p class="muted">Juro de 1 período = <code>C · i</code><br>
+    Juro de <code>t</code> períodos = <code>C · i</code> somado <code>t</code> vezes = <code>C · i · t</code><br>
+    Montante = capital + juros = <code>C + C·i·t</code> → colocando C em evidência → <code>C·(1 + i·t)</code></p>
     <p><code>J = C · i · t</code> &nbsp;&nbsp; <code>M = C · (1 + i · t)</code></p>
     <p class="muted">J = juros · C = capital · i = taxa (decimal) · t = tempo · M = montante</p>
   </div>
-  <p><strong>Exemplo:</strong> R$ 1.000 a 2% a.m. por 5 meses → J = 1000 × 0,02 × 5 = <strong>R$ 100</strong>; M = R$ 1.100.</p>
-  <div class="tip">💡 Em juros simples, <strong>taxa e tempo têm que estar na mesma unidade</strong> — e a conversão é proporcional: 12% a.a. = 1% a.m. (basta dividir).</div>
+  <p>Repare que <code>(1 + i·t)</code> é um <strong>fator de multiplicação</strong> — o mesmo do bloco 1. Juros simples é porcentagem com o percentual multiplicado pelo prazo. Nada mais.</p>
 
-  <h2>3. Juros compostos</h2>
-  <p>Os juros incidem sobre o <strong>montante acumulado</strong> — juro sobre juro (crescimento exponencial). É o regime do mercado financeiro real.</p>
+  <h3>2.3 Exemplo resolvido, linha a linha</h3>
+  <p><strong>Exemplo:</strong> R$ 1.000 a 2% a.m. por 5 meses.</p>
   <div class="card">
-    <p><code>M = C · (1 + i)<sup>t</sup></code> &nbsp;&nbsp; <code>J = M − C</code></p>
+    <p class="muted">Dados: C = 1.000 · i = 2% a.m. = <strong>0,02</strong> · t = 5 meses<br>
+    J = C · i · t = 1.000 × 0,02 × 5<br>
+    J = 20 × 5 = <strong>R$ 100</strong><br>
+    M = C + J = 1.000 + 100 = <strong>R$ 1.100</strong></p>
+    <p class="muted">Conferindo pelo outro caminho: M = 1.000 × (1 + 0,02×5) = 1.000 × 1,10 = R$ 1.100. ✓</p>
   </div>
-  <p><strong>Exemplo:</strong> R$ 1.000 a 10% a.a. por 2 anos → M = 1000 × 1,1² = 1000 × 1,21 = <strong>R$ 1.210</strong> (juros simples dariam R$ 1.200 — a diferença de R$ 10 é o juro sobre juro).</p>
+  <p>Veja o mês a mês para sentir a linearidade — <strong>R$ 20 todo mês, sem exceção</strong>:</p>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Mês</th><th>Juro do mês</th><th>Juros acumulados</th><th>Montante</th></tr>
+    <tr><td>1</td><td>2% de 1.000 = R$ 20</td><td>R$ 20</td><td>R$ 1.020</td></tr>
+    <tr><td>2</td><td>2% de 1.000 = R$ 20</td><td>R$ 40</td><td>R$ 1.040</td></tr>
+    <tr><td>3</td><td>2% de 1.000 = R$ 20</td><td>R$ 60</td><td>R$ 1.060</td></tr>
+    <tr><td>4</td><td>2% de 1.000 = R$ 20</td><td>R$ 80</td><td>R$ 1.080</td></tr>
+    <tr><td>5</td><td>2% de 1.000 = R$ 20</td><td>R$ 100</td><td><strong>R$ 1.100</strong></td></tr>
+  </table>
+  </div>
+  <p>Note a coluna "Juro do mês": ela <strong>nunca muda</strong>, porque a base é sempre 1.000 — o capital inicial. No mês 5, o banco cobra 2% dos R$ 1.000 originais e ignora completamente os R$ 80 de juros já acumulados. É exatamente isso que caracteriza o regime simples.</p>
 
-  <h3>A comparação que a banca cobra</h3>
+  <h3>2.4 A questão de trás para frente</h3>
+  <p>A banca adora dar o montante e pedir o capital. É só isolar a variável. <strong>Exemplo:</strong> uma aplicação virou R$ 1.380 após 8 meses a 3% a.m. em juros simples. Qual foi o capital?</p>
+  <div class="card">
+    <p class="muted">M = C · (1 + i·t) → 1.380 = C × (1 + 0,03×8)<br>
+    1.380 = C × (1 + 0,24) = C × 1,24<br>
+    C = 1.380 ÷ 1,24 = <strong>R$ 1.112,90</strong></p>
+    <p class="muted">Erro clássico aqui: tirar 24% de 1.380 (= 1.048,80) e chamar isso de capital. Não funciona, porque os 24% foram calculados sobre <em>C</em>, não sobre <em>M</em>. Para desfazer uma multiplicação por 1,24 você <strong>divide</strong> por 1,24 — não multiplica por 0,76.</p>
+  </div>
+
+  <h3>2.5 Unidades: onde 80% dos erros acontecem</h3>
+  <p>Taxa e tempo têm que estar na <strong>mesma unidade</strong>. "12% ao ano por 18 meses" não vai direto na fórmula — converta um dos dois:</p>
+  <div class="card">
+    <p class="muted"><strong>Opção A</strong> — taxa para mensal: 12% ÷ 12 = 1% a.m.; t = 18 → i·t = 0,01 × 18 = <strong>0,18</strong><br>
+    <strong>Opção B</strong> — tempo para anos: t = 18/12 = 1,5; i = 0,12 → i·t = 0,12 × 1,5 = <strong>0,18</strong><br>
+    Mesmo resultado, como tinha que ser. Escolha a de conta mais redonda.</p>
+  </div>
+  <div class="tip">💡 Em juros simples, <strong>taxa e tempo têm que estar na mesma unidade</strong> — e a conversão é proporcional: 12% a.a. = 1% a.m. (basta dividir). Isso só vale no regime simples. No composto, dividir é erro grave — veja o bloco 4.</div>
+  <div class="trap">🪤 <strong>Prazo em dias.</strong> Quando o enunciado fala em dias, a banca escolhe o "ano" que quer: <strong>ano comercial</strong> = 360 dias (mês de 30) ou <strong>ano civil/exato</strong> = 365 dias. Juros comerciais/ordinários usam 360; juros exatos usam 365. Se o enunciado não disser nada e os números forem múltiplos de 30 (60 dias, 90 dias, 180 dias), é 360 — é o padrão bancário e o que a banca espera. Marcar 365 sem o enunciado pedir é cair na alternativa-armadilha que eles colocaram de propósito.</div>
+
+  <h2 id="sec-3-juros-compostos">3. Juros compostos</h2>
+
+  <h3>3.1 A intuição: aluguel sobre o aluguel</h3>
+  <p>No regime composto, no fim de cada período o juro <strong>é incorporado ao capital</strong> (é isso que "capitalizar" quer dizer). No período seguinte, o banco cobra aluguel sobre um montante maior — inclusive sobre o juro que ele mesmo cobrou antes. É juro sobre juro, e é o regime do mercado financeiro real: CDB, poupança, financiamento, cartão de crédito, cheque especial. Juros simples, na prática bancária, quase só aparecem em multa/mora e em prova.</p>
+  <p>Em código, a diferença para o simples é de um caractere:</p>
+  <div class="card">
+    <p><span class="muted">// simples</span><br>
+    <code>total = total + C*i</code> &nbsp;&nbsp;<span class="muted">// soma constante; a base nunca muda</span></p>
+    <p><span class="muted">// composto</span><br>
+    <code>saldo = saldo * (1+i)</code> &nbsp;&nbsp;<span class="muted">// reatribui a variável; a base cresce a cada volta</span></p>
+    <p class="muted">Multiplicar por <code>(1+i)</code> um total de <code>t</code> vezes é elevar a <code>t</code>. É daí — e só daí — que sai o expoente.</p>
+  </div>
+
+  <h3>3.2 Derivando a fórmula</h3>
+  <div class="card">
+    <p class="muted">Fim do 1º período: <code>M₁ = C·(1+i)</code><br>
+    Fim do 2º período: o capital agora é M₁, então <code>M₂ = M₁·(1+i) = C·(1+i)·(1+i) = C·(1+i)²</code><br>
+    Fim do 3º período: <code>M₃ = M₂·(1+i) = C·(1+i)³</code><br>
+    ... aplicando <code>t</code> vezes:</p>
+    <p><code>M = C · (1 + i)<sup>t</sup></code> &nbsp;&nbsp; <code>J = M − C</code></p>
+    <p class="muted">Não existe fórmula direta e útil para J no composto. Ache M primeiro, depois subtraia C. Quem tenta "J = C·i·t" no composto erra.</p>
+  </div>
+  <p>Repare no paralelo com o bloco 1: <code>(1+i)<sup>t</sup></code> é o mesmo <strong>produto de fatores</strong> das variações sucessivas — só que todos os fatores são iguais, e por isso viram potência. <em>Juro composto é aumento percentual sucessivo aplicado t vezes.</em> Se você entendeu que 10% + 10% dá 21%, você já entendeu juros compostos.</p>
+
+  <h3>3.3 Exemplo resolvido, linha a linha</h3>
+  <p><strong>Exemplo:</strong> R$ 1.000 a 10% a.a. por 2 anos.</p>
+  <div class="card">
+    <p class="muted">M = C · (1+i)<sup>t</sup> = 1.000 × (1 + 0,10)²<br>
+    M = 1.000 × (1,10)² = 1.000 × 1,21<br>
+    M = <strong>R$ 1.210</strong> · J = 1.210 − 1.000 = <strong>R$ 210</strong></p>
+    <p class="muted">Juros simples nas mesmas condições dariam M = 1.000 × (1 + 0,10×2) = R$ 1.200. A diferença de <strong>R$ 10</strong> é exatamente 10% dos R$ 100 de juros do 1º ano — é o juro sobre juro, com nome e sobrenome.</p>
+  </div>
+  <p>Agora o mesmo ano a ano, para ver a base crescer:</p>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Ano</th><th>Capital no início</th><th>Juro do ano (10% do saldo)</th><th>Montante no fim</th></tr>
+    <tr><td>1</td><td>R$ 1.000,00</td><td>10% de 1.000 = R$ 100,00</td><td>R$ 1.100,00</td></tr>
+    <tr><td>2</td><td>R$ 1.100,00</td><td>10% de 1.100 = R$ 110,00</td><td><strong>R$ 1.210,00</strong></td></tr>
+    <tr><td>3</td><td>R$ 1.210,00</td><td>10% de 1.210 = R$ 121,00</td><td>R$ 1.331,00</td></tr>
+    <tr><td>4</td><td>R$ 1.331,00</td><td>10% de 1.331 = R$ 133,10</td><td>R$ 1.464,10</td></tr>
+  </table>
+  </div>
+  <p>Compare com a tabela do bloco 2.3: lá a coluna do juro era uma constante teimosa (20, 20, 20...); aqui ela <strong>cresce sozinha</strong> (100, 110, 121, 133,10...) sem que ninguém deposite mais nada. Essa coluna crescente é a matéria inteira.</p>
+
+  <h3>3.4 Segundo exemplo — contexto de CDB</h3>
+  <p><strong>Exemplo:</strong> R$ 2.000 num CDB a 5% a.m. por 3 meses.</p>
+  <div class="card">
+    <p class="muted">(1,05)² = 1,05 × 1,05 = 1,1025<br>
+    (1,05)³ = 1,1025 × 1,05 = <strong>1,157625</strong><br>
+    M = 2.000 × 1,157625 = <strong>R$ 2.315,25</strong><br>
+    J = 2.315,25 − 2.000 = <strong>R$ 315,25</strong></p>
+    <p class="muted">No simples: M = 2.000 × (1 + 0,05×3) = 2.000 × 1,15 = R$ 2.300 → J = R$ 300. O composto entregou <strong>R$ 15,25 a mais</strong> em 3 meses.</p>
+  </div>
+  <p class="muted">Sobre elevar a potência na prova: você não precisa de calculadora científica. <code>(1,05)³</code> se faz em duas multiplicações encadeadas. Para expoentes maiores, a banca <strong>dá a tabela</strong> de <code>(1+i)<sup>n</sup></code> no enunciado — se ela deu, é porque a questão é de composto e o número que você precisa está lá. Procure na tabela antes de tentar heroísmo aritmético.</p>
+
+  <h3>3.5 A comparação que a banca cobra</h3>
+  <p>Aqui está a questão conceitual mais cobrada do tema, e quase todo mundo responde errado no reflexo. A pergunta é: <em>composto sempre rende mais que simples?</em> A resposta é <strong>não</strong>.</p>
+  <p>Veja com números propositalmente exagerados — C = R$ 1.000 a <strong>100% ao ano</strong> (i = 1,00), variando só o prazo:</p>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Prazo</th><th>Montante — Simples: C(1+i·t)</th><th>Montante — Composto: C(1+i)<sup>t</sup></th><th>Vencedor</th></tr>
+    <tr><td>t = 0,5 ano (meio período)</td><td>1.000 × (1 + 1×0,5) = <strong>R$ 1.500,00</strong></td><td>1.000 × 2<sup>0,5</sup> = 1.000 × 1,4142 = <strong>R$ 1.414,21</strong></td><td><strong>Simples</strong></td></tr>
+    <tr><td>t = 1 ano</td><td>1.000 × (1 + 1×1) = <strong>R$ 2.000,00</strong></td><td>1.000 × 2<sup>1</sup> = <strong>R$ 2.000,00</strong></td><td><strong>Empatam</strong></td></tr>
+    <tr><td>t = 2 anos</td><td>1.000 × (1 + 1×2) = <strong>R$ 3.000,00</strong></td><td>1.000 × 2<sup>2</sup> = <strong>R$ 4.000,00</strong></td><td><strong>Composto</strong></td></tr>
+    <tr><td>t = 3 anos</td><td>1.000 × (1 + 1×3) = <strong>R$ 4.000,00</strong></td><td>1.000 × 2<sup>3</sup> = <strong>R$ 8.000,00</strong></td><td><strong>Composto</strong> (e dispara)</td></tr>
+  </table>
+  </div>
+  <p><strong>Por que empata em t = 1?</strong> Porque <code>C(1 + i·1) = C(1+i)</code> e <code>C(1+i)<sup>1</sup> = C(1+i)</code> — são a <em>mesma expressão algébrica</em>. Não é coincidência nem aproximação: em um único período não houve tempo de capitalizar nada, e capitalizar é a única diferença entre os dois regimes.</p>
+  <p><strong>Por que o simples ganha em t &lt; 1?</strong> Porque no regime simples o juro é distribuído <em>proporcionalmente</em> dentro do período — meio período rende metade do juro cheio. No composto, o juro só é creditado ao final do período; a fração usa raiz, e raiz de número maior que 1 cresce mais devagar que a reta. <code>2<sup>0,5</sup> = 1,414</code> é menor que <code>1,5</code>. Fora do mundo dos concursos: por isso quem resgata um CDB "no meio do caminho" recebe menos do que a proporção ingênua sugere.</p>
   <div class="table-scroll">
   <table>
     <tr><th>Prazo</th><th>Quem rende mais</th></tr>
@@ -45,45 +225,336 @@
     <tr><td>t &gt; 1 período</td><td><strong>Composto</strong> (e a diferença explode)</td></tr>
   </table>
   </div>
-  <div class="trap">🪤 "Composto rende mais SEMPRE" é falso — em t=1 os montantes são iguais. Essa é a questão conceitual mais cobrada do tema.</div>
+  <div class="trap">🪤 "Composto rende mais SEMPRE" é falso — em t=1 os montantes são iguais. Essa é a questão conceitual mais cobrada do tema. E cuidado com o <em>período</em>: "t &lt; 1" significa menos que <strong>um período da taxa</strong>, não "menos que um ano". A 2% <strong>ao mês</strong> por 20 dias, t = 20/30 = 0,67 <strong>mês</strong> → é fração de período → simples ganha.</div>
+  <div class="tip">📌 <strong>Atalho de prova:</strong> desenhe mentalmente uma reta e uma curva saindo do mesmo ponto em t=0. Elas se cruzam obrigatoriamente em t=1. Antes do cruzamento a reta está por cima; depois, a curva. Esse desenho responde a questão inteira sem uma conta.</div>
 
-  <h2>4. Taxas — o coração da matéria</h2>
+  <h2 id="sec-4-taxas-o-coracao-da-materia">4. Taxas — o coração da matéria</h2>
+  <p>Este é o bloco que mais reprova, e por um motivo bobo: são quatro nomes parecidos para coisas diferentes. Se você entender o <strong>problema</strong> que cada nome resolve, nunca mais confunde.</p>
+
+  <h3>4.1 Nominal × efetiva — a taxa mentirosa</h3>
+  <p>O enunciado clássico é <em>"12% ao ano com capitalização mensal"</em>, e ele é contraditório de propósito: a taxa está expressa <strong>ao ano</strong>, mas o juro é incorporado <strong>ao mês</strong>. Quando o período da taxa difere do período da capitalização, essa taxa é <strong>nominal</strong> — só um rótulo, um nome (daí "nominal"), e não pode ser usada em fórmula nenhuma. A taxa <strong>efetiva</strong> é aquela em que os dois períodos <em>coincidem</em>: é a taxa de verdade, a que entra na fórmula.</p>
+  <p>E a regra para sair da nominal para a efetiva é — surpreendentemente — <strong>dividir</strong>:</p>
+  <div class="card">
+    <p><code>i<sub>efetiva do período de capitalização</sub> = i<sub>nominal</sub> ÷ (nº de capitalizações no período da nominal)</code></p>
+    <p class="muted">12% a.a. com capitalização mensal → 12 capitalizações no ano → 12% ÷ 12 = <strong>1% a.m. (efetiva)</strong></p>
+  </div>
+  <p><strong>Por que dividir, se estamos em juros compostos?</strong> Porque a nominal é uma <em>declaração</em>, e a convenção de mercado diz que ela se reparte proporcionalmente até o período de capitalização. Não é teorema — é regra de rotulagem. E é por isso que ela mente: dividir por 12 e depois capitalizar 12 vezes devolve mais de 12%.</p>
+
+  <h3>4.2 O exemplo clássico, completo</h3>
+  <p><strong>Exemplo:</strong> um banco anuncia "12% ao ano, capitalização mensal". Qual a efetiva anual — a que você realmente paga?</p>
+  <div class="card">
+    <p class="muted"><strong>Passo 1 — nominal → efetiva do período de capitalização (divide):</strong><br>
+    12% a.a. ÷ 12 meses = <strong>1% a.m.</strong> ← esta é efetiva mensal</p>
+    <p class="muted"><strong>Passo 2 — efetiva mensal → efetiva anual (capitaliza):</strong><br>
+    Aplicar 1% doze vezes, cada uma sobre o saldo novo:<br>
+    (1,01)<sup>12</sup> = <strong>1,126825</strong><br>
+    i<sub>efetiva anual</sub> = 1,126825 − 1 = 0,126825 = <strong>12,68% a.a.</strong></p>
+    <p class="muted">A "taxa de 12%" custa, na prática, <strong>12,68%</strong>. Os 0,68 pontos extras são o juro sobre juro dos 12 meses.</p>
+  </div>
+  <p>Com um número maior a mentira fica escandalosa: <strong>24% a.a. com capitalização mensal</strong> → 2% a.m. → <code>(1,02)<sup>12</sup> = 1,268242</code> → <strong>26,82% a.a. efetivos</strong>. Quase três pontos percentuais de diferença.</p>
+  <div class="tip">💡 <strong>Regra de ouro do bloco:</strong> a efetiva anual é <strong>sempre maior</strong> que a nominal anual, sempre que houver mais de uma capitalização no ano. Se você calculou e deu <em>menor</em>, você inverteu alguma coisa. E quanto mais frequente a capitalização (diária &gt; mensal &gt; trimestral), maior a efetiva — pelo mesmo motivo de sempre: mais voltas no loop <code>saldo = saldo*(1+i)</code>.</div>
+
+  <h3>4.3 Equivalentes × proporcionais — divide ou capitaliza?</h3>
+  <p>Duas taxas são <strong>equivalentes</strong> quando, aplicadas ao mesmo capital pelo mesmo prazo total, produzem <strong>o mesmo montante</strong>, apesar de expressas em períodos diferentes. É a pergunta "1% ao mês dá quanto ao ano?", feita com honestidade. A derivação é imediata: se os montantes têm que ser iguais ao fim de um ano, então</p>
+  <div class="card">
+    <p><code>C·(1 + i<sub>a</sub>)<sup>1</sup> = C·(1 + i<sub>m</sub>)<sup>12</sup></code> → cortando o C →<br>
+    <code>(1 + i<sub>a</sub>) = (1 + i<sub>m</sub>)<sup>12</sup></code></p>
+    <p class="muted">Generalizando: <code>(1 + i<sub>maior</sub>) = (1 + i<sub>menor</sub>)<sup>k</sup></code>, onde k = quantos períodos menores cabem no maior.</p>
+  </div>
+  <p><strong>Exemplo:</strong> uma aplicação rende 1% a.m. Qual a taxa trimestral equivalente?</p>
+  <div class="card">
+    <p class="muted">Cabem 3 meses num trimestre → k = 3<br>
+    (1 + i<sub>trim</sub>) = (1,01)<sup>3</sup> = 1,030301<br>
+    i<sub>trim</sub> = 1,030301 − 1 = 0,030301 = <strong>3,0301% a.t.</strong></p>
+    <p class="muted"><strong>A conta ERRADA:</strong> 1% × 3 = 3% a.t. Erra por 0,0301 p.p. — pouco, mas é exatamente o distrator principal. Se "3%" e "3,03%" estão ambas nas alternativas, a resposta é 3,03%: eles só colocariam as duas para te pegar.</p>
+    <p class="muted"><strong>Exemplo 2:</strong> 10% ao semestre → cabem 2 semestres no ano → (1 + i<sub>a</sub>) = (1,10)² = 1,21 → i<sub>a</sub> = <strong>21% a.a.</strong> (e não 20%: o 1% extra é o velho conhecido do bloco 1.2).</p>
+  </div>
+  <p>Já as taxas <strong>proporcionais</strong> se relacionam por divisão pura: 12% a.a. é proporcional a 1% a.m., a 3% a.t., a 6% a.s. Proporcional é o conceito do <em>regime simples</em>; equivalente é o do <em>composto</em>. O elo que fecha tudo: <strong>no regime simples, taxas proporcionais são equivalentes</strong> (dão o mesmo montante); no composto, não são — e é essa quebra que a banca cobra.</p>
   <div class="table-scroll">
   <table>
     <tr><th>Taxa</th><th>O que é</th><th>Como converter</th></tr>
     <tr><td><strong>Nominal</strong></td><td>a "de fachada": o período da taxa ≠ o da capitalização</td><td><strong>Divide</strong> (proporcional): 12% a.a. cap. mensal → 1% a.m.</td></tr>
     <tr><td><strong>Efetiva</strong></td><td>a real: período da taxa = período de capitalização</td><td>É a que se usa na fórmula</td></tr>
     <tr><td><strong>Equivalentes</strong></td><td>taxas que geram o mesmo montante em prazos diferentes</td><td><strong>Capitaliza</strong>: (1+i<sub>a</sub>) = (1+i<sub>m</sub>)<sup>12</sup></td></tr>
+    <tr><td><strong>Proporcionais</strong></td><td>relacionadas por divisão pura; só são equivalentes no regime simples</td><td><strong>Divide</strong>: 12% a.a. → 1% a.m.</td></tr>
     <tr><td><strong>Real</strong></td><td>ganho descontada a inflação</td><td>(1+i<sub>real</sub>) = (1+i<sub>nominal</sub>) ÷ (1+inflação)</td></tr>
   </table>
   </div>
-  <p><strong>Nominal → efetiva (exemplo clássico):</strong> 12% a.a. com capitalização mensal → divide por 12 = 1% a.m. (efetiva mensal) → a efetiva <em>anual</em> é (1,01)¹² − 1 ≈ <strong>12,68% a.a.</strong> (maior que a nominal!).</p>
-  <p><strong>Taxa real (Fisher):</strong> rendeu 10% com inflação de 5% → (1,10 ÷ 1,05) − 1 ≈ <strong>4,76%</strong> — e <em>não</em> 5%.</p>
-  <div class="trap">🪤 Nominal se <strong>divide</strong> (proporcional/juros simples entre períodos); equivalente se <strong>capitaliza</strong> (exponencial). Subtrair a inflação da taxa nominal ("10−5=5%") é aproximação — a banca cobra a fórmula da divisão.</div>
+  <p><strong>Nominal → efetiva (resumo do exemplo clássico):</strong> 12% a.a. com capitalização mensal → divide por 12 = 1% a.m. (efetiva mensal) → a efetiva <em>anual</em> é (1,01)¹² − 1 ≈ <strong>12,68% a.a.</strong> (maior que a nominal!).</p>
+  <div class="trap">🪤 Nominal se <strong>divide</strong> (proporcional/juros simples entre períodos); equivalente se <strong>capitaliza</strong> (exponencial). Se o enunciado disser "capitalização" ou "capitalizados", divide. Se disser "equivalente" ou "que produz o mesmo montante", capitaliza. São palavras-gatilho: leia o enunciado caçando-as antes de fazer qualquer conta.</div>
 
-  <h2>5. Descontos</h2>
-  <p>Antecipar um título = receber menos hoje. <strong>N</strong> = valor nominal (de face, no vencimento); <strong>A</strong> = valor atual (o que se recebe).</p>
+  <h3>4.4 Taxa real e o efeito Fisher</h3>
+  <p>Sua aplicação rendeu 10% no ano; a inflação foi 5%. Você ficou 5% mais rico? Quase — e a banca cobra o "quase". Pense em <strong>poder de compra</strong>, não em reais: você tinha R$ 100 e o pacote de café custava R$ 1 — dava para comprar 100 pacotes.</p>
+  <div class="card">
+    <p class="muted">Depois de 1 ano:<br>
+    Seu dinheiro: 100 × 1,10 = <strong>R$ 110</strong><br>
+    O café: 1,00 × 1,05 = <strong>R$ 1,05</strong> o pacote<br>
+    Quantos pacotes você compra agora? 110 ÷ 1,05 = <strong>104,76 pacotes</strong></p>
+    <p class="muted">Você saiu de 100 para 104,76 pacotes → seu ganho <em>real</em> foi de <strong>4,76%</strong> — e não 5%.</p>
+  </div>
+  <p>Repare no que fizemos: dividimos o fator do rendimento pelo fator da inflação. Isso é Fisher — e agora não precisa ser decorado:</p>
+  <div class="card">
+    <p><code>(1 + i<sub>real</sub>) = (1 + i<sub>nominal</sub>) ÷ (1 + π)</code> &nbsp;&nbsp;<span class="muted">π = inflação</span></p>
+    <p class="muted"><strong>Taxa real (Fisher):</strong> rendeu 10% com inflação de 5% → (1,10 ÷ 1,05) − 1 = 1,047619 − 1 ≈ <strong>4,76%</strong> — e <em>não</em> 5%.</p>
+  </div>
+  <p class="muted">Aviso de vocabulário: aqui "nominal" quer dizer "aparente, em moeda corrente, sem descontar inflação" — <em>não</em> tem relação com a taxa nominal do item 4.1. São dois usos diferentes da mesma palavra, e a banca sabe disso. Julgue pelo contexto: se o enunciado fala em <strong>inflação</strong>, é este "nominal"; se fala em <strong>capitalização</strong>, é o outro.</p>
+  <div class="card">
+    <p class="muted"><strong>Exemplo 2:</strong> CDB rendeu 12%, inflação 6% → (1 + i<sub>real</sub>) = 1,12 ÷ 1,06 = 1,056603 → i<sub>real</sub> = <strong>5,66%</strong>. A subtração ingênua daria 6%: erro de 0,34 p.p. → alternativa errada marcada.</p>
+    <p class="muted"><strong>Exemplo 3 — taxa real negativa (adoram este):</strong> poupança rendeu 6%, inflação 8% → 1,06 ÷ 1,08 = 0,981481 → i<sub>real</sub> = <strong>−1,85%</strong>. O saldo em reais subiu, mas o poder de compra <strong>caiu</strong>. Note o fator <em>abaixo de 1</em> — o mesmo sinal visual de perda do 0,96 do bloco 1.3. Rendimento abaixo da inflação ⟹ taxa real negativa.</p>
+  </div>
+  <div class="trap">🪤 Subtrair a inflação da taxa nominal ("10 − 5 = 5%") é <strong>aproximação</strong>, e só funciona razoavelmente com taxas muito pequenas. A banca cobra a fórmula da <strong>divisão</strong>, e o resultado exato é sempre <em>menor</em> que a subtração ingênua quando há inflação positiva. Se você calculou pela subtração e o número bateu redondinho com uma alternativa, desconfie: essa alternativa é a isca.</div>
+  <div class="tip">📌 <strong>Atalho de prova:</strong> as três conversões deste bloco são a mesma operação com fatores. <strong>Acumular no tempo</strong> → multiplica fatores. <strong>Tirar um efeito</strong> (inflação) → divide fatores. <strong>Rotular</strong> (nominal→efetiva) → divide a taxa. Só a terceira é convenção; as duas primeiras são matemática.</div>
+
+  <h2 id="sec-5-descontos">5. Descontos</h2>
+
+  <h3>5.1 A situação, antes da fórmula</h3>
+  <p>Você tem uma loja e vendeu a prazo: na mão, uma duplicata de R$ 1.000 que só será paga daqui a 2 meses. Mas você precisa do dinheiro <em>hoje</em>. Vai ao banco e "desconta o título": o banco te dá dinheiro agora e fica com o direito de receber os R$ 1.000 no vencimento — e te dá <em>menos</em> de R$ 1.000. Essa diferença é o <strong>desconto</strong>: é a operação de juros de trás para frente. Em vez de partir do capital e projetar o futuro, você parte do futuro e recua até hoje.</p>
+  <div class="card">
+    <p class="muted"><strong>N</strong> = valor nominal (de face, o que está escrito no título, valor no vencimento)<br>
+    <strong>A</strong> = valor atual (também <em>valor descontado</em>, <em>valor líquido</em>: o que se recebe hoje)<br>
+    <strong>D</strong> = desconto = <code>N − A</code>, sempre<br>
+    <strong>t</strong> = tempo de antecipação (quanto falta para o vencimento)</p>
+  </div>
+  <p>Toda a briga do bloco é uma pergunta só: <strong>a taxa de desconto incide sobre qual valor?</strong> Sobre o que está escrito no papel (N), ou sobre o que você efetivamente recebe (A)? Duas respostas, dois tipos.</p>
+
+  <h3>5.2 Desconto comercial (por fora, bancário)</h3>
+  <p>Incide sobre o <strong>valor nominal</strong>. É o mais fácil de calcular — e por ser fácil os bancos o adotaram, lá quando não havia calculadora. É juros simples aplicado sobre N.</p>
+  <div class="card">
+    <p><code>D<sub>c</sub> = N · i · t</code> &nbsp;→&nbsp; <code>A = N − D<sub>c</sub> = N·(1 − i·t)</code></p>
+    <p class="muted">Repare: é a fórmula <code>J = C·i·t</code>, com N no lugar de C, e subtraindo em vez de somar. É "juros simples de cabeça para baixo".</p>
+  </div>
+
+  <h3>5.3 Desconto racional (por dentro, real)</h3>
+  <p>Incide sobre o <strong>valor atual</strong> — o conceitualmente correto, porque o dinheiro que o banco de fato adianta a você é A, não N. Daí "racional" ou "justo" (e daí os bancos não usarem). Derivando em três passos:</p>
+  <div class="card">
+    <p class="muted">O desconto incide sobre A: <code>D<sub>r</sub> = A · i · t</code><br>
+    Como <code>N = A + D<sub>r</sub></code> → <code>N = A + A·i·t = A·(1 + i·t)</code><br>
+    Isolando A:</p>
+    <p><code>A = N ÷ (1 + i·t)</code> &nbsp;&nbsp; <code>D<sub>r</sub> = N − A</code></p>
+    <p class="muted">Ou seja: o racional é <strong>exatamente</strong> a fórmula do montante simples isolada para trás. A é o capital que, aplicado a juros simples durante t, viraria N. É o valor presente honesto.</p>
+  </div>
+
+  <h3>5.4 Exemplo resolvido — os dois, lado a lado</h3>
+  <p><strong>Exemplo:</strong> título de R$ 1.000, descontado 2 meses antes do vencimento, taxa de 5% a.m.</p>
+  <div class="card">
+    <p class="muted"><strong>Comercial (por fora):</strong><br>
+    D<sub>c</sub> = N · i · t = 1.000 × 0,05 × 2 = <strong>R$ 100,00</strong><br>
+    A = 1.000 − 100 = <strong>R$ 900,00</strong> ← é o que o cliente recebe</p>
+    <p class="muted"><strong>Racional (por dentro):</strong><br>
+    A = N ÷ (1 + i·t) = 1.000 ÷ (1 + 0,05×2) = 1.000 ÷ 1,10<br>
+    A = <strong>R$ 909,09</strong><br>
+    D<sub>r</sub> = 1.000 − 909,09 = <strong>R$ 90,91</strong></p>
+    <p class="muted">Conferindo o racional pela definição (o desconto tem que ser 10% de A): 909,09 × 0,05 × 2 = 90,91 ✓ Fecha.</p>
+  </div>
   <div class="table-scroll">
   <table>
-    <tr><th>Tipo</th><th>Incide sobre</th><th>Fórmula (simples)</th><th>Resultado</th></tr>
-    <tr><td><strong>Comercial</strong> (por fora, bancário)</td><td>valor <strong>nominal</strong></td><td>D = N · i · t</td><td>desconto MAIOR</td></tr>
-    <tr><td><strong>Racional</strong> (por dentro)</td><td>valor <strong>atual</strong></td><td>D = A · i · t → A = N/(1+i·t)</td><td>desconto menor (o "justo")</td></tr>
+    <tr><th>Tipo</th><th>Incide sobre</th><th>Fórmula (simples)</th><th>No exemplo</th><th>Resultado</th></tr>
+    <tr><td><strong>Comercial</strong> (por fora, bancário)</td><td>valor <strong>nominal</strong></td><td>D = N · i · t</td><td>D = R$ 100,00 · A = R$ 900,00</td><td>desconto MAIOR</td></tr>
+    <tr><td><strong>Racional</strong> (por dentro)</td><td>valor <strong>atual</strong></td><td>D = A · i · t → A = N/(1+i·t)</td><td>D = R$ 90,91 · A = R$ 909,09</td><td>desconto menor (o "justo")</td></tr>
   </table>
   </div>
-  <p><strong>Exemplo:</strong> título de R$ 1.000, 2 meses antes, 5% a.m. → <em>Comercial:</em> D = 1000×0,05×2 = R$ 100 → recebe R$ 900. <em>Racional:</em> A = 1000/1,10 = R$ 909,09 → D = R$ 90,91.</p>
-  <div class="tip">💡 O desconto <strong>comercial</strong> é o usado pelos bancos (favorece quem antecipa o dinheiro). Por isso "desconto bancário" = comercial = por fora.</div>
 
-  <h2>6. Séries de pagamentos (rendas/anuidades)</h2>
+  <h3>5.5 Por que o comercial é sempre maior</h3>
+  <p>Não decore — veja: os dois aplicam a mesma taxa <code>i·t</code>, mas o comercial a aplica sobre <strong>N</strong> e o racional sobre <strong>A</strong>. E <code>N &gt; A</code> sempre (o título vale mais no futuro do que hoje). Mesma taxa sobre base maior = desconto maior. Fim.</p>
+  <p>E existe uma relação exata entre os dois, que a banca às vezes cobra direto:</p>
+  <div class="card">
+    <p><code>D<sub>c</sub> = D<sub>r</sub> · (1 + i·t)</code></p>
+    <p class="muted">Testando no exemplo: 90,909... × 1,10 = <strong>100,00</strong> ✓ Bate na vírgula.</p>
+    <p class="muted">Faz sentido: o desconto comercial é o desconto racional "levado ao futuro". Sabendo um, você tem o outro sem refazer nada.</p>
+  </div>
+  <div class="tip">💡 O desconto <strong>comercial</strong> é o usado pelos bancos (favorece quem antecipa o dinheiro). Por isso "desconto bancário" = comercial = por fora. Mnemônico: <strong>C</strong>omercial = <strong>C</strong>obra mais = base <strong>C</strong>heia (o valor nominal). Se a questão pede "o maior desconto" ou "o que o banco pratica", é comercial.</div>
+  <div class="trap">🪤 <strong>Duas armadilhas.</strong> (1) A banca pergunta "qual o <em>valor atual</em>?" e você calcula o <em>desconto</em> — leia o que foi pedido: A ou D. São números diferentes e ambos estão nas alternativas. (2) No desconto comercial, se <code>i·t ≥ 1</code>, o valor atual dá zero ou negativo — o que é absurdo na vida real e é a prova matemática de que o comercial só funciona em prazos curtos. Se der negativo na sua conta, você provavelmente confundiu a unidade do tempo, não a fórmula.</div>
+
+  <h2 id="sec-6-series-de-pagamentos-rendas-anuidades">6. Séries de pagamentos (rendas/anuidades)</h2>
+
+  <h3>6.1 A intuição: por que não dá para somar as parcelas</h3>
+  <p>"12 × R$ 500 sem juros" dá R$ 6.000 no cartaz da loja. Mas quanto vale, <em>hoje</em>, o direito de receber R$ 500 por mês durante 12 meses? Menos de R$ 6.000 — a parcela do 12º mês só chega daqui a um ano, e dinheiro tem data (bloco 0). Somar parcelas de datas diferentes é o pecado original da matemática financeira: é somar moedas diferentes sem converter.</p>
+  <p>A conversão tem nome: <strong>trazer a valor presente</strong>. Se <code>M = C·(1+i)<sup>n</sup></code>, isolando C:</p>
+  <div class="card">
+    <p><code>C = M ÷ (1+i)<sup>n</sup></code> &nbsp;ou, equivalentemente,&nbsp; <code>C = M · (1+i)<sup>−n</sup></code></p>
+    <p class="muted">Dividir por <code>(1+i)<sup>n</sup></code> é "voltar no tempo" n períodos. É a operação inversa de capitalizar. O nome disso é <strong>descontar</strong> (mesma ideia do bloco 5, agora em regime composto).</p>
+  </div>
+  <p>Uma <strong>série uniforme</strong> é só isso: vários pagamentos iguais (<code>PMT</code>), em datas diferentes, cada um trazido para hoje e depois somados. Somar só é legítimo <em>depois</em> que todos estão na mesma data.</p>
+
+  <h3>6.2 Os três tipos — a diferença é só onde cai o primeiro pagamento</h3>
   <ul>
-    <li><strong>Postecipada</strong> (termos vencidos): 1º pagamento ao fim do 1º período. É o padrão (financiamentos).</li>
-    <li><strong>Antecipada</strong> (termos antecipados): 1º pagamento na data zero (entrada). Vale mais — desconta um período a menos.</li>
-    <li><strong>Diferida</strong>: há carência antes do 1º pagamento ("compre e só pague em 90 dias").</li>
+    <li><strong>Postecipada</strong> (termos vencidos): 1º pagamento ao <em>fim</em> do 1º período. É o padrão — financiamentos, empréstimos, "compre hoje, primeira parcela em 30 dias". Se o enunciado não disser nada, é esta.</li>
+    <li><strong>Antecipada</strong> (termos antecipados): 1º pagamento na <strong>data zero</strong> (a "entrada"). Vale mais que a postecipada, porque cada parcela é paga um período mais cedo — desconta-se um período a menos de cada uma.</li>
+    <li><strong>Diferida</strong>: há <strong>carência</strong> antes do 1º pagamento. É o "compre agora e só comece a pagar em 90 dias". Vale menos, porque tudo foi empurrado para frente.</li>
   </ul>
-  <div class="card"><p>Valor presente da série uniforme postecipada:<br>
-  <code>PV = PMT · [1 − (1+i)<sup>−n</sup>] ÷ i</code></p></div>
 
-  <h2>7. Amortização — SAC × Price</h2>
-  <p>Toda prestação = <strong>amortização</strong> (abate o saldo devedor) + <strong>juros</strong> (calculados sobre o saldo devedor do período anterior).</p>
+  <h3>6.3 A fórmula do valor presente, derivada</h3>
+  <p>Considere 3 parcelas de PMT, postecipadas, a uma taxa i. Traga cada uma para hoje:</p>
+  <div class="card">
+    <p class="muted">Parcela do mês 1 → vale hoje <code>PMT ÷ (1+i)<sup>1</sup></code><br>
+    Parcela do mês 2 → vale hoje <code>PMT ÷ (1+i)<sup>2</sup></code><br>
+    Parcela do mês 3 → vale hoje <code>PMT ÷ (1+i)<sup>3</sup></code><br>
+    <code>PV = PMT·[(1+i)<sup>−1</sup> + (1+i)<sup>−2</sup> + (1+i)<sup>−3</sup>]</code></p>
+    <p class="muted">Aquilo entre colchetes é uma <strong>progressão geométrica</strong> de razão <code>(1+i)<sup>−1</sup></code>. Aplicando a soma da PG e simplificando, o colchete inteiro colapsa em uma expressão fechada:</p>
+    <p>Valor presente da série uniforme postecipada:<br>
+    <code>PV = PMT · [1 − (1+i)<sup>−n</sup>] ÷ i</code></p>
+    <p class="muted">O termo <code>[1 − (1+i)<sup>−n</sup>] ÷ i</code> tem nome próprio nas tabelas financeiras: <strong>a<sub>n¬i</sub></strong> ("a-ene-cantoneira-i"), o fator de valor atual. Se a banca der uma tabela de <code>a<sub>n¬i</sub></code>, é só multiplicar pela PMT — a questão vira uma multiplicação.</p>
+  </div>
+
+  <h3>6.4 Exemplo resolvido — provando que a fórmula é só a soma</h3>
+  <p><strong>Exemplo:</strong> 3 parcelas mensais de R$ 1.000, postecipadas, taxa de 10% a.m. Qual o valor à vista?</p>
+  <div class="card">
+    <p class="muted"><strong>Na força bruta (trazendo uma a uma):</strong><br>
+    1ª: 1.000 ÷ 1,10 = R$ 909,09<br>
+    2ª: 1.000 ÷ 1,21 = R$ 826,45<br>
+    3ª: 1.000 ÷ 1,331 = R$ 751,31<br>
+    Soma = 909,09 + 826,45 + 751,31 = <strong>R$ 2.486,85</strong></p>
+    <p class="muted"><strong>Pela fórmula:</strong><br>
+    (1,10)<sup>3</sup> = 1,331 → (1,10)<sup>−3</sup> = 1 ÷ 1,331 = 0,751315<br>
+    PV = 1.000 × [1 − 0,751315] ÷ 0,10<br>
+    PV = 1.000 × 0,248685 ÷ 0,10 = 1.000 × 2,48685 = <strong>R$ 2.486,85</strong> ✓</p>
+    <p class="muted">Idênticos, porque a fórmula <em>é</em> a soma — só que fechada. As 3 parcelas somam R$ 3.000 no papel, mas valem R$ 2.486,85 hoje. Os R$ 513,15 de diferença são os juros embutidos no parcelamento.</p>
+  </div>
+
+  <h3>6.5 Antecipada e diferida — sem fórmula nova</h3>
+  <p>Não decore mais duas fórmulas. Ambas são a postecipada deslocada no tempo, e deslocar no tempo é multiplicar ou dividir por <code>(1+i)</code>.</p>
+  <p><strong>Antecipada</strong> — as mesmas 3 parcelas de R$ 1.000, mas a primeira <em>hoje</em> (t=0, 1 e 2):</p>
+  <div class="card">
+    <p class="muted"><strong>Na força bruta:</strong> 1.000 (já está hoje) + 909,09 + 826,45 = <strong>R$ 2.735,54</strong></p>
+    <p class="muted"><strong>Pelo atalho:</strong> cada parcela está exatamente 1 período mais perto → basta capitalizar a postecipada uma vez:<br>
+    <code>PV<sub>ant</sub> = PV<sub>post</sub> × (1+i)</code> = 2.486,85 × 1,10 = <strong>R$ 2.735,54</strong> ✓</p>
+  </div>
+  <p><strong>Diferida</strong> — as mesmas 3 parcelas, com 1 mês de carência (pagamentos em t=2, 3 e 4):</p>
+  <div class="card">
+    <p class="muted"><strong>Pelo atalho:</strong> tudo está 1 período mais longe → desconta a postecipada uma vez:<br>
+    <code>PV<sub>dif</sub> = PV<sub>post</sub> ÷ (1+i)<sup>m</sup></code> &nbsp;<span class="muted">(m = períodos de carência)</span><br>
+    PV<sub>dif</sub> = 2.486,85 ÷ 1,10 = <strong>R$ 2.260,77</strong></p>
+    <p class="muted"><strong>Conferindo na força bruta:</strong> 1.000/1,21 + 1.000/1,331 + 1.000/1,4641 = 826,45 + 751,31 + 683,01 = <strong>R$ 2.260,77</strong> ✓</p>
+  </div>
+  <p>Compare os três, mesmas parcelas, mesma taxa — muda só a data:</p>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Série</th><th>Datas dos pagamentos</th><th>Valor presente</th><th>Relação com a postecipada</th></tr>
+    <tr><td><strong>Antecipada</strong></td><td>t = 0, 1, 2</td><td><strong>R$ 2.735,54</strong></td><td>× (1+i) — vale <strong>mais</strong></td></tr>
+    <tr><td><strong>Postecipada</strong></td><td>t = 1, 2, 3</td><td><strong>R$ 2.486,85</strong></td><td>referência</td></tr>
+    <tr><td><strong>Diferida</strong> (1 de carência)</td><td>t = 2, 3, 4</td><td><strong>R$ 2.260,77</strong></td><td>÷ (1+i) — vale <strong>menos</strong></td></tr>
+  </table>
+  </div>
+  <div class="tip">📌 <strong>Atalho de prova:</strong> quando a questão der PV e pedir PMT (o caso "financiei R$ X em n vezes, qual a prestação?"), é só inverter: <code>PMT = PV · i ÷ [1 − (1+i)<sup>−n</sup>]</code>. É a mesma fórmula, e é exatamente a fórmula da prestação da Tabela Price do próximo bloco. Você não vai aprender duas fórmulas — vai usar a mesma duas vezes.</div>
+  <div class="trap">🪤 A carência quase sempre é <strong>com juros</strong>: durante os 90 dias de "não pague nada" a dívida <em>continua rendendo</em> juros para o banco. "Diferida" não é presente — é adiamento caro. E cuidado com a contagem: "carência de 3 meses, 1º pagamento no 4º mês" — o m da fórmula é o número de períodos que a série inteira andou para frente, não o número da parcela.</div>
+
+  <h2 id="sec-7-amortizacao-sac-price-americano">7. Amortização — SAC × Price × Americano</h2>
+
+  <h3>7.1 A anatomia de uma prestação</h3>
+  <p>O tópico mais cobrado e o mais mal entendido, porque quase ninguém para para perguntar: <em>do que é feita uma prestação?</em> A resposta cabe numa linha e explica tudo o que vem depois:</p>
+  <div class="card">
+    <p><code>Prestação = Amortização + Juros</code></p>
+    <p class="muted"><strong>Juros</strong> = <code>i × saldo devedor do período ANTERIOR</code> — é o aluguel do mês. Esse dinheiro vai embora, não abate nada.<br>
+    <strong>Amortização</strong> = <code>Prestação − Juros</code> — é o que sobra e efetivamente reduz o saldo devedor.<br>
+    <strong>Novo saldo</strong> = <code>saldo anterior − amortização</code></p>
+  </div>
+  <p>Essas três linhas <em>são</em> o algoritmo. Todo sistema de amortização roda exatamente esse loop:</p>
+  <div class="card">
+    <p><code>para cada periodo:</code><br>
+    &nbsp;&nbsp;<code>juros = saldo * i</code><br>
+    &nbsp;&nbsp;<code>amortizacao = prestacao - juros</code><br>
+    &nbsp;&nbsp;<code>saldo = saldo - amortizacao</code></p>
+    <p class="muted">A <strong>única</strong> diferença entre SAC, Price e Americano é <em>qual variável você fixa</em>. Fixe a amortização → SAC. Fixe a prestação → Price. Fixe a amortização em zero até o fim → Americano. É a mesma função com um parâmetro diferente.</p>
+  </div>
+  <p>E entenda o motivo pelo qual os juros <em>sempre</em> caem, em qualquer sistema: eles são calculados sobre o saldo devedor, e o saldo devedor só faz diminuir. Base menor, juro menor. Isso não é característica de sistema nenhum — é consequência de estar pagando a dívida.</p>
+
+  <h3>7.2 SAC — Sistema de Amortização Constante</h3>
+  <p>A regra está no nome: você devolve <strong>a mesma fatia do principal</strong> todo mês. Deve R$ 12.000 em 3 meses? Devolve R$ 4.000 de principal por mês, ponto. Os juros vêm por cima; e como o saldo cai sempre R$ 4.000, os juros caem sempre a mesma quantia — e a prestação também.</p>
+  <div class="card">
+    <p><code>A = Saldo inicial ÷ n</code> &nbsp;<span class="muted">(constante, é a definição do sistema)</span><br>
+    <code>J<sub>k</sub> = i × saldo devedor anterior</code><br>
+    <code>P<sub>k</sub> = A + J<sub>k</sub></code> &nbsp;<span class="muted">(decrescente, porque J cai)</span></p>
+  </div>
+  <p><strong>Exemplo resolvido:</strong> financiamento de <strong>R$ 12.000 em 3 meses a 10% a.m.</strong>, pelo SAC.</p>
+  <div class="card">
+    <p class="muted"><strong>Passo 1 — a amortização:</strong> A = 12.000 ÷ 3 = <strong>R$ 4.000</strong> (todo mês, sem exceção)</p>
+    <p class="muted"><strong>Passo 2 — mês 1:</strong> juros = 10% de 12.000 = R$ 1.200 → prestação = 4.000 + 1.200 = <strong>R$ 5.200</strong> → saldo = 12.000 − 4.000 = R$ 8.000</p>
+    <p class="muted"><strong>Passo 3 — mês 2:</strong> juros = 10% de <em>8.000</em> = R$ 800 → prestação = 4.000 + 800 = <strong>R$ 4.800</strong> → saldo = 8.000 − 4.000 = R$ 4.000</p>
+    <p class="muted"><strong>Passo 4 — mês 3:</strong> juros = 10% de <em>4.000</em> = R$ 400 → prestação = 4.000 + 400 = <strong>R$ 4.400</strong> → saldo = 4.000 − 4.000 = <strong>R$ 0</strong> ✓ quitado</p>
+  </div>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Mês</th><th>Saldo devedor (início)</th><th>Juros (10% do saldo)</th><th>Amortização</th><th>Prestação</th><th>Saldo devedor (fim)</th></tr>
+    <tr><td>1</td><td>R$ 12.000,00</td><td>R$ 1.200,00</td><td><strong>R$ 4.000,00</strong></td><td><strong>R$ 5.200,00</strong></td><td>R$ 8.000,00</td></tr>
+    <tr><td>2</td><td>R$ 8.000,00</td><td>R$ 800,00</td><td><strong>R$ 4.000,00</strong></td><td><strong>R$ 4.800,00</strong></td><td>R$ 4.000,00</td></tr>
+    <tr><td>3</td><td>R$ 4.000,00</td><td>R$ 400,00</td><td><strong>R$ 4.000,00</strong></td><td><strong>R$ 4.400,00</strong></td><td><strong>R$ 0,00</strong></td></tr>
+    <tr><td colspan="2"><strong>Totais</strong></td><td><strong>R$ 2.400,00</strong></td><td><strong>R$ 12.000,00</strong></td><td><strong>R$ 14.400,00</strong></td><td>—</td></tr>
+  </table>
+  </div>
+  <p>Leia a planilha em colunas, é onde está o aprendizado:</p>
+  <ul>
+    <li>A coluna <strong>Amortização</strong> é uma constante — é a definição do sistema, e é de onde vem a sigla.</li>
+    <li>A coluna <strong>Juros</strong> cai de 1.200 → 800 → 400: <strong>R$ 400 por mês, sempre a mesma queda</strong>. Não é acaso: o saldo cai R$ 4.000 fixos, e 10% de R$ 4.000 = R$ 400.</li>
+    <li>Por isso a <strong>Prestação</strong> cai exatamente R$ 400 por mês: <code>queda da prestação = A × i</code>. No SAC as prestações formam uma <strong>P.A. decrescente</strong> — e isso permite achar a prestação de número 137 sem montar planilha nenhuma.</li>
+    <li>A coluna Amortização soma <strong>exatamente</strong> os R$ 12.000 emprestados. Tem que somar, em qualquer sistema — é a definição de quitar.</li>
+  </ul>
+  <div class="card">
+    <p class="muted"><strong>Fórmulas de atalho do SAC</strong> (todas saem da P.A., não precisam ser decoradas):<br>
+    Saldo devedor após k parcelas: <code>SD<sub>k</sub> = Saldo inicial − k·A</code><br>
+    Prestação de número k: <code>P<sub>k</sub> = P<sub>1</sub> − (k−1)·A·i</code><br>
+    Juros da parcela k: <code>J<sub>k</sub> = i · SD<sub>k−1</sub></code></p>
+  </div>
+
+  <h3>7.3 Price — Sistema Francês</h3>
+  <p>Aqui a lógica se inverte: em vez de fixar a amortização e deixar a prestação flutuar, você <strong>fixa a prestação</strong> e deixa a amortização se virar. É o sistema do carnê, do CDC, do crédito ao consumidor — porque "12 × R$ 480" é o que o cliente entende.</p>
+  <p>E de onde sai o valor dessa prestação fixa? <strong>Do bloco 6</strong>, sem uma fórmula nova. Um financiamento Price <em>é</em> uma série uniforme postecipada: o valor emprestado hoje (PV) tem que ser exatamente o valor presente das prestações. Então é só isolar PMT em <code>PV = PMT·[1 − (1+i)<sup>−n</sup>] ÷ i</code>:</p>
+  <div class="card">
+    <p><code>PMT = PV · i ÷ [1 − (1+i)<sup>−n</sup>]</code></p>
+    <p class="muted">Tradução: a prestação da Price é aquela que faz o banco recuperar, em valor de hoje, exatamente o que emprestou — nem mais, nem menos.</p>
+  </div>
+  <p><strong>Exemplo resolvido:</strong> o <em>mesmo</em> financiamento — <strong>R$ 12.000 em 3 meses a 10% a.m.</strong> — agora pela Price.</p>
+  <div class="card">
+    <p class="muted"><strong>Passo 1 — a prestação:</strong><br>
+    (1,10)<sup>3</sup> = 1,331 → (1,10)<sup>−3</sup> = 0,751315<br>
+    1 − 0,751315 = 0,248685<br>
+    PMT = 12.000 × 0,10 ÷ 0,248685 = 1.200 ÷ 0,248685 = <strong>R$ 4.825,38</strong> (fixa, nos 3 meses)</p>
+    <p class="muted"><strong>Passo 2 — mês 1:</strong> juros = 10% de 12.000 = R$ 1.200,00 → amortização = 4.825,38 − 1.200,00 = <strong>R$ 3.625,38</strong> → saldo = 12.000 − 3.625,38 = R$ 8.374,62</p>
+    <p class="muted"><strong>Passo 3 — mês 2:</strong> juros = 10% de 8.374,62 = R$ 837,46 → amortização = 4.825,38 − 837,46 = <strong>R$ 3.987,92</strong> → saldo = 8.374,62 − 3.987,92 = R$ 4.386,71</p>
+    <p class="muted"><strong>Passo 4 — mês 3:</strong> juros = 10% de 4.386,71 = R$ 438,67 → amortização = 4.825,38 − 438,67 = <strong>R$ 4.386,71</strong> → saldo = 4.386,71 − 4.386,71 = <strong>R$ 0,00</strong> ✓ quitado</p>
+  </div>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Mês</th><th>Saldo devedor (início)</th><th>Juros (10% do saldo)</th><th>Amortização</th><th>Prestação</th><th>Saldo devedor (fim)</th></tr>
+    <tr><td>1</td><td>R$ 12.000,00</td><td>R$ 1.200,00</td><td>R$ 3.625,38</td><td><strong>R$ 4.825,38</strong></td><td>R$ 8.374,62</td></tr>
+    <tr><td>2</td><td>R$ 8.374,62</td><td>R$ 837,46</td><td>R$ 3.987,92</td><td><strong>R$ 4.825,38</strong></td><td>R$ 4.386,71</td></tr>
+    <tr><td>3</td><td>R$ 4.386,71</td><td>R$ 438,67</td><td>R$ 4.386,71</td><td><strong>R$ 4.825,38</strong></td><td><strong>R$ 0,00</strong></td></tr>
+    <tr><td colspan="2"><strong>Totais</strong></td><td><strong>R$ 2.476,13</strong></td><td><strong>R$ 12.000,01</strong></td><td><strong>R$ 14.476,14</strong></td><td>—</td></tr>
+  </table>
+  </div>
+  <p class="muted">O centavo de sobra na coluna de amortização é arredondamento (com todas as casas, a conta fecha em zero). Na prática o banco ajusta a última parcela — e na prova você marca a alternativa mais próxima; a banca sabe do arredondamento e não te reprova por um centavo.</p>
+  <p>O que a planilha da Price ensina:</p>
+  <ul>
+    <li>A <strong>Prestação</strong> é uma constante — é a definição do sistema, e é o único motivo de ele existir.</li>
+    <li>Os <strong>Juros</strong> caem (1.200 → 837,46 → 438,67), como em qualquer sistema. Mas caem de forma <em>irregular</em>, não em P.A.</li>
+    <li>Como <code>Amortização = Prestação − Juros</code> e a prestação é fixa, a amortização é a sobra: <strong>juro cai ⟹ amortização sobe</strong>. Por isso ela é <em>crescente</em> (3.625,38 → 3.987,92 → 4.386,71). Não é regra decorada — é subtração.</li>
+    <li>A amortização cresce <strong>geometricamente</strong>, na razão <code>(1+i)</code>: 3.625,38 × 1,10 = 3.987,92 ✓ e 3.987,92 × 1,10 = 4.386,71 ✓. É um atalho poderoso: sabendo a 1ª amortização, todas as outras saem multiplicando por 1,10. <code>A<sub>k</sub> = A<sub>1</sub>·(1+i)<sup>k−1</sup></code>.</li>
+    <li>No início você paga quase só juros (no mês 1, R$ 1.200 dos R$ 4.825 são aluguel — 25%); no fim, quase só principal. Foi por isso que seu financiamento imobiliário "não andou" nos primeiros anos: ele nunca ia andar, é o desenho do produto.</li>
+  </ul>
+
+  <h3>7.4 Sistema Americano (bullet)</h3>
+  <p>O mais simples de todos: você <strong>não amortiza nada</strong> durante o contrato. Paga só o aluguel todo mês, e devolve o principal inteiro de uma vez no vencimento. É o modelo das debêntures, dos títulos de dívida, do Tesouro prefixado.</p>
+  <div class="card">
+    <p class="muted"><strong>Mesmos R$ 12.000, 3 meses, 10% a.m.:</strong><br>
+    Mês 1: juros = 10% de 12.000 = R$ 1.200 · amortização = R$ 0 · prestação = <strong>R$ 1.200</strong> · saldo = R$ 12.000<br>
+    Mês 2: juros = 10% de 12.000 = R$ 1.200 · amortização = R$ 0 · prestação = <strong>R$ 1.200</strong> · saldo = R$ 12.000<br>
+    Mês 3: juros = R$ 1.200 · amortização = R$ 12.000 · prestação = <strong>R$ 13.200</strong> · saldo = <strong>R$ 0</strong></p>
+    <p class="muted">Juros totais = 3 × 1.200 = <strong>R$ 3.600</strong> — o mais caro dos três. Óbvio, quando se entende o mecanismo: o saldo devedor <em>nunca</em> caiu, então o juro foi cobrado sobre a base cheia o tempo todo.</p>
+  </div>
+
+  <h3>7.5 Os três, lado a lado — mesmos R$ 12.000, 3 meses, 10% a.m.</h3>
+  <p>Esta é a tabela que responde qualquer questão conceitual do tema:</p>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Mês</th><th>SAC — prestação</th><th>PRICE — prestação</th><th>AMERICANO — prestação</th></tr>
+    <tr><td>1</td><td>R$ 5.200,00 <span class="muted">(a mais alta)</span></td><td>R$ 4.825,38</td><td>R$ 1.200,00 <span class="muted">(a mais baixa)</span></td></tr>
+    <tr><td>2</td><td>R$ 4.800,00</td><td>R$ 4.825,38</td><td>R$ 1.200,00</td></tr>
+    <tr><td>3</td><td>R$ 4.400,00 <span class="muted">(a mais baixa)</span></td><td>R$ 4.825,38</td><td>R$ 13.200,00 <span class="muted">(a bomba)</span></td></tr>
+    <tr><td><strong>Total pago</strong></td><td><strong>R$ 14.400,00</strong></td><td><strong>R$ 14.476,14</strong></td><td><strong>R$ 15.600,00</strong></td></tr>
+    <tr><td><strong>Juros totais</strong></td><td><strong>R$ 2.400,00</strong> 🥇 <span class="muted">o mais barato</span></td><td><strong>R$ 2.476,13</strong> 🥈</td><td><strong>R$ 3.600,00</strong> 🥉 <span class="muted">o mais caro</span></td></tr>
+  </table>
+  </div>
+  <p><strong>Por que o SAC é sempre o mais barato?</strong> Não é porque "a taxa é menor" — <em>a taxa é idêntica nos três</em>, 10% a.m. É porque o SAC devolve o principal <strong>mais rápido</strong>. Saldo devedor menor ⟹ menos base para o juro morder. O Americano é o mais caro pelo motivo inverso: não devolve nada até o fim. A Price fica no meio, porque devolve, mas devagar no começo.</p>
+  <div class="tip">💡 <strong>A regra que resume tudo:</strong> pague o principal mais cedo e você pagará menos juros. Sempre. É por isso que amortização antecipada (usando o saldo devedor, não as parcelas futuras) economiza tanto dinheiro na vida real — e é por isso que, entre dois sistemas com a mesma taxa, vence quem amortiza mais rápido no começo.</div>
   <div class="table-scroll">
   <table>
     <tr><th></th><th>SAC (Sistema de Amortização Constante)</th><th>PRICE (Sistema Francês)</th></tr>
@@ -95,11 +566,25 @@
     <tr><td>Uso típico</td><td>financiamento imobiliário (SFH)</td><td>crédito ao consumidor, CDC</td></tr>
   </table>
   </div>
-  <p><strong>Exemplo SAC:</strong> dívida de R$ 100.000 em 100 meses a 1% a.m. → amortização fixa = R$ 1.000/mês. 1ª prestação = 1.000 + (1% de 100.000) = <strong>R$ 2.000</strong>. 2ª = 1.000 + (1% de 99.000) = R$ 1.990. E cai R$ 10 por mês.</p>
-  <div class="tip">💡 Mnemônico: <strong>SAC</strong> = <u>S</u>empre <u>A</u>mortiza <u>C</u>onstante (e a prestação Cai). <strong>PRICE</strong> = <u>P</u>restação <u>P</u>arada.</div>
-  <p><strong>Sistema Americano:</strong> só juros durante o contrato e o principal todo no final (bullet). <strong>SACRE</strong>: misto (usado pela Caixa), prestação sobe e depois desce.</p>
 
-  <h2>8. As 8 questões que sempre caem</h2>
+  <h3>7.6 O exemplo grande do SAC (o que a banca costuma dar)</h3>
+  <p><strong>Exemplo SAC:</strong> dívida de R$ 100.000 em 100 meses a 1% a.m. → amortização fixa = R$ 1.000/mês. 1ª prestação = 1.000 + (1% de 100.000) = <strong>R$ 2.000</strong>. 2ª = 1.000 + (1% de 99.000) = R$ 1.990. E cai R$ 10 por mês.</p>
+  <p>Repare que "cai R$ 10 por mês" é o <code>A × i = 1.000 × 0,01</code> do item 7.2 — e agora você consegue responder qualquer variação sem planilha:</p>
+  <div class="card">
+    <p class="muted"><strong>"Qual a 40ª prestação?"</strong> → P<sub>40</sub> = 2.000 − 39×10 = <strong>R$ 1.610</strong><br>
+    <strong>"Qual o saldo devedor após 40 parcelas?"</strong> → 100.000 − 40×1.000 = <strong>R$ 60.000</strong><br>
+    <strong>"Qual o juro da 41ª parcela?"</strong> → 1% de 60.000 = <strong>R$ 600</strong> (juros incidem sobre o saldo <em>anterior</em>)<br>
+    <strong>"Qual a última prestação?"</strong> → P<sub>100</sub> = 1.000 + 1% de 1.000 = <strong>R$ 1.010</strong></p>
+  </div>
+  <p class="muted">Compare: pela Price, a prestação desses mesmos R$ 100.000/100 meses/1% seria fixa em R$ 1.586,57 — bem mais baixa que os R$ 2.000 iniciais do SAC (é o argumento de venda), mas o total de juros sairia em R$ 58.657 contra R$ 50.500 do SAC. Prestação menor no começo, R$ 8 mil a mais no fim.</p>
+
+  <h3>7.7 Fechando o bloco</h3>
+  <div class="tip">💡 Mnemônico: <strong>SAC</strong> = <u>S</u>empre <u>A</u>mortiza <u>C</u>onstante (e a prestação Cai). <strong>PRICE</strong> = <u>P</u>restação <u>P</u>arada.</div>
+  <p><strong>Sistema Americano:</strong> só juros durante o contrato e o principal todo no final (bullet). <strong>SACRE</strong>: misto (usado pela Caixa), prestação sobe e depois desce — na largada ele se comporta como Price e depois migra para SAC, com recálculos periódicos.</p>
+  <div class="trap">🪤 <strong>As quatro pegadinhas de amortização.</strong> (1) "No SAC os juros são constantes" — <strong>falso</strong>: no SAC a <em>amortização</em> é constante; os juros caem. Trocar as palavras é o distrator nº 1. (2) "A Price tem prestação fixa, logo os juros são fixos" — <strong>falso</strong>: a prestação é fixa, mas a composição dela muda todo mês. (3) "Como o SAC começa mais caro, ele custa mais" — <strong>falso</strong>: começa mais alto e termina mais barato no total. (4) Juros incidem sobre o saldo devedor do período <strong>anterior</strong> — calcular sobre o saldo já amortizado do próprio mês é o erro de conta mais comum na planilha.</div>
+  <div class="tip">📌 <strong>Atalho de prova:</strong> a 1ª prestação é a única em que os dois sistemas concordam sobre os juros (ambos usam o saldo inicial cheio). Se a questão só quer a <em>primeira</em> parcela do SAC, são 5 segundos: <code>P<sub>1</sub> = saldo/n + i·saldo</code>. Não monte planilha para o que cabe numa linha.</div>
+
+  <h2 id="sec-8-as-8-questoes-que-sempre-caem">8. As 8 questões que sempre caem</h2>
   <div class="table-scroll">
   <table>
     <tr><th>#</th><th>Tipo</th><th>O que fazer</th></tr>
@@ -113,6 +598,31 @@
     <tr><td>8</td><td>SAC × Price (conceitual)</td><td>Amortização × prestação constante</td></tr>
   </table>
   </div>
+
+  <h3>8.1 O mesmo quadro, com o erro que a banca espera de você</h3>
+  <div class="table-scroll">
+  <table>
+    <tr><th>#</th><th>Gatilho no enunciado</th><th>A conta certa</th><th>O distrator que eles plantaram</th></tr>
+    <tr><td>1</td><td>"juros simples", "taxa linear"</td><td>M = C(1+i·t) · converta a unidade antes</td><td>Usar 12% a.a. direto com t em meses</td></tr>
+    <tr><td>2</td><td>"juros compostos", "capitalizado", tabela de (1+i)ⁿ dada</td><td>M = C(1+i)<sup>n</sup> · J = M − C</td><td>Calcular J por C·i·t no composto</td></tr>
+    <tr><td>3</td><td>"qual regime rende mais", prazo fracionário</td><td>t&lt;1 simples · t=1 empata · t&gt;1 composto</td><td>"Composto sempre rende mais"</td></tr>
+    <tr><td>4</td><td>"aumentos sucessivos", "acumulado no bimestre"</td><td>Multiplicar fatores: 1,10 × 1,10 = 1,21</td><td>Somar: 10% + 10% = 20%</td></tr>
+    <tr><td>5</td><td>"nominal", "com capitalização mensal"</td><td>Divide (12%÷12 = 1% a.m.); se pedir a efetiva anual, capitaliza: (1,01)¹²</td><td>Usar os 12% direto como efetiva anual</td></tr>
+    <tr><td>6</td><td>"inflação", "ganho real", "poder de compra"</td><td>(1+i)÷(1+π) − 1</td><td>Subtrair: 10% − 5% = 5%</td></tr>
+    <tr><td>7</td><td>"título", "duplicata", "antecipar", "desconto bancário"</td><td>Comercial: D = N·i·t · Racional: A = N÷(1+i·t)</td><td>Entregar o D quando pediram o A (e vice-versa)</td></tr>
+    <tr><td>8</td><td>"SAC", "Price", "sistema francês", "prestação"</td><td>SAC: amortização fixa, prestação cai, juros totais menores. Price: prestação fixa, amortização sobe</td><td>"No SAC os juros são constantes"</td></tr>
+  </table>
+  </div>
+
+  <h3>8.2 Checklist de 20 segundos antes de qualquer conta</h3>
+  <ol>
+    <li><strong>Que regime?</strong> Se o enunciado não disser, procure "capitalização"/"composto". Prazo longo e cara de banco → composto.</li>
+    <li><strong>Taxa e tempo na mesma unidade?</strong> Se não, converta <em>primeiro</em>. E lembre: converter no simples é dividir; no composto é capitalizar.</li>
+    <li><strong>A taxa está em decimal?</strong> 10% é 0,10 na fórmula. Esquecer isso erra por um fator de 100 e o resultado costuma ser absurdo — se der um número esquisito, é quase sempre isto.</li>
+    <li><strong>O que exatamente foi pedido?</strong> J ou M? A ou D? A prestação ou o total pago? Metade das alternativas erradas é a resposta certa da pergunta errada.</li>
+    <li><strong>A banca deu tabela?</strong> Se deu <code>(1+i)<sup>n</sup></code> ou <code>a<sub>n¬i</sub></code>, é composto e o número está lá. Use.</li>
+    <li><strong>O resultado faz sentido?</strong> Montante tem que ser maior que capital. Valor atual tem que ser menor que nominal. Amortizações têm que somar o principal. Taxa real com inflação positiva tem que ser menor que a nominal. Essas quatro checagens pegam quase todo erro de sinal ou de inversão.</li>
+  </ol>
   <div class="tip">📇 Treine no quiz (aba 🧪 → Matemática/Estatística): há 8 questões só de financeira, cobrindo exatamente estes 8 tipos.</div>
 </div>
 </body>

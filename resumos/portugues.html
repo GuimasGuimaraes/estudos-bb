@@ -10,20 +10,92 @@
 <div class="wrap">
   <div class="nav"><a href="index.html">← Biblioteca</a> · <a href="../guia.html">Guia</a></div>
   <h1>✍️ Língua Portuguesa</h1>
-  <p class="sub">A disciplina que mais derruba candidato de exatas. Aqui está a teoria filtrada: só o que as bancas realmente cobram, com o teste prático de cada regra.</p>
+  <p class="sub">A disciplina que mais derruba candidato de exatas. Aqui está a teoria explicada do zero: por que cada regra existe, como ela funciona por dentro e como decidir em 5 segundos na hora da prova.</p>
 
-  <div class="tip">🎯 <strong>Como usar:</strong> não leia de uma vez. Cada bloco corresponde a uma semana de questões. Leia o bloco, resolva 30 questões dele, volte para conferir o que errou.</div>
+  <div class="card" id="sumario">
+    <h2 id="sec-sumario" style="margin-top:0">📑 Sumário</h2>
+    <ol style="columns:2;column-gap:28px">
+      <li><a href="#sec-0-antes-de-tudo-por-que-portugues-parece-impo">0. Antes de tudo: por que Português parece impossível para quem é de exatas</a></li>
+      <li><a href="#sec-1-interpretacao-de-texto-a-estrategia">1. Interpretação de texto — a estratégia</a></li>
+      <li><a href="#sec-2-acentuacao-grafica">2. Acentuação gráfica</a></li>
+      <li><a href="#sec-3-sintaxe-os-termos-da-oracao">3. Sintaxe — os termos da oração</a></li>
+      <li><a href="#sec-4-periodo-composto">4. Período composto</a></li>
+      <li><a href="#sec-5-concordancia-verbal-os-casos-que-caem">5. Concordância verbal — os casos que caem</a></li>
+      <li><a href="#sec-6-concordancia-nominal">6. Concordância nominal</a></li>
+      <li><a href="#sec-7-regencia-a-tabela-que-vale-ponto">7. Regência — a tabela que vale ponto</a></li>
+      <li><a href="#sec-8-crase-o-algoritmo">8. Crase — o algoritmo</a></li>
+      <li><a href="#sec-9-colocacao-pronominal">9. Colocação pronominal</a></li>
+      <li><a href="#sec-10-pontuacao">10. Pontuação</a></li>
+      <li><a href="#sec-11-palavras-que-a-banca-adora-confundir">11. Palavras que a banca adora confundir</a></li>
+      <li><a href="#sec-12-reescrita-mantendo-o-sentido">12. Reescrita mantendo o sentido</a></li>
+    </ol>
+    <p class="muted" style="margin-top:8px">Apostila longa de propósito — use o sumário para ir direto ao ponto. Cada 🪤 é uma pegadinha de banca; cada 💡 é um atalho de prova.</p>
+  </div>
 
-  <h2>1. Interpretação de texto — a estratégia</h2>
-  <p>Interpretação não é "achismo": é localizar no texto. A banca sempre pode apontar a linha que justifica o gabarito.</p>
+
+  <div class="tip">🎯 <strong>Como usar:</strong> não leia de uma vez. Cada bloco corresponde a uma semana de questões. Leia o bloco, resolva 30 questões dele, volte para conferir o que errou. Esta apostila não é uma lista de regras para decorar — é uma explicação. Leia como se fosse documentação de um sistema que você vai ter que manter.</div>
+
+  <h2 id="sec-0-antes-de-tudo-por-que-portugues-parece-impo">0. Antes de tudo: por que Português parece impossível para quem é de exatas</h2>
+  <p>Existe um mal-entendido que atrapalha praticamente todo candidato de TI. Você aprendeu, no colégio, que Português é decoreba: uma lista arbitrária de regras que alguém inventou e que você tem que memorizar. Com essa premissa, a matéria vira um <code>switch</code> gigante com trezentos <code>case</code> sem lógica nenhuma — e é claro que não entra.</p>
+  <p>A premissa está errada. A gramática normativa é, na esmagadora maioria das vezes, <strong>a descrição formal de um sistema que você já opera de cabeça</strong>. Você fala português desde criança e acerta a concordância de frases complexas sem pensar. O que a prova cobra não é a sua intuição — é a sua capacidade de <em>explicitar</em> o que a intuição já faz. É a diferença entre usar uma linguagem e conhecer a sua especificação.</p>
+  <p>Só que existe um detalhe importante: a intuição foi treinada na <strong>língua falada</strong>, e a prova cobra a <strong>norma culta escrita</strong>. São dois dialetos diferentes do mesmo idioma — como Python 2 e Python 3. Parecidos o bastante para você achar que sabe, diferentes o bastante para quebrar. Toda vez que este material disser "isso é coloquial, mas errado em prova", é exatamente esse descompasso.</p>
+  <p>A estratégia desta apostila, então, é esta: <strong>nunca começar pela regra</strong>. Começa-se sempre pelo problema que a regra resolve. Quando você entende o problema, a regra vira consequência óbvia e você deixa de precisar decorar.</p>
+  <div class="tip">💡 <strong>Ordem de leitura recomendada.</strong> O bloco 3 (Sintaxe) é a fundação. Concordância, regência, crase, colocação e pontuação são todos <em>aplicações</em> de sintaxe. Se você tentar decorar crase sem saber o que é preposição, vai gastar dez vezes mais tempo e acertar metade. Se estiver com pouco tempo e tiver que escolher, leia o 3 duas vezes antes de ir ao 8.</div>
+
+  <h2 id="sec-1-interpretacao-de-texto-a-estrategia">1. Interpretação de texto — a estratégia</h2>
+
+  <h3>1.1 O problema: você acha que interpretação é opinião</h3>
+  <p>É a queixa clássica: "interpretação é subjetivo, cada um entende uma coisa, a banca coloca o gabarito que quer". Se isso fosse verdade, todo concurso seria anulado por recurso. Não é.</p>
+  <p>A regra de ouro é esta: <strong>a banca sempre consegue apontar a linha do texto que justifica o gabarito</strong>. Sempre. Ela é obrigada a isso, porque tem que responder recurso. Ou seja, questão de interpretação não pergunta "o que você achou do texto"; pergunta "o que <em>está escrito</em> ou <em>decorre necessariamente</em> do que está escrito".</p>
+  <p>Pense assim: o texto é a base de dados, e a alternativa correta é uma <code>SELECT</code> que retorna linhas existentes. A alternativa errada é uma <code>SELECT</code> que retorna algo que não está na tabela — mas que <em>parece</em> plausível para quem confia na memória em vez de consultar. Interpretação de texto é uma tarefa de <strong>localização</strong>, não de criação. O erro número um do candidato é responder de memória, com o que ele achou que o texto disse, em vez de voltar e conferir.</p>
+
+  <h3>1.2 O procedimento, na ordem certa</h3>
+  <p>Existe uma ordem de execução que economiza minutos e evita erros. Ela é contraintuitiva:</p>
   <ul>
-    <li><strong>Leia o comando primeiro</strong>: saber o que procurar muda como você lê o texto.</li>
+    <li><strong>Leia o comando primeiro</strong>: saber o que procurar muda como você lê o texto. Ler o texto inteiro antes de saber a pergunta é como fazer <code>SELECT *</code> em uma tabela de milhões de linhas para depois filtrar na aplicação. Você processa muita coisa à toa e ainda perde o foco. Lendo o comando antes, você lê o texto já com um filtro ativo na cabeça — sabe o que é sinal e o que é ruído.</li>
     <li><strong>Sublinhe os operadores</strong>: <em>mas, porém, contudo</em> (opõem), <em>portanto, logo</em> (concluem), <em>porque, pois</em> (explicam), <em>embora, ainda que</em> (concedem). A tese do autor quase sempre vem DEPOIS do "mas".</li>
     <li><strong>Depreende-se × está explícito</strong>: se a questão pede inferência, a resposta não está escrita — mas decorre logicamente. Se pede o que o texto "afirma", tem que estar lá, com todas as letras.</li>
   </ul>
-  <div class="trap">🪤 Alternativa com <strong>extrapolação</strong> (diz mais do que o texto), <strong>generalização</strong> ("todos", "sempre", "nunca") ou <strong>inversão sutil</strong> (troca causa por consequência) = errada. Desconfie de absolutos.</div>
+  <p>Vale abrir o segundo item, porque ele é a técnica mais rentável desta seção inteira. Os operadores argumentativos (as conjunções e locuções que ligam ideias) são <strong>o esqueleto lógico do texto</strong>. Um texto dissertativo é, estruturalmente, uma cadeia de proposições ligadas por operadores — exatamente como uma expressão booleana. Se você marca os operadores, você tem o fluxograma do texto sem precisar guardar o conteúdo todo na memória.</p>
+  <p>E o "mas" é o operador mais informativo de todos. Quando alguém escreve "<em>A tecnologia bancária evoluiu muito na última década, <strong>mas</strong> a segurança não acompanhou</em>", o que essa pessoa <em>defende</em> é que a segurança não acompanhou. A primeira parte é concessão — é o que ela admite para depois derrubar. Bancas adoram cobrar isso perguntando "a tese do autor é..." e colocando, como distrator, justamente a parte antes do "mas". Regra prática: <strong>o que vem antes do "mas" é o que o autor concede; o que vem depois é o que ele defende</strong>.</p>
 
-  <h2>2. Acentuação gráfica</h2>
+  <h3>1.3 Como as alternativas erradas são fabricadas</h3>
+  <p>Aqui está o segredo que ninguém conta: as alternativas erradas não são aleatórias. Elas são produzidas por um punhado pequeno de operações mecânicas sobre o texto original. Se você reconhece a operação, você elimina a alternativa sem nem precisar reler o parágrafo.</p>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Defeito</th><th>O que a banca faz</th><th>Exemplo (texto: "muitos bancos adotaram IA")</th></tr>
+    <tr><td><strong>Extrapolação</strong></td><td>Acrescenta informação verdadeira no mundo real, mas ausente no texto</td><td>"...adotaram IA <em>para reduzir custos com pessoal</em>" — o motivo não estava lá</td></tr>
+    <tr><td><strong>Generalização</strong></td><td>Troca quantificador parcial por universal</td><td>"<em>Todos</em> os bancos adotaram IA"</td></tr>
+    <tr><td><strong>Inversão</strong></td><td>Troca causa por consequência, ou inverte a direção da relação</td><td>"A IA foi adotada <em>porque</em> os bancos cresceram" quando o texto dizia o contrário</td></tr>
+    <tr><td><strong>Troca de operador</strong></td><td>Muda concessão em causa, adição em oposição</td><td>"<em>Embora</em> tenham adotado IA..." onde o texto tinha "<em>porque</em>"</td></tr>
+    <tr><td><strong>Grau exagerado</strong></td><td>Sobe a intensidade: "sugere" vira "prova"; "pode" vira "deve"</td><td>"O texto <em>comprova</em> que..." quando o autor só indicou</td></tr>
+  </table>
+  </div>
+  <p>Note o padrão: <strong>todo defeito é um exagero para mais</strong>. A alternativa errada quase sempre diz <em>mais</em> do que o texto autorizou. A alternativa certa costuma ser a mais tímida, a mais chata, a que parece óbvia demais. Se uma alternativa te dá a sensação de "essa é muito boa, muito inteligente", desconfie — texto de prova raramente é inteligente, e a banca não premia quem completa o raciocínio do autor.</p>
+  <div class="trap">🪤 Alternativa com <strong>extrapolação</strong> (diz mais do que o texto), <strong>generalização</strong> ("todos", "sempre", "nunca") ou <strong>inversão sutil</strong> (troca causa por consequência) = errada. Desconfie de absolutos. Um "sempre" ou "nunca" numa alternativa é sinal vermelho: para derrubar um universal basta um contraexemplo, e o texto quase nunca sustenta afirmação tão forte.</div>
+
+  <h3>1.4 O teste prático</h3>
+  <p>Diante de uma alternativa, faça uma pergunta única: <strong>"consigo pôr o dedo na linha que diz isso?"</strong> Se a resposta for "não, mas é claramente o que ele quis dizer", a alternativa é errada — a menos que o comando peça inferência. E mesmo em inferência, o teste é lógico, não psicológico: <em>se o texto for verdadeiro, essa alternativa é necessariamente verdadeira?</em> Não é "provavelmente"; é "necessariamente". Inferência válida é implicação lógica, não palpite bem informado.</p>
+
+  <h2 id="sec-2-acentuacao-grafica">2. Acentuação gráfica</h2>
+
+  <h3>2.1 O problema: a escrita não marca a voz</h3>
+  <p>Fale em voz alta: <em>sabia</em>, <em>sabiá</em>, <em>sábia</em>. Três palavras, três significados totalmente diferentes, e a única coisa que as distingue é <strong>qual sílaba você pronuncia mais forte</strong>. Essa sílaba forte é a <strong>tônica</strong>. Quando você fala, o ouvinte percebe a tônica automaticamente. Quando você escreve, a informação some — a menos que exista uma marca.</p>
+  <p>O acento gráfico é essa marca. Ele não é enfeite nem tradição: é um bit de metadado que diz "a tônica é aqui". E, como todo sistema bem projetado, a língua não marca o que já é previsível. Se a posição da tônica fosse marcada em toda palavra, teríamos acento em tudo — desperdício. Então o português fez o que qualquer engenheiro faria: <strong>definiu um padrão default e só marca as exceções ao default</strong>.</p>
+  <p>É esse o insight que destrava acentuação. Todas aquelas regras que parecem arbitrárias são, na verdade, a lista das exceções ao padrão. Vamos ver qual é o padrão.</p>
+
+  <h3>2.2 Os três nomes que você precisa (e só três)</h3>
+  <p>As palavras se classificam pela posição da tônica, contando da última sílaba para trás:</p>
+  <ul>
+    <li><strong>Oxítona</strong> — tônica na <strong>última</strong> sílaba: ca-<u>FÉ</u>, so-<u>FÁ</u>, ur-u-<u>BU</u>, com-pu-ta-<u>DOR</u>.</li>
+    <li><strong>Paroxítona</strong> — tônica na <strong>penúltima</strong>: <u>LI</u>-vro, com-pu-ta-<u>DO</u>-res, <u>TE</u>-la, se-<u>GU</u>-ro.</li>
+    <li><strong>Proparoxítona</strong> — tônica na <strong>antepenúltima</strong>: <u>TÉC</u>-ni-co, <u>NÚ</u>-me-ro, <u>LÂM</u>-pa-da.</li>
+  </ul>
+  <p>Agora o fato central: <strong>a esmagadora maioria das palavras do português é paroxítona</strong>. Paroxítona é o default do idioma. Se você vir uma palavra desconhecida e não tiver nenhuma pista, aposte na penúltima sílaba — você acerta na maior parte das vezes.</p>
+  <p>Isso explica de imediato a regra das <strong>proparoxítonas: todas são acentuadas, sem exceção</strong>. Por quê? Porque proparoxítona é raríssima em português. É exceção pura ao default, e como toda exceção pura, precisa ser marcada em 100% dos casos. Não há o que decorar aqui: se a tônica está na antepenúltima, tem acento. Ponto. Essa é a única regra da acentuação que nunca falha.</p>
+
+  <h3>2.3 A lógica invertida de oxítonas e paroxítonas</h3>
+  <p>Aqui está a parte que confunde todo mundo, e que fica trivial quando você vê o mecanismo. Compare as duas terminações:</p>
   <div class="table-scroll">
   <table>
     <tr><th>Regra</th><th>Acentua</th><th>Exemplos</th></tr>
@@ -33,11 +105,58 @@
     <tr><td>Hiato I/U</td><td>2ª vogal tônica sozinha (ou com S)</td><td>saída, baú, país — <em>mas não</em>: feiura, Raul</td></tr>
   </table>
   </div>
-  <p><strong>Pós-reforma (2009):</strong> caíram os acentos de <em>ideia, heroico, feiura, voo, enjoo</em> e o trema. Continuam: <strong>pôde</strong> (passado) × pode, <strong>pôr</strong> (verbo) × por, <strong>têm/vêm</strong> (plural) × tem/vem.</p>
-  <div class="trap">🪤 Cuidado com a prosódia: <strong>rubrica</strong> (ru-BRI-ca), <strong>gratuito</strong> (gra-TUI-to), <strong>recorde</strong>, <strong>ibero</strong> — paroxítonas sem acento que todo mundo pronuncia errado.</div>
+  <p>Olhe as duas primeiras linhas juntas. As terminações são <strong>exatamente as mesmas</strong> — A, E, O, EM/ENS — só que uma regra acentua quando termina assim e a outra acentua quando <em>não</em> termina assim. Elas são complementares, como uma condição e a sua negação.</p>
+  <p>A explicação é a seguinte: palavras terminadas em A, E, O (as vogais mais comuns do idioma) são, por padrão, <strong>paroxítonas</strong>. <code>livro</code>, <code>mesa</code>, <code>pente</code> — você lê com tônica na penúltima sem hesitar. Então, se uma palavra termina em A/E/O e é <em>oxítona</em>, ela está violando o padrão, e por isso precisa de acento: <code>sofá</code>, <code>café</code>, <code>cipó</code>. Já palavras terminadas em outras coisas — L, R, X, I, U, N — tendem a ser <strong>oxítonas</strong> por padrão: <code>papel</code>, <code>amor</code>, <code>caju</code>, <code>abacaxi</code>. Logo, se uma palavra termina em L/R/X/I/U e é <em>paroxítona</em>, ela violou o padrão e leva acento: <code>fácil</code>, <code>câncer</code>, <code>tórax</code>, <code>júri</code>.</p>
+  <p>Ou seja, não são duas regras. É <strong>uma regra só</strong>, aplicada duas vezes: <em>acentua-se o que foge do comportamento esperado para aquela terminação</em>. Guarde as terminações A/E/O/EM como um conjunto e pergunte apenas: a palavra está no grupo "esperado" ou fora dele?</p>
+  <p><strong>Exemplo comentado.</strong> Por que <code>fácil</code> tem acento e <code>fossil</code> está errado — quer dizer, <code>fóssil</code>? Ambas são paroxítonas terminadas em L. L não está no grupo A/E/O/EM, então paroxítona terminada em L é anômala e leva acento: <code>fácil</code>, <code>fóssil</code>, <code>útil</code>, <code>hábil</code>. E por que <code>funil</code> não tem? Porque <code>funil</code> é oxítona (fu-<u>NIL</u>) — está fazendo exatamente o que se espera de uma palavra terminada em L. Comportamento default, sem marcação.</p>
 
-  <h2>3. Sintaxe — os termos da oração</h2>
+  <h3>2.4 Hiato: quando duas vogais brigam</h3>
+  <p><strong>Hiato</strong> é quando duas vogais vizinhas ficam em sílabas diferentes: sa-<u>Í</u>-da, pa-<u>ÍS</u>, ba-<u>Ú</u>. O oposto é o <strong>ditongo</strong>, em que as duas ficam na mesma sílaba: <em>pai</em>, <em>meu</em>, <em>coisa</em>.</p>
+  <p>O problema que o acento resolve aqui é uma ambiguidade real de leitura. Escreva <code>saida</code> sem acento: você lê "SAI-da" (ditongo, duas sílabas com o I grudado no A) ou "sa-Í-da" (hiato, três sílabas)? Não dá para saber. O acento no I resolve: ele diz "esse I é tônico e está sozinho na sílaba dele".</p>
+  <p>A regra completa exige <strong>três condições simultâneas</strong> — e é aqui que a banca pega gente:</p>
+  <ol>
+    <li>O I ou U é a <strong>segunda</strong> vogal do hiato;</li>
+    <li>Ele é <strong>tônico</strong>;</li>
+    <li>Ele está <strong>sozinho</strong> na sílaba (ou só com S).</li>
+  </ol>
+  <p>Agora os contraexemplos, que são o que realmente cai. <code>Raul</code>: o U é segunda vogal, é tônico — mas <strong>não está sozinho</strong>, tem o L junto na sílaba (Ra-<u>UL</u>). Falha a condição 3, sem acento. <code>Feiura</code>: o U é tônico e está sozinho, mas antes dele vem <em>ei</em>, um ditongo — a regra pós-2009 diz que I/U tônico precedido de ditongo não é mais acentuado. E <code>juiz</code>? O I é tônico, é segunda vogal, mas está acompanhado do Z. Sem acento. Já <code>juízes</code> tem acento, porque na divisão silábica ju-<u>Í</u>-zes o I fica sozinho.</p>
+  <div class="tip">💡 <strong>Teste de 5 segundos para hiato:</strong> divida em sílabas e olhe a sílaba do I/U tônico. Se tiver <em>só</em> a vogal (ou vogal + S), acentua. Se tiver qualquer consoante junto, não acentua. <code>ra-ul</code> → tem L → não. <code>sa-í-da</code> → só o I → sim. <code>ju-í-zes</code> → só o I → sim. <code>ju-iz</code> → tem Z → não.</div>
+
+  <h3>2.5 O que a reforma de 2009 tirou (e o que não tirou)</h3>
+  <p><strong>Pós-reforma (2009):</strong> caíram os acentos de <em>ideia, heroico, feiura, voo, enjoo</em> e o trema. Continuam: <strong>pôde</strong> (passado) × pode, <strong>pôr</strong> (verbo) × por, <strong>têm/vêm</strong> (plural) × tem/vem.</p>
+  <p>Vale entender por que <em>esses</em> sobreviveram. A reforma eliminou acentos que eram <strong>redundantes</strong> — em <code>ideia</code>, ninguém jamais leu errado sem o acento, então o acento não carregava informação. Mas os que ficaram são <strong>diferenciais</strong>: sem eles, você perde informação de verdade.</p>
+  <ul>
+    <li><em>Ele <strong>pode</strong> recorrer</em> (presente, agora) × <em>Ele <strong>pôde</strong> recorrer</em> (pretérito, ontem). Some o acento, some o tempo verbal.</li>
+    <li><em>Vou <strong>pôr</strong> o recurso no sistema</em> (verbo) × <em>Fui reprovado <strong>por</strong> um ponto</em> (preposição).</li>
+    <li><em>O candidato <strong>tem</strong> direito</em> (singular) × <em>Os candidatos <strong>têm</strong> direito</em> (plural). Mesma coisa com <em>vem/vêm</em>. Aqui o acento é a única marca de número — e por isso cai muito em prova de concordância disfarçada de acentuação.</li>
+  </ul>
+  <p>E os derivados: <em>contêm, mantêm, provêm, detêm</em> (plural) × <em>contém, mantém, provém, detém</em> (singular). O padrão é constante: singular com acento agudo, plural com circunflexo.</p>
+  <div class="trap">🪤 Cuidado com a prosódia: <strong>rubrica</strong> (ru-BRI-ca), <strong>gratuito</strong> (gra-TUI-to), <strong>recorde</strong>, <strong>ibero</strong> — paroxítonas sem acento que todo mundo pronuncia errado. A banca cobra assim: "assinale a palavra cuja sílaba tônica está corretamente indicada". Se você pronuncia <em>RÚ-bri-ca</em> ou <em>gra-tu-Í-to</em>, você marca a alternativa errada com toda a confiança do mundo. Some à lista: <strong>avaro, filantropo, pudico, refrega</strong>.</div>
+
+  <h2 id="sec-3-sintaxe-os-termos-da-oracao">3. Sintaxe — os termos da oração</h2>
+
+  <h3>3.1 Por que este é o bloco mais importante da apostila</h3>
+  <p>Sintaxe é a única parte de Português que funciona como um <strong>parser</strong>. Dada uma frase, você identifica quais pedaços exercem quais funções e como eles se conectam. E isso é a fundação de tudo o que vem depois: concordância verbal é "o verbo copia o número do sujeito" — inútil se você não acha o sujeito. Regência é "o verbo determina a preposição do complemento" — inútil se você não sabe o que é complemento. Crase depende de saber se o termo anterior pede preposição. Pontuação depende de saber onde termina o sujeito.</p>
+  <p>Se você pular este bloco, os blocos 5 a 10 viram decoreba cega. Se você dominar este bloco, os blocos 5 a 10 viram aplicação direta. Não existe atalho aqui — é o investimento com maior retorno da matéria inteira.</p>
+
+  <h3>3.2 O verbo é o centro de tudo</h3>
+  <p>Comece por aqui: <strong>toda oração se organiza em torno de um verbo</strong>. Aliás, é essa a definição de oração — um enunciado com verbo. "A crise financeira de 2008" não é oração (não tem verbo); "A crise financeira de 2008 abalou os bancos" é.</p>
+  <p>A analogia que funciona: pense no verbo como uma <strong>função</strong>. Uma função tem uma assinatura — nome, parâmetros que exige, parâmetros que aceita. O verbo funciona assim: ele define quantos e quais complementos precisa para fazer sentido. <code>chegar</code> não pede argumento nenhum. <code>fazer</code> pede um. <code>entregar</code> pede dois. E, como em código, chamar com a aridade errada quebra: "Eu entreguei" fica no ar — entregou o quê? a quem?</p>
+  <p>O <strong>sujeito</strong>, nessa analogia, é quem chama a função — o contexto sobre o qual o verbo se aplica. E, exatamente como um método de instância herda algo do objeto que o invoca, o verbo <strong>copia número e pessoa do sujeito</strong>. É literalmente isso que é concordância verbal.</p>
+
+  <h3>3.3 Como achar o sujeito de verdade</h3>
   <p>Saber achar o sujeito resolve 80% das questões de concordância. Pergunte ao verbo: <em>"quem é que...?"</em></p>
+  <p>Vamos fazer direito. O procedimento tem duas etapas:</p>
+  <ol>
+    <li><strong>Ache o verbo primeiro.</strong> Não procure o sujeito antes — procure o verbo. É o ponto fixo da oração.</li>
+    <li><strong>Pergunte ao verbo</strong>: "quem é que [verbo]?" ou "o que é que [verbo]?" A resposta é o sujeito.</li>
+  </ol>
+  <p>Em "<em>Foram aprovados na primeira fase 240 candidatos</em>": ache o verbo (<em>foram aprovados</em>), pergunte "quem é que foi aprovado?" → <em>240 candidatos</em>. Pronto, sujeito achado, e agora se explica o plural — que talvez você tenha estranhado, porque o sujeito veio no fim.</p>
+  <p>Duas advertências que evitam a maioria dos erros:</p>
+  <p><strong>(a) O sujeito não é "quem vem antes do verbo".</strong> Essa é a heurística que todo mundo usa inconscientemente e é justamente onde a banca ataca. Em português a ordem é livre — o sujeito pode vir antes, depois ou no meio. "Chegaram ontem <em>os resultados</em>" tem sujeito posposto. A banca inverte a ordem <em>de propósito</em> para você errar a concordância.</p>
+  <p><strong>(b) O sujeito nunca está dentro de uma locução prepositiva.</strong> Se um termo vem regido por preposição (de, em, para, com...), ele não é o sujeito daquele verbo. Em "<em>A maioria <u>dos candidatos</u> desistiu</em>", o sujeito é <em>a maioria</em> — <em>dos candidatos</em> está preso à preposição <code>de</code>, é adjunto. Por isso "desistiu", singular. É como se a preposição fosse um qualificador de escopo: o termo já pertence a outro nó da árvore, não pode ser promovido a sujeito.</p>
+
+  <h3>3.4 Os tipos de sujeito</h3>
   <div class="table-scroll">
   <table>
     <tr><th>Tipo de sujeito</th><th>Como identificar</th><th>Exemplo</th></tr>
@@ -48,7 +167,23 @@
     <tr><td><strong>Inexistente</strong></td><td>oração sem sujeito (verbo impessoal)</td><td><em>Há</em> vagas. / <em>Faz</em> dez anos. / <em>Choveu</em>.</td></tr>
   </table>
   </div>
-  <p><strong>Transitividade</strong> (define regência e voz passiva):</p>
+  <p>Antes de seguir, uma palavra que aparece aí e precisa de definição: <strong>núcleo</strong>. O núcleo é a palavra principal de um termo — aquela que sobra se você tirar todos os acessórios. Em "<em>os três novos analistas de segurança do banco</em>", tire artigo, numeral, adjetivo e os complementos preposicionados: sobra <strong>analistas</strong>. Esse é o núcleo. E é <em>com o núcleo</em> que o verbo concorda, não com a palavra mais próxima. Por isso "<em>os três novos analistas de segurança do banco <u>foram</u> contratados</em>" — e não "foi", ainda que <em>banco</em> esteja coladinho no verbo.</p>
+  <p>Agora, as três categorias que confundem:</p>
+  <p><strong>Oculto (ou elíptico)</strong> — o sujeito existe, mas não está escrito, porque a terminação do verbo já entrega quem é. "<em>Estudamos ontem</em>": aquele <code>-mos</code> só combina com <em>nós</em>. A informação está codificada na flexão em vez de num termo separado. Não confunda com sujeito indeterminado: aqui você <em>sabe</em> quem é.</p>
+  <p><strong>Indeterminado</strong> — existe um agente, mas o texto deliberadamente não diz quem. "<em>Falaram mal do edital</em>": alguém falou, mas quem? Não dá para recuperar, e é essa a intenção. Marca formal: verbo na 3ª pessoa do plural sem sujeito expresso nem referente antes. Cuidado: se o contexto anterior tinha "os candidatos", então "falaram" tem sujeito oculto, não indeterminado. A segunda forma é <em>verbo intransitivo/transitivo indireto + SE</em>: "<em>Precisa-se de gente</em>". Voltaremos a isso no bloco 5.</p>
+  <p><strong>Inexistente (oração sem sujeito)</strong> — a diferença crucial: aqui <strong>não há agente nenhum</strong>, nem escondido nem indeterminado. Não é que você não saiba quem; é que não existe quem. "<em>Choveu</em>" — quem choveu? Ninguém. A chuva não é sujeito, é o próprio evento. "<em>Há vagas</em>" — quem há? Ninguém há; <em>vagas</em> é objeto direto de <code>haver</code>, não sujeito.</p>
+  <p>Esse é o ponto que faz toda a diferença na prova. Se não há sujeito, <strong>o verbo não tem com quem concordar</strong>. E um verbo tem que ir para alguma forma — então vai para a forma neutra, a 3ª pessoa do singular. É por isso que verbo impessoal fica sempre no singular. Não é regra arbitrária: é a consequência lógica de não existir sujeito. Guarde isso, porque é o coração do "houveram" errado que você vai ver no bloco 5.</p>
+  <div class="tip">💡 <strong>Teste do sujeito inexistente:</strong> tente perguntar "quem?" ao verbo. Se a pergunta for absurda — "quem choveu?", "quem faz dez anos?" — a oração não tem sujeito, e o verbo trava no singular.</div>
+
+  <h3>3.5 Transitividade — a assinatura do verbo</h3>
+  <p><strong>Transitividade</strong> (define regência e voz passiva) é simplesmente <em>quantos e que tipo de complementos o verbo exige</em>. Se você entendeu a analogia da assinatura de função, já entendeu o conceito; falta só o vocabulário.</p>
+  <p>Primeiro, os dois tipos de complemento:</p>
+  <ul>
+    <li><strong>Objeto direto (OD)</strong> — complemento que se liga ao verbo <strong>sem preposição</strong>. <em>Fiz <u>a prova</u>.</em></li>
+    <li><strong>Objeto indireto (OI)</strong> — complemento que se liga ao verbo <strong>por meio de uma preposição obrigatória</strong>. <em>Assisti <u>ao debate</u>.</em></li>
+  </ul>
+  <p>Repare que "direto/indireto" não tem nada a ver com importância nem com ordem. É só isto: <strong>tem preposição exigida pelo verbo ou não tem?</strong> Essa é a única pergunta. A preposição funciona como um conector obrigatório que o próprio verbo especifica — parte da assinatura dele, não uma escolha sua.</p>
+  <p>Com isso, os cinco tipos:</p>
   <ul>
     <li><strong>VI</strong> — não pede complemento: <em>O candidato chegou.</em></li>
     <li><strong>VTD</strong> — pede objeto direto, sem preposição: <em>Fiz <u>a prova</u>.</em></li>
@@ -56,8 +191,41 @@
     <li><strong>VTDI</strong> — pede os dois: <em>Entreguei <u>o recurso</u> <u>à banca</u>.</em></li>
     <li><strong>VL</strong> — liga sujeito a predicativo: ser, estar, parecer, ficar, continuar, tornar-se.</li>
   </ul>
+  <p>Três esclarecimentos que valem ponto:</p>
+  <p><strong>Transitividade não é propriedade fixa do verbo — é do verbo <em>naquele sentido</em>.</strong> É sobrecarga de método, literalmente. <code>assistir(String filme)</code> e <code>assistir(a: Paciente)</code> são duas assinaturas diferentes do mesmo nome, e o sentido muda conforme a assinatura: <em>assistir <u>ao</u> filme</em> = ver; <em>assistir <u>o</u> paciente</em> = ajudar. Não é capricho da gramática — a preposição é o que <em>desambigua</em> qual sentido está em jogo. Todo o bloco 7 vive disso.</p>
+  <p><strong>Verbo de ligação não tem complemento; tem predicativo.</strong> Verbo de ligação (VL) não expressa ação nenhuma — ele é um sinal de igual. "<em>O concurso <strong>é</strong> difícil</em>": <em>é</em> não faz nada, apenas atribui <em>difícil</em> a <em>concurso</em>. Esse termo atribuído chama-se <strong>predicativo do sujeito</strong>: a característica ou estado que se predica do sujeito. E daí decorre que ele concorda com o sujeito — "<em>As provas <strong>são difíceis</strong></em>". Guarde o termo "predicativo": ele volta na concordância nominal.</p>
+  <p><strong>Só VTD vira voz passiva.</strong> A voz passiva promove o objeto direto a sujeito: <em>Aprovaram <u>o edital</u></em> → <em><u>O edital</u> foi aprovado</em>. Se o verbo não tem OD, não há o que promover — por isso não existe "*o filme foi assistido" na norma culta rigorosa (assistir = ver é VTI). Esse detalhe é a base do bloco 12.</p>
 
-  <h2>4. Período composto</h2>
+  <h3>3.6 Predicado: o que sobra</h3>
+  <p><strong>Predicado</strong> é tudo o que na oração não é sujeito — é o que se declara <em>sobre</em> o sujeito. Três tipos, e a classificação depende só de onde está o núcleo da informação:</p>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Tipo de predicado</th><th>Núcleo</th><th>Verbo</th><th>Exemplo</th></tr>
+    <tr><td><strong>Verbal</strong></td><td>o verbo</td><td>VI, VTD, VTI, VTDI</td><td>O candidato <em>estudou muito</em>.</td></tr>
+    <tr><td><strong>Nominal</strong></td><td>o predicativo</td><td>de ligação</td><td>O candidato <em>está preparado</em>.</td></tr>
+    <tr><td><strong>Verbo-nominal</strong></td><td>verbo <strong>e</strong> predicativo</td><td>de ação + predicativo junto</td><td>O candidato <em>saiu <u>satisfeito</u></em> da prova.</td></tr>
+  </table>
+  </div>
+  <p>O terceiro é o que cai. "<em>Os candidatos saíram satisfeitos</em>" diz duas coisas ao mesmo tempo: eles saíram (ação) e eles estavam satisfeitos (estado). Duas informações, um predicado — daí o nome. Detecte assim: <strong>há um verbo de ação, mas também um adjetivo que qualifica o sujeito</strong>. E como esse adjetivo é predicativo do sujeito, ele concorda com o sujeito — motivo pelo qual "satisfeitos" está no plural.</p>
+  <p><strong>Exemplo comentado.</strong> "<em>Os analistas consideraram a proposta <u>inviável</u></em>". Aqui <em>inviável</em> não qualifica <em>os analistas</em> — qualifica <em>a proposta</em>, que é o objeto direto. Isso se chama <strong>predicativo do objeto</strong>, e ele concorda com o objeto: "<em>consideraram <u>as propostas</u> <u>inviáveis</u></em>". Se você escrever "consideraram as propostas inviável", quebrou. Verbos que costumam pedir predicativo do objeto: <em>considerar, julgar, achar, eleger, nomear, chamar, tornar</em>.</p>
+
+  <h3>3.7 Adjunto e aposto — os acessórios</h3>
+  <p>Dois termos que a banca usa sem explicar e que você precisa reconhecer:</p>
+  <p><strong>Adjunto adnominal</strong> — tudo que acompanha um substantivo qualificando-o: artigo, adjetivo, numeral, pronome possessivo, locução adjetiva. Em "<em>os dois novos servidores do banco</em>", tudo além de <em>servidores</em> é adjunto adnominal. Mnemônico: "ad-<strong>nominal</strong>" = preso a um <strong>nome</strong>.</p>
+  <p><strong>Adjunto adverbial</strong> — circunstância: tempo, lugar, modo, causa, intensidade. "<em>Ontem</em>, o sistema caiu <em>duas vezes</em> <em>por sobrecarga</em>." Todos são adjuntos adverbiais. São <strong>acessórios</strong>: você pode apagá-los e a frase continua de pé ("o sistema caiu"). Essa é a característica que importa para pontuação — o que é acessório e está deslocado pode ser isolado por vírgula; o que é essencial, não.</p>
+  <p><strong>Aposto</strong> — um termo que <strong>reexplica outro</strong>, colocado ao lado dele, geralmente entre vírgulas. "<em>O Banco do Brasil, <u>a instituição financeira mais antiga do país</u>, abriu concurso</em>." O trecho sublinhado é aposto: ele é outra maneira de nomear a mesma entidade — um alias, um <code>AS</code> de SQL. Teste: se você trocar o termo original pelo aposto, a frase continua verdadeira e coerente. É por isso que aposto explicativo vem entre vírgulas: ele é informação adicional, não restritiva.</p>
+  <p><strong>Vocativo</strong> — chamamento, o interlocutor. "<em>Guilherme, revise a crase.</em>" Não é sujeito nem complemento: está fora da estrutura da oração, é só o endereçamento. Sempre isolado por vírgula.</p>
+  <div class="trap">🪤 <strong>Adjunto adnominal × complemento nominal.</strong> Ambos vêm com preposição depois de um substantivo, e a banca adora. A diferença: adjunto indica <strong>quem faz</strong> (agente/posse), complemento indica <strong>quem sofre</strong> (paciente/alvo). "<em>A invasão <u>dos hackers</u></em>" — os hackers invadiram, são agentes → adjunto adnominal. "<em>A invasão <u>do sistema</u></em>" — o sistema foi invadido, é paciente → complemento nominal. Mesma forma superficial, papéis semânticos opostos.</div>
+
+  <h2 id="sec-4-periodo-composto">4. Período composto</h2>
+
+  <h3>4.1 O problema: frases têm estrutura de árvore</h3>
+  <p>Uma oração = um verbo. Duas orações numa frase só = período composto. A pergunta é: <strong>como elas se relacionam?</strong> E só existem duas respostas possíveis.</p>
+  <p>Ou as orações estão <strong>lado a lado</strong>, cada uma se sustentando sozinha — isso é <strong>coordenação</strong>. Ou uma está <strong>dentro da outra</strong>, exercendo uma função sintática dentro dela — isso é <strong>subordinação</strong>.</p>
+  <p>A analogia é direta: coordenação é uma lista de instruções sequenciais; subordinação é aninhamento. Em "<em>Estudei e passei</em>", as duas orações são independentes — <em>estudei</em> faz sentido sozinha, <em>passei</em> também. Em "<em>Quero <u>que você estude</u></em>", a oração sublinhada não vive sozinha: ela é o objeto direto de <em>quero</em>. Ela ocupa um slot dentro da oração principal, como um argumento aninhado numa chamada de função. Por isso se chama subordinada — ela está subordinada a um papel dentro da outra.</p>
+  <p>Teste prático para distinguir: <strong>tente apagar uma das orações</strong>. Se cada pedaço continua sendo uma frase completa, é coordenação. Se um pedaço deixa um buraco na outra ("Quero..." — quero o quê?), é subordinação.</p>
+
+  <h3>4.2 Coordenação — as 5 relações</h3>
   <p><strong>Coordenação</strong> (orações independentes) — decore as 5 relações:</p>
   <div class="table-scroll">
   <table>
@@ -69,6 +237,29 @@
     <tr><td>Explicativa</td><td>porque, pois (antes do verbo), que, porquanto</td></tr>
   </table>
   </div>
+  <p>Cinco relações, e cada uma tem um sentido lógico que você já conhece de outro contexto:</p>
+  <ul>
+    <li><strong>Aditiva</strong> = soma. É o <code>AND</code>. Vale notar o <em>nem</em>: ele é "e não" — já vem com a negação embutida. Por isso "<em>Não estudou <u>nem</u> passou</em>" está certo e "não estudou nem não passou" é redundância.</li>
+    <li><strong>Adversativa</strong> = oposição, contraste. Marca que a segunda parte contraria a expectativa criada pela primeira.</li>
+    <li><strong>Alternativa</strong> = escolha, o <code>OR</code>. Cuidado que o <em>ou</em> em português tanto exclui ("<em>ou passa ou desiste</em>") quanto inclui ("<em>traga caneta ou lápis</em>") — o contexto decide.</li>
+    <li><strong>Conclusiva</strong> = a segunda oração é consequência lógica da primeira. É o <em>portanto</em> do silogismo.</li>
+    <li><strong>Explicativa</strong> = a segunda oração justifica <em>o que foi dito</em> na primeira.</li>
+  </ul>
+  <p>Duas armadilhas de conjunção que caem sempre:</p>
+  <p><strong>O <em>pois</em> tem duas caras, e a posição decide.</strong> Antes do verbo, é explicativo: "<em>Estude, <u>pois</u> a prova é difícil</em>" (= porque). Depois do verbo, é conclusivo: "<em>A prova é difícil; estude, <u>pois</u></em>" (= portanto). Mesma palavra, relações lógicas opostas. Se você tratar posição como parâmetro, a ambiguidade some.</p>
+  <p><strong>Explicativa × Conclusiva</strong> é a confusão mais comum, porque as duas envolvem causa e efeito — só que em direções inversas. Na <strong>conclusiva</strong>, a primeira oração é a causa e a segunda é o efeito: "<em>Ele estudou muito, <u>portanto</u> passou</em>" (estudar → passar). Na <strong>explicativa</strong>, a segunda oração é a causa da primeira: "<em>Ele passou, <u>pois</u> estudou muito</em>" (estudar → passar, mas dito ao contrário). O conteúdo lógico é o mesmo; muda a ordem de apresentação. Teste: se você puder inserir "por isso", é conclusiva; se puder inserir "porque", é explicativa.</p>
+
+  <h3>4.3 Subordinação: os três tipos</h3>
+  <p>Se a oração subordinada exerce uma função dentro da principal, então ela exerce alguma das funções que você já viu no bloco 3. Daí os três tipos, e o nome de cada um entrega qual função é:</p>
+  <ul>
+    <li><strong>Substantiva</strong> — faz papel de <em>substantivo</em>: sujeito, objeto, complemento. "<em>Quero <u>que você passe</u></em>" (= quero <u>sua aprovação</u> — objeto direto). Marca típica: começa com <em>que</em> ou <em>se</em> e você consegue substituí-la por "isso".</li>
+    <li><strong>Adjetiva</strong> — faz papel de <em>adjetivo</em>: qualifica um substantivo anterior. "<em>O candidato <u>que estudou</u> passou</em>" (= o candidato <u>estudioso</u>). Marca: vem introduzida por pronome relativo (<em>que, o qual, cujo, onde, quem</em>) e se refere a um substantivo imediatamente antes.</li>
+    <li><strong>Adverbial</strong> — faz papel de <em>advérbio</em>: indica circunstância (tempo, causa, condição...). "<em><u>Quando o edital sair</u>, eu me inscrevo</em>."</li>
+  </ul>
+  <p><strong>Teste prático de 5 segundos.</strong> Substitua a oração inteira: se couber "<em>isso</em>", é substantiva. Se couber um adjetivo, é adjetiva. Se couber um advérbio ("<em>ontem</em>", "<em>por isso</em>", "<em>assim</em>"), é adverbial.</p>
+  <div class="tip">💡 <strong>O "que" é ambíguo e a banca sabe.</strong> Em "<em>Espero que você passe</em>", <em>que</em> é conjunção integrante (substantiva) — não retoma nada, só conecta. Em "<em>O aluno que estudou passou</em>", <em>que</em> é pronome relativo (adjetiva) — retoma <em>o aluno</em> e exerce função dentro da oração dele (ali, sujeito de <em>estudou</em>). Teste: substitua por <em>o qual</em>. Se ficar de pé, é relativo → adjetiva.</div>
+
+  <h3>4.4 Subordinação adverbial — as circunstâncias</h3>
   <p><strong>Subordinação adverbial</strong> — as mais cobradas:</p>
   <div class="table-scroll">
   <table>
@@ -83,9 +274,18 @@
     <tr><td>Temporal</td><td>quando, enquanto, assim que, mal</td><td>tempo</td></tr>
   </table>
   </div>
-  <div class="trap">🪤 <strong>Concessiva × Causal</strong> é a troca preferida das bancas na reescrita: "Embora estudasse, foi mal" (concessão, contraria a expectativa) ≠ "Porque estudou, foi bem" (causa). E <strong>"como"</strong> no início = causal; no meio = comparativo.</div>
+  <p>Não decore a tabela — entenda três pares que a banca explora:</p>
+  <p><strong>Causal × Consecutiva: mesma relação, foco invertido.</strong> "<em>Ele passou <u>porque</u> estudou muito</em>" foca a causa. "<em>Ele estudou <u>tanto que</u> passou</em>" foca o efeito. O fato do mundo é idêntico; muda o que a frase põe em destaque. Marca formal da consecutiva: sempre tem um intensificador antes (<em>tão, tal, tanto, tamanho</em>) puxando o <em>que</em>.</p>
+  <p><strong>Condicional × Concessiva: hipótese × hipótese que não impede.</strong> A condicional diz "se A, então B" — A é requisito de B. A concessiva diz "mesmo com A, ainda assim B" — A seria motivo para não-B, mas B acontece assim mesmo. Compare: "<em><u>Se</u> chover, cancelo a prova</em>" (chuva → cancelamento) versus "<em><u>Ainda que</u> chova, faço a prova</em>" (chuva deveria impedir, mas não impede). A concessiva é sempre <strong>uma expectativa frustrada</strong>: ela cria um cenário adverso e o anula.</p>
+  <p><strong>Final × Causal: intenção × razão.</strong> "<em>Estudou <u>porque</u> queria passar</em>" (causa: o motivo já existia). "<em>Estudou <u>para que</u> pudesse passar</em>" (finalidade: o objetivo ainda estava no futuro). Causa olha para trás; finalidade olha para frente. E a final quase sempre pede subjuntivo, o que ajuda a reconhecer.</p>
+  <p><strong>Exemplo comentado — a proporcional.</strong> "<em><u>À medida que</u> a prova se aproximava, ele estudava mais</em>": as duas coisas crescem juntas, é proporcional. Muita gente troca por "<em>ao passo que</em>", que também pode ser proporcional — mas <em>ao passo que</em> é frequentemente usado como <strong>adversativo</strong> ("<em>ele estudava, ao passo que o irmão dormia</em>" = contraste). Duas leituras diferentes; só o contexto decide. Em prova de reescrita, não troque uma pela outra sem checar o sentido.</p>
+  <div class="trap">🪤 <strong>Concessiva × Causal</strong> é a troca preferida das bancas na reescrita: "Embora estudasse, foi mal" (concessão, contraria a expectativa) ≠ "Porque estudou, foi bem" (causa). E <strong>"como"</strong> no início = causal; no meio = comparativo. Compare: "<em><u>Como</u> chovia, ficamos em casa</em>" (= já que) × "<em>Ele age <u>como</u> um profissional</em>" (= tal qual). Uma palavra, dois papéis; a posição resolve.</div>
 
-  <h2>5. Concordância verbal — os casos que caem</h2>
+  <h2 id="sec-5-concordancia-verbal-os-casos-que-caem">5. Concordância verbal — os casos que caem</h2>
+
+  <h3>5.1 A regra é uma só</h3>
+  <p><strong>O verbo concorda com o sujeito em número e pessoa.</strong> Isso é tudo. Não existe segunda regra de concordância verbal. Tudo o que a tabela abaixo lista são casos em que <em>achar o sujeito é difícil</em> — e não casos em que a regra muda.</p>
+  <p>Grave essa reformulação, porque ela muda a maneira de estudar: <strong>concordância verbal não é um tópico de concordância. É um tópico de identificação de sujeito.</strong> Toda questão que você errar aqui, você errou porque identificou o sujeito errado, não porque esqueceu uma regra.</p>
   <div class="table-scroll">
   <table>
     <tr><th>Caso</th><th>Regra</th><th>Exemplo</th></tr>
@@ -102,9 +302,63 @@
     <tr><td>Horas</td><td>com o numeral</td><td>São 14 horas. É meio-dia e meia. É uma hora.</td></tr>
   </table>
   </div>
-  <div class="tip">💡 Teste do <strong>SE</strong>: tem preposição depois do verbo? → singular fixo. Não tem? → tente a voz passiva analítica ("são vendidas"): se couber, concorda.</div>
 
-  <h2>6. Concordância nominal</h2>
+  <h3>5.2 Haver: o caso mais cobrado do Brasil</h3>
+  <p>Vamos destrinchar, porque isto cai em toda prova.</p>
+  <p>O verbo <strong>haver</strong>, no sentido de <em>existir</em>, é <strong>impessoal</strong> — e "impessoal" quer dizer, literalmente, <em>sem pessoa</em>, ou seja, <strong>sem sujeito</strong>. Volte ao bloco 3.4: se não há sujeito, o verbo não tem com quem concordar, e trava na forma neutra (3ª pessoa do singular).</p>
+  <p>Onde está o erro de todo mundo? Em "<em>Havia vagas</em>", o falante olha para <em>vagas</em>, vê um plural, e o reflexo dispara: "plural, então o verbo vai para o plural" → "*Haviam vagas". Mas <em>vagas</em> <strong>não é sujeito</strong> — é objeto direto de <em>haver</em>. E verbo não concorda com objeto. Nunca. Em nenhuma situação.</p>
+  <p>A prova disso é simples: substitua <em>vagas</em> por um pronome. "<em>Havia vagas</em>" → "<em>Havia<strong>-as</strong></em>". Se cabe pronome oblíquo de objeto direto (<em>o, a, os, as</em>), o termo é objeto direto, não sujeito. Compare com <em>existir</em>: "<em>Existem vagas</em>" → "*existe-as"? Impossível. Porque em <em>existir</em>, <em>vagas</em> é o sujeito de fato — quem existe são as vagas. Daí a assimetria que a tabela registra: <strong>haver não concorda; existir concorda</strong>. Não é caprichoso: os dois verbos têm assinaturas diferentes.</p>
+  <p>E a parte que separa quem estudou de quem não estudou: <strong>a impessoalidade contamina o auxiliar</strong>. Quando <em>haver</em> impessoal entra numa locução verbal, o verbo auxiliar também trava no singular, porque a locução inteira herda a impessoalidade.</p>
+  <ul>
+    <li>✅ <em><u>Deve haver</u> muitas vagas.</em> — <em>deve</em> fica singular.</li>
+    <li>❌ <em><u>Devem haver</u> muitas vagas.</em> — o candidato flexionou o auxiliar achando que <em>vagas</em> era sujeito.</li>
+    <li>✅ <em><u>Vai haver</u> novas provas.</em> / ❌ <em>Vão haver novas provas.</em></li>
+    <li>✅ <em><u>Pode haver</u> recursos.</em> / ❌ <em>Podem haver recursos.</em></li>
+  </ul>
+  <p>Mas — e aqui está o contraste que a banca monta — com <em>existir</em> acontece o oposto, porque <em>existir</em> tem sujeito, e o sujeito puxa a locução inteira: ✅ <em><u>Devem existir</u> muitas vagas</em>. Uma frase certa e a outra errada com a mesma estrutura superficial. Se você não entendeu o mecanismo, é loteria.</p>
+  <div class="tip">💡 <strong>Teste de 5 segundos para haver:</strong> troque <em>haver</em> por <em>existir</em> e flexione. Se a frase com <em>existir</em> fica no plural, então a frase com <em>haver</em> fica no <strong>singular</strong> — sempre. "Existem vagas" ⇔ "Há vagas". "Devem existir vagas" ⇔ "Deve haver vagas". A troca inverte o número; é um conversor confiável.</div>
+  <p>O mesmo raciocínio vale para <strong>fazer</strong> indicando tempo decorrido ou clima: "<em>Faz dez anos que trabalho com TI</em>", "<em>Faz meses que estudo</em>", "<em>Vai fazer dois meses</em>". Quem faz dez anos? Ninguém. Sem sujeito → singular travado → e o auxiliar também trava ("vai fazer", nunca "vão fazer"). Idem <em>chover, nevar, amanhecer, anoitecer</em> quando literais.</p>
+  <div class="trap">🪤 <strong>Haver pessoal existe e concorda!</strong> Quando <em>haver</em> significa "comportar-se" ou aparece como auxiliar, ele tem sujeito e flexiona normalmente: "<em>Os candidatos <u>houveram-se</u> bem na prova</em>", "<em>Eles <u>haviam</u> estudado</em>". A impessoalidade só vale para o <em>haver</em> = existir/ocorrer/tempo.</div>
+
+  <h3>5.3 O "SE" — o operador de dois modos</h3>
+  <p>Esta é a segunda maior fonte de erro, e a chave está inteira no bloco 3.5: <strong>a transitividade do verbo decide o que o SE é</strong>.</p>
+  <p>Existem dois usos que interessam:</p>
+  <p><strong>Modo 1 — partícula apassivadora (SE + VTD).</strong> "<em>Vendem-se apostilas</em>". Isto é <em>voz passiva sintética</em>: uma passiva disfarçada. A prova é que ela se converte perfeitamente na passiva analítica: "<em>Apostilas <u>são vendidas</u></em>". E na passiva, quem era objeto vira <strong>sujeito</strong>. Ou seja: <em>apostilas</em> É o sujeito. Portanto o verbo concorda com ele: "vend<strong>em</strong>-se apostilas". Singular ali é erro.</p>
+  <p><strong>Modo 2 — índice de indeterminação do sujeito (SE + VTI ou VI).</strong> "<em>Precisa-se de programadores</em>". Aqui não há passiva possível — "*programadores são precisados" não existe, porque <em>precisar</em> é VTI e não tem objeto direto para promover a sujeito. Então <em>de programadores</em> continua sendo objeto indireto, o sujeito fica <strong>indeterminado</strong>, e o verbo trava na 3ª do singular. "Precisam-se de programadores" é erro clássico.</p>
+  <p>Note a elegância do sistema: os dois modos se distinguem por <strong>um único bit</strong> — tem preposição depois do verbo ou não? Tendo preposição, o complemento está preso, não pode virar sujeito, e o verbo fica singular. Não tendo, o complemento é promovível, vira sujeito, e o verbo concorda.</p>
+  <div class="tip">💡 Teste do <strong>SE</strong>: tem preposição depois do verbo? → singular fixo. Não tem? → tente a voz passiva analítica ("são vendidas"): se couber, concorda.</div>
+  <p><strong>Exemplo comentado com o par completo:</strong></p>
+  <ul>
+    <li>✅ <em>Alug<u>am</u>-se salas.</em> → "salas são alugadas" funciona → passiva → concorda → plural.</li>
+    <li>❌ <em>Aluga-se salas.</em> → o candidato tratou <em>salas</em> como objeto; mas é sujeito.</li>
+    <li>✅ <em>Trata-se <u>de</u> um caso grave.</em> → tem preposição (<em>de</em>) → indeterminação → singular travado.</li>
+    <li>❌ <em>Tratam-se de casos graves.</em> → erro campeão. <em>Tratar-se de</em> é sempre singular, sem exceção, porque a preposição está lá.</li>
+  </ul>
+
+  <h3>5.4 Sujeito composto e a questão da ordem</h3>
+  <p>Sujeito composto (dois ou mais núcleos) <strong>anteposto</strong> ao verbo vai para o plural, e não há discussão: "<em>TI e Bancários caem na prova</em>". Faz sentido — dois núcleos somados dão plural.</p>
+  <p>O caso interessante é o <strong>posposto</strong>: quando o sujeito vem depois do verbo, o português admite duas concordâncias. "<em>Caem na prova TI e Bancários</em>" (plural, concordância com o conjunto) e "<em>Cai na prova TI e Bancários</em>" (com o núcleo mais próximo) são ambas aceitas. Por quê? Porque quando o verbo é enunciado, o falante ainda não terminou de listar os sujeitos — a concordância com o mais próximo é um efeito de processamento em tempo real, e a norma tolera. Em prova, se você vir a forma singular numa estrutura assim, <strong>não marque como erro automaticamente</strong>. É facultativo.</p>
+  <p>Dois casos derivados que caem:</p>
+  <ul>
+    <li><strong>Núcleos ligados por OU</strong>: se o "ou" for excludente, singular ("<em>Pedro ou João será aprovado</em>" — só um pode); se for inclusivo, plural ("<em>Vinho ou cerveja me agradam</em>").</li>
+    <li><strong>Pessoas diferentes</strong>: prevalece a de menor número. 1ª pessoa vence 2ª e 3ª. "<em>Eu e os analistas <u>resolvemos</u> o bug</em>" (eu + eles = nós). "<em>Tu e ele <u>sois/são</u> aprovados</em>" (2ª + 3ª = vós, ou "vocês" na prática).</li>
+  </ul>
+
+  <h3>5.5 As expressões-armadilha</h3>
+  <p><strong>"Um dos que"</strong> — plural preferencial: "<em>Foi um dos que mais estudaram</em>". A lógica: o <em>que</em> retoma <em>os</em>, não <em>um</em>. Reescreva mentalmente: "<em>Dentre os [candidatos] que mais estudar<u>am</u>, ele foi um</em>". A oração adjetiva descreve o grupo, não o indivíduo. Por isso plural.</p>
+  <p><strong>"Mais de um"</strong> — singular, contra toda a intuição: "<em>Mais de um candidato desistiu</em>". Semanticamente são vários, mas a forma manda: o núcleo é <em>um</em>, e a concordância é formal, não semântica. Exceção: se houver reciprocidade ou repetição, vai a plural ("<em>Mais de um candidato se ofenderam</em>"). Detalhe: "<strong>mais de dois</strong>" vai ao plural normalmente — a esquisitice é só com <em>um</em>.</p>
+  <p><strong>Porcentagem</strong> — a concordância segue o <em>número</em> ou o <em>especificador</em>, e ambas são aceitas: "<em>50% dos candidatos faltaram</em>" (com <em>candidatos</em>) ou "<em>50% da turma faltou</em>" (com <em>turma</em>). Mas se o número vier sozinho, manda o número: "<em>1% faltou</em>", "<em>30% faltaram</em>". E se houver determinante antes do percentual, ele manda: "<em><u>Os</u> 50% restantes votaram</em>".</p>
+  <p><strong>Horas</strong> — concorda com o numeral, porque o sujeito é o próprio número de horas: "<em>São 14 horas</em>", "<em>É uma hora</em>", "<em>É meio-dia e meia</em>" (meia = meia <em>hora</em>, feminino, concorda). Repare: "<em>É meio-dia e meio</em>" está errado — <em>meia</em> concorda com <em>hora</em> subentendida, não com <em>meio-dia</em>.</p>
+  <p><strong>Expressões partitivas</strong> (a maioria de, grande parte de, um bando de): a norma aceita as duas. "<em>A maioria dos candidatos desistiu</em>" (formal, com <em>maioria</em>) e "<em>A maioria dos candidatos desistiram</em>" (com o coletivo semântico) são ambas defensáveis. A banca costuma cobrar a primeira.</p>
+
+  <h2 id="sec-6-concordancia-nominal">6. Concordância nominal</h2>
+
+  <h3>6.1 A regra e a única pergunta que importa</h3>
+  <p>A regra geral é trivial: <strong>adjetivo, artigo, numeral e pronome concordam em gênero e número com o substantivo a que se referem</strong>. "<em>Os novos analistas contratados</em>" — tudo no masculino plural, seguindo <em>analistas</em>. Você faz isso sem pensar.</p>
+  <p>Então onde está a dificuldade? Numa pergunta só: <strong>essa palavra é adjetivo ou advérbio?</strong> Porque <strong>adjetivo varia e advérbio é invariável</strong> — sempre, sem exceção. Advérbio não tem gênero nem número porque ele não se refere a um substantivo; ele modifica verbo, adjetivo ou outro advérbio. Não há com quem concordar.</p>
+  <p>Quase toda questão de concordância nominal é a mesma questão disfarçada: identificar a classe da palavra. E existe um teste único que resolve praticamente todos os casos: <strong>se a palavra puder ser substituída por "muito" e a frase continuar de pé, é advérbio → invariável. Se puder ser substituída por um adjetivo ("bons", "grandes"), é adjetivo → varia.</strong></p>
+
+  <h3>6.2 Os casos, um a um</h3>
   <ul>
     <li><strong>Anexo, incluso, obrigado, mesmo, próprio</strong> = adjetivos → concordam: <em>Seguem anexas as planilhas. Obrigada, disse ela.</em> Mas a locução <strong>em anexo</strong> é invariável.</li>
     <li><strong>Menos</strong> e <strong>alerta</strong>: invariáveis sempre. <em>Menos pessoas. Estamos alerta.</em> ("menas" não existe!)</li>
@@ -112,8 +366,35 @@
     <li><strong>É proibido / é necessário / é bom</strong>: invariáveis SEM artigo; concordam COM artigo. <em>É proibido entrada. / É proibidA A entrada.</em></li>
     <li><strong>Meio</strong>: numeral varia (<em>meia hora</em>); advérbio não (<em>ela está meio nervosa</em>).</li>
   </ul>
+  <p>Agora o porquê de cada um:</p>
+  <p><strong>Anexo.</strong> É adjetivo — significa "junto", "apenso". Se é adjetivo, refere-se a um substantivo e concorda com ele: "<em>Seguem <u>anexas</u> as planilhas</em>", "<em>Envio <u>anexo</u> o relatório</em>", "<em>Vão <u>anexos</u> os comprovantes</em>". O erro "<em>segue em anexo as planilhas</em>" mistura duas coisas: <em>em anexo</em> é <strong>locução adverbial</strong>, e locução adverbial é invariável — mas aí o verbo continua tendo que concordar com o sujeito ("<em>Segu<u>em</u> em anexo as planilhas</em>"). Muita gente erra o verbo achando que "em anexo" resolve tudo.</p>
+  <p><strong>Obrigado.</strong> É adjetivo elíptico de "<em>eu fico obrigado a você</em>" — ou seja, concorda com <strong>quem fala</strong>, não com quem ouve. Homem diz "obrigado"; mulher diz "obrigada". Sempre. Não importa o gênero do interlocutor.</p>
+  <p><strong>Menos.</strong> Invariável porque é advérbio (ou pronome indefinido invariável). "<em>Menos pessoas, menos problemas, menos vagas</em>". A forma "menas" simplesmente não existe em português — nem no coloquial aceito. É um dos poucos casos em que a regra é pura memorização.</p>
+  <p><strong>Bastante</strong> é o exemplo perfeito do teste. "<em>Ele tinha <u>bastantes</u> motivos</em>" — aqui <em>bastante</em> equivale a <em>muitos</em>, está qualificando o substantivo <em>motivos</em>, é adjetivo (pronome indefinido, tecnicamente) → varia. "<em>Ele estudou <u>bastante</u></em>" — aqui equivale a <em>muito</em>, modifica o verbo <em>estudou</em>, é advérbio → invariável. E "<em>As provas estavam bastante difíceis</em>": <em>bastante</em> modifica o adjetivo <em>difíceis</em>, então é advérbio → não varia. "*bastantes difíceis" é erro.</p>
+  <p><strong>Meio</strong> segue o mesmo padrão. "<em>Meia hora</em>" — numeral, quantifica <em>hora</em>, varia. "<em>Ela está <u>meio</u> nervosa</em>" — equivale a "um pouco", modifica o adjetivo <em>nervosa</em>, é advérbio → invariável. "*meia nervosa" é erro, ainda que soe natural para muita gente.</p>
+  <p><strong>É proibido / é necessário / é bom</strong> merece atenção porque a lógica é sutil e cai muito. Compare:</p>
+  <ul>
+    <li><em>É proibido <u>entrada</u>.</em> — sem artigo, o termo está genérico, indeterminado. Sem determinação, não há com que concordar de forma específica, e a expressão fica no masculino neutro.</li>
+    <li><em>É proibid<u>a</u> <u>a</u> entrada.</em> — o artigo <em>a</em> determina o substantivo. Determinado, ele exige concordância: <em>proibida</em>.</li>
+    <li><em>Água é bom para a saúde.</em> ✅ (genérico) × <em><u>A</u> água é boa para a saúde.</em> ✅ (determinado)</li>
+    <li><em>É necessário paciência.</em> ✅ × <em>É necessári<u>a</u> muit<u>a</u> paciência.</em> ✅ (<em>muita</em> determina)</li>
+  </ul>
+  <p>Pense assim: o artigo é o que "instancia" o substantivo. Sem artigo, ele é uma classe abstrata — e a concordância vai ao neutro. Com artigo, ele é um objeto concreto, e o predicativo se ajusta a ele.</p>
 
-  <h2>7. Regência — a tabela que vale ponto</h2>
+  <h3>6.3 Um adjetivo, vários substantivos</h3>
+  <p>Caso que a tabela original não cobre e cai em prova: quando um adjetivo qualifica dois ou mais substantivos, há duas soluções aceitas.</p>
+  <p><strong>Adjetivo DEPOIS dos substantivos:</strong> pode concordar com todos (plural — e se houver gêneros diferentes, vai ao masculino) ou só com o mais próximo. "<em>Comprei livro e apostila <u>novos</u></em>" ✅ ou "<em>Comprei livro e apostila <u>nova</u></em>" ✅.</p>
+  <p><strong>Adjetivo ANTES dos substantivos:</strong> concorda obrigatoriamente com o mais próximo. "<em><u>Velha</u> apostila e livro</em>" ✅ — não se diz "*velhos apostila e livro".</p>
+  <div class="trap">🪤 <strong>"Mesmo" e "próprio" não são muletas.</strong> Como adjetivos, concordam: "<em>As <u>mesmas</u> regras</em>", "<em>Elas <u>próprias</u> corrigiram</em>". Mas usar <em>mesmo</em> como pronome de retomada — "<em>O candidato entrou e o mesmo assinou a lista</em>" — é vício de linguagem burocrática e a banca considera inadequado. Use <em>ele</em>.</div>
+
+  <h2 id="sec-7-regencia-a-tabela-que-vale-ponto">7. Regência — a tabela que vale ponto</h2>
+
+  <h3>7.1 O que é regência, afinal</h3>
+  <p>Volte à analogia do bloco 3: o verbo é uma função com assinatura. <strong>Regência é exatamente isso — a assinatura do verbo</strong>: quais complementos ele aceita e com qual preposição. "Reger" significa "governar": o verbo <em>governa</em> o complemento, determina a forma como ele deve aparecer.</p>
+  <p>O ponto que destrava a matéria: <strong>a preposição não é escolha sua, é imposição do verbo</strong>. Você não decide se assiste "o filme" ou "ao filme" — o verbo <code>assistir</code>, no sentido de "ver", exige a preposição <code>a</code>. É como um parâmetro tipado: você não passa uma <code>String</code> onde o método pede um <code>Integer</code> só porque acha mais natural. O compilador reclama. A banca também.</p>
+  <p>E, como já foi dito no bloco 3.5, <strong>o mesmo verbo pode ter várias assinaturas, e cada uma corresponde a um sentido diferente</strong>. Isso é sobrecarga. A preposição é o que resolve qual overload está sendo chamado — é informação semântica, não decoração.</p>
+
+  <h3>7.2 A tabela</h3>
   <div class="table-scroll">
   <table>
     <tr><th>Verbo</th><th>Regência correta</th><th>Erro comum</th></tr>
@@ -130,14 +411,74 @@
     <tr><td>Pagar / perdoar</td><td>coisa = VTD; pessoa = VTI</td><td>"paguei o fornecedor"</td></tr>
   </table>
   </div>
-  <div class="tip">💡 A regência decide o relativo: <em>o filme <strong>a que</strong> assisti</em>, <em>o cargo <strong>a que</strong> aspiro</em>, <em>a norma <strong>a que</strong> obedeço</em>.</div>
 
-  <h2>8. Crase — o algoritmo</h2>
+  <h3>7.3 O porquê de cada par</h3>
+  <p><strong>Assistir</strong> é o campeão. Três sentidos, três assinaturas:</p>
+  <ul>
+    <li><em>ver, presenciar</em> → VTI com <code>a</code>: "<em>Assisti <u>ao</u> jogo</em>", "<em>Assistimos <u>à</u> apresentação do resultado</em>".</li>
+    <li><em>ajudar, prestar assistência</em> → VTD: "<em>O médico assistiu <u>o paciente</u></em>", "<em>O advogado assiste <u>o cliente</u></em>".</li>
+    <li><em>caber, pertencer (direito)</em> → VTI com <code>a</code>: "<em>Não lhe assiste esse direito</em>".</li>
+  </ul>
+  <p>Repare que a distinção não é gratuita: ela evita ambiguidade real. "<em>O médico assistiu o paciente</em>" (ajudou) ≠ "<em>O médico assistiu ao paciente</em>" (ficou olhando). Duas frases com sentidos opostos, e só a preposição separa.</p>
+  <p><strong>Aspirar</strong>, mesma coisa: <em>aspirar o ar</em> (VTD, = inalar) × <em>aspirar <u>ao</u> cargo</em> (VTI, = almejar). O aspirador de pó aspira <em>o</em> pó; o candidato aspira <em>ao</em> cargo.</p>
+  <p><strong>Visar</strong>: <em>visar o cheque</em> (VTD, = assinar, pôr o visto) × <em>visar <u>ao</u> lucro</em> (VTI, = ter por objetivo) × <em>visar o alvo</em> (VTD, = mirar). Só o sentido de "almejar" pede preposição.</p>
+  <p><strong>Implicar</strong> é o mais violado no português corporativo. No sentido de "acarretar, ter como consequência", é <strong>VTD, sem preposição</strong>: "<em>A falha implicou <u>a perda</u> dos dados</em>" — jamais "implicou <em>na</em> perda". Nos outros sentidos, pede preposição: "<em>implicar <u>com</u> alguém</em>" (= implicância) e "<em>implicar-se <u>em</u> algo</em>" (= envolver-se). Como você fala "implicar em" todo dia no trabalho, este exige atenção consciente.</p>
+  <p><strong>Preferir</strong> é <em>X <strong>a</strong> Y</em>, nunca "do que". "<em>Prefiro Java <u>a</u> Python</em>" ✅. "*Prefiro Java <em>do que</em> Python" ❌. E nada de reforço: "*prefiro <em>muito mais</em> Java", "*prefiro <em>antes</em>" — o próprio verbo já carrega a ideia de superioridade, e reforçá-la é redundância que a banca considera erro.</p>
+  <p><strong>Esquecer / lembrar</strong> seguem uma lógica bonita: <strong>com pronome, ganha preposição; sem pronome, não tem</strong>.</p>
+  <ul>
+    <li>✅ <em>Esqueci <u>o nome</u>.</em> / ✅ <em>Esqueci-me <u>do</u> nome.</em></li>
+    <li>✅ <em>Lembrei <u>o prazo</u>.</em> / ✅ <em>Lembrei-me <u>do</u> prazo.</em></li>
+    <li>❌ <em>Me esqueci o nome.</em> (pronome sem preposição) / ❌ <em>Esqueci do nome.</em> (preposição sem pronome — este é o erro mais comum de todos)</li>
+  </ul>
+  <p>É um par acoplado: os dois vêm juntos ou nenhum vem. Trate como invariante.</p>
+  <p><strong>Pagar / perdoar</strong> — a regra é elegante: <strong>coisa é objeto direto, pessoa é objeto indireto</strong>. "<em>Paguei <u>a conta</u> <u>ao fornecedor</u></em>" — a conta (coisa, OD), ao fornecedor (pessoa, OI). "*Paguei o fornecedor" está errado na norma culta. Idem: "<em>Perdoei <u>a dívida</u> <u>ao devedor</u></em>". O mesmo padrão vale para <em>agradecer</em> ("agradeço <u>o favor</u> <u>a você</u>") e <em>informar</em> ("informei <u>o resultado</u> <u>ao candidato</u>" — ou, invertido, "informei <u>o candidato</u> <u>do resultado</u>": <em>informar</em> aceita as duas ordens).</p>
+  <p><strong>Obedecer/desobedecer</strong> são VTI: "<em>obedecer <u>às</u> regras</em>". Curiosidade que a banca explora: apesar de serem VTI, admitem voz passiva ("<em>As regras foram obedecidas</em>") — são a exceção histórica à ideia de que só VTD apassiva. Não estranhe se vir isso num gabarito.</p>
+
+  <h3>7.4 A conexão com o pronome relativo — aqui vale ponto de verdade</h3>
+  <p>Esta é a razão real pela qual regência cai tanto. Quando você usa um pronome relativo, <strong>a preposição exigida pelo verbo tem que migrar para antes do relativo</strong>. E é aí que se separa quem sabe de quem chuta.</p>
+  <p>Monte o raciocínio em duas etapas: (1) qual a regência do verbo? (2) põe a preposição antes do <em>que</em>.</p>
+  <ul>
+    <li><em>Assisti <u>ao</u> filme</em> → <em>o filme <strong>a que</strong> assisti</em> ✅ (não "o filme que assisti")</li>
+    <li><em>Aspiro <u>ao</u> cargo</em> → <em>o cargo <strong>a que</strong> aspiro</em> ✅</li>
+    <li><em>Obedeço <u>à</u> norma</em> → <em>a norma <strong>a que</strong> obedeço</em> ✅</li>
+    <li><em>Preciso <u>de</u> ajuda</em> → <em>a ajuda <strong>de que</strong> preciso</em> ✅</li>
+    <li><em>Confio <u>em</u> você</em> → <em>a pessoa <strong>em quem</strong> confio</em> ✅</li>
+  </ul>
+  <p>Compare com um VTD, que não tem preposição para migrar: <em>Fiz a prova</em> → <em>a prova <strong>que</strong> fiz</em> ✅ — limpo, sem preposição.</p>
+  <div class="tip">💡 A regência decide o relativo: <em>o filme <strong>a que</strong> assisti</em>, <em>o cargo <strong>a que</strong> aspiro</em>, <em>a norma <strong>a que</strong> obedeço</em>. <strong>Teste de 5 segundos:</strong> desmonte a oração relativa numa frase simples ("assisti ___ filme"). A preposição que aparecer ali é a que vai antes do <em>que</em>. Se não aparecer nenhuma, o relativo vai sozinho.</div>
+  <div class="trap">🪤 O relativo <strong>cujo</strong> nunca vem com artigo depois: "<em>o banco <u>cujo</u> sistema falhou</em>" ✅, "*o banco cujo o sistema falhou" ❌. E <em>cujo</em> concorda com a coisa <strong>possuída</strong>, não com o possuidor: "<em>a empresa <u>cujos</u> servidores caíram</em>" — <em>cujos</em> concorda com <em>servidores</em>.</div>
+
+  <h2 id="sec-8-crase-o-algoritmo">8. Crase — o algoritmo</h2>
+
+  <h3>8.1 Por que a crase existe (comece por aqui, sempre)</h3>
+  <p>Esqueça a regra por um minuto. Vamos construir a crase do zero.</p>
+  <p>Pegue o verbo <code>referir-se</code>. Ele exige a preposição <code>a</code>: você se refere <strong>a</strong> alguma coisa. Agora pegue o substantivo <em>diretora</em>, que, sendo determinado, pede o artigo <strong>a</strong>: <em>a diretora</em>.</p>
+  <p>Junte os dois: <em>Refiro-me</em> + <code>a</code> (preposição, exigida pelo verbo) + <code>a diretora</code> (artigo + substantivo). Escreveria "<em>Refiro-me a a diretora</em>". Dois "a" colados.</p>
+  <p>Nenhuma língua tolera isso. O português faz o que qualquer sistema faria: <strong>funde os dois em um só</strong>. E, para não perder a informação de que ali existiam dois elementos, marca a fusão com um sinal gráfico — o acento grave. <em>Refiro-me <strong>à</strong> diretora</em>.</p>
+  <p>É isto e nada mais. <strong>A crase é a fusão de dois "a"; o acento grave é apenas a marca dessa fusão.</strong> "Crase", em grego, significa literalmente "mistura". O acento não é uma regra ortográfica arbitrária — é um registro de que dois elementos gramaticais colidiram e se fundiram.</p>
+  <p>E isso explica de imediato por que a crase parece tão difícil: <strong>ela não é um tópico, é a interseção de dois tópicos</strong>. Para acertar, você precisa saber (a) se há preposição e (b) se há artigo. Falhando qualquer um dos dois, não há crase. É um <code>AND</code>:</p>
+  <p><code>crase = temPreposicaoA() &amp;&amp; temArtigoA()</code></p>
+  <p>Aliás, é isso que explica <em>todas</em> as exceções que você vai ver. Não existe "regra de crase" — existe uma condição de duas partes, e cada exceção é apenas um caso em que uma das duas partes é falsa. Vamos usar exatamente essa estrutura.</p>
+
+  <h3>8.2 O algoritmo, passo a passo</h3>
   <p>Crase = preposição <strong>A</strong> + artigo <strong>A(s)</strong> (ou pronome <em>aquele/aquilo</em>, ou relativo <em>a qual</em>). Rode o teste:</p>
   <ol>
     <li>A palavra seguinte é <strong>feminina</strong>? Se não → sem crase (exceto "à moda de").</li>
     <li>O termo anterior <strong>exige a preposição "a"</strong>? (teste: troque por palavra masculina — se virar <strong>AO</strong>, há crase)</li>
   </ol>
+  <p>Vamos executar esse algoritmo com calma, porque cada passo tem um porquê.</p>
+  <p><strong>Passo 1 — a palavra seguinte é feminina?</strong> Se for masculina, não existe o artigo <em>a</em> (seria <em>o</em>), logo a condição B falha, logo não há fusão possível. É por isso que "<em>a pé</em>", "<em>a lápis</em>", "<em>a cavalo</em>" nunca têm crase: <em>pé</em>, <em>lápis</em> e <em>cavalo</em> são masculinos. Não há artigo <em>a</em> ali para se fundir com coisa nenhuma. Simples assim.</p>
+  <p><strong>Passo 2 — o termo anterior exige a preposição <code>a</code>?</strong> E aqui vem o teste mais poderoso da matéria inteira: <strong>troque a palavra feminina por uma masculina equivalente</strong>. Se o resultado for <strong>AO</strong>, havia preposição + artigo — logo, crase. Se o resultado for <strong>O</strong> sozinho, havia só artigo — sem crase. Se for <strong>A</strong> sozinho, havia só preposição — sem crase.</p>
+  <p>Por que esse teste funciona? Porque no masculino a fusão é <em>visível</em>: <code>a + o = ao</code>, e ninguém escreve "ao" sem perceber. O masculino é o seu debugger — ele torna explícito o que no feminino está escondido pela colisão de dois "a" idênticos.</p>
+  <p><strong>Exemplo comentado, rodando o algoritmo:</strong></p>
+  <ul>
+    <li>"<em>Refiro-me ___ diretora</em>" → troque: "<em>Refiro-me <u>ao</u> diretor</em>" → deu AO → <strong>crase</strong>: <em>Refiro-me <u>à</u> diretora</em>. ✅</li>
+    <li>"<em>Conheço ___ diretora</em>" → troque: "<em>Conheço <u>o</u> diretor</em>" → deu O sozinho → só artigo, sem preposição → <strong>sem crase</strong>: <em>Conheço a diretora</em>. ✅ (E faz sentido: <em>conhecer</em> é VTD, não pede preposição nenhuma.)</li>
+    <li>"<em>Comecei ___ estudar</em>" → troque por masculino? Não dá, <em>estudar</em> é verbo → verbo não admite artigo → <strong>sem crase</strong>: <em>Comecei a estudar</em>. ✅</li>
+  </ul>
+  <p>Repare que o passo 2 é, na prática, uma consulta ao bloco 7. <strong>Crase depende de regência.</strong> Se você não sabe que <em>referir-se</em> pede <code>a</code> e <em>conhecer</em> não pede nada, você não tem como rodar o algoritmo. Por isso os dois blocos andam juntos.</p>
+
+  <h3>8.3 A tabela de casos — agora explicada</h3>
   <div class="table-scroll">
   <table>
     <tr><th>✅ HÁ crase</th><th>❌ NÃO há crase</th></tr>
@@ -149,10 +490,69 @@
     <tr><td>Nomes de lugar que pedem artigo: <em>Vou à Bahia</em> (Volto DA Bahia)</td><td>Lugar sem artigo: <em>Vou a Brasília</em> (Volto DE Brasília)</td></tr>
   </table>
   </div>
-  <p><strong>Facultativa</strong> (a banca cobra reconhecer que é opcional): antes de <strong>nome de mulher</strong> (à/a Maria), <strong>pronome possessivo feminino</strong> (à/a minha casa) e depois de <strong>até</strong> (até à/a porta).</p>
-  <div class="tip">💡 Regra do "vou a / volto da": <em>Volto DA</em> → crase (Vou À). <em>Volto DE</em> → sem crase (Vou A).</div>
+  <p>Agora repare no padrão: <strong>toda a coluna da direita é a mesma coisa</strong>. Em todos os casos, falta o artigo. Vamos verificar um por um:</p>
+  <ul>
+    <li><strong>Antes de masculino</strong>: palavra masculina não recebe o artigo <em>a</em>. Sem artigo → sem fusão.</li>
+    <li><strong>Antes de verbo</strong>: verbo é verbo, não é substantivo. Substantivo aceita artigo ("<em>o estudo</em>"); verbo no infinitivo, não ("*o estudar" não é português normal). Sem artigo → sem crase. "<em>Começou a chover</em>", "<em>Passei a estudar</em>", "<em>Dispus-me a ajudar</em>".</li>
+    <li><strong>Antes de pronome pessoal</strong>: "*a ela" não existe com artigo — pronome já é determinado por natureza, dispensa artigo. Sem artigo → sem crase. Vale para <em>ela, você, Vossa Senhoria, quem</em>.</li>
+    <li><strong>Palavras repetidas</strong>: "<em>cara a cara</em>", "<em>gota a gota</em>", "<em>face a face</em>", "<em>dia a dia</em>". Estrutura de locução adverbial fixa, sem artigo — a prova é que o padrão vale igual no masculino ("<em>lado a lado</em>"). Sem artigo → sem crase.</li>
+    <li><strong>Artigo indefinido</strong>: "<em>a uma reunião</em>" — o artigo aqui é <em>uma</em>, indefinido, não é o artigo definido <em>a</em>. Elementos diferentes não se fundem.</li>
+    <li><strong>Lugar sem artigo</strong>: alguns nomes de lugar pedem artigo (a Bahia, a França), outros não (Brasília, Portugal). Sem artigo → sem crase.</li>
+  </ul>
+  <p>Ou seja: <strong>não são seis regras. É uma regra aplicada seis vezes.</strong> Se você entendeu que crase = preposição + artigo, você deriva a coluna inteira sem decorar nada.</p>
+  <p>E a coluna da esquerda? Também tem um padrão único: <strong>é sempre preposição + artigo presentes</strong>. As locuções femininas ("<em>à noite, às vezes, à vista, à medida que, às pressas, à toa</em>") levam crase por convenção — a gramática as trata como bloco fixo com artigo embutido, para evitar ambiguidade. Aliás, o exemplo clássico de ambiguidade real: "<em>Matou-o <u>à</u> bala</em>" (com bala, instrumento) × "<em>Matou-o a bala</em>" (a bala matou alguém?). O acento desambigua.</p>
+  <p><strong>Horas</strong>: "<em>às 14h</em>" tem crase porque há artigo subentendido — a prova é o masculino: "<em>ao meio-dia</em>". Deu AO → confirma preposição + artigo. Mas "<em>a partir <u>de</u> 14h</em>" não tem, porque a preposição ali é <em>de</em>, não <em>a</em>.</p>
+  <p><strong>"À moda de"</strong> é a exceção que confirma a regra: "<em>bife <u>à</u> Osvaldo Aranha</em>", "<em>sapatos <u>à</u> Luís XV</em>". Tem crase mesmo diante de nome masculino porque a palavra <em>moda</em> (feminina) está elíptica: "à [moda de] Osvaldo Aranha". O artigo feminino está lá, só que invisível. Se você reconstruir a frase completa, a regra geral se aplica normalmente.</p>
 
-  <h2>9. Colocação pronominal</h2>
+  <h3>8.4 Os casos facultativos</h3>
+  <p><strong>Facultativa</strong> (a banca cobra reconhecer que é opcional): antes de <strong>nome de mulher</strong> (à/a Maria), <strong>pronome possessivo feminino</strong> (à/a minha casa) e depois de <strong>até</strong> (até à/a porta).</p>
+  <p>Por que facultativa? Porque nesses três casos <strong>o artigo é que é facultativo</strong>, e a crase apenas herda essa liberdade. Repare:</p>
+  <ul>
+    <li><strong>Nome próprio de pessoa</strong>: tanto faz dizer "<em>Vi <u>a</u> Maria ontem</em>" quanto "<em>Vi Maria ontem</em>". Ambos são português. Se o artigo é opcional, a fusão também é: "<em>Refiro-me <u>a</u> Maria</em>" e "<em>Refiro-me <u>à</u> Maria</em>" estão ambos certos.</li>
+    <li><strong>Possessivo feminino</strong>: "<em>Fui <u>a</u> minha casa</em>" e "<em>Fui <u>à</u> minha casa</em>" — porque tanto "<em>minha casa</em>" quanto "<em>a minha casa</em>" são aceitos.</li>
+    <li><strong>Depois de "até"</strong>: "<em>Fui até <u>a</u> porta</em>" / "<em>Fui até <u>à</u> porta</em>" — porque <em>até</em> admite ou não a preposição <code>a</code> reforçando.</li>
+  </ul>
+  <p>A lição de prova: se a facultatividade existe, <strong>a banca não pode cobrar como erro nenhuma das duas formas</strong>. Se uma questão apresentar "à Maria" e perguntar se está correto, a resposta é sim. Se apresentar "a Maria", também sim. O que ela cobra é você <em>reconhecer</em> que é opcional.</p>
+  <div class="tip">💡 Regra do "vou a / volto da": <em>Volto DA</em> → crase (Vou À). <em>Volto DE</em> → sem crase (Vou A). <strong>Por que funciona:</strong> <em>da</em> é <code>de + a</code> — se o "a" (artigo) apareceu na volta, ele existe no nome do lugar, e portanto reaparece na ida fundido com a preposição. É um teste de existência do artigo usando outra preposição como sonda. "Volto <u>da</u> Bahia" → "Vou <u>à</u> Bahia". "Volto <u>de</u> Brasília" → "Vou <u>a</u> Brasília".</div>
+
+  <h3>8.5 Àquele, àquilo e o "a que"</h3>
+  <p>A crase não acontece só com artigo. Ela acontece sempre que a preposição <code>a</code> encontra <strong>qualquer palavra que comece com "a"</strong> e admita fusão. Os casos:</p>
+  <ul>
+    <li><strong>Pronomes demonstrativos</strong> <em>aquele, aquela, aquilo, aqueles, aquelas</em>: "<em>Refiro-me <u>àquele</u> edital</em>" (= a + aquele). Teste: se o masculino der "ao", aqui dá "àquele". Aliás, note que este caso não depende de gênero nenhum — "<em>àquele</em>" é masculino e tem acento. Isso derruba quem decorou "crase só antes de feminino" sem entender.</li>
+    <li><strong>Relativo <em>a qual / as quais</em></strong>: "<em>A norma <u>à qual</u> obedeço</em>" (= a + a qual). Este é ótimo para resolver o "a que": se você não souber se o relativo leva crase, troque por <em>a qual</em> — no feminino singular ele fica explícito.</li>
+    <li><strong>A pronome demonstrativo <em>a</em> = "aquela"</strong>: "<em>Minha opinião é igual <u>à</u> do diretor</em>" (= igual a + a [opinião] do diretor). Aqui o <em>a</em> não é artigo, é demonstrativo — mas funde igual.</li>
+  </ul>
+  <p><strong>Teste de 5 segundos para "àquele":</strong> substitua <em>aquele</em> por <em>este</em>. Se aparecer a preposição ("refiro-me <u>a</u> este"), há crase no <em>àquele</em>. Se não aparecer ("vi este"), não há ("vi aquele edital").</p>
+  <div class="trap">🪤 <strong>As quatro pegadinhas de crase que mais caem:</strong><br>
+  (1) <em>"À distância"</em>: com complemento, crase obrigatória ("<em>Ficou <u>à</u> distância de 10 metros</em>"); sem complemento, a norma tradicional pede "<em>a distância</em>" ("<em>Reconheci-o a distância</em>"). Mas "<em>ensino <u>a</u> distância</em>" já é dicionarizado das duas formas — não é o caso mais seguro para cobrar, e boas bancas evitam.<br>
+  (2) <em>"À vista" × "a prazo"</em>: por que uma tem e a outra não? <em>Vista</em> é feminino, <em>prazo</em> é masculino. É só isso. A regra é a mesma.<br>
+  (3) <em>Crase antes de plural</em>: "<em>Refiro-me <u>às</u> normas</em>" (com artigo, específicas) × "<em>Refiro-me <u>a</u> normas de segurança</em>" (sem artigo, genérico). Dois "a" no plural exigem o "s"; um "a" sozinho antes de plural indica ausência de artigo — e é forma correta, não erro.<br>
+  (4) <em>"Chegar a casa"</em>: sem crase, porque <em>casa</em> (= o próprio lar) não leva artigo. Mas "<em>Cheguei <u>à</u> casa de meu pai</em>" leva, porque o complemento especifica a casa e traz o artigo junto. Mesma coisa com <em>terra</em>: "<em>O marinheiro foi a terra</em>" (terra firme) × "<em>Voltou <u>à</u> Terra</em>" (o planeta).</div>
+
+  <h2 id="sec-9-colocacao-pronominal">9. Colocação pronominal</h2>
+
+  <h3>9.1 O problema: onde encaixar o pronominho</h3>
+  <p>Primeiro, defina o objeto de estudo. <strong>Pronome oblíquo átono</strong> são estes: <em>me, te, se, o, a, lhe, nos, vos, os, as, lhes</em>. Vamos desmontar o nome, porque ele assusta e não devia:</p>
+  <ul>
+    <li><strong>Pronome</strong> — substitui um nome. Em vez de "vi <em>o candidato</em>", "vi<strong>-o</strong>".</li>
+    <li><strong>Oblíquo</strong> — faz papel de <em>complemento</em>, não de sujeito. Os pronomes retos (<em>eu, tu, ele</em>) são sujeitos; os oblíquos (<em>me, te, o, lhe</em>) são objetos.</li>
+    <li><strong>Átono</strong> — não tem acento tônico próprio; ele "gruda" fonicamente no verbo vizinho, como um clítico. É literalmente por isso que a posição dele importa: ele precisa se apoiar em alguma coisa.</li>
+  </ul>
+  <p>Traduzindo: são pronomes-complemento fraquinhos que não conseguem ficar sozinhos e precisam se encostar no verbo. A única pergunta da matéria é: <strong>encostar de que lado?</strong></p>
+  <p>Três posições possíveis, e os nomes são transparentes se você conhecer os prefixos gregos:</p>
+  <ul>
+    <li><strong>Pró</strong>clise = <em>antes</em> do verbo. ("pro-" = adiante, à frente) — <em>Não <strong>se</strong> esqueça.</em></li>
+    <li><strong>Meso</strong>clise = no <em>meio</em> do verbo. ("meso-" = meio) — <em>Convidá-<strong>lo</strong>-ei.</em></li>
+    <li><strong>Ên</strong>clise = <em>depois</em> do verbo. ("en-" = dentro/em seguida) — <em>Diga-<strong>me</strong>.</em></li>
+  </ul>
+
+  <h3>9.2 A lógica: ênclise é o padrão, próclise é atração</h3>
+  <p>Aqui está o modelo mental que resolve a matéria. Na norma culta escrita, <strong>a posição default do pronome é depois do verbo (ênclise)</strong>. É de lá que ele sai. "<em>Chamou-me o gerente</em>", "<em>Diga-me a verdade</em>".</p>
+  <p>Mas certas palavras <strong>atraem</strong> o pronome para antes do verbo. Elas funcionam como um ímã: se aparecem antes do verbo, puxam o pronome para o meio delas e o verbo. É essa a origem do termo <strong>palavra atrativa</strong>.</p>
+  <p>Ou seja, a lógica é: <code>if (temPalavraAtrativa) próclise; else ênclise;</code></p>
+  <p>E por que essas palavras atraem? Repare no que elas têm em comum: <strong>quase todas são palavras que "abrem" alguma coisa — negam, subordinam, questionam, intensificam</strong>. Elas criam uma tensão sintática à frente do verbo, e o pronome átono, que é fraco e busca apoio, é sugado para esse campo. Não é uma explicação rigorosa de gramática histórica, mas é um modelo que funciona e faz você lembrar da lista sem decorá-la item a item.</p>
+
+  <h3>9.3 A tabela</h3>
   <div class="table-scroll">
   <table>
     <tr><th>Posição</th><th>Quando</th><th>Exemplo</th></tr>
@@ -161,26 +561,107 @@
     <tr><td><strong>Ênclise</strong><br>(depois)</td><td>Início de frase, após pausa/vírgula, verbo no imperativo afirmativo, infinitivo impessoal</td><td>Diga-<strong>me</strong> a verdade.</td></tr>
   </table>
   </div>
-  <div class="trap">🪤 <strong>Nunca</strong> inicie período com pronome oblíquo na norma escrita ("Me avise" → "Avise-me"). E havendo atrativo, a próclise é obrigatória mesmo no futuro (Não <strong>o</strong> convidarei — jamais "convidá-lo-ei" aqui).</div>
+  <p>As cinco famílias de atrativos, com o porquê de cada uma:</p>
+  <ol>
+    <li><strong>Palavras negativas</strong>: <em>não, nunca, jamais, nada, ninguém, nenhum, nem</em>. "<em><u>Não</u> <strong>se</strong> esqueça do prazo</em>", "<em><u>Ninguém</u> <strong>me</strong> avisou</em>". Esta é a mais forte e a mais cobrada — se tem negação antes do verbo, é próclise, ponto final.</li>
+    <li><strong>Advérbios</strong>: <em>sempre, ainda, já, talvez, aqui, ali, bem, mal</em>. "<em><u>Talvez</u> <strong>me</strong> chamem</em>", "<em><u>Aqui</u> <strong>se</strong> trabalha muito</em>". Detalhe importante: <strong>se houver vírgula depois do advérbio, ele perde a força atrativa</strong> — "<em>Aqui, trabalha-<strong>se</strong> muito</em>" ✅. A vírgula é uma barreira; ela isola o advérbio e quebra o campo de atração.</li>
+    <li><strong>Pronomes relativos, indefinidos e interrogativos</strong>: <em>que, quem, o qual, alguém, tudo, quantos</em>. "<em>O livro <u>que</u> <strong>me</strong> deram</em>", "<em><u>Quem</u> <strong>te</strong> avisou?</em>", "<em><u>Tudo</u> <strong>se</strong> resolve</em>".</li>
+    <li><strong>Conjunções subordinativas</strong>: <em>que, quando, se, embora, porque, conforme</em>. "<em><u>Quando</u> <strong>o</strong> vi, cumprimentei</em>", "<em>Disse <u>que</u> <strong>se</strong> arrependia</em>". Note o contraste com as coordenativas, que <strong>não</strong> atraem: "<em>Estudei <u>e</u> preparei-<strong>me</strong></em>" ✅ (o <em>e</em> é coordenativo, não puxa).</li>
+    <li><strong>Frases exclamativas e optativas</strong> (que exprimem desejo): "<em><u>Deus</u> <strong>o</strong> abençoe!</em>", "<em>Bons ventos <strong>o</strong> levem!</em>"</li>
+  </ol>
 
-  <h2>10. Pontuação</h2>
+  <h3>9.4 Mesóclise: a peça mais estranha do sistema</h3>
+  <p>Mesóclise parece bizarra — meter um pronome no meio de um verbo? Mas tem explicação histórica que a torna óbvia.</p>
+  <p>O futuro do português nasceu de uma perífrase do latim vulgar: <em>cantar hei</em> (= "hei de cantar") virou <em>cantarei</em>. Ou seja, <strong>o futuro é, por dentro, dois verbos colados</strong>: infinitivo + haver. E o pronome se encaixava entre eles, como sempre fez. <em>Convidar</em> + <em>lo</em> + <em>hei</em> → <em>convidá-lo-ei</em>. Não é o pronome invadindo o verbo; é o pronome ficando na junta que já existia.</p>
+  <p>Por isso a mesóclise só existe no <strong>futuro do presente</strong> (convidá-lo-ei) e no <strong>futuro do pretérito</strong> (convidá-lo-ia). Em nenhum outro tempo, porque nenhum outro tem essa junta interna.</p>
+  <p>E a regra prática: <strong>mesóclise é o default do futuro — mas só se não houver atrativo</strong>. Havendo atrativo, a próclise vence, porque atração é mais forte que default:</p>
+  <ul>
+    <li>✅ <em>Convidá-lo-ei para a reunião.</em> (futuro, sem atrativo → mesóclise)</li>
+    <li>✅ <em><u>Não</u> <strong>o</strong> convidarei para a reunião.</em> (tem negação → próclise vence)</li>
+    <li>❌ <em>Não convidá-lo-ei.</em> (o candidato aplicou a regra do futuro ignorando o atrativo)</li>
+  </ul>
+  <p>Pense em precedência de operadores: atração tem prioridade maior que o default do tempo verbal.</p>
+
+  <h3>9.5 Ênclise e locuções verbais</h3>
+  <p>Ênclise é obrigatória em três situações que valem memorizar:</p>
+  <ul>
+    <li><strong>Início de período</strong>: "<em>Diga-me a verdade</em>", "<em>Chamaram-me ontem</em>". Nunca se começa frase com oblíquo átono na escrita formal.</li>
+    <li><strong>Depois de pausa (vírgula)</strong>: "<em>Aqui, trabalha-se muito</em>" — a vírgula anulou o atrativo.</li>
+    <li><strong>Imperativo afirmativo</strong>: "<em>Faça-o agora</em>". Mas no imperativo <em>negativo</em>, a negação atrai: "<em>Não <u>o</u> faça</em>".</li>
+  </ul>
+  <p><strong>Locuções verbais</strong> (dois verbos, como "quero estudar", "estou fazendo", "tenho feito") são caso à parte e caem bastante. As formas aceitas:</p>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Estrutura</th><th>Formas aceitas</th><th>Exemplo</th></tr>
+    <tr><td>Auxiliar + infinitivo</td><td>ênclise no auxiliar, ênclise no principal, ou próclise ao principal</td><td>Quero-<strong>lhe</strong> falar. / Quero falar-<strong>lhe</strong>. / Quero <strong>lhe</strong> falar.</td></tr>
+    <tr><td>Auxiliar + gerúndio</td><td>ênclise no auxiliar ou no gerúndio</td><td>Estava-<strong>me</strong> lembrando. / Estava lembrando-<strong>me</strong>.</td></tr>
+    <tr><td>Auxiliar + particípio</td><td><strong>nunca</strong> ênclise no particípio</td><td>Tinha-<strong>me</strong> falado. ✅ / *Tinha falado-<strong>me</strong>. ❌</td></tr>
+    <tr><td>Com atrativo antes</td><td>próclise ao auxiliar</td><td>Não <strong>me</strong> tinha falado.</td></tr>
+  </table>
+  </div>
+  <p>A única proibição dura aí é a do <strong>particípio</strong>: nunca prenda o pronome depois dele. "*Tinha falado-me", "*Havia informado-lhe" são erros. Motivo: o particípio já é uma forma "fechada", adjetival, e não sustenta o clítico.</p>
+  <div class="trap">🪤 <strong>Nunca</strong> inicie período com pronome oblíquo na norma escrita ("Me avise" → "Avise-me"). E havendo atrativo, a próclise é obrigatória mesmo no futuro (Não <strong>o</strong> convidarei — jamais "convidá-lo-ei" aqui). <strong>Atenção ao viés do falante:</strong> no Brasil falado, próclise é o default absoluto — "me passa o sal", "me avisa depois". Está certíssimo na fala e errado na prova. Neste tópico, mais do que em qualquer outro, <strong>não confie no ouvido</strong>: se "soa natural", provavelmente é a forma coloquial. Rode a regra conscientemente.</div>
+
+  <h2 id="sec-10-pontuacao">10. Pontuação</h2>
+
+  <h3>10.1 O problema: vírgula não é pausa para respirar</h3>
+  <p>Todo mundo aprendeu na escola que "vírgula é onde você respira". É a informação mais destrutiva do ensino de português, e é a razão de você errar pontuação.</p>
+  <p>A vírgula é <strong>sintática</strong>, não respiratória. Ela marca fronteiras de estrutura: sinaliza que um termo foi deslocado, intercalado, isolado ou enumerado. Se ela fosse respiratória, seria subjetiva — mas ela não é, e por isso pode ser cobrada em prova objetiva.</p>
+  <p>A analogia: pontuação é <strong>delimitador</strong>, como parênteses e vírgulas em código. Você não abre parêntese onde acha bonito; você abre onde a estrutura exige. E, exatamente como em código, <strong>delimitadores vêm em pares</strong> quando isolam algo — abriu, tem que fechar. Boa parte dos erros de pontuação em prova é literalmente um parêntese não fechado: o candidato abre a intercalação com vírgula e esquece de fechar.</p>
+
+  <h3>10.2 As 3 proibições absolutas</h3>
   <p><strong>As 3 proibições absolutas</strong> (vírgula única):</p>
   <ol>
     <li>Entre <strong>sujeito e verbo</strong>: <em>Os candidatos aprovados[,] receberão o e-mail.</em> ❌</li>
     <li>Entre <strong>verbo e complemento</strong>: <em>Recebi[,] o resultado.</em> ❌</li>
     <li>Entre <strong>nome e complemento/adjunto</strong>: <em>A prova[,] de tecnologia foi difícil.</em> ❌</li>
   </ol>
+  <p>Por que essas três? Porque as três separam <strong>termos que têm ligação sintática obrigatória</strong>. Sujeito e verbo formam a espinha da oração; verbo e complemento estão unidos pela regência; nome e complemento também. Você não pode inserir um separador no meio de uma unidade indivisível — seria como pôr um delimitador no meio de um identificador.</p>
+  <p>O caso 1 é onde a maioria erra, e o motivo é claro: quando o sujeito é <strong>longo</strong>, o falante sente vontade de respirar antes do verbo. "<em>Os candidatos que se inscreveram até o dia 30 e pagaram a taxa[,] receberão o e-mail</em>" — a vontade de pôr vírgula ali é quase irresistível. E é erro, não importa o comprimento. O tamanho do sujeito é irrelevante para a regra.</p>
   <p><em>Exceção:</em> pode-se <strong>intercalar</strong> com DUAS vírgulas: <em>Os candidatos, apesar do cansaço, receberão o e-mail.</em> ✅</p>
+  <p>E note que isso <strong>não é uma exceção de verdade</strong> — é o princípio dos pares. Você não separou sujeito de verbo; você isolou um termo intercalado <em>entre</em> eles, com abre e fecha. A ligação sujeito-verbo continua intacta: apague o que está entre as vírgulas e a frase permanece íntegra. É esse o teste.</p>
+  <div class="tip">💡 <strong>Teste de 5 segundos das duas vírgulas:</strong> apague tudo que está entre as duas vírgulas. Se a frase continuar completa e correta, a pontuação está certa. Se ficar um buraco, você isolou algo que não podia ser isolado. "<em>Os candidatos, apesar do cansaço, receberão o e-mail</em>" → apague → "<em>Os candidatos receberão o e-mail</em>" ✅. Funciona.</div>
+
+  <h3>10.3 Os usos obrigatórios</h3>
   <p><strong>Usos obrigatórios da vírgula:</strong> enumerar; isolar aposto explicativo, vocativo e adjunto adverbial deslocado (longo); separar oração subordinada adverbial anteposta; isolar oração adjetiva <strong>explicativa</strong>.</p>
+  <p>Repare que existe um princípio único por trás de quase todos: <strong>o que está fora da ordem natural ou fora da estrutura essencial vai entre vírgulas</strong>.</p>
+  <p>A ordem natural do português é <em>sujeito → verbo → complementos → adjuntos</em>. Tudo que sai dessa ordem precisa ser sinalizado, porque o leitor precisa saber que o que ele está lendo não está no lugar esperado:</p>
+  <ul>
+    <li><strong>Adjunto adverbial deslocado</strong>: "<em>O sistema caiu ontem</em>" (ordem natural, sem vírgula) → "<em><u>Ontem</u>, o sistema caiu</em>" (deslocado, com vírgula). Se o adverbial for curto, a vírgula é facultativa; se for longo, obrigatória: "<em><u>Depois de três horas de tentativas frustradas</u>, o sistema voltou</em>".</li>
+    <li><strong>Subordinada adverbial anteposta</strong>: mesma lógica, escala maior. "<em>Eu me inscrevo quando o edital sair</em>" (natural) → "<em><u>Quando o edital sair</u>, eu me inscrevo</em>" (anteposta, vírgula obrigatória).</li>
+    <li><strong>Vocativo</strong>: está fora da estrutura da oração, então sempre isolado. "<em>Guilherme, revise a crase.</em>"</li>
+    <li><strong>Aposto explicativo</strong>: é informação adicional, não essencial. "<em>O BB, <u>maior banco do país</u>, abriu concurso.</em>"</li>
+  </ul>
+
+  <h3>10.4 Restritiva × explicativa: onde a vírgula muda o sentido</h3>
+  <p>Este é o tópico mais bonito de pontuação, porque aqui a vírgula não é estética — <strong>ela altera o significado da frase</strong>.</p>
   <div class="table-scroll">
   <table>
     <tr><th>Adjetiva RESTRITIVA (sem vírgula)</th><th>Adjetiva EXPLICATIVA (com vírgulas)</th></tr>
     <tr><td>Os bancos <strong>que são públicos</strong> abriram concurso.<br><em>(só alguns bancos — restringe)</em></td><td>Os bancos, <strong>que são públicos</strong>, abriram concurso.<br><em>(todos os bancos são públicos — explica)</em></td></tr>
   </table>
   </div>
-  <p><strong>Ponto e vírgula</strong>: separa itens de enumeração já com vírgulas ou orações longas correlatas. <strong>Dois-pontos</strong>: anuncia enumeração, citação ou explicação.</p>
+  <p>Traduza para a sua linguagem e fica cristalino. A <strong>restritiva é um WHERE</strong>: ela filtra o conjunto. "<em>Os bancos que são públicos abriram concurso</em>" = <code>SELECT * FROM bancos WHERE publico = true</code> — só o subconjunto abriu concurso, os privados não.</p>
+  <p>A <strong>explicativa é um comentário</strong>: ela não filtra nada, só acrescenta informação sobre o conjunto inteiro. "<em>Os bancos, que são públicos, abriram concurso</em>" = todos os bancos abriram concurso, e, a propósito, todos eles são públicos.</p>
+  <p>Ou seja, <strong>as duas vírgulas são o operador que transforma filtro em comentário</strong>. Sem vírgula, a oração restringe o universo; com vírgula, ela apenas descreve. E é por isso que a explicativa pode ser apagada sem prejuízo (é comentário) e a restritiva não (é filtro — apagar muda o resultado).</p>
+  <p><strong>Exemplo comentado, com consequência real:</strong></p>
+  <ul>
+    <li>"<em>Os funcionários <u>que cometeram fraude</u> foram demitidos.</em>" → só os fraudadores foram demitidos. Alguns funcionários continuam empregados.</li>
+    <li>"<em>Os funcionários, <u>que cometeram fraude</u>, foram demitidos.</em>" → <strong>todos</strong> os funcionários foram demitidos, e todos fraudaram. Empresa vazia.</li>
+  </ul>
+  <p>Duas vírgulas, uma empresa inteira demitida. Isso não é detalhe de gramática — é diferença de conteúdo, e é exatamente por isso que a banca cobra em questão de interpretação, não só de pontuação.</p>
 
-  <h2>11. Palavras que a banca adora confundir</h2>
+  <h3>10.5 Ponto e vírgula, dois-pontos</h3>
+  <p><strong>Ponto e vírgula</strong>: separa itens de enumeração já com vírgulas ou orações longas correlatas. <strong>Dois-pontos</strong>: anuncia enumeração, citação ou explicação.</p>
+  <p>Pense no <strong>ponto e vírgula como um separador de nível superior</strong>. Quando os itens de uma lista já contêm vírgulas internas, usar vírgula para separá-los cria ambiguidade — você não sabe qual vírgula separa item e qual separa o conteúdo de um item. É o mesmo problema de um CSV cujos campos contêm vírgulas. A solução é subir de nível: use ponto e vírgula entre os itens.</p>
+  <p>"<em>Compareceram: João, o diretor; Maria, a gerente; e Pedro, o analista.</em>" — com vírgula em tudo, você leria seis pessoas. Com ponto e vírgula, ficam claras as três.</p>
+  <p>Os <strong>dois-pontos</strong> são um operador de anúncio: eles dizem "o que vem agora desenvolve o que acabei de falar". Servem para enumeração ("<em>Estudei três matérias: Português, TI e Bancários</em>"), citação ("<em>O edital diz: ...</em>") e explicação ("<em>O motivo é simples: não estudei crase</em>").</p>
+  <div class="trap">🪤 Não use dois-pontos <strong>entre verbo e complemento</strong>: "<em>Os aprovados foram: João, Maria e Pedro</em>" é criticado por gramáticos rigorosos (você separou o verbo do predicativo). Prefira "<em>Os aprovados foram os seguintes: João, Maria e Pedro</em>" ou "<em>Foram aprovados: João, Maria e Pedro</em>" — nesta, o verbo está na passiva e a lista é o sujeito posposto anunciado.</div>
+
+  <h2 id="sec-11-palavras-que-a-banca-adora-confundir">11. Palavras que a banca adora confundir</h2>
+
+  <h3>11.1 Como estudar esta seção</h3>
+  <p>Esta tabela parece uma lista de decoreba, mas não precisa ser. <strong>Cada par tem um teste de substituição</strong> — uma palavra que, se couber, decide a questão. Não decore os significados; decore os testes. O teste é um predicado booleano que você roda em três segundos.</p>
   <div class="table-scroll">
   <table>
     <tr><th>Par</th><th>Diferença</th><th>Teste rápido</th></tr>
@@ -199,15 +680,82 @@
   </table>
   </div>
 
-  <h2>12. Reescrita mantendo o sentido</h2>
-  <p>A questão-rainha da Cesgranrio/FGV. Ao reescrever, verifique nesta ordem:</p>
+  <h3>11.2 Os quatro pares que mais caem, destrinchados</h3>
+  <p><strong>Há × A</strong> — o eixo é o <strong>tempo</strong>. <em>Há</em> é o verbo <em>haver</em> impessoal (bloco 5.2) indicando tempo <strong>decorrido</strong>, olhando para trás: "<em><u>Há</u> dez anos trabalho com TI</em>" (= faz dez anos). <em>A</em> é preposição, indicando tempo <strong>futuro</strong> ou distância, olhando para frente: "<em>Daqui <u>a</u> dez dias sai o edital</em>". Teste: cabe "faz"? Então é <em>há</em>.</p>
+  <div class="trap">🪤 "<em>Há dez anos <u>atrás</u></em>" é <strong>redundância</strong> e cai muito. O <em>há</em> já significa "atrás no tempo"; repetir é pleonasmo vicioso. Escreva "<em>há dez anos</em>" ou "<em>dez anos atrás</em>" — nunca os dois. Mesmo raciocínio para "<em>elo de ligação</em>", "<em>encarar de frente</em>", "<em>planejar antecipadamente</em>".</div>
+  <p><strong>Por que / Por quê / Porque / Porquê</strong> — quatro formas, e a lógica é uma matriz 2×2. Duas perguntas resolvem: <strong>é pergunta ou resposta?</strong> e <strong>está no fim da frase ou é substantivo?</strong></p>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Forma</th><th>Quando</th><th>Equivale a</th><th>Exemplo</th></tr>
+    <tr><td><strong>Por que</strong> (separado, sem acento)</td><td>pergunta (direta ou indireta), no início ou meio</td><td>"por qual motivo"</td><td><em>Por que você não estudou?</em> / <em>Não sei por que ele desistiu.</em></td></tr>
+    <tr><td><strong>Por quê</strong> (separado, com acento)</td><td>pergunta, no <strong>fim</strong> da frase (antes de ponto)</td><td>"por qual motivo"</td><td><em>Você desistiu por quê?</em></td></tr>
+    <tr><td><strong>Porque</strong> (junto, sem acento)</td><td>resposta, explicação, causa</td><td>"pois", "já que"</td><td><em>Desisti porque não estudei.</em></td></tr>
+    <tr><td><strong>Porquê</strong> (junto, com acento)</td><td>substantivo (vem com artigo/determinante antes)</td><td>"o motivo"</td><td><em>Não sei <u>o</u> porquê da desistência.</em></td></tr>
+  </table>
+  </div>
+  <p>O acento aparece nas duas formas em que a palavra é <strong>tônica</strong>: no fim da frase (onde ela recebe o peso da entonação) e como substantivo (onde ela é o núcleo). É o mesmo princípio do bloco 2 — o acento marca proeminência. Nas outras duas, a palavra é átona e não leva acento.</p>
+  <p><strong>Teste de 5 segundos:</strong> cabe "o motivo" com artigo? → <em>o porquê</em>. Cabe "por qual motivo"? → separado (com acento se estiver no fim). Cabe "pois"? → <em>porque</em> junto.</p>
+  <p><strong>Onde × Aonde</strong> — a diferença é pura regência (bloco 7), e por isso este par é fácil quando você entende. <em>Onde</em> = <strong>em que lugar</strong>, para verbos que indicam permanência: "<em><u>Onde</u> você trabalha?</em>" (trabalhar <u>em</u>). <em>Aonde</em> = <code>a + onde</code> = <strong>a que lugar</strong>, para verbos que pedem a preposição <code>a</code>, ou seja, verbos de movimento: "<em><u>Aonde</u> você vai?</em>" (ir <u>a</u>). O teste é o verbo: ele pede <em>em</em> ou pede <em>a</em>? E o terceiro caso: se não é lugar físico, use <em>em que</em> — "<em>a situação <u>em que</u> nos encontramos</em>", não "*a situação onde".</p>
+  <p><strong>Ao encontro de × De encontro a</strong> — vetores opostos. <em>Ao encontro de</em> = a favor, convergindo: "<em>A proposta veio <u>ao encontro das</u> nossas expectativas</em>" (agradou). <em>De encontro a</em> = contra, colidindo: "<em>A proposta foi <u>de encontro às</u> nossas expectativas</em>" (frustrou). Mnemônico: pense em dois carros — "de encontro" é batida de frente. O <em>de</em> traz a ideia de choque.</p>
+  <p><strong>Se não × Senão</strong> — <em>se não</em> separado é a conjunção condicional <em>se</em> + a negação: "<em><u>Se não</u> estudar, não passa</em>" (= caso não estude). <em>Senão</em> junto tem dois sentidos: "caso contrário" ("<em>Estude, <u>senão</u> não passa</em>") e "a não ser" ("<em>Não faz nada <u>senão</u> reclamar</em>"). Teste: cabe "caso não"? separado. Cabe "caso contrário"? junto.</p>
+  <p><strong>Mal × Mau</strong> — o teste do antônimo é infalível e vale três segundos. Se o oposto for <strong>bem</strong>, escreva <em>mal</em> (advérbio, com L de "beM"→"maL"... na verdade o mnemônico é: <em>mal</em> ↔ <em>bem</em>, <em>mau</em> ↔ <em>bom</em>, as vogais casam). "<em>Ele dormiu <u>mal</u></em>" (↔ dormiu bem) × "<em>Ele é um <u>mau</u> profissional</em>" (↔ bom profissional). Bônus: <em>mal</em> também é conjunção temporal (= assim que): "<em><u>Mal</u> cheguei, o sistema caiu</em>".</p>
+  <p><strong>A fim de × Afim</strong> — <em>a fim de</em> (separado) indica finalidade, equivale a "para": "<em>Estudo <u>a fim de</u> passar</em>". <em>Afim</em> (junto) é adjetivo, significa "semelhante, com afinidade": "<em>São áreas <u>afins</u></em>", "<em>disciplinas afins</em>". Teste: cabe "para"? separado.</p>
+  <p><strong>Haja vista</strong> — locução que significa "considerando", "tendo em vista". A palavra <em>vista</em> é <strong>invariável</strong> aqui: "<em>Haja vista os problemas</em>", "<em>Haja vista as falhas</em>". Nunca "*haja visto" (que seria o particípio de ver, coisa diferente) e nunca "*hajam vista" (o <em>haja</em> é impessoal — bloco 5.2 de novo).</p>
+  <p><strong>A nível de</strong> — vício de linguagem corporativa. Em prova, é <strong>sempre</strong> inadequada, sem exceção. Substitua por "<em>em nível de</em>" (quando é hierarquia real: "<em>decisão em nível federal</em>") ou, melhor ainda, reescreva: "<em>a nível de segurança</em>" → "<em>quanto à segurança</em>" / "<em>no âmbito da segurança</em>".</p>
+
+  <h2 id="sec-12-reescrita-mantendo-o-sentido">12. Reescrita mantendo o sentido</h2>
+
+  <h3>12.1 Por que esta questão existe</h3>
+  <p>A questão-rainha da Cesgranrio/FGV. E ela existe por um motivo específico: <strong>é a única questão que testa todos os blocos de uma vez</strong>. Reescrever uma frase exige verificar concordância, regência, crase, colocação, pontuação e relação lógica — simultaneamente. É o teste de integração da matéria.</p>
+  <p>Enquadre assim: reescrita é <strong>refatoração</strong>. Você reorganiza a estrutura interna sem alterar o comportamento observável. Uma refatoração que muda o resultado não é refatoração — é bug. E a banca cobra exatamente isso: qual das cinco alternativas preservou o comportamento?</p>
+  <p>A consequência prática é importante: <strong>você não julga se a alternativa é bonita, elegante ou natural. Você julga se ela é equivalente.</strong> Uma reescrita feia mas equivalente é o gabarito; uma reescrita elegante que trocou concessão por causa é a errada.</p>
+
+  <h3>12.2 O checklist, na ordem</h3>
+  <p>Ao reescrever, verifique nesta ordem:</p>
   <ol>
     <li><strong>Manteve a relação lógica?</strong> (causa continuou causa; concessão continuou concessão)</li>
     <li><strong>Manteve a voz?</strong> Ativa ↔ passiva só é válida com VTD. <em>Aprovaram o edital</em> → <em>O edital foi aprovado</em>. ✅</li>
     <li><strong>Manteve a regência e a crase</strong> após a troca?</li>
     <li><strong>Manteve o sentido do vocábulo no contexto?</strong> Sinônimo de dicionário nem sempre serve.</li>
   </ol>
-  <div class="tip">📇 Fixe estas regras com o quiz de Português (aba 🧪 do guia) — são 22 questões só desta matéria, todas com a pegadinha explicada.</div>
+  <p>A ordem não é arbitrária — é do erro mais grosseiro para o mais sutil. Comece pelo item 1 porque ele elimina alternativas em bloco e custa três segundos. Só desça ao item 4 quando sobrarem duas.</p>
+  <p><strong>Item 1 — a relação lógica.</strong> Este é o mais rentável. Você já viu no bloco 4 que cada conjunção carrega uma relação lógica específica. Trocar <em>embora</em> por <em>porque</em> não é troca de palavra: é troca de operador. É como trocar <code>&amp;&amp;</code> por <code>||</code> e dizer que o código é o mesmo.</p>
+  <ul>
+    <li>Original: "<em><u>Embora</u> o sistema tenha sido atualizado, as falhas persistiram.</em>" (concessão)</li>
+    <li>✅ "<em>O sistema foi atualizado; <u>no entanto</u>, as falhas persistiram.</em>" (adversativa — concessão e adversidade são intercambiáveis, ambas marcam contraste)</li>
+    <li>❌ "<em><u>Como</u> o sistema foi atualizado, as falhas persistiram.</em>" (virou causa: agora a atualização <em>provocou</em> as falhas. Sentido completamente diferente.)</li>
+  </ul>
+  <p>Guarde este par: <strong>concessiva ⇄ adversativa é troca válida</strong>; concessiva → causal, jamais.</p>
+  <p><strong>Item 2 — a voz.</strong> Aqui a exigência é técnica. Voz passiva só existe com verbo transitivo <strong>direto</strong>, porque a operação é "promover o objeto direto a sujeito" (bloco 3.5). Sem OD, não há promoção possível.</p>
+  <ul>
+    <li>✅ <em>A banca aprovou o edital</em> (ativa) → <em>O edital foi aprovado pela banca</em> (passiva). <em>Aprovar</em> é VTD, tem OD, funciona.</li>
+    <li>❌ <em>Assisti ao debate</em> → *<em>O debate foi assistido por mim</em>. <em>Assistir</em> (= ver) é VTI. Não há OD. Na norma rigorosa, não apassiva.</li>
+    <li>❌ <em>Preciso de ajuda</em> → *<em>Ajuda é precisada por mim</em>. Absurdo, pelo mesmo motivo.</li>
+  </ul>
+  <p>E atenção à passiva sintética (bloco 5.3): "<em>Aprovou-se o edital</em>" ⇔ "<em>O edital foi aprovado</em>". São a mesma voz em roupas diferentes. Se a banca fizer essa troca, ela está certa — e o teste é a concordância: no plural, "<em>Aprovaram-se os editais</em>" ⇔ "<em>Os editais foram aprovados</em>".</p>
+  <p><strong>Item 3 — regência e crase.</strong> Este é o item traiçoeiro, porque a alternativa parece perfeita e quebra num detalhe. Quando você troca um verbo por um sinônimo, <strong>a regência muda junto</strong> — e a crase vem atrás.</p>
+  <ul>
+    <li>Original: "<em>Ele <u>quer</u> o cargo</em>" (VTD, sem preposição).</li>
+    <li>❌ "<em>Ele <u>aspira</u> o cargo</em>" — <em>aspirar</em> no sentido de desejar é VTI, exige <code>a</code>.</li>
+    <li>✅ "<em>Ele <u>aspira ao</u> cargo</em>."</li>
+    <li>Original: "<em>Ele <u>viu</u> a apresentação</em>" → ✅ "<em>Ele <u>assistiu à</u> apresentação</em>" (mudou o verbo, entrou a preposição, e com feminino determinado apareceu a crase). ❌ "<em>Ele assistiu a apresentação</em>" — sem crase, erro.</li>
+  </ul>
+  <p>É o efeito dominó: mudou o verbo → mudou a assinatura → mudou a preposição → talvez apareça ou suma a crase. Sempre rode o algoritmo do bloco 8 depois de qualquer troca de verbo.</p>
+  <p><strong>Item 4 — o vocábulo no contexto.</strong> Sinônimo de dicionário nem sempre serve, e o motivo é que palavras têm <em>conotação</em> além de denotação. Compare: "<em>O gerente foi <u>econômico</u> nas explicações</em>" e "<em>O gerente foi <u>mesquinho</u> nas explicações</em>". O dicionário aproxima as duas; a frase não. Uma é neutra, a outra é pejorativa.</p>
+  <p>Ou ainda: "<em>uma política <u>rigorosa</u> de segurança</em>" ≠ "<em>uma política <u>rígida</u> de segurança</em>" — rigorosa é elogio (aplica-se com rigor), rígida sugere inflexibilidade. Em texto de prova, esse tipo de deslize é o que separa a alternativa certa da quase certa.</p>
+
+  <h3>12.3 O teste prático de 5 segundos</h3>
+  <p>Diante das cinco alternativas de reescrita, faça nesta ordem:</p>
+  <ol>
+    <li><strong>Olhe só os conectivos.</strong> Circule a conjunção de cada alternativa. Alguma trocou a relação lógica? Elimina. Isso costuma matar duas ou três alternativas antes de você ler a frase inteira.</li>
+    <li><strong>Olhe a voz.</strong> Alguém apassivou um verbo que não podia? Elimina.</li>
+    <li><strong>Nas sobreviventes, olhe as preposições e as crases.</strong> Mudou o verbo sem ajustar a regência? Elimina.</li>
+    <li><strong>Só então avalie nuance de sentido.</strong></li>
+  </ol>
+  <p>Repare que este procedimento é <strong>eliminação, não escolha</strong>. Você não procura a certa; você derruba as erradas. Em reescrita, a alternativa correta quase nunca é obviamente correta — mas as erradas são reconhecivelmente erradas, uma vez que você sabe onde olhar. Esse é o ponto: a matéria toda desta apostila serve para você saber onde olhar.</p>
+  <div class="trap">🪤 <strong>A pegadinha final da reescrita:</strong> a alternativa que "melhora" o texto. A banca oferece uma versão mais clara, mais direta, mais bonita — e errada, porque acrescentou ou tirou informação. O comando não pede um texto melhor; pede um texto <strong>equivalente</strong>. Se a alternativa te dá vontade de dizer "essa ficou até melhor que a original", desconfie: melhoria costuma ser sintoma de que algo mudou.</div>
+
+  <div class="tip">📇 Fixe estas regras com o quiz de Português (aba 🧪 do guia) — são 22 questões só desta matéria, todas com a pegadinha explicada. E lembre: ler esta apostila não fixa nada sozinho. O que fixa é errar questão, voltar aqui, entender <em>por que</em> errou, e errar menos na próxima. Teoria sem questão é documentação sem código rodando.</div>
 </div>
 </body>
 </html>
