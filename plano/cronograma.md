@@ -7,13 +7,27 @@ cronômetro do guia; pausas não contam).
 
 ## Ciclo de segunda a sexta (3 × 1h)
 
+Cada bloco de teoria tem sua apostila na [Biblioteca](../resumos/index.html) —
+no guia, o botão **📖 teoria** do bloco abre a apostila certa.
+
 | Dia | 🌅 Manhã (1h) — Teoria/Base | 🌇 Tarde (1h) — Questões de TI | 🌙 Noite (1h) — Revisão + leve |
 | --- | --- | --- | --- |
-| **Seg** | Bancários (teoria + resumo) | SQL / PL-SQL / Modelagem | Revisões do dia + lei seca (LGPD / Res. 4.893) |
-| **Ter** | Língua Portuguesa | Java / Estrutura de Dados (leitura de código) | Revisões do dia + 5–10 questões de Inglês |
-| **Qua** | Atualidades do Mercado Financeiro | Segurança / Redes | Revisões do dia + cartões + caderno de erros |
-| **Qui** | Probabilidade e Estatística | Linux / Git / DevOps / Nuvem | Revisões do dia + releitura do resumo de Bancários |
+| **Seg** | Bancários — apostila da semana ([Materiais](../guia.html)) | SQL / PL-SQL / Modelagem ([apostila](../resumos/ti-fundamentos.html)) | Revisões + lei seca ([LGPD](../resumos/lgpd-bancaria.html)) |
+| **Ter** | [Português](../resumos/portugues.html) | Java / Estrutura de Dados ([apostila](../resumos/ti-fundamentos.html)) | Revisões + Inglês ([apostila](../resumos/ingles.html)) |
+| **Qua** | Atualidades ([apostila](../resumos/bancarios-pagamentos.html)) | Segurança / Redes ([apostila](../resumos/ti-seguranca-redes.html)) | Revisões + cartões + caderno de erros |
+| **Qui** | [Estatística](../resumos/estatistica.html) ou [Mat. Financeira](../resumos/matematica-financeira.html) | Linux / Git / Nuvem ([apostila](../resumos/ti-seguranca-redes.html)) | Revisões + releitura de [Produtos](../resumos/bancarios-produtos.html) |
 | **Sex** | Bancários (só questões) | Quiz misto de 15–20 questões | Fechar o caderno de erros da semana + cartões |
+
+### Qual apostila de Bancários em cada fase (manhãs de segunda)
+
+| Semanas | Apostila |
+| --- | --- |
+| 1–2 | [SFN](../resumos/sfn.html) |
+| 3–4 | [Produtos e Serviços](../resumos/bancarios-produtos.html) + [Pagamentos (Pix)](../resumos/bancarios-pagamentos.html) |
+| 5–6 | [Pagamentos (Open Finance)](../resumos/bancarios-pagamentos.html) + [LGPD](../resumos/lgpd-bancaria.html) |
+| 7–8 | [Compliance e Riscos](../resumos/bancarios-compliance.html) + Drex/ESG |
+| 9–12 | [Mat. Financeira](../resumos/matematica-financeira.html) nas quintas + quadros de fixação de todas |
+| 13+ | Releitura dirigida pelos piores tópicos do edital verticalizado |
 
 > 💡 Encaixe sugerido com trabalho de 8h: manhã antes do expediente, tarde no
 > almoço ou logo após o expediente, noite depois do jantar. O que importa é o

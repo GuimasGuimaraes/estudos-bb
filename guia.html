@@ -318,21 +318,21 @@ const DISCS = ["Português","Inglês","Matemática/Estatística","Bancários","A
 
 const CRONO = {
   1: { nome: "Segunda", blocos: [
-      { id:"b1", txt:"🌅 Manhã — Conhecimentos Bancários: teoria + resumo esquematizado", dur:"1h", disc:"Bancários" },
-      { id:"b2", txt:"🌇 Tarde — TI: SQL / PL-SQL / Modelagem — só questões", dur:"1h", disc:"TI" },
-      { id:"b3", txt:"🌙 Noite — Revisões do dia + lei seca (LGPD / Res. 4.893)", dur:"1h", disc:"Bancários" } ]},
+      { id:"b1", txt:"🌅 Manhã — Bancários: teoria (a apostila da semana está na aba 📚 Materiais)", dur:"1h", disc:"Bancários", res:"rIndex" },
+      { id:"b2", txt:"🌇 Tarde — TI: SQL / PL-SQL / Modelagem — só questões", dur:"1h", disc:"TI", res:"rTiFund" },
+      { id:"b3", txt:"🌙 Noite — Revisões do dia + lei seca (LGPD / Res. 4.893)", dur:"1h", disc:"Bancários", res:"rLgpd" } ]},
   2: { nome: "Terça", blocos: [
-      { id:"b1", txt:"🌅 Manhã — Língua Portuguesa: gramática + questões", dur:"1h", disc:"Português" },
-      { id:"b2", txt:"🌇 Tarde — TI: Java / Estrutura de Dados — leitura de código", dur:"1h", disc:"TI" },
-      { id:"b3", txt:"🌙 Noite — Revisões do dia + 5–10 questões de Inglês", dur:"1h", disc:"Inglês" } ]},
+      { id:"b1", txt:"🌅 Manhã — Língua Portuguesa: teoria + questões", dur:"1h", disc:"Português", res:"rPort" },
+      { id:"b2", txt:"🌇 Tarde — TI: Java / Estrutura de Dados — leitura de código", dur:"1h", disc:"TI", res:"rTiFund" },
+      { id:"b3", txt:"🌙 Noite — Revisões do dia + 5–10 questões de Inglês", dur:"1h", disc:"Inglês", res:"rIng" } ]},
   3: { nome: "Quarta", blocos: [
-      { id:"b1", txt:"🌅 Manhã — Atualidades do Mercado Financeiro", dur:"1h", disc:"Atualidades" },
-      { id:"b2", txt:"🌇 Tarde — TI: Segurança da Informação / Redes — questões", dur:"1h", disc:"TI" },
+      { id:"b1", txt:"🌅 Manhã — Atualidades do Mercado Financeiro", dur:"1h", disc:"Atualidades", res:"rPag" },
+      { id:"b2", txt:"🌇 Tarde — TI: Segurança da Informação / Redes — questões", dur:"1h", disc:"TI", res:"rTiSeg" },
       { id:"b3", txt:"🌙 Noite — Revisões do dia + cartões vencidos + caderno de erros", dur:"1h", disc:"TI" } ]},
   4: { nome: "Quinta", blocos: [
-      { id:"b1", txt:"🌅 Manhã — Probabilidade e Estatística: teoria + prática", dur:"1h", disc:"Matemática/Estatística" },
-      { id:"b2", txt:"🌇 Tarde — TI: Linux / Git / DevOps / Nuvem — questões", dur:"1h", disc:"TI" },
-      { id:"b3", txt:"🌙 Noite — Revisões do dia + releitura do resumo de Bancários", dur:"1h", disc:"Bancários" } ]},
+      { id:"b1", txt:"🌅 Manhã — Estatística (ou Matemática Financeira, conforme a semana)", dur:"1h", disc:"Matemática/Estatística", res:"rEstat" },
+      { id:"b2", txt:"🌇 Tarde — TI: Linux / Git / DevOps / Nuvem — questões", dur:"1h", disc:"TI", res:"rTiSeg" },
+      { id:"b3", txt:"🌙 Noite — Revisões do dia + releitura de Bancários (apostila de Produtos)", dur:"1h", disc:"Bancários", res:"rProd" } ]},
   5: { nome: "Sexta", blocos: [
       { id:"b1", txt:"🌅 Manhã — Bancários: só questões", dur:"1h", disc:"Bancários" },
       { id:"b2", txt:"🌇 Tarde — TI: quiz misto de 15–20 questões", dur:"1h", disc:"TI" },
@@ -914,6 +914,15 @@ const LINKS = {
   rTi: "resumos/ti-comparativos.html",
   rLgpd: "resumos/lgpd-bancaria.html",
   rIndex: "resumos/index.html",
+  rPort: "resumos/portugues.html",
+  rMatFin: "resumos/matematica-financeira.html",
+  rEstat: "resumos/estatistica.html",
+  rProd: "resumos/bancarios-produtos.html",
+  rPag: "resumos/bancarios-pagamentos.html",
+  rComp: "resumos/bancarios-compliance.html",
+  rIng: "resumos/ingles.html",
+  rTiFund: "resumos/ti-fundamentos.html",
+  rTiSeg: "resumos/ti-seguranca-redes.html",
 };
 
 const BIBLIOTECA = [
@@ -941,7 +950,7 @@ const PLANO_MATERIAIS = [
         { id: "s0t2", txt: "Baixar as provas do BB 2021 e 2023 (Agente de Tecnologia) com gabarito no PCI Concursos", link: "pci" },
         { id: "s0t3", txt: "Salvar nos favoritos: LGPD (lei seca no Planalto)", link: "lgpd" },
         { id: "s0t4", txt: "Salvar nos favoritos: páginas oficiais do Bacen — Pix, Open Finance e Drex (fonte das questões de Bancários)", link: "pix" },
-        { id: "s0t5", txt: "Escolher e salvar UMA playlist de Conhecimentos Bancários no YouTube (Gran, Estratégia ou Direção)", link: "ytBancarios" },
+        { id: "s0t5", txt: "Abrir a Biblioteca de Teoria e ler o índice — entender como as 11 apostilas funcionam (vídeo no YouTube virou opcional)", link: "rIndex" },
         { id: "s0t6", txt: "Definir os horários fixos dos 3 blocos de 1h (ex.: 7h / 12h30 / 20h) e criar alarmes no celular" },
         { id: "s0t7", txt: "SIMULADO DIAGNÓSTICO: prova BB 2021 inteira, 5h cronometradas, sem consulta — registrar na aba ✍️" },
         { id: "s0t8", txt: "Analisar o diagnóstico: anotar as 3 piores disciplinas no registro do simulado" },
@@ -952,8 +961,8 @@ const PLANO_MATERIAIS = [
   semanas: [
     { id: "a1", titulo: "Semana 1 — SFN: quem manda no dinheiro", objetivo: "Dominar CMN × Bacen × CVM (o tópico nº 1 de Bancários). Manhãs: teoria de SFN · Tardes: TI conforme o dia · Noites: revisões + leve.",
       tarefas: [
-        { id: "a1t1", txt: "Ler o resumo local do SFN (20 min) — abre no navegador", link: "rSfn" },
-        { id: "a1t2", txt: "Assistir 2–3 aulas de SFN no YouTube (manhãs de seg e sex)", link: "ytSFN" },
+        { id: "a1t1", txt: "Apostila SFN — 1ª metade: por que existe, os 3 andares, CMN e Bacen (manhãs de seg)", link: "rSfn" },
+        { id: "a1t2", txt: "Apostila SFN — 2ª metade: Copom, CVM, Susep/Previc, instrumentos e quadro final", link: "rSfn" },
         { id: "a1t3", txt: "Resolver 40 questões de SFN na plataforma (filtro: CMN, Bacen, CVM) com ≥70% de acerto", link: "tec" },
         { id: "a1t4", txt: "Português: 30 questões de interpretação + concordância (terças + noites)" },
         { id: "a1t5", txt: "Fazer 2 quizzes de Bancários aqui no guia (aba 🧪)" },
@@ -961,15 +970,15 @@ const PLANO_MATERIAIS = [
       ]},
     { id: "a2", titulo: "Semana 2 — Política monetária + Java", objetivo: "Selic, Copom e instrumentos (open market, compulsório, redesconto). Português: crase e regência.",
       tarefas: [
-        { id: "a2t1", txt: "Aula de política monetária (YouTube) + reler a seção do resumo SFN", link: "ytSFN" },
+        { id: "a2t1", txt: "Reler na apostila SFN: instrumentos de política monetária + a transmissão da Selic passo a passo", link: "rSfn" },
         { id: "a2t2", txt: "30 questões de política monetária/Selic/Copom na plataforma", link: "tec" },
-        { id: "a2t3", txt: "Português: 30 questões de crase + regência verbal" },
+        { id: "a2t3", txt: "Apostila Português: seções de sintaxe (a base!) + crase e regência → 30 questões", link: "rPort" },
         { id: "a2t4", txt: "TI (tardes): 40 questões de Java/estrutura de dados — leitura de código cronometrada", link: "tec" },
-        { id: "a2t5", txt: "Estatística (qui): descritiva — média, mediana, moda, desvio (aula + 15 questões)", link: "ytEstat" },
+        { id: "a2t5", txt: "Apostila Estatística: medidas de posição e dispersão (qui) + 15 questões", link: "rEstat" },
       ]},
     { id: "a3", titulo: "Semana 3 — Produtos bancários + 1ª redação", objetivo: "CDB, poupança, fundos, crédito, cartões, FGC. Começa o treino de redação (domingos, 1h).",
       tarefas: [
-        { id: "a3t1", txt: "Aulas de produtos bancários (YouTube) + anotar limites do FGC", link: "ytBancarios" },
+        { id: "a3t1", txt: "Apostila Produtos — depósitos, poupança, renda fixa, tributação e FGC (com os 5 casos resolvidos)", link: "rProd" },
         { id: "a3t2", txt: "40 questões de produtos bancários na plataforma", link: "tec" },
         { id: "a3t3", txt: "Português: 30 questões de pontuação + colocação pronominal" },
         { id: "a3t4", txt: "✍️ 1ª REDAÇÃO (domingo, 1h, manuscrita, 30 linhas) — tema da pasta redacao/temas.md; ver estrutura antes", link: "ytRedacao" },
@@ -977,7 +986,7 @@ const PLANO_MATERIAIS = [
       ]},
     { id: "a4", titulo: "Semana 4 — Pix + fechamento do ciclo", objetivo: "Pix a fundo (fonte oficial) + simulado de checagem para medir o progresso do mês.",
       tarefas: [
-        { id: "a4t1", txt: "Ler a página oficial do Pix no Bacen (regras, limites, MED) — 2 noites", link: "pix" },
+        { id: "a4t1", txt: "Apostila Pagamentos — bloco do Pix (o caminho do dinheiro em 8 passos, modalidades, MED); complemento: página oficial do Bacen", link: "rPag" },
         { id: "a4t2", txt: "30 questões de Pix/arranjos de pagamento", link: "tec" },
         { id: "a4t3", txt: "SIMULADO: prova BB 2023 inteira, cronometrada (sábado) + correção com caderno de erros" },
         { id: "a4t4", txt: "Redação nº 2 (domingo) — autoavaliar com o checklist do projeto" },
@@ -989,23 +998,23 @@ const PLANO_MATERIAIS = [
   semanas: [
     { id: "b1", titulo: "Semana 5 — Open Finance", objetivo: "Fases, consentimento, participantes — direto da fonte oficial. TI: redes nas tardes.",
       tarefas: [
-        { id: "b1t1", txt: "Ler a página oficial do Open Finance no Bacen (2 noites)", link: "of" },
+        { id: "b1t1", txt: "Apostila Pagamentos — bloco Open Finance (as 4 fases, consentimento, ITP); complemento: página oficial", link: "rPag" },
         { id: "b1t2", txt: "25 questões de Open Finance/Open Banking", link: "tec" },
-        { id: "b1t3", txt: "Português: 30 questões de semântica + reescrita de frases" },
-        { id: "b1t4", txt: "TI (tardes): 40 questões de redes (OSI, TCP/IP, portas) + reler quadros do resumo de TI", link: "rTi" },
+        { id: "b1t3", txt: "Apostila Português: seção de reescrita mantendo o sentido → 30 questões de semântica/reescrita", link: "rPort" },
+        { id: "b1t4", txt: "TI (tardes): 40 questões de redes + o bloco de redes da apostila (sub-redes resolvidas, OSI, portas)", link: "rTiSeg" },
         { id: "b1t5", txt: "Redação nº 3 — tema: Open Finance e proteção de dados (está no banco de temas)" },
       ]},
     { id: "b2", titulo: "Semana 6 — LGPD a fundo", objetivo: "A interseção perfeita do seu perfil: LGPD + Res. 4.893. Dá para gabaritar.",
       tarefas: [
         { id: "b2t1", txt: "Ler a LGPD na lei seca — artigos 1–22 e 46–52 (3 noites, 20 min cada)", link: "lgpd" },
-        { id: "b2t2", txt: "Reler o resumo local de LGPD bancária + Res. 4.893", link: "rLgpd" },
+        { id: "b2t2", txt: "Apostila LGPD — princípios, as 10 bases legais e a Res. 4.893 (leia ANTES da lei seca)", link: "rLgpd" },
         { id: "b2t3", txt: "40 questões de LGPD na plataforma (filtro: LGPD)", link: "tec" },
         { id: "b2t4", txt: "TI (tardes): 40 questões de Linux/Git", link: "tec" },
         { id: "b2t5", txt: "Quiz de Bancários no guia até bater ≥80%" },
       ]},
     { id: "b3", titulo: "Semana 7 — Lavagem de dinheiro + compliance", objetivo: "Lei 9.613, as 3 fases, Coaf, comunicações obrigatórias. TI: engenharia de software/ágil.",
       tarefas: [
-        { id: "b3t1", txt: "Ler a Lei 9.613 (foco: arts. 1º, 9º–11) — 2 noites", link: "lei9613" },
+        { id: "b3t1", txt: "Apostila Compliance — bloco PLD (as 3 fases pela lógica do criminoso); depois a Lei 9.613 na lei seca", link: "rComp" },
         { id: "b3t2", txt: "30 questões de prevenção à lavagem/Coaf", link: "tec" },
         { id: "b3t3", txt: "TI (tardes): 30 questões de Scrum/Kanban/DevOps/testes", link: "tec" },
         { id: "b3t4", txt: "Estatística: amostragem + correlação/regressão (15 questões)" },
@@ -1013,7 +1022,7 @@ const PLANO_MATERIAIS = [
       ]},
     { id: "b4", titulo: "Semana 8 — Drex, ESG + simulado", objetivo: "Fechar a regulação moderna e medir o 2º mês.",
       tarefas: [
-        { id: "b4t1", txt: "Ler a página oficial do Drex no Bacen (1 noite)", link: "drex" },
+        { id: "b4t1", txt: "Apostila Pagamentos — bloco Drex (CBDC × cripto, liquidação atômica) + Compliance: bloco ESG", link: "rPag" },
         { id: "b4t2", txt: "20 questões de moeda digital/criptoativos + 20 de ASG/ESG", link: "tec" },
         { id: "b4t3", txt: "SIMULADO: prova de TI bancária de outra banca (ex.: Caixa 2024) para treinar multibanca" },
         { id: "b4t4", txt: "Correção do simulado: TODO erro no caderno + atualizar 📖 Edital" },
@@ -1025,8 +1034,8 @@ const PLANO_MATERIAIS = [
   semanas: [
     { id: "c1", titulo: "Semana 9 — Matemática financeira", objetivo: "Juros simples/compostos, taxas equivalentes, SAC × Price — cai TODO ano.",
       tarefas: [
-        { id: "c1t1", txt: "Aulas de matemática financeira (YouTube) nas manhãs de seg/qui", link: "ytMatFin" },
-        { id: "c1t2", txt: "40 questões de juros + amortização na plataforma", link: "tec" },
+        { id: "c1t1", txt: "Apostila Matemática Financeira — juros e taxas, com os exemplos resolvidos (manhãs de seg/qui)", link: "rMatFin" },
+        { id: "c1t2", txt: "Apostila Mat. Financeira — descontos, séries e as planilhas de SAC × Price → 40 questões", link: "tec" },
         { id: "c1t3", txt: "TI (tardes): refazer os tópicos com pior % no seu histórico de quiz" },
         { id: "c1t4", txt: "Redação nº 6" },
       ]},
@@ -1034,13 +1043,13 @@ const PLANO_MATERIAIS = [
       tarefas: [
         { id: "c2t1", txt: "Criar rotina: ler notícias do Bacen 2x/semana (Selic atual, IPCA, novidades Pix/Drex)", link: "bcb" },
         { id: "c2t2", txt: "Montar UMA página de anotações de atualidades (mês a mês) na pasta do projeto" },
-        { id: "c2t3", txt: "Inglês: 20 questões de interpretação na plataforma", link: "tec" },
+        { id: "c2t3", txt: "Apostila Inglês: fazer as 4 oficinas de interpretação (11 questões resolvidas) + 20 na plataforma", link: "rIng" },
         { id: "c2t4", txt: "30 questões de atualidades do mercado financeiro", link: "tec" },
         { id: "c2t5", txt: "Redação nº 7" },
       ]},
     { id: "c3", titulo: "Semana 11 — Lei seca, 2ª passada", objetivo: "Reler LGPD + 9.613 já sabendo o que a banca cobra; ética e autorregulação.",
       tarefas: [
-        { id: "c3t1", txt: "Releitura ativa da LGPD (anotar só o que ainda confunde)", link: "lgpd" },
+        { id: "c3t1", txt: "Releitura ativa: LGPD na lei seca + os quadros de fixação das 5 apostilas de Bancários", link: "lgpd" },
         { id: "c3t2", txt: "20 questões de ética bancária/autorregulação", link: "tec" },
         { id: "c3t3", txt: "TI (tardes): 60 questões mistas cronometradas (2 min/questão)", link: "tec" },
         { id: "c3t4", txt: "Estatística: revisão geral via 20 questões" },
@@ -1059,7 +1068,7 @@ const PLANO_MATERIAIS = [
   semanas: [
     { id: "d1", titulo: "O loop de 4 semanas (repetir até o edital)", objetivo: "Meta de saída: os 78 tópicos do edital em 'Dominado'. Volume: ~150 questões/semana + 1 redação/semana + simulado quinzenal.",
       tarefas: [
-        { id: "d1t1", txt: "Semana tipo 1: os 3 piores tópicos de Bancários (teoria rápida + 30 questões cada)" },
+        { id: "d1t1", txt: "Semana tipo 1: os 3 piores tópicos de Bancários (releitura dirigida da apostila + 30 questões cada)", link: "rIndex" },
         { id: "d1t2", txt: "Semana tipo 2: os 3 piores de Português/Estatística + simulado no sábado" },
         { id: "d1t3", txt: "Semana tipo 3: os 3 piores de TI + lei seca (releitura de 1 norma)" },
         { id: "d1t4", txt: "Semana tipo 4: geral — 60 questões multibanca + simulado + zerar revisões" },
@@ -1344,6 +1353,7 @@ function renderHoje() {
       <div class="block-item ${done ? "done" : ""}">
         <input type="checkbox" ${done ? "checked" : ""} onchange="toggleBlock('${b.id}')">
         <div class="bt">${esc(b.txt)}</div>
+        ${b.res ? `<a href="${LINKS[b.res]}" target="_blank" rel="noopener" class="badge" style="text-decoration:none" title="Abrir a apostila desta matéria">📖 teoria</a>` : ""}
         <span class="badge">${b.dur}</span>
       </div>`;
   }).join("");
@@ -2383,9 +2393,9 @@ function renderMateriais() {
   el.innerHTML = `
   <div class="card">
     <h2>📚 Materiais e roteiro completo</h2>
-    <p class="small">O plano inteiro, da Semana 0 até a prova, com links diretos. <strong>Custo total da Fase 1: só a
-    plataforma de questões</strong> — todo o resto é gratuito (fontes oficiais do Bacen, lei seca, YouTube e este guia).
-    Não compre curso de TI; não acumule material.</p>
+    <p class="small">O plano inteiro, da Semana 0 até a prova, com links diretos. <strong>A teoria agora é 100% da
+    Biblioteca abaixo</strong> (as tarefas apontam para a apostila certa de cada semana) — YouTube virou opcional.
+    <strong>Custo total da Fase 1: só a plataforma de questões.</strong> Não compre curso de TI; não acumule material.</p>
     <div class="small" style="margin-top:6px"><strong>${totalDone}</strong> de ${totalAll} tarefas concluídas</div>
     <div class="progress-outer"><div style="width:${Math.round((totalDone / totalAll) * 100)}%"></div></div>
     <p class="muted" style="margin-top:6px">As semanas dizem O QUE estudar; o horário (manhã/tarde/noite) segue o

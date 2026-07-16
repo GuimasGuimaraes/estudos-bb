@@ -39,8 +39,10 @@ Conhecimentos Específicos. Você **não** vai aprender TI do zero — vai:
 ### 1. Conhecimentos Bancários + Atualidades do Mercado Financeiro (prioridade nº 1)
 É o conteúdo mais distante do seu dia a dia e o mais "decoreba lógica".
 
-- **Método:** teoria em PDF/vídeo + resumo esquematizado próprio + questões no
-  mesmo dia. Entenda a *lógica da regulação*, não decore listas soltas.
+- **Método:** teoria pelas apostilas da [Biblioteca](../resumos/index.html)
+  (SFN, Produtos, Pagamentos, Compliance, LGPD — escritas do zero para o seu
+  perfil) + questões no mesmo dia. Entenda a *lógica da regulação*, não decore
+  listas soltas.
 - **Mapa mínimo:** SFN (CMN → Bacen → CVM → Susep/Previc — quem normatiza ×
   quem supervisiona × quem opera), política monetária, Pix (regras e limites),
   Open Finance, LGPD aplicada a bancos, resoluções do Bacen sobre segurança
